@@ -17,7 +17,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="/static/assets/"
+  data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -27,12 +27,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Collapse - UI elements | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/static/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,35 +43,33 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/static/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/static/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/static/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-
-    <link rel="stylesheet" href="/static/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="/static/assets/vendor/js/helpers.js"></script>
+    <script src="../assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/static/assets/js/config.js"></script>
+    <script src="../assets/js/config.js"></script>
   </head>
 
   <body>
-  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-          <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -141,7 +139,7 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -194,12 +192,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/templates/member/mypage.html" class="menu-link">
+                  <a href="pages-account-settings-account.html" class="menu-link">
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/tmeplates/member/account-connections.html" class="menu-link">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">Notifications</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-connections.html" class="menu-link">
                     <div data-i18n="Connections">Connections</div>
                   </a>
                 </li>
@@ -212,17 +215,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/templates/login/login.html" class="menu-link" target="_blank">
+                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Login</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/templates/login/join.html" class="menu-link" target="_blank">
+                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Register</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/templates/login/forgot-password.html" class="menu-link" target="_blank">
+                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Forgot Password</div>
                   </a>
                 </li>
@@ -256,7 +259,7 @@
               </a>
             </li>
             <!-- User interface -->
-            <li class="menu-item">
+            <li class="menu-item active open">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-box"></i>
                 <div data-i18n="User interface">User interface</div>
@@ -287,7 +290,7 @@
                     <div data-i18n="Carousel">Carousel</div>
                   </a>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active">
                   <a href="ui-collapse.html" class="menu-link">
                     <div data-i18n="Collapse">Collapse</div>
                   </a>
@@ -487,11 +490,26 @@
                 </div>
               </div>
               <!-- /Search -->
+
               <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <li class="nav-item lh-1 me-3">
+                  <a
+                    class="github-button"
+                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    data-icon="octicon-star"
+                    data-size="large"
+                    data-show-count="true"
+                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
+                    >Star</a
+                  >
+                </li>
+
+                <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="/static/assets/img/image/images.jpeg" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -500,11 +518,11 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="/static/assets/img/image/images.jpeg" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Kiyoung</span>
+                            <span class="fw-semibold d-block">John Doe</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -514,7 +532,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/templates/member/mypage.html">
+                      <a class="dropdown-item" href="#">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -538,7 +556,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/templates/login/login.html">
+                      <a class="dropdown-item" href="auth-login-basic.html">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -549,324 +567,152 @@
               </ul>
             </div>
           </nav>
+
           <!-- / Navbar -->
+
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-            <div class="container container-p-y">
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">UI elements /</span> Collapse</h4>
+
+              <!-- Collapse -->
+              <h5>Collapse</h5>
               <div class="row">
-                <div class="col-lg-12order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="card-body text-center">
-                        <h2 class="card-title text-primary">추천 컨텐츠</h2>
-                        <ul class="nav justify-content-center flex-row flex-wrap">
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#" ><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#" ><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🫨</span> 제가 ,, 보이시나요 ,,?</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🎯</span> 시험 적중 강의</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🍀</span> 럭키 아삽 발견 !</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🤫</span> 나만 알고 싶은 비밀 강의</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😱</span> 이 강의에는 전설이 있대.. !</span></a></p></li>
-                          <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
-                        </ul>
-                      </div>
-                    </div>
-                  <div>
-                    <div class="d-flex justify-content-center">
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm" >
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div>
-                    <!-- <div class="d-flex justify-content-center">
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images2.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                    <!--<div class="d-flex justify-content-center"  data-tab="tab_3" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
+                <div class="col-12">
+                  <div class="card mb-4">
+                    <h5 class="card-header">Basic</h5>
+                    <div class="card-body">
+                      <p class="card-text">
+                        Toggle the visibility of content across your project with a few classes and our JavaScript
+                        plugins.
+                      </p>
+                      <p class="demo-inline-spacing">
+                        <a
+                          class="btn btn-primary me-1"
+                          data-bs-toggle="collapse"
+                          href="#collapseExample"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          Link with href
+                        </a>
+                        <button
+                          class="btn btn-primary me-1"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#collapseExample"
+                          aria-expanded="false"
+                          aria-controls="collapseExample"
+                        >
+                          Button with data-bs-target
+                        </button>
+                      </p>
+                      <div class="collapse" id="collapseExample">
+                        <div class="d-grid d-sm-flex p-3 border">
+                          <img
+                            src="../assets/img/elements/1.jpg"
+                            alt="collapse-image"
+                            height="125"
+                            class="me-4 mb-sm-0 mb-2"
+                          />
+                          <span>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                            galley of type and scrambled it to make a type specimen book. It has survived not only five
+                            centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                            It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
+                            passages, and more recently with desktop publishing software like Aldus PageMaker including
+                            versions of Lorem Ipsum.It is a long established fact that a reader will be distracted by
+                            the readable content of a page when looking at its layout. The point of using Lorem Ipsum is
+                            that it has a more-or-less normal distribution of letters.
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div class="d-flex justify-content-center"  data-tab="tab_4" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-center"  data-tab="tab_5" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                    <!-- <div class="d-flex justify-content-center"  data-tab="tab_6" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                  </div>
-
-
                   </div>
                 </div>
-              </div>
-            </div>
-            <!-- 선생님 리스트 -->
-            <div class="container ">
-              <div class="row">
-                <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4 h-100">
+                <div class="col-12">
                   <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">선생님이 궁금해요❗</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">선생님을 낱낱이 파헤쳐드립니다!</h6>
-                        <div class="row justify-content-around p-3">
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small>
-                              </div>
-                            </a>
+                    <h5 class="card-header">Multiple targets</h5>
+                    <div class="card-body">
+                      <p class="card-text">Show and hide multiple elements by referencing them with a selector.</p>
+
+                      <p class="demo-inline-spacing">
+                        <a
+                          class="btn btn-primary me-1"
+                          data-bs-toggle="collapse"
+                          href="#multiCollapseExample1"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="multiCollapseExample1"
+                          >Toggle first element</a
+                        >
+                        <button
+                          class="btn btn-primary me-1"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#multiCollapseExample2"
+                          aria-expanded="false"
+                          aria-controls="multiCollapseExample2"
+                        >
+                          Toggle second element
+                        </button>
+                        <button
+                          class="btn btn-primary me-1"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target=".multi-collapse"
+                          aria-expanded="false"
+                          aria-controls="multiCollapseExample1 multiCollapseExample2"
+                        >
+                          Toggle both elements
+                        </button>
+                      </p>
+                      <div class="row">
+                        <div class="col-12 col-md-6 mb-2 mb-md-0">
+                          <div class="collapse multi-collapse" id="multiCollapseExample1">
+                            <div class="d-grid d-sm-flex p-3 border">
+                              <img
+                                src="../assets/img/elements/2.jpg"
+                                alt="collapse-image"
+                                height="125"
+                                class="me-4 mb-sm-0 mb-2"
+                              />
+                              <span>
+                                All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as
+                                necessary, making this the first true generator on the Internet. It uses a dictionary of
+                                over 200 Latin words, combined with a handful of model sentence structures, to generate
+                                Lorem Ipsum which looks reasonable.
+                              </span>
+                            </div>
                           </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="collapse multi-collapse" id="multiCollapseExample2">
+                            <div class="d-grid d-sm-flex p-3 border">
+                              <img
+                                src="../assets/img/elements/3.jpg"
+                                alt="collapse-image"
+                                height="125"
+                                class="me-4 mb-sm-0 mb-2"
+                              />
+                              <span>
+                                There are many variations of passages of Lorem Ipsum available, but the majority have
+                                suffered alteration in some form, by injected humour, or randomised words which don't
+                                look even slightly believable. If you are going to use a passage of Lorem Ipsum.
+                              </span>
+                            </div>
                           </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
-                          </div>
+                        </div>
                       </div>
-                    </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- 강의 추천 -->
-            <div class="container">
-              <div class="row">
-                <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">📚가장 인기 있는 강의</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">학생들에게 가장 인기 많은 강의는?</h6>
-                        <div class="row justify-content-around p-3">
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                                </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 가장 인기 있는 글 -->
-            <div class="container ">
-              <div class="row">
-                <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">🔥실시간 인기글🔥</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">학생들에게 가장 인기 많은 강의는?</h6>
-                        <div class="row justify-content-around">
-                          <div class="table-responsive text-nowrap">
-                            <table class="table table-hover text-center">
-                              <thead>
-                                <tr>
-                                  <th>제목</th>
-                                  <th>작성자</th>
-                                  <th>등록일</th>
-                                  <th>조회수</th>
-                                </tr>
-                              </thead>
-                              <tbody class="table-border-bottom-0">
-                                <tr>
-                                  <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>헉 이게 실화냐?</strong></td>
-                                  <td>Tom</td>
-                                  <td>2022-22-22</td>
-                                  <td>222</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">강의 후기✏️</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">강의 후기 !</h6>
-                        <div class="row justify-content-around">
-                            <div class="table-responsive text-nowrap">
-                              <table class="table table-hover text-center">
-                                <thead>
-                                  <tr>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>등록일</th>
-                                    <th>조회수</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                  <tr>
-                                    <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>대박 강의입니다..</strong></td>
-                                    <td>Sam</td>
-                                    <td>2033-33-22</td>
-                                    <td>222</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- / Content -->
 
             <!-- Footer -->
@@ -878,13 +724,25 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder"></a>
+                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
                 </div>
                 <div>
-                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">Juyeon Jeon</a>
-                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">Jaeseon Lee</a>
-                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">Jeehyeon Jang</a>
-                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">Jongyun Chae</a>
+                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+
+                  <a
+                    href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                    target="_blank"
+                    class="footer-link me-4"
+                    >Documentation</a
+                  >
+
+                  <a
+                    href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                    target="_blank"
+                    class="footer-link me-4"
+                    >Support</a
+                  >
                 </div>
               </div>
             </footer>
@@ -900,23 +758,35 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    <!-- / Layout wrapper -->
+
+    <div class="buy-now">
+      <a
+        href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >Upgrade to Pro</a
+      >
+    </div>
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/static/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/static/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/static/assets/vendor/js/bootstrap.js"></script>
-    <script src="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/static/assets/vendor/js/menu.js"></script>
-    <!-- endbuild/static-/static-->
-    <!-- Vendors /static -->
-    <script src="/static/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-    <!-- Main JS /static>-->
-    <script src="/static/assets/js/main.js"></script>
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
     <!-- Page JS -->
-    <script src="/static/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
   </body>
 </html>

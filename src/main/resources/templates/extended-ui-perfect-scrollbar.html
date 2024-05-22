@@ -17,7 +17,7 @@
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="/static/assets/"
+  data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -27,12 +27,12 @@
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>Perfect Scrollbar - Extended UI | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/static/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -43,35 +43,35 @@
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/static/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/static/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/static/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/static/assets/css/demo.css" />
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="/static/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="/static/assets/vendor/js/helpers.js"></script>
+    <script src="../assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/static/assets/js/config.js"></script>
+    <script src="../assets/js/config.js"></script>
   </head>
 
   <body>
-  
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-          <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
             <a href="index.html" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -141,7 +141,7 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="index.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -194,12 +194,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/templates/member/mypage.html" class="menu-link">
+                  <a href="pages-account-settings-account.html" class="menu-link">
                     <div data-i18n="Account">Account</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/tmeplates/member/account-connections.html" class="menu-link">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">Notifications</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-connections.html" class="menu-link">
                     <div data-i18n="Connections">Connections</div>
                   </a>
                 </li>
@@ -212,17 +217,17 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="/templates/login/login.html" class="menu-link" target="_blank">
+                  <a href="auth-login-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Login</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/templates/login/join.html" class="menu-link" target="_blank">
+                  <a href="auth-register-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Register</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="/templates/login/forgot-password.html" class="menu-link" target="_blank">
+                  <a href="auth-forgot-password-basic.html" class="menu-link" target="_blank">
                     <div data-i18n="Basic">Forgot Password</div>
                   </a>
                 </li>
@@ -361,13 +366,13 @@
             </li>
 
             <!-- Extended components -->
-            <li class="menu-item">
+            <li class="menu-item active open">
               <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-copy"></i>
                 <div data-i18n="Extended UI">Extended UI</div>
               </a>
               <ul class="menu-sub">
-                <li class="menu-item">
+                <li class="menu-item active">
                   <a href="extended-ui-perfect-scrollbar.html" class="menu-link">
                     <div data-i18n="Perfect Scrollbar">Perfect scrollbar</div>
                   </a>
@@ -487,11 +492,26 @@
                 </div>
               </div>
               <!-- /Search -->
+
               <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <li class="nav-item lh-1 me-3">
+                  <a
+                    class="github-button"
+                    href="https://github.com/themeselection/sneat-html-admin-template-free"
+                    data-icon="octicon-star"
+                    data-size="large"
+                    data-show-count="true"
+                    aria-label="Star themeselection/sneat-html-admin-template-free on GitHub"
+                    >Star</a
+                  >
+                </li>
+
+                <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="/static/assets/img/image/images.jpeg" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -500,11 +520,11 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="/static/assets/img/image/images.jpeg" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">Kiyoung</span>
+                            <span class="fw-semibold d-block">John Doe</span>
                             <small class="text-muted">Admin</small>
                           </div>
                         </div>
@@ -514,7 +534,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/templates/member/mypage.html">
+                      <a class="dropdown-item" href="#">
                         <i class="bx bx-user me-2"></i>
                         <span class="align-middle">My Profile</span>
                       </a>
@@ -538,7 +558,7 @@
                       <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="/templates/login/login.html">
+                      <a class="dropdown-item" href="auth-login-basic.html">
                         <i class="bx bx-power-off me-2"></i>
                         <span class="align-middle">Log Out</span>
                       </a>
@@ -549,324 +569,108 @@
               </ul>
             </div>
           </nav>
+
           <!-- / Navbar -->
+
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-            <div class="container container-p-y">
+
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4">
+                <span class="text-muted fw-light">Extended UI /</span> Perfect Scrollbar
+              </h4>
+
               <div class="row">
-                <div class="col-lg-12order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="card-body text-center">
-                        <h2 class="card-title text-primary">추천 컨텐츠</h2>
-                        <ul class="nav justify-content-center flex-row flex-wrap">
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#" ><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#" ><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🫨</span> 제가 ,, 보이시나요 ,,?</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🎯</span> 시험 적중 강의</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🍀</span> 럭키 아삽 발견 !</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">🤫</span> 나만 알고 싶은 비밀 강의</span></a></p></li>
-                          <li class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😱</span> 이 강의에는 전설이 있대.. !</span></a></p></li>
-                          <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
-                        </ul>
-                      </div>
+                <!-- Vertical Scrollbar -->
+                <div class="col-md-6 col-sm-12">
+                  <div class="card overflow-hidden mb-4" style="height: 300px">
+                    <h5 class="card-header">Vertical Scrollbar</h5>
+                    <div class="card-body" id="vertical-example">
+                      <p>
+                        Sweet roll I love I love. Tiramisu I love soufflé cake tart sweet roll cotton candy cookie.
+                        Macaroon biscuit dessert. Bonbon cake soufflé jelly gummi bears lemon drops. Chocolate bar I
+                        love macaroon danish candy pudding. Jelly carrot cake I love tart cake bear claw macaroon candy
+                        candy canes. Muffin gingerbread sweet jujubes croissant sweet roll. Topping muffin carrot cake
+                        sweet. Toffee chocolate muffin I love croissant. Donut carrot cake ice cream ice cream. Wafer I
+                        love pie danish marshmallow cheesecake oat cake pie I love. Icing pie chocolate marzipan jelly
+                        ice cream cake.
+                      </p>
+                      <p>
+                        Marzipan oat cake caramels chocolate. Lemon drops cheesecake jelly beans sweet icing pudding
+                        croissant. Donut candy canes carrot cake soufflé. Croissant candy wafer pie I love oat cake
+                        lemon drops caramels jujubes. I love macaroon halvah liquorice cake. Danish sweet roll pudding
+                        cookie sweet roll I love. Jelly cake I love bear claw jujubes dragée gingerbread. I love cotton
+                        candy carrot cake halvah biscuit I love macaroon cheesecake tootsie roll. Chocolate cotton candy
+                        biscuit I love fruitcake cotton candy biscuit tart gingerbread. Powder oat cake I love.
+                        Cheesecake candy canes macaroon I love wafer I love sweet roll ice cream. Toffee cookie macaroon
+                        lemon drops tart candy canes. Gummies gummies pie tiramisu I love bear claw cheesecake.
+                      </p>
+                      <p>
+                        Marzipan oat cake caramels chocolate. Lemon drops cheesecake jelly beans sweet icing pudding
+                        croissant. Donut candy canes carrot cake soufflé. Croissant candy wafer pie I love oat cake
+                        lemon drops caramels jujubes. I love macaroon halvah liquorice cake. Danish sweet roll pudding
+                        cookie sweet roll I love. Jelly cake I love bear claw jujubes dragée gingerbread. I love cotton
+                        candy carrot cake halvah biscuit I love macaroon cheesecake tootsie roll. Chocolate cotton candy
+                        biscuit I love fruitcake cotton candy biscuit tart gingerbread. Powder oat cake I love.
+                        Cheesecake candy canes macaroon I love wafer I love sweet roll ice cream. Toffee cookie macaroon
+                        lemon drops tart candy canes. Gummies gummies pie tiramisu I love bear claw cheesecake.
+                      </p>
+                      <p>
+                        Sweet roll I love I love. Tiramisu I love soufflé cake tart sweet roll cotton candy cookie.
+                        Macaroon biscuit dessert. Bonbon cake soufflé jelly gummi bears lemon drops. Chocolate bar I
+                        love macaroon danish candy pudding. Jelly carrot cake I love tart cake bear claw macaroon candy
+                        candy canes. Muffin gingerbread sweet jujubes croissant sweet roll. Topping muffin carrot cake
+                        sweet. Toffee chocolate muffin I love croissant. Donut carrot cake ice cream ice cream. Wafer I
+                        love pie danish marshmallow cheesecake oat cake pie I love. Icing pie chocolate marzipan jelly
+                        ice cream cake.
+                      </p>
+                      <p>
+                        Sweet roll I love I love. Tiramisu I love soufflé cake tart sweet roll cotton candy cookie.
+                        Macaroon biscuit dessert. Bonbon cake soufflé jelly gummi bears lemon drops. Chocolate bar I
+                        love macaroon danish candy pudding. Jelly carrot cake I love tart cake bear claw macaroon candy
+                        candy canes. Muffin gingerbread sweet jujubes croissant sweet roll. Topping muffin carrot cake
+                        sweet. Toffee chocolate muffin I love croissant. Donut carrot cake ice cream ice cream. Wafer I
+                        love pie danish marshmallow cheesecake oat cake pie I love. Icing pie chocolate marzipan jelly
+                        ice cream cake.
+                      </p>
+                      <p>
+                        Sweet roll I love I love. Tiramisu I love soufflé cake tart sweet roll cotton candy cookie.
+                        Macaroon biscuit dessert. Bonbon cake soufflé jelly gummi bears lemon drops. Chocolate bar I
+                        love macaroon danish candy pudding. Jelly carrot cake I love tart cake bear claw macaroon candy
+                        candy canes. Muffin gingerbread sweet jujubes croissant sweet roll. Topping muffin carrot cake
+                        sweet. Toffee chocolate muffin I love croissant. Donut carrot cake ice cream ice cream. Wafer I
+                        love pie danish marshmallow cheesecake oat cake pie I love. Icing pie chocolate marzipan jelly
+                        ice cream cake.
+                      </p>
                     </div>
-                  <div>
-                    <div class="d-flex justify-content-center">
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm" >
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div>
-                    <!-- <div class="d-flex justify-content-center">
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images2.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                    <!--<div class="d-flex justify-content-center"  data-tab="tab_3" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-center"  data-tab="tab_4" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div>
-                    <div class="d-flex justify-content-center"  data-tab="tab_5" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                    <!-- <div class="d-flex justify-content-center"  data-tab="tab_6" >
-                      <div class=" d-flex justify-content-between mb-4 border w-50 rounded shadow-sm">
-                        <div class="col-5">
-                          <a href="#">
-                            <div class="justify-content-end">
-                              <img src="/static/assets/img/image/images.jpeg" class="card-img" style="width: 100%; height: auto;" alt="...">
-                            </div>
-                          </a>
-                        </div>
-                        <div class="col-5">
-                          들릴까봐 겁나!<br/>
-                          by. 코딩마법사,,,, G
-                        </div>
-                      </div>
-                    </div> -->
-                  </div>
-
-
                   </div>
                 </div>
+                <!--/ Vertical Scrollbar -->
+
+                <!-- Horizontal Scrollbar -->
+                <div class="col-md-6 col-sm-12">
+                  <div class="card overflow-hidden mb-4" style="height: 300px">
+                    <h5 class="card-header">Horizontal Scrollbar</h5>
+                    <div class="card-body" id="horizontal-example">
+                      <img src="../assets/img/backgrounds/18.jpg" alt="scrollbar-image" />
+                    </div>
+                  </div>
+                </div>
+                <!--/ Horizontal Scrollbar -->
+
+                <!-- Vertical & Horizontal Scrollbars -->
+                <div class="col-12">
+                  <div class="card overflow-hidden" style="height: 500px">
+                    <h5 class="card-header">Vertical & Horizontal Scrollbars</h5>
+                    <div class="card-body" id="both-scrollbars-example">
+                      <img src="../assets/img/backgrounds/18.jpg" alt="scrollbar-image" />
+                    </div>
+                  </div>
+                </div>
+                <!--/ Vertical & Horizontal Scrollbars -->
               </div>
             </div>
-            <!-- 선생님 리스트 -->
-            <div class="container ">
-              <div class="row">
-                <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">선생님이 궁금해요❗</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">선생님을 낱낱이 파헤쳐드립니다!</h6>
-                        <div class="row justify-content-around p-3">
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">선생님</h5>
-                                <small class="text-muted">과목</small><br/>
-                              </div>
-                            </a>
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- 강의 추천 -->
-            <div class="container">
-              <div class="row">
-                <div class="col-12 col-lg-12 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">📚가장 인기 있는 강의</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">학생들에게 가장 인기 많은 강의는?</h6>
-                        <div class="row justify-content-around p-3">
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                                </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                          <div class="card my-3 col-lg-3 col-md-6 col-sm-12">
-                            <a href="#">
-                              <div class="d-flex justify-content-center">
-                                <img src="/static/assets/img/illustrations/man-with-laptop-light.png" class="card-img-top" style="width: 80%;" alt="...">
-                              </div>
-                              <div class="card-body">
-                                <h5 class="card-title">수강과목</h5>
-                                <small class="text-muted">선생님</small><br/>
-                                <small class="text-muted">최고의 과목</small>
-                              </div>
-                            </a>
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- 가장 인기 있는 글 -->
-            <div class="container ">
-              <div class="row">
-                <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">🔥실시간 인기글🔥</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">학생들에게 가장 인기 많은 강의는?</h6>
-                        <div class="row justify-content-around">
-                          <div class="table-responsive text-nowrap">
-                            <table class="table table-hover text-center">
-                              <thead>
-                                <tr>
-                                  <th>제목</th>
-                                  <th>작성자</th>
-                                  <th>등록일</th>
-                                  <th>조회수</th>
-                                </tr>
-                              </thead>
-                              <tbody class="table-border-bottom-0">
-                                <tr>
-                                  <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>헉 이게 실화냐?</strong></td>
-                                  <td>Tom</td>
-                                  <td>2022-22-22</td>
-                                  <td>222</td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-12 col-lg-6 order-2 order-md-3 order-lg-2 mb-4 h-100">
-                  <div class="card">
-                    <div class="row row-bordered g-0">
-                      <div class="col-md-12 pb-3">
-                        <h5 class="card-header m-0 me-2 pb-0 fw-bold">강의 후기✏️</h5>
-                        <h6 class="card-header m-0 me-2 pt-2 pb-3">강의 후기 !</h6>
-                        <div class="row justify-content-around">
-                            <div class="table-responsive text-nowrap">
-                              <table class="table table-hover text-center">
-                                <thead>
-                                  <tr>
-                                    <th>제목</th>
-                                    <th>작성자</th>
-                                    <th>등록일</th>
-                                    <th>조회수</th>
-                                  </tr>
-                                </thead>
-                                <tbody class="table-border-bottom-0">
-                                  <tr>
-                                    <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>대박 강의입니다..</strong></td>
-                                    <td>Sam</td>
-                                    <td>2033-33-22</td>
-                                    <td>222</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                      </div>
-                    </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- / Content -->
 
             <!-- Footer -->
@@ -878,13 +682,25 @@
                     document.write(new Date().getFullYear());
                   </script>
                   , made with ❤️ by
-                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder"></a>
+                  <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
                 </div>
                 <div>
-                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">Juyeon Jeon</a>
-                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">Jaeseon Lee</a>
-                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">Jeehyeon Jang</a>
-                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">Jongyun Chae</a>
+                  <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                  <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+
+                  <a
+                    href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
+                    target="_blank"
+                    class="footer-link me-4"
+                    >Documentation</a
+                  >
+
+                  <a
+                    href="https://github.com/themeselection/sneat-html-admin-template-free/issues"
+                    target="_blank"
+                    class="footer-link me-4"
+                    >Support</a
+                  >
                 </div>
               </div>
             </footer>
@@ -900,23 +716,37 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
+    <!-- / Layout wrapper -->
+
+    <div class="buy-now">
+      <a
+        href="https://themeselection.com/products/sneat-bootstrap-html-admin-template/"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >Upgrade to Pro</a
+      >
+    </div>
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/static/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/static/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/static/assets/vendor/js/bootstrap.js"></script>
-    <script src="/static/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/static/assets/vendor/js/menu.js"></script>
-    <!-- endbuild/static-/static-->
-    <!-- Vendors /static -->
-    <script src="/static/assets/vendor/libs/apex-charts/apexcharts.js"></script>
-    <!-- Main JS /static>-->
-    <script src="/static/assets/js/main.js"></script>
+    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="../assets/vendor/libs/popper/popper.js"></script>
+    <script src="../assets/vendor/js/bootstrap.js"></script>
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="../assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <!-- Main JS -->
+    <script src="../assets/js/main.js"></script>
+
     <!-- Page JS -->
-    <script src="/static/assets/js/dashboards-analytics.js"></script>
+    <script src="../assets/js/extended-ui-perfect-scrollbar.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-    
   </body>
 </html>
