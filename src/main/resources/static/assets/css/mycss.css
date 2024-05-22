@@ -1,0 +1,20 @@
+.capsule {
+    padding: 0.5rem 1rem;
+    border: 1px solid #696cff !important;
+    border-radius: 50rem !important;
+    color: #696cff !important;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.capsule .capsule-icon {
+    box-shadow: 0 .125rem .25rem rgba(161,172,184,.4) !important;
+    display: inline-flex;
+    justify-content: center;
+    border-radius: 50rem !important;
+}
+
+.capsule:hover {
+    transition: all .2s ease-in-out;
+    background: #e7e7ff !important;
+}

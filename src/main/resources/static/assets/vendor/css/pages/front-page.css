@@ -159,7 +159,7 @@ nav.layout-navbar.navbar-active::after {
 
 .light-style .layout-navbar .navbar.landing-navbar {
     border-color: rgba(255,255,255,.68);
-    background: rgba(255,255,255,.38)
+    background: rgba(255, 255, 255, 0.6)
 }
 
 .light-style .layout-navbar .navbar.landing-navbar .navbar-nav .nav-link {
