@@ -15,22 +15,22 @@ import java.time.LocalDateTime;
 public class LectureDTO {
 
     @NotEmpty
-    private String lecture_idx;
+    private String lectureIdx;
     @NotEmpty
     private String title;
     @NotEmpty
     private int price;
     @NotEmpty
-    private String category_idx;
+    private String categoryIdx;
     @NotEmpty
     private String content;
     @NotEmpty
-    private LocalDateTime start_date;
+    private LocalDateTime startDate;
     @NotEmpty
-    private LocalDateTime end_date;
+    private LocalDateTime endDate;
     private String video;
     private String img;
-    private String lecture_recommend;
+    private String lectureRecommend;
 
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
