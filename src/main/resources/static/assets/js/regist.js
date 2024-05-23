@@ -76,3 +76,49 @@ function deleteThisFile2(element,bbsFileIdx) {
         });
     }
 }
+
+function addInput() {
+    let subList = document.querySelector('#subList');
+    let subs = document.querySelectorAll('#subList .sub');
+    let subsCnt = subs.length + 1;
+    $(subList).append(`
+        <div class="sub row align-items-stretch gap-1">
+            <div class="col-11 border rounded-start py-4">
+                <div class="input-group input-group-merge d-flex flex-column ">
+                    <small class="d-block subNum text-primary fw-bold">${subsCnt}회차</small>
+                    <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
+                    <div class="input-group input-group-merge">
+                        <input type="text" class="form-control" id="subTitle">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
+                    <input class="form-control" name="video${subsCnt}" type="file" id="video${subsCnt}">
+                </div>
+            </div>
+            <div class="col-1 rounded-end btn bg-white btn-outline-primary me-n1">
+                <button type="button" class="btn h-100 w-100 text-primary btn-delete" onclick="deleteThis(this)">x</button>
+            </div>
+        </div>
+    `);
+}
+
+function deleteThis(element) {
+    let subList = document.querySelector('#subList');
+    let subs = document.querySelectorAll('#subList .sub');
+    let subsCnt = subs.length + 2;
+    if(subs.length > 1) {
+        element.parentElement.parentElement.remove();
+        let subs2 = document.querySelectorAll('#subList .sub');
+        for(let i=0; i < subs2.length ; i++) {
+            let target = subs2[i].querySelector('input[type=file]');
+            let target2 = subs2[i].querySelector('.subNum');
+            target.name = 'video'+ (i+1);
+            target.id = 'video'+ (i+1);
+            target2.innerText = (i+1) + '회차';
+        }
+    } else {
+        alert("최소 1개의 입력칸이 필요합니다.")
+    }
+}
+

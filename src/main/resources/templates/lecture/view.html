@@ -16,8 +16,25 @@
             <!-- Content -->
             <form>
             <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
+                        <div class="d-lg-flex w-100 justify-content-start">
+                            <div class="row m-lg-0 pb-sm-1 pb-md-1">
+                                <a href="/lecture/list" class="col-sm-12 btn btn-outline-primary">목록</a>
+                            </div>
+                        </div>
+                        <div class="d-lg-flex w-100 justify-content-end">
+                            <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
+                                <a href="#" class="col-sm-12 btn btn-outline-primary">삭제</a>
+                            </div>
+                            <div class="row m-lg-0 pb-sm-1 pb-md-1">
+                                <a href="/lecture/modify?lectureIdx=1" class="col-sm-12 btn btn-primary">수정</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               <div class="row mb-4">
-                  <div class="card g-3 mt-5">
+                  <div class="card g-3">
                       <div class="card-body row g-3">
                           <div class="col-lg-8">
                               <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
@@ -83,7 +100,7 @@
                                           <div class="accordion-header" id="heading1">
                                               <button type="button" class="accordion-button bg-lighter rounded-0 collapsed" data-bs-toggle="collapse" data-bs-target="#chapter1" aria-expanded="true" aria-controls="chapter1">
                                                   <span class="d-flex flex-column">
-                                                    <span class="h5 mb-1">회차정보</span>
+                                                    <span class="h6 mb-1 fw-bold">회차정보</span>
                                                     <span class="fw-normal">총 11회차</span>
                                                   </span>
                                               </button>
@@ -121,7 +138,7 @@
                                           <div class="accordion-header" id="heading2">
                                               <button type="button" class="accordion-button bg-lighter rounded-0 collapsed" data-bs-toggle="collapse" data-bs-target="#chapter2" aria-expanded="true" aria-controls="chapter2">
                                                 <span class="d-flex flex-column">
-                                                    <span class="h5 mb-1">강의후기</span>
+                                                    <span class="h6 fw-bold mb-1">강의후기</span>
                                                         <span>
                                                             <i class="lni lni-star-filled text-primary"></i>
                                                             <i class="lni lni-star-filled"></i>
@@ -199,13 +216,6 @@
                           </div>
                       </div>
                   </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12 col-md-12 d-lg-flex d-md-flex justify-content-start">
-                  <div class="row mb-3">
-                    <a href="/lecture/list" class="col-sm-12 col-md-12 btn btn-outline-primary">목록</a>
-                  </div>
-                </div>
               </div>
             </div>
             </form>
