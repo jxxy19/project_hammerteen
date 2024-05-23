@@ -29,9 +29,11 @@ public class MemberController {
     @GetMapping("/mypage")
     public void mypageGet(Model model) {
         log.info("마이페이지");
-        model.addAttribute("pageType", setPageType("마이페이지"));
+        model.addAttribute("pageType", setPageType("회원정보수정"));
     }
 
     @GetMapping("/writeList")
-    public void myListGet() {log.info("마이리스트");}
+    public void myListGet(Model model) {log.info("작성글확인");
+        model.addAttribute("pageType", setPageType("작성글 확인"));}
+
 }

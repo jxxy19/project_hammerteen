@@ -232,17 +232,17 @@
 <!-- Breadcrumbs : start -->
 <th:block th:if="${pageType.menu1 != null}">
 <!--    and !menu1.toString().equals('메인')-->
-    <div class="breadcrumbs">
-        <div class="container" style="background-color: #E7E7FF;">
+    <div class="breadcrumbs p-3">
+        <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">
                     <div class="breadcrumbs-content">
-                        <h1 class="page-title" th:text="${pageType.menu2}">메뉴명</h1>
+                        <h1 class="page-title m-0 p-0 fw-bold" th:text="${pageType.menu2}">메뉴명</h1>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-12">
-                    <ul class="breadcrumb-nav">
-                        <li ><span th:text="${pageType.menu1}">메뉴명</span> > </li>
+                    <ul class="breadcrumb-nav m-0 p-0 nav justify-content-end">
+                        <li ><span th:text="${pageType.menu1}">메뉴명</span>&nbsp;>&nbsp;</li>
                         <li th:text="${pageType.menu2}">메뉴명</li>
                     </ul>
                 </div>
