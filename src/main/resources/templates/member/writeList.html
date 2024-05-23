@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  data-template="vertical-menu-template-free"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/common/common.html}">
+    <!-- Layout wrapper -->
+    <th:block layout:fragment="content">
+    <section class="section-py">
+      <div class="container">
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Layout container -->
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">마이 페이지 /</span> 작성한 글 목록</h4>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="card mb-4">
+                    <h5 class="card-header">나의 계정 정보</h5>
+                    <div class="my-items bg-white rounded shadow-sm p-5">
+                      <!-- Start List Title -->
+                      <div class="item-list-title rounded-top p-3" style="background-color: #686BFF;">
+                        <div class="row align-items-center">
+                          <div class="col-lg-5 col-md-5 col-12 d-flex align-items-center">
+                            <p class="p-0 m-0 text-white">제목</p>
+                          </div>
+                          <div class="col-lg-3 col-md-3 col-12">
+                            <p class="text-white">카테고리</p>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-12">
+                            <p class="text-white">등록자</p>
+                          </div>
+                          <div class="col-lg-2 col-md-2 col-12 align-right">
+                            <p class="text-white">등록일</p>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- End List Title -->
+                      <!-- Start Single List -->
+<!--                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">-->
+                        <div class="single-item-list cursor-pointer">
+<!--                          th:each="dto:${pageResponseDTO.dtoList}-->
+                          <div class="row align-items-center p-3"  onclick="goToThisLink('/board/view?bbsIdx=',this)">
+<!--                            th:data-idx="${dto.bbsIdx}"-->
+                            <div class="col-lg-5 col-md-5 col-12">
+                              <p class="title">sdfsd</p>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-12">
+                              <p>aa</p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12">
+                              <p>ss</p>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-12 align-right">
+                              <p>d</p>
+                            </div>
+                          </div>
+                        </div>
+<!--                      </th:block>-->
+<!--                      <th:block th:unless="${pageResponseDTO.dtoList.size() > 0}">-->
+                        <div class="single-item-list" >
+                          <div class="row align-items-center p-3" >
+                            <div class="col-12">
+                              <p class="title text-center">게시글이 없습니다.</p>
+                            </div>
+                          </div>
+                        </div>
+<!--                      </th:block>-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Content -->
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+    </div>
+    <!-- / Layout wrapper -->
+  </div>
+</section>
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/assets/js/pages-account-settings-account.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </th:block>
+</html>
