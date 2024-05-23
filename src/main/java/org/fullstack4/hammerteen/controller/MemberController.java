@@ -29,4 +29,8 @@ public class MemberController {
     public void myListGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "작성글 확인"));
     }
+    @GetMapping("/regiQna")
+    public void regiQna(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "1:1문의하기(QNA)"));
+    }
 }

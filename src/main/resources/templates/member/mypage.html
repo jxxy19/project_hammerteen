@@ -27,13 +27,7 @@
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <img
-                          src="/assets/img/image/images2.jpeg"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
+                          src="/assets/img/image/images2.jpeg" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">사진 올리기</span>
@@ -59,43 +53,70 @@
                       <form id="formAccountSettings" method="POST" onsubmit="return false">
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">이름</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              id="name"
-                              name="name"
-                              value="이기영"
-                              readonly
-                              style="background-color: #fff;"
-                            />
-                          </div>
-                          <div class="mb-3 col-md-6">
                             <label for="memberId" class="form-label">ID</label>
-                            <input class="form-control" type="text" name="memberId" id="memberId" value="kiyoung" readonly style="background-color:#fff;" />
+                            <input class="form-control" type="text" name="memberId" id="memberId" value="kiyoung" disabled/>
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="organization" class="form-label">Birthday</label>
-                            <input
-                              type="date"
-                              class="form-control"
-                              id="birthday"
-                              name="birthday"
-                              value="1960-03-05"
-                            />
+                            <label for="name" class="form-label">이름</label>
+                            <input class="form-control" type="text" id="name" name="name" value="이기영" disabled/>
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="email" class="form-label">E-mail</label>
-                            <input
-                              class="form-control"
-                              type="text"
-                              id="email"
-                              name="email"
-                              value=""
-                              placeholder="john.doe@example.com"
-                            />
+                            <label class="form-label" for="password1">비밀번호</label>
+                            <div class="input-group input-group-merge form-password-toggle">
+                              <input type="password" id="password1" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
                           </div>
-                          
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="password2">비밀번호 재입력</label>
+                            <div class="input-group input-group-merge form-password-toggle">
+                              <input type="password" id="password2" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                            </div>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="birthday" class="form-label">생일</label>
+                            <input type="date" class="form-control"  id="birthday"  name="birthday" value="1960-03-05" disabled/>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <div class="row">
+                              <div class="col-lg-8 col-sm-9 pe-lg-1">
+                                <label for="email" class="form-label">이메일</label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="abc@email.com" />
+                              </div>
+                              <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
+                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailChekck">중복체크</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="phoneNum" class="form-label">전화번호</label>
+                            <input class="form-control" type="text" id="phoneNum" name="phoneNum" value="" placeholder="010-1234-5678"/>
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <div class="row">
+                              <div class="col-lg-8 col-sm-8 pe-lg-1 px-sm-2">
+                                <label for="zipcode" class="form-label">우편번호</label>
+                                <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly/>
+                              </div>
+                              <div class="col-lg-4 col-sm-4 align-content-end ps-lg-1">
+                                <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row justify-content-end">
+                          <div class="mb-3 col-md-6 ">
+                            <label for="addr1" class="form-label">주소</label>
+                            <input class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" readonly/>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                          <div class="mb-3 col-md-6 ">
+                            <label for="addr2" class="form-label">상세 주소</label>
+                            <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소"/>
+                          </div>
+                        </div>
                         <div class="mt-2">
                           <button type="submit" class="btn btn-primary me-2">수정하기</button>
                           <button type="reset" class="btn btn-outline-secondary">취소</button>
@@ -135,7 +156,6 @@
                             <div class="flex-grow-1 row align-items-center">
                               <div class="col-9 mb-sm-0 mb-2">
                                 <h6 class="mb-0">Naver</h6>
-                                <!-- <small class="text-muted">Naver Account</small> -->
                               </div>
                               <div class="col-3 text-end">
                                 <div class="form-check form-switch">
@@ -144,8 +164,6 @@
                               </div>
                             </div>
                           </div>
-                          
-                          
                           <!-- /Connections -->
                         </div>
                       </div>
@@ -162,12 +180,7 @@
                       </div>
                       <form id="formAccountDeactivation" onsubmit="return false">
                         <div class="form-check mb-3">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="accountActivation"
-                            id="accountActivation"
-                          />
+                          <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation"/>
                           <label class="form-check-label" for="accountActivation"
                             >회원 탈퇴에 동의합니다.</label
                           >
@@ -197,7 +210,17 @@
     <script src="/assets/js/main.js"></script>
     <!-- Page JS -->
     <script src="/assets/js/pages-account-settings-account.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      let zipcode = document.getElementById("zipCode");
+      let zipcodeBtn = document.getElementById("zipCodeBtn");
+      let addr1 = document.getElementById("addr1");
+
+      zipcodeBtn.addEventListener("click", ()=> {
+      zipCode(zipcode, addr1);
+      });
+    </script>
     </th:block>
 </html>

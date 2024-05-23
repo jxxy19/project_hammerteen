@@ -61,7 +61,7 @@
             <div class="card-body">
               <!-- Logo -->
               <div class="app-brand justify-content-center">
-                <a href="/templates/index.html" class="app-brand-link gap-2">
+                <a href="/" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
                     <img style="width: 100px" src="/assets/img/hammerteen_logo.svg">
                   </span>
@@ -126,11 +126,11 @@
                     </div>
                     <div class="mb-3 row">
                       <div class="col-lg-8 col-sm-9 pe-lg-1">
-                      <label for="zipcode" class="form-label">우편번호</label>
-                      <input type="text" class="form-control bg-white" id="zipcode" name="zipcode" placeholder="우편번호" readonly/>
+                      <label for="zipCode" class="form-label">우편번호</label>
+                      <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly/>
                       </div>
                       <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
-                        <button type="button" class="form-control btn btn-outline-primary" id="zipcodeBtn" name="zipcodeBtn" onclick="zipCode()">우편번호</button>
+                        <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
                       </div>
                     </div>
 
@@ -149,7 +149,7 @@
                 <div class="mb-3">
                   <div>
                     <div class="form-check m-0 p-2">
-                      <input type="checkbox" id="agreeAll" name="agreeAll" >
+                      <input type="checkbox" class="form-check-input ms-2" id="agreeAll" name="agreeAll" >
                       <label class="m-0 text-dark" for="agreeAll">아래 모든 내용에 모두 동의합니다.</label>
                     </div>
                     <div class="accordion" id="accordionExample">
@@ -157,10 +157,10 @@
                         <div class="accordion-header" id="headingOne" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                           <div class="accordion-button d-flex justify-content-between align-items-center bg-label-primary">
                             <p class="mb-0 ">
-                              [필수] 이용약관
+                              [필수] 이용약관&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms" type="checkbox" id="terms1" name="terms1" value="Y" onclick="event.stopPropagation();" >
+                              <input class="terms form-check-input" type="checkbox" id="terms1" name="terms1" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms1" onclick="event.stopPropagation();" >동의함</label>
                             </div>
                           </div>
@@ -362,10 +362,10 @@
                         <div class="accordion-header" id="headingTwo"  data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                           <div class="accordion-button d-flex justify-content-between align-items-center bg-label-primary">
                             <p class="mb-0">
-                              [필수] 개인정보 수집 및 이용 동의
+                              [필수] 개인정보 수집 및 이용 동의&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms" type="checkbox" id="terms2" name="terms2" value="Y" onclick="event.stopPropagation();" >
+                              <input class="terms form-check-input" type="checkbox" id="terms2" name="terms2" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms2" onclick="event.stopPropagation();">동의함</label>
                             </div>
                           </div>
@@ -485,10 +485,10 @@
                         <div class="accordion-header" id="headingFour"  data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                           <div class="accordion-button d-flex justify-content-between align-items-center bg-label-primary">
                             <p class="mb-0">
-                              [선택] SMS 및 이메일 수신 동의
+                              [선택] SMS 및 이메일 수신 동의&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms" type="checkbox" id="terms4" name="terms4" value="Y" onclick="event.stopPropagation();">
+                              <input class="terms form-check-input" type="checkbox" id="terms4" name="terms4" value="Y" onclick="event.stopPropagation();">
                               <label class="m-0" for="terms4" onclick="event.stopPropagation();">동의함</label>
                             </div>
                           </div>
@@ -534,22 +534,20 @@
 
     <!-- Main JS -->
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/commonUtil.js"></script>
     <!-- Page JS -->
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!--  주소 api-->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
-      //우편번호 & 주소 1 다음api
-      function zipCode() {
-        new daum.Postcode({
-          oncomplete: function (data) {
-            document.getElementById("zipcode").value = data.zonecode;
-            document.getElementById("addr1").value = data.roadAddress;
-          }
-        }).open();
-      }
+      let zipcode = document.getElementById("zipCode");
+      let zipcodeBtn = document.getElementById("zipCodeBtn");
+      let addr1 = document.getElementById("addr1");
 
+      zipcodeBtn.addEventListener("click", ()=> {
+        zipCode(zipcode, addr1);
+      });
       // 이용약관 전체동의
       const agreeAll = document.getElementById('agreeAll');
       agreeAll.addEventListener('change', ()=>{
