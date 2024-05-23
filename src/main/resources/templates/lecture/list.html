@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/common/common.html}">
+<body>
+    <!-- Layout wrapper -->
+    <th:block layout:fragment="content">
+    <section>
+      <div class="container">
+        <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <div class="col-lg-3 col-md-4 col-12">
+                  <div class="category-sidebar">
+                    <!-- Start Single Widget -->
+                    <div class="single-widget search">
+                      <h3>키워드</h3>
+                      <form action="">
+                        <input type="hidden" name="category1" value="goods">
+                        <input type="hidden" name="search_type" value="t">
+                        <input type="hidden" name="search_type" value="c">
+                        <input type="hidden" name="search_type" value="u">
+                        <input type="text" name="search_word" placeholder="강의명&amp;선생님">
+                        <button type="submit">
+                          <i class="lni lni-search-alt"></i>
+                        </button>
+                      </form>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget">
+                      <h3>카테고리</h3>
+                      <ul class="list">
+                        <li>
+                          <a href="#">전체<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">국어<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">수학<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">영어<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">한국사<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">사회<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">과학<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">직업<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">제2외국어<span>1</span></a>
+                        </li>
+                        <li>
+                          <a href="#">일반/진로/교양<span>1</span></a>
+                        </li>
+
+                      </ul>
+                    </div>
+                    <!-- End Single Widget -->
+                    <!-- Start Single Widget -->
+                    <div class="single-widget banner">
+                      <h3>광고</h3>
+                      <a href="javascript:void(0)">
+                        <img class="w-100 rounded" src="/assets/images/banner/banner.jpg" alt="#">
+                      </a>
+                    </div>
+                    <!-- End Single Widget -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- / Content -->
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+      </div>
+    </section>
+    </th:block>
+    <!-- build:js assets/vendor/js/core.js -->
+    <th:block layout:fragment="script">
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/assets/js/pages-account-settings-account.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    </th:block>
+</body>
+</html>

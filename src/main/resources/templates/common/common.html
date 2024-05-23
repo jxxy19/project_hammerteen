@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/assets/vendor/css/pages/front-page.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
 
     <!--  썸머노트  -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -65,8 +66,82 @@
                     <i class="tf-icons bx bx-x bx-sm"></i>
                 </button>
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('강의') ? 'active':''}" href="/lecture/list">강의</a>
+                    <li class="nav-item mega-dropdown">
+                        <a href="/lecture/list" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('강의') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                            <span data-i18n="Pages">강의</span>
+                        </a>
+                        <div class="dropdown-menu p-4">
+                            <div class="row gy-4">
+                                <div class="col-12 col-lg">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=전체" th:classappend="${pageType != null and pageType.menu1.toString().equals('강의') and (param.category == null or param.category.toString().equals('전체')) ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>전체</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/course/list?category=국어" th:classappend="${param.category != null and param.category.toString().equals('국어') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>국어</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=수학" th:classappend="${param.category != null and param.category.toString().equals('수학') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>수학</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=영어" th:classappend="${param.category != null and param.category.toString().equals('영어') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>영어</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=한국사" th:classappend="${param.category != null and param.category.toString().equals('한국사') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>한국사</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-12 col-lg">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=사회" th:classappend="${param.category != null and param.category.toString().equals('사회') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>사회</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=과학" th:classappend="${param.category != null and param.category.toString().equals('과학') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>과학</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=직업" th:classappend="${param.category != null and param.category.toString().equals('직업') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>직업</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=제2외국어" th:classappend="${param.category != null and param.category.toString().equals('제2외국어') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>제2외국어</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link mega-dropdown-link" href="/lecture/list?category=일반/진로/교양" th:classappend="${param.category != null and param.category.toString().equals('일반/진로/교양') ? 'active' : ''}">
+                                                <i class='bx bx-radio-circle me-2'></i>
+                                                <span>일반/진로/교양</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('선생님') ? 'active':''}" href="#">선생님</a>
