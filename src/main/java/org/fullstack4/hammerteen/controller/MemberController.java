@@ -2,6 +2,7 @@ package org.fullstack4.hammerteen.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.hammerteen.util.CommonUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,22 +18,15 @@ import java.util.Map;
 @RequestMapping(value="/member")
 @RequiredArgsConstructor
 public class MemberController {
-
-
-    public Map<String, String> setPageType(String menu2) {
-        Map<String,String> pageType = new HashMap<>();
-        pageType.put("menu1", "마이페이지");
-        pageType.put("menu2", menu2);
-        return pageType;
-    }
+    private String menu1 = "마이페이지";
 
     @GetMapping("/mypage")
     public void mypageGet(Model model) {
-        model.addAttribute("pageType", setPageType("회원정보수정"));
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원정보수정"));
     }
 
     @GetMapping("/writeList")
-    public void myListGet(Model model) {log.info("작성글확인");
-        model.addAttribute("pageType", setPageType("작성글 확인"));}
-
+    public void myListGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "작성글 확인"));
+    }
 }
