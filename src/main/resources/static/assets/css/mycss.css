@@ -7,7 +7,7 @@
     text-align: center;
 }
 
-.capsule .capsule-icon {
+.capsule-icon {
     box-shadow: 0 .125rem .25rem rgba(161,172,184,.4) !important;
     display: inline-flex;
     justify-content: center;
