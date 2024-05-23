@@ -2,14 +2,13 @@
 
 <html
   lang="en"
-  class="light-style layout-menu-fixed"
-  data-template="vertical-menu-template-free"
+  class="light-style layout-menu-fixed layout-navbar-fixed layout-wide"
   xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{/common/common.html}">
     <!-- Layout wrapper -->
     <th:block layout:fragment="content">
-    <section>
+    <section class="section-py">
       <div class="container">
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -25,23 +24,34 @@
                       <aside id="layout-menu" class="menu-vertical menu bg-menu-theme">
                           <ul>
                               <li class="menu-item">
-                                  <a href="/member/writeList" class="menu-link">
-                                      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                                      <div data-i18n="Misc">Misc</div>
+                                  <a href="/member/writeList?category=qna" class="menu-link">
+                                      <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
+                                      <div data-i18n="Misc">작성한 QnA</div>
                                   </a>
                               <li class="menu-item">
-                                  <a href="/member/writeList" class="menu-link">
-                                      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                                      <div data-i18n="Error">Error</div>
+                                  <a href="/member/writeList?category=review" class="menu-link">
+                                      <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
+                                      <div data-i18n="Misc">작성한 후기</div>
                                   </a>
                               </li>
                               <li class="menu-item">
-                                  <a href="pages-misc-under-maintenance.html" class="menu-link">
-                                      <i class="menu-icon tf-icons bx bx-cube-alt"></i>
-                                      <div data-i18n="Under Maintenance">Under Maintenance</div>
+                                  <a href="/member/writeList?category=eduInfo" class="menu-link">
+                                      <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
+                                      <div data-i18n="Under Maintenance">작성한 교육정보</div>
                                   </a>
                               </li>
-
+                              <li class="menu-item">
+                                  <a href="/member/writeList?category=data" class="menu-link">
+                                      <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
+                                      <div data-i18n="Under Maintenance">작성한 자료실</div>
+                                  </a>
+                              </li>
+                              <li class="menu-item">
+                                  <a href="/member/writeList?category=free" class="menu-link">
+                                      <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
+                                      <div data-i18n="Under Maintenance">작성한 자유게시판</div>
+                                  </a>
+                              </li>
 <!--                                  </ul>-->
 <!--                              </li>-->
                               <!-- Components -->
