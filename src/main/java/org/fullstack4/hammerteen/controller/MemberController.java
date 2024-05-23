@@ -22,7 +22,7 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public void mypageGet(Model model) {
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원정보수정"));
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원정보 수정"));
     }
 
     @GetMapping("/writeList")
