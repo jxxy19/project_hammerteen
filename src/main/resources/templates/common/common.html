@@ -46,7 +46,7 @@
 <script src="/assets/vendor/js/mega-dropdown.js"></script>
 
 <!-- header: Start -->
-<nav class="layout-navbar shadow-none py-0">
+<nav class="layout-navbar shadow-none py-0 ">
     <div class="container">
         <div class="navbar navbar-expand-lg landing-navbar px-3 px-md-4 ">
             <!-- Menu logo wrapper: Start -->
@@ -154,7 +154,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="#" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/member/mypage" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
                             <span data-i18n="Pages">마이페이지</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -162,7 +162,7 @@
                                 <div class="col-12 col-lg">
                                     <ul class="nav flex-column">
                                         <li class="nav-item active">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/member/mypage">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>회원정보 수정</span>
                                             </a>
@@ -214,13 +214,13 @@
             <!-- Toolbar: Start -->
             <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
                 <li>
-                    <a href="#" class="text-primary">가입하기</a>
+                    <a href="/login/join" class="text-primary">가입하기</a>
                 </li>
                 <li class="p-1">
-                    <a href="#" class="btn btn-primary" target="_blank"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그인</span></a>
+                    <a href="/login/login" class="btn btn-primary"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그인</span></a>
                 </li>
                 <li>
-                    <a href="#" class="btn btn-outline-primary" target="_blank"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그아웃</span></a>
+                    <a href="#" class="btn btn-outline-primary"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그아웃</span></a>
                 </li>
             </ul>
             <!-- Toolbar: End -->
@@ -230,9 +230,9 @@
 <!-- header: End -->
 
 <!-- Breadcrumbs : start -->
-<th:block th:if="${pageType.menu1 != null}">
+<th:block th:if="${pageType != null}">
 <!--    and !menu1.toString().equals('메인')-->
-    <div class="breadcrumbs p-3">
+    <div class="breadcrumbs p-3 bg-label-primary bg-thunder ">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 col-md-6 col-12">

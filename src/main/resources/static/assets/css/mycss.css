@@ -18,3 +18,13 @@
     transition: all .2s ease-in-out;
     background: #e7e7ff !important;
 }
+
+.bg-thunder {
+    background: url("/assets/img/backgrounds/full.png") center center;
+    background-size: cover;
+}
+
+.breadcrumbs .row {
+    padding-top: 8em;
+    padding-bottom: 0.5em;
+}

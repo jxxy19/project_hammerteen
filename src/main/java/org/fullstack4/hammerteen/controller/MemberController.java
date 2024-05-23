@@ -28,7 +28,6 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public void mypageGet(Model model) {
-        log.info("마이페이지");
         model.addAttribute("pageType", setPageType("회원정보수정"));
     }
 
