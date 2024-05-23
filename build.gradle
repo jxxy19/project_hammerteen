@@ -44,6 +44,9 @@ dependencies {
 
 	// JSON
 	implementation group: 'org.json', name: 'json', version: '20200518'
+
+	//구글로그인
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
