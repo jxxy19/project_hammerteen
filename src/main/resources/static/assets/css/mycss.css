@@ -20,6 +20,7 @@
 }
 
 .bg-thunder {
+    background-color: #e7e7ff !important;
     background: url("/assets/img/backgrounds/full.png") center center;
     background-size: cover;
 }
@@ -27,4 +28,12 @@
 .breadcrumbs .row {
     padding-top: 8em;
     padding-bottom: 0.5em;
+}
+
+.h-300px {
+    height: 300px !important;
+}
+
+.overflow-y-scroll {
+    overflow-y: scroll;
 }
