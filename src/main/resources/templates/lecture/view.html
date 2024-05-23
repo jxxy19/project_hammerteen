@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{/common/common.html}">
+<body>
+    <!-- Layout wrapper -->
+    <th:block layout:fragment="content">
+    <section>
+      <div class="container">
+        <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+          <div class="content-wrapper">
+            <!-- Content -->
+            <form>
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row mb-4">
+                  <div class="card g-3 mt-5">
+                      <div class="card-body row g-3">
+                          <div class="col-lg-8">
+                              <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
+                                  <div class="me-1">
+                                      <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
+                                      <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span></p>
+                                  </div>
+                                  <div class="d-flex align-items-center">
+                                      <span class="badge bg-label-primary">과목</span>
+
+                                  </div>
+                              </div>
+                              <div class="card academy-content shadow-none border">
+                                  <div class="p-2">
+                                      <div>
+                                          <video class="w-100 rounded" controls src="/assets/video/test.MP4"></video>
+                                      </div>
+                                  </div>
+                                  <div class="card-body">
+                                      <h5 class="fw-bold">강좌소개</h5>
+                                      <p class="mb-4">
+                                          강좌소개를 한번 해볼까 합니다!<br>
+                                      </p>
+                                      <p class="mb-4">
+                                          여러분 인건 정말 좋은 강좌에요 한번 들어보쇼
+                                      </p>
+                                      <p> "최고 입니다. 여러분 이 시대 꼭 들어야하는 강의!" — 장지현
+                                      </p>
+                                      <hr class="my-4">
+                                      <h5 class="fw-bold">강사정보</h5>
+                                      <div class="d-flex justify-content-start align-items-center user-name">
+                                          <div class="avatar-wrapper">
+                                              <div class="avatar avatar-sm me-2"><img src="/assets/img/default.png" alt="Avatar" class="rounded-circle"></div>
+                                          </div>
+                                          <div class="d-flex flex-column">
+                                              <span class="fw-medium"><span>전주연</span> 선생님</span>
+                                              <small class="text-muted">풀스택 4기</small>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-lg-4">
+                              <div class="stick-top">
+                                  <div class="card mb-4">
+                                      <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
+                                          결제정보
+                                      </div>
+                                      <div class="card-body py-4">
+                                          <h4 class="text-start"><span class="text-primary fw-bold">10,000</span>원</h4>
+                                          <div class="d-flex gap-1 justify-content-between">
+                                              <button class="btn btn-outline-primary w-100 px-0">장바구니 담기</button>
+                                              <button class="btn btn-primary w-100 px-0">바로 결제하기</button>
+                                          </div>
+                                          <div class="d-flex gap-1 pt-3 justify-content-around">
+                                              <i class="bx bx-like bx-sm mx-4 btn-icons"></i>
+                                              <i class="bx bx-share bx-sm mx-4 btn-icons"></i>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="accordion accordion-bordered" id="courseContent">
+                                      <div class="accordion-item shadow-none border border-bottom-0 mb-0 active">
+                                          <div class="accordion-header" id="heading1">
+                                              <button type="button" class="accordion-button bg-lighter rounded-0 collapsed" data-bs-toggle="collapse" data-bs-target="#chapter1" aria-expanded="true" aria-controls="chapter1">
+                                                  <span class="d-flex flex-column">
+                                                    <span class="h5 mb-1">회차정보</span>
+                                                    <span class="fw-normal">총 11회차</span>
+                                                  </span>
+                                              </button>
+                                          </div>
+                                          <div id="chapter1" class="accordion-collapse collapse show" data-bs-parent="#courseContent" style="">
+                                              <div class="accordion-body py-3 border-top">
+                                                  <div class="d-flex align-items-center">
+                                                      <p class="p-0 m-0">
+                                                          <span class="h6"><i>1</i><span class="ps-2">강의 오리엔테이션</span></span>
+                                                          <span class="text-muted d-block ps-3">23분</span>
+                                                      </p>
+                                                  </div>
+                                                  <div class="d-flex align-items-center">
+                                                      <p class="p-0 m-0">
+                                                          <span class="h6"><i>2</i><span class="ps-2">IP 주소의 이해</span></span>
+                                                          <span class="text-muted d-block ps-3">62분</span>
+                                                      </p>
+                                                  </div>
+                                                  <div class="d-flex align-items-center">
+                                                      <p class="p-0 m-0">
+                                                          <span class="h6"><i>3</i><span class="ps-2">같은 네트워크에서의 통신</span></span>
+                                                          <span class="text-muted d-block ps-3">44분</span>
+                                                      </p>
+                                                  </div>
+                                                  <div class="d-flex align-items-center">
+                                                      <p class="p-0 m-0">
+                                                          <span class="h6"><i>4</i><span class="ps-2">스위치를 이용한 통신 기술</span></span>
+                                                          <span class="text-muted d-block ps-3">12분</span>
+                                                      </p>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="accordion-item shadow-none border mb-0">
+                                          <div class="accordion-header" id="heading2">
+                                              <button type="button" class="accordion-button bg-lighter rounded-0 collapsed" data-bs-toggle="collapse" data-bs-target="#chapter2" aria-expanded="true" aria-controls="chapter2">
+                                                <span class="d-flex flex-column">
+                                                    <span class="h5 mb-1">강의후기</span>
+                                                        <span>
+                                                            <i class="lni lni-star-filled text-primary"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="fw-normal">( 총 100건 )</i>
+                                                        </span>
+                                                </span>
+                                              </button>
+                                          </div>
+                                          <div id="chapter2" class="accordion-collapse collapse" data-bs-parent="#courseContent" style="">
+                                              <div class="accordion-body py-3 border-top">
+                                                  <div class="d-flex flex-column align-items-center">
+                                                      <p class="d-flex flex-column gap-1 w-100 py-3 m-0">
+                                                          <span>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                          </span>
+                                                          <span class="h6 m-0">로버트 다우니 주니어</span>
+                                                          <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
+                                                      </p>
+                                                      <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
+                                                          <span>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                          </span>
+                                                          <span class="h6 m-0">로버트 다우니 주니어</span>
+                                                          <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
+                                                      </p>
+                                                      <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
+                                                          <span>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                            <i class="lni lni-star-filled"></i>
+                                                          </span>
+                                                          <span class="h6 m-0">로버트 다우니 주니어</span>
+                                                          <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
+                                                      </p>
+                                                      <!-- Pagination -->
+                                                      <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
+                                                          <ul class="pagination">
+                                                              <li class="page-item prev">
+                                                                  <a class="page-link" href="#"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                                              </li>
+                                                              <li class="page-item active">
+                                                                  <a class="page-link" href="#">1</a>
+                                                              </li>
+                                                              <li class="page-item">
+                                                                  <a class="page-link" href="#">2</a>
+                                                              </li>
+                                                              <li class="page-item">
+                                                                  <a class="page-link" href="#">3</a>
+                                                              </li>
+                                                              <li class="page-item next">
+                                                                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                                              </li>
+                                                          </ul>
+                                                      </nav>
+                                                      <!--/ End Pagination -->
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 col-md-12 d-lg-flex d-md-flex justify-content-start">
+                  <div class="row mb-3">
+                    <a href="/lecture/list" class="col-sm-12 col-md-12 btn btn-outline-primary">목록</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </form>
+            <!-- / Content -->
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+      </div>
+    </section>
+    </th:block>
+    <!-- build:js assets/vendor/js/core.js -->
+    <th:block layout:fragment="script">
+        <script src="/assets/js/plyr.js"></script>
+    </th:block>
+</body>
+</html>
