@@ -11,16 +11,13 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name="hamt_lecture_heart")
-public class LectureHeartEntity {
-
+public class LectureGoodEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(unique = true, nullable = false)
-    private int heartIdx;
-
+    @Column(unique=true, nullable=false)
+    private int goodIdx;
     @Column(nullable = false)
     private int lectureIdx;
-
     @Column(length = 20, nullable = false)
     private String userId;
 }

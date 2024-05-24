@@ -21,7 +21,8 @@ public class LectureEntity extends BaseEntity{
     private int lectureIdx;
     @Column(nullable=false, length = 10)
     private String categoryIdx;
-    private int teacherName;
+    @Column(nullable=false, length = 20)
+    private String teacherName;
     @Column(nullable=false, length = 50)
     private String title;
     @Column(nullable=false, length = 500)
