@@ -27,6 +27,9 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="/assets/css/LineIcons.2.0.css" />
     <link rel="stylesheet" href="/assets/css/plyr.css">
+    <link rel="stylesheet" href="/assets/css/flatpickr.css">
+    <link rel="stylesheet" href="/assets/css/fullcalendar.css">
+    <style data-fullcalendar=""></style>
 
     <!--  썸머노트  -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
@@ -191,7 +194,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="#" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/mystudy/myLectureList" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
                             <span data-i18n="Pages">나의 학습방</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -199,19 +202,19 @@
                                 <div class="col-12 col-lg">
                                     <ul class="nav flex-column">
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('나의 강의실') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/mystudy/myLectureList">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>나의 강의실</span>
                                             </a>
                                         </li>
-                                        <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('나의 강의실') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                        <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('성적표') ? 'active':''}">
+                                            <a class="nav-link mega-dropdown-link" href="/mystudy/myReportCardList">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>성적표</span>
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('학습계획표') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/mystudy/myStudyPlan">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>학습계획표</span>
                                             </a>
