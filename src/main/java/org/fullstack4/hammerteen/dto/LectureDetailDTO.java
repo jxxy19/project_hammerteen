@@ -22,10 +22,8 @@ public class LectureDetailDTO {
     private int lectureIdx;
     private String title;
     private String content;
-    private String thumbnailVideoDirectory;
-    private String thumbnailVideoFile;
-    private String thumbnailImgDirectory;
-    private String thumbnailImgFile;
+    private String VideoDirectory;
+    private String VideoFile;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 

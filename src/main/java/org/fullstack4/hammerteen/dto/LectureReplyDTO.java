@@ -15,21 +15,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class LectureReplyDTO {
-    private int replyIdx;
-
+    private int lectureReplyIdx;
     @NotNull
     private int lectureIdx;
-
-
     @NotEmpty
     private String reviewContent;
-
-    @Column(nullable = true)
     private int rating;
-
     @NotEmpty
     private String userId;
-
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 }

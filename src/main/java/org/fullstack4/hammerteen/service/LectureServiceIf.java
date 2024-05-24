@@ -17,18 +17,20 @@ public interface LectureServiceIf {
     void deleteThumbnailVideo(int lectureIdx);
     LectureDTO view(LectureDTO lectureDTO);
     void modify(LectureDTO lectureDTO);
-    void delete(LectureDTO lectureDTO);
+    void delete(int lectureIdx);
 
     void registLectureDetail(LectureDetailDTO lectureDetailDTO);
+    public void registLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam);
     void modifyLectureDetail(LectureDetailDTO lectureDetailDTO);
-    void deleteLectureDetail(LectureDetailDTO lectureDetailDTO);
-    void deleteLectureDetail(int lectureIdx);
-    List<LectureDetailDTO> listLectureDetail(LPageRequestDTO lPageRequestDTO, int lectureIdx);
+    void modifyLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam);
+    void deleteLectureDetail(int lectureDetailIdx);
+    void deleteLectureDetailAll(int lectureIdx);
+    List<LectureDetailDTO> listLectureDetail(int lectureIdx);
     void registLectureReply(LectureReplyDTO lectureReplyDTO);
     void modifyLectureReply(LectureReplyDTO lectureReplyDTO);
-    void deleteLectureReply(LectureReplyDTO lectureReplyDTO);
+    void deleteLectureReply(int lectureReplyIdx);
     void deleteLectureReplyAll(int lectureIdx);
-    LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lPageRequestDTO,int lectureIdx);
-    int countCategory(String categoryName);
+    LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
+    int countCategory(String categoryIdx);
 
 }

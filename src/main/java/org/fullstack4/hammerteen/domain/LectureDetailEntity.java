@@ -24,25 +24,18 @@ public class LectureDetailEntity extends BaseEntity{
     @Column(length=500,nullable=false)
     private String content;
     @Column(nullable=true, length = 100)
-    private String thumbnailVideoDirectory;
+    private String videoDirectory;
     @Column(nullable=true, length = 50)
-    private String thumbnailVideoFile;
-    @Column(nullable=true, length = 100)
-    private String thumbnailImgDirectory;
-    @Column(nullable=true, length = 50)
-    private String thumbnailImgFile;
+    private String videoFile;
 
     public void modify(String title, String content){
         this.title=title;
         this.content=content;
     }
 
-    public void modifyImg(){
-
-    }
-
-    public void modifyVideo(){
-
+    public void modifyVideo(String videoDirectory, String videoFile){
+        this.videoDirectory=videoDirectory;
+        this.videoFile=videoFile;
     }
 
 

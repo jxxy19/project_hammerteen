@@ -103,6 +103,35 @@ public class CommonFileUtil {
 
     }
 
+    public List<String> uploadVideo(MultipartHttpServletRequest files, String uploadFolder,String videoParam) {
+        if(files.getFile(videoParam)==null || files.getFile(videoParam).getSize()<=0){
+            return null;
+        }
+        List<String> filenames = new ArrayList<>();
+        List<MultipartFile> list = files.getFiles(videoParam);
+        for (MultipartFile file : list) {
+            String fileRealName = file.getOriginalFilename();
+            long size = file.getSize();
+            String fileExt = fileRealName.substring(fileRealName.indexOf("."), fileRealName.length());
+
+            UUID uuid = UUID.randomUUID();
+            String[] uuids = uuid.toString().split("-");
+            String newName = uuids[0] + fileRealName;
+
+            File saveFile = new File(uploadFolder + "\\" + newName);
+            try {
+                file.transferTo(saveFile);
+                filenames.add(newName);
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return filenames;
+
+    }
+
     public void fileDelite(String file_directory, String file_name){
         File file = new File(file_directory+File.separator+file_name);
         file.delete();
