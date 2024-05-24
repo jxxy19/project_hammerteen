@@ -15,48 +15,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class PaymentDTO {
-
     private int paymentIdx;
-
-
-    private int lecturePrice;
-
-    @NotNull
-    private int lectureIdx;
-
-    @NotEmpty
-    private String lectureName;
-
-    @NotEmpty
-    private String userId;
-
-    @NotEmpty
-    private String userPhoneNumber;
-
-    @NotEmpty
-    private String userName;
-
-    @NotEmpty
-    private String userEmail;
-
-    @NotEmpty
-    private String paymentMethod;
-
-    @NotEmpty
-    private String paymentCompany;
-
-
+    private int orderIdx;
     private int paymentAmount;
-
-    @NotEmpty
-    private String paymentNumber;
-
-    @NotEmpty
+    private String userId;
+    private String userPhoneNumber;
+    private String userName;
+    private String userEmail;
+    private String paymentMethod;
+    private String paymentCompany;
+    private String paymentMerchantId;
+    private String paymentPgId;
+    private String receiptUrl;
     private String paymentStatus;
-
-
-    private LocalDateTime paymentDate;
-
-
-    private LocalDateTime refundDate;
+    private LocalDateTime regDate;
+    private LocalDateTime modifyDate;
 }

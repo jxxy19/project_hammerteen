@@ -160,3 +160,15 @@ function zipCode(element1, element2) {
     }).open();
 }
 
+// 데이터 파싱용
+// 콤마 추가하는 로직
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+// 콤마 삭제하는 로직
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+

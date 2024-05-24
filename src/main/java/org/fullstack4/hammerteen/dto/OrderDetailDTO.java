@@ -1,8 +1,5 @@
 package org.fullstack4.hammerteen.dto;
 
-import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,11 +11,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrderDTO {
+public class OrderDetailDTO {
+    private int orderDetailIdx;
     private int orderIdx;
-    private String userId;
-    private String orderStatus;
-    private int totalAmount;
+    private int lectureIdx;
+    private String title;
+    private String teacherName;
+    private int price;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 }

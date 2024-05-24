@@ -19,22 +19,19 @@ public class PaymentEntity extends BaseEntity{
     private int paymentIdx;
 
     @Column(nullable = false)
-    private int lecturePrice;
+    private int orderIdx;
 
-    @Column(nullable = false)
-    private int lectureIdx;
-
-    @Column(length = 50, nullable = false)
-    private String lectureName;
+    @Column(nullable=false)
+    private int paymentAmount;
 
     @Column(length = 20, nullable = false)
     private String userId;
 
-    @Column(length = 50, nullable = false)
-    private String userPhoneNumber;
-
     @Column(length = 10, nullable = false)
     private String userName;
+
+    @Column(length = 50, nullable = false)
+    private String userPhoneNumber;
 
     @Column(length = 50, nullable = false)
     private String userEmail;
@@ -45,27 +42,19 @@ public class PaymentEntity extends BaseEntity{
     @Column(length = 50, nullable = false)
     private String paymentCompany;
 
-    @Column(nullable = false)
-    private int paymentAmount;
+    @Column(length = 100, nullable = false)
+    private String paymentMerchantId;
 
-    @Column(length = 20)
-    private String paymentNumber;
+    @Column(length = 100, nullable = false)
+    private String paymentPgId;
+
+    @Column(length = 500, nullable = false)
+    private String receiptUrl;
 
     @Column(length = 10, nullable = false)
-    private String paymentStatus;
+    @Builder.Default
+    private String paymentStatus="Y";
 
-    @Column(nullable = false)
-    private LocalDateTime paymentDate;
-
-    @Column
-    private LocalDateTime refundDate;
-
-    public void modify(String paymentStatus){
-
-        this.paymentStatus=paymentStatus;
-
-
-    }
 
 }
 

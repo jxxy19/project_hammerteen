@@ -17,11 +17,12 @@ public class OrderEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
     private int orderIdx;
-
-
     @Column(length = 20, nullable = false)
     private String userId;
-
-
+    @Column(length = 5, nullable = false)
+    @Builder.Default
+    private String orderStatus="1";
+    @Column(nullable=false)
+    private int totalAmount;
 }
 

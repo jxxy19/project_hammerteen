@@ -3,6 +3,7 @@
 <html
         class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
         lang="en"
+        xmlns:th="http://www.thymeleaf.org"
         layout:decorate="~{/common/common.html}"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
@@ -31,34 +32,22 @@
                                             <div class="col-lg-8">
                                                 <div class="card academy-content shadow-none border">
                                                     <div class="d-flex justify-content-between align-items-center flex-wrap gap-1 m-0">
-                                                        <div class="row m-0 p-2 justify-content-between align-items-center">
-                                                            <div class="col-2">
-                                                                <img class="w-100 rounded" src="/assets/img/default.png">
+<!--                                                        <th:block th:if="${lectureDTOList.size() > 0}">-->
+                                                            <div class="row m-0 p-2 justify-content-between align-items-center" th:each="dto : ${lectureDTOList}">
+                                                                <div class="col-2">
+                                                                    <img class="w-100 rounded" src="/assets/img/default.png">
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    <h5 class="mb-1 text-primary fw-bold" th:text="${dto.title}">강의 제목입니다.</h5>
+                                                                    <p class="mb-1"><span class="fw-medium" th:text="${dto.teacherName}"> Devonne Wallbridge </span>선생님</p>
+                                                                    <span class="badge bg-label-primary" th:text="${dto.lectureCategoryIdx}">과목</span>
+                                                                </div>
+                                                                <div class="d-flex align-items-center col-2">
+                                                                    <span class="text-primary fw-bold" th:text="${dto.price}">10,000</span><span>원</span>
+                                                                </div>
+                                                                <input type="hidden" name="lectureIdx" th:value="${dto.lectureIdx}">
                                                             </div>
-                                                            <div class="col-8">
-                                                                <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
-                                                                <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span>
-                                                                </p>
-                                                                <span class="badge bg-label-primary">과목</span>
-                                                            </div>
-                                                            <div class="d-flex align-items-center col-2">
-                                                                <span class="text-primary fw-bold">10,000</span><span>원</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row m-0 p-2 justify-content-between align-items-center">
-                                                            <div class="col-2">
-                                                                <img class="w-100 rounded" src="/assets/img/default.png">
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
-                                                                <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span>
-                                                                </p>
-                                                                <span class="badge bg-label-primary">과목</span>
-                                                            </div>
-                                                            <div class="d-flex align-items-center col-2">
-                                                                <span class="text-primary fw-bold">10,000</span><span>원</span>
-                                                            </div>
-                                                        </div>
+<!--                                                        </th:block>-->
                                                     </div>
                                                 </div>
                                             </div>
@@ -71,9 +60,10 @@
                                                         </div>
                                                         <div class="card-body py-4">
                                                             <div>
-                                                                <p>이름 : <span>장지현</span></p>
-                                                                <p>이메일 : <span>test@test.test</span></p>
-                                                                <p>휴대폰 : <span>010-0000-0000</span></p>
+                                                                <input type="hidden" id="userId" th:value="${session.memberDTO.getUserId()}">
+                                                                <p>이름 : <span id="name" th:text="${session.memberDTO.getName()}">장지현</span></p>
+                                                                <p>이메일 : <span id="email" th:text="${session.memberDTO.getEmail()}">test@test.test</span></p>
+                                                                <p>휴대폰 : <span id="phone" th:text="${session.memberDTO.getPhoneNumber()}">010-0000-0000</span></p>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -82,9 +72,9 @@
                                                             결제정보
                                                         </div>
                                                         <div class="card-body py-4">
-                                                            <h4 class="text-start"><span class="text-primary fw-bold">20,000</span>원</h4>
+                                                            <h4 class="text-start"><span class="text-primary fw-bold" id="amount" th:text="${totalPrice}">20,000</span>원</h4>
                                                             <div class="d-flex gap-1 justify-content-between">
-                                                                <a type="button" class="btn btn-primary w-100 px-0 text-white">결제하기</a>
+                                                                <button type="button" class="btn btn-primary w-100 px-0 text-white" onclick="requestPay()">결제하기</button>
                                                             </div>
                                                             <div class="form-check mt-3">
                                                                 <input class="form-check-input" name="agreeCheck" type="checkbox" value="" id="agreeCheck">
@@ -111,62 +101,12 @@
         </div>
     </section>
     <!-- Modal -->
-    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="reviewModal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="reviewModalLabel">나의 평점</h1>
-                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div>
-                            <p class="p-0 m-0">별점을 선택해주세요.</p>
-                            <ul class="list star-list mb-1">
-                                <li id="star_ul">
-                                    <i class="lni lni-star-filled" data-score="1"></i>
-                                    <i class="lni lni-star-filled" data-score="2"></i>
-                                    <i class="lni lni-star-filled" data-score="3"></i>
-                                    <i class="lni lni-star-filled" data-score="4"></i>
-                                    <i class="lni lni-star-filled" data-score="5"></i>
-                                </li>
-                            </ul>
-                            <input id="rank" name="rank" type="hidden" value=""/>
-                            <div class="form-group">
-                                <textarea class="form-control different-control w-100" cols="30"
-                                          id="review_contents" maxlength="100" name="review_contents" placeholder="리뷰를 작성해주세요"
-                                          rows="5"></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer p-0">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
-                            <button class="btn btn-primary" type="submit">저장</button>
-                        </div>
-                    </form>
-                    <div>
-                        <ul class="list star-list mb-1">
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled"></i>
-                            <i class="lni lni-star-filled"></i>
-                        </ul>
-                        <div class="text-muted d-block ps-2 border rounded py-3">
-                            <p>저의 평점은 만점입니다!!</p>
-                            <p>모두 얼른 들으세요!</p>
-                        </div>
-                        <div class="modal-footer p-0">
-                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </th:block>
 <!-- build:js assets/vendor/js/core.js -->
 <th:block layout:fragment="script">
     <script src="/assets/js/plyr.js"></script>
+    <script src="/assets/js/iamport.payment-1.2.0.js"></script>
+    <script src="/assets/js/payment.js"></script>
 </th:block>
 </body>
 </html>
