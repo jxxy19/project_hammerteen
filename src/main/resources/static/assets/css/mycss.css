@@ -669,3 +669,13 @@
 .bg-lecture {
     background-color: #eeeeee;
 }
+
+.right-pinned {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.3rem;
+}
+
+.w-15px {
+    width: 15px !important;
+}

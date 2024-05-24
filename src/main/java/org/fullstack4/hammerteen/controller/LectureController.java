@@ -30,4 +30,12 @@ public class LectureController {
     public void modifyGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
     }
+    @GetMapping("/teacherList")
+    public void teacherListGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType("선생님", "선생님"));
+    }
+    @GetMapping("/saleStatic")
+    public void teacherSaleStaticGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType("선생님", "매출통계"));
+    }
 }

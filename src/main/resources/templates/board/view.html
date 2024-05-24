@@ -94,6 +94,43 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row m-0 mt-3">
+                                <div class="post-comments">
+                                    <h3 class="comment-title"><span>댓글</span></h3>
+                                    <form class="m-0 mb-5 row" method="post">
+                                        <div class="col-lg-11 col-12 p-0">
+                                            <input type="hidden" name="bbsIdx">
+                                            <input type="hidden" name="category1" >
+                                            <textarea class="form-control" name="content" rows="3"></textarea>
+                                        </div>
+                                        <div class="col-lg-1 col-12 p-0" >
+                                            <button class="btn btn-primary w-100 h-100" onclick="">등록</button>
+                                        </div>
+                                    </form>
+                                    <ul class="comments-list">
+                                        <li>
+                                            <div class="comment-desc pb-5 mt-5 border-bottom">
+                                                <form method="post">
+                                                    <input type="hidden" name="replyIdx" value="">
+                                                    <input type="hidden" name="bbsIdx" value="">
+                                                    <input type="hidden" name="userId" value="">
+                                                    <div class="desc-top d-flex justify-content-between w-100">
+                                                        <div>
+                                                            <span class="date">등록일시 :</span>
+                                                            <span class="date">수정일시 : </span>
+                                                        </div>
+                                                        <div class="d-flex gap-1 align-items-center">
+                                                            <a href="#" class="reply-link position-sticky"><i class="lni lni-brush-alt"></i>수정</a>
+                                                            <a href="#" class="reply-link position-sticky"><i class="lni lni-eraser"></i>삭제</a>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-area"></p>
+                                                </form>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- / Content -->

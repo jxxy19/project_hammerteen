@@ -41,4 +41,8 @@ public class MyPageController {
     public void likeListGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));
     }
+    @GetMapping("/payList")
+    public void payListGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "결제 내역"));
+    }
 }
