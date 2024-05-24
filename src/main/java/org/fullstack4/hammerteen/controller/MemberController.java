@@ -31,6 +31,6 @@ public class MemberController {
     }
     @GetMapping("/cart")
     public void cartGet(Model model) {
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "카트"));
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "장바구니 내역"));
     }
 }
