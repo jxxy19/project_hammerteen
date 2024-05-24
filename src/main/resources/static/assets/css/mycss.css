@@ -669,3 +669,7 @@
 .bg-lecture {
     background-color: #eeeeee;
 }
+
+.w-15px {
+    width: 15px !important;
+}
