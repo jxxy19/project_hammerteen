@@ -18,40 +18,35 @@
                         <div class="row mb-2">
                             <div class="category-sidebar p-0">
                                 <div class="container-xxl flex-grow-1 container-p-y p-3">
-                                    <div class="container-xxl flex-grow-1 container-p-y p-3 row justify-content-end">
-                                        <button type="button" id="listBtn" class="btn btn-outline-primary col-1 mx-1"><i class="lni lni-list"></i>
+                                    <div class="container-xxl flex-grow-1 container-p-y p-3 row m-0 justify-content-between">
+                                        <div class="col-6">
+                                        <button type="button" id="listBtn" class="btn btn-outline-primary col-2 mx-1"><i class="lni lni-list"></i>
                                             <a href="/board/list">&nbsp;목록</a></button>
-                                        <button type="button" id="modifyBtn" class="btn btn-outline-primary col-1 mx-1"><i class="lni lni-write"></i>
-                                            <a href="/board/modify">&nbsp;수정</a></button>
-                                        <button type="button" id="deleteBtn" class="btn btn-outline-primary col-1 mx-1"><i class="bx bxs-trash"></i>
-                                            <a href="">&nbsp;삭제</a></button>
+                                        </div>
+                                        <div class="col-6 row justify-content-end">
+                                            <button type="button" id="modifyBtn" class="btn btn-outline-primary col-2 mx-1"><i class="bx bxs-trash"></i>
+                                                <a href="/board/delete">&nbsp;삭제</a></button>
+                                            <button type="button" id="deleteBtn" class="btn btn-primary col-2 mx-1"><i class="lni lni-write"></i>
+                                                <a href="/board/modify" class="text-white">&nbsp;수정</a></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="card mb-4">
-                                    <div class="my-items bg-white rounded shadow-sm p-5">
+                                    <div class="my-items bg-white rounded shadow-sm m-5">
                                         <!-- Start List Title -->
-                                        <div class="item-list-title rounded-top p-3" style="background-color: #686BFF;">
+                                        <div class="item-list-title rounded-top p-3 bg-primary">
                                             <div class="row align-items-center">
-                                                <div class="col-lg-1 col-md-2 col-12 d-flex align-items-center p-2">
-                                                    <p class="p-0 m-0 text-white">카테고리명</p>
+                                                <div class="col-12 d-flex align-items-center p-2">
+                                                    <p class="p-0 m-0 text-white">제목 내용</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="item-list-title rounded-top p-3">
-                                            <div class="row align-items-center">
-                                                <div class="col-lg-1 col-md-2 col-12 d-flex align-items-center p-3 my-2 rounded-start border-primary text-center">
-                                                    <p class="p-0 m-0 text">제목</p>
-                                                </div>
-                                                <div class="col-lg-11 col-md-10 col-12 p-3 my-2 rounded-end border">
-                                                    <p class="p-0 m-0">내용</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="row align-items-center justify-content-between">
-                                                <div class="col-lg-6 col-12">
-                                                    <div class="row">
+                                        <div class="item-list-title  p-3 border">
+                                            <div class="row m-0 align-items-center justify-content-between">
+                                                <div class="col-lg-6 col-12 px-0">
+                                                    <div class="row m-0">
                                                         <div class="col-lg-2 col-md-2 col-12 d-flex align-items-center p-3 my-2 rounded-start border-primary text-center">
                                                             <p class="p-0 m-0 text-center">작성자</p>
                                                         </div>
@@ -60,8 +55,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-12">
-                                                    <div class="row">
+                                                <div class="col-lg-6 col-12 px-0">
+                                                    <div class="row m-0">
                                                         <div class="col-lg-2 col-md-2 col-12 d-flex align-items-center my-2 p-3 border-primary text-center">
                                                             <p class="p-0 m-0 text-center">등록일</p>
                                                         </div>
@@ -71,7 +66,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="row align-items-center">
+                                            <div class="row m-0 align-items-center">
                                                 <div class="col-lg-1 col-md-2 col-12 d-flex align-items-center p-3 my-2 rounded-start border-primary text-center">
                                                     <p class="p-0 m-0 text-center">조회수</p>
                                                 </div>
@@ -79,7 +74,7 @@
                                                     <p class="p-0 m-0">0</p>
                                                 </div>
                                             </div>
-                                            <div class="row align-items-stretch">
+                                            <div class="row m-0 align-items-stretch">
                                                 <div class="col-lg-1 col-md-2 col-12 d-flex align-items-center my-2 p-3 rounded-start border-primary text-center">
                                                     <p class="p-0 m-0 text-center">첨부파일</p>
                                                 </div>
@@ -87,7 +82,7 @@
                                                     <p class="p-1 border rounded"><button class="btn btn-secondary me-3"><i class="lni lni-empty-file"></i></button>
                                                 </div>
                                             </div>
-                                            <div class="row align-items-stretch">
+                                            <div class="row m-0 align-items-stretch">
                                                 <div class="col-lg-1 col-md-2 col-12 d-flex align-items-center my-2 p-3 rounded-start border-primary text-center">
                                                     <p class="p-0 m-0 text-center">내용</p>
                                                 </div>
