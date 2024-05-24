@@ -38,8 +38,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-
-
-application-oauth.properties
-/src/main/resources/apllication-oauth.properties
