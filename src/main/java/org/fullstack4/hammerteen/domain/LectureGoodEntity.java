@@ -10,7 +10,7 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="hamt_lecture_heart")
+@Table(name="hamt_lecture_good")
 public class LectureGoodEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
