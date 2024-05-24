@@ -8,6 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LectureRepository extends JpaRepository<LectureEntity, Integer> {
-    Page<LectureEntity> findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
+    Page<LectureEntity> findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
 
 }
