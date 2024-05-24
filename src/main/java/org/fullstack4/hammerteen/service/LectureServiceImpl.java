@@ -3,7 +3,9 @@ package org.fullstack4.hammerteen.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.hammerteen.domain.LectureDetailEntity;
 import org.fullstack4.hammerteen.domain.LectureEntity;
+import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.LectureDetailRepository;
 import org.fullstack4.hammerteen.repository.LectureReplyRepository;
@@ -60,8 +62,8 @@ public class LectureServiceImpl implements LectureServiceIf{
     }
 
     @Override
-    public void delete(LectureDTO lectureDTO) {
-        lectureRepository.deleteById(lectureDTO.getLectureIdx());
+    public void delete(int lectureIdx) {
+        lectureRepository.deleteById(lectureIdx);
     }
     @Override
     public LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO) {
@@ -100,14 +102,14 @@ public class LectureServiceImpl implements LectureServiceIf{
         LectureEntity lectureEntity =result.orElse(null);
         String saveDirectory = "D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
         List<String> filenames = null;
-        filenames = commonFileUtil.thumbnailUploadVideo(files,saveDirectory);
+        filenames = commonFileUtil.thumbnailUploadImg(files,saveDirectory);
         if (lectureEntity != null) {
             if(filenames!=null) {
-                if(lectureEntity.getThumbnailVideoDirectory()!=null) {
-                    commonFileUtil.fileDelite(lectureEntity.getThumbnailVideoDirectory(), lectureEntity.getThumbnailVideoFile());
+                if(lectureEntity.getThumbnailImgDirectory()!=null) {
+                    commonFileUtil.fileDelite(lectureEntity.getThumbnailImgDirectory(), lectureEntity.getThumbnailImgFile());
                 }
                 for (String filename : filenames) {
-                    lectureEntity.modifyVideo(saveDirectory,filename);
+                    lectureEntity.modifyImg(saveDirectory,filename);
                 }
             }
             lectureRepository.save(lectureEntity);
@@ -150,43 +152,107 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     @Override
     public void deleteThumbnailImg(int lectureIdx) {
-
+        Optional<LectureEntity> result = lectureRepository.findById(lectureIdx);
+        LectureEntity lectureEntity =result.orElse(null);
+        if (lectureEntity != null && lectureEntity.getThumbnailImgFile()!=null) {
+            commonFileUtil.fileDelite(lectureEntity.getThumbnailImgDirectory(), lectureEntity.getThumbnailImgFile());
+        }
     }
 
     @Override
     public void deleteThumbnailVideo(int lectureIdx) {
-
+        Optional<LectureEntity> result = lectureRepository.findById(lectureIdx);
+        LectureEntity lectureEntity =result.orElse(null);
+        if (lectureEntity != null && lectureEntity.getThumbnailVideoFile()!=null) {
+            commonFileUtil.fileDelite(lectureEntity.getThumbnailVideoDirectory(), lectureEntity.getThumbnailVideoFile());
+        }
     }
 
 
     @Override
     public void registLectureDetail(LectureDetailDTO lectureDetailDTO) {
-
+        LectureDetailEntity lectureDetailEntity = modelMapper.map(lectureDetailDTO, LectureDetailEntity.class);
+        lectureDetailRepository.save(lectureDetailEntity);
+    }
+    @Override
+    public void registLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam) {
+        String saveDirectory = "D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
+        List<String> filenames = null;
+        filenames = commonFileUtil.uploadVideo(files,saveDirectory,videoParam);
+        if(filenames!=null) {
+            for (String filename : filenames) {
+                lectureDetailDTO.setVideoDirectory(saveDirectory);
+                lectureDetailDTO.setVideoFile(filename);
+            }
+        }
     }
 
     @Override
     public void modifyLectureDetail(LectureDetailDTO lectureDetailDTO) {
-
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
+        LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        if (lectureDetailEntity != null) {
+            lectureDetailEntity.modify(lectureDetailDTO.getTitle(),lectureDetailDTO.getContent());
+            lectureDetailRepository.save(lectureDetailEntity);
+        }
     }
 
     @Override
-    public void deleteLectureDetail(LectureDetailDTO lectureDetailDTO) {
-
+    public void modifyLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
+        LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        String saveDirectory = "D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
+        List<String> filenames = null;
+        filenames = commonFileUtil.uploadVideo(files,saveDirectory,videoParam);
+        if (lectureDetailEntity != null) {
+            if(filenames!=null) {
+                if(lectureDetailEntity.getVideoDirectory()!=null) {
+                    commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
+                }
+                for (String filename : filenames) {
+                    lectureDetailEntity.modifyVideo(saveDirectory,filename);
+                }
+            }
+            lectureDetailRepository.save(lectureDetailEntity);
+        }
     }
 
     @Override
-    public void deleteLectureDetail(int lectureIdx) {
-
+    public void deleteLectureDetail(int lectureDetailIdx) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailIdx);
+        LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        if (lectureDetailEntity != null) {
+            if(lectureDetailEntity.getVideoDirectory()!=null) {
+                commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
+            }
+        }
+        lectureDetailRepository.deleteById(lectureDetailIdx);
     }
 
     @Override
-    public List<LectureDetailDTO> listLectureDetail(LPageRequestDTO lPageRequestDTO, int lectureIdx) {
-        return null;
+    public void deleteLectureDetailAll(int lectureIdx) {
+        List<LectureDetailEntity> lectureEntityList = lectureDetailRepository.findAllByLectureIdx(lectureIdx);
+        for(LectureDetailEntity lectureDetailEntity : lectureEntityList){
+            if(lectureDetailEntity.getVideoDirectory()!=null){
+                commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
+            }
+        }
+        lectureDetailRepository.deleteAllByLectureIdx(lectureIdx);
+    }
+
+    @Override
+    public List<LectureDetailDTO> listLectureDetail(int lectureIdx) {
+        List<LectureDetailEntity> lectureEntityList = lectureDetailRepository.findAllByLectureIdx(lectureIdx);
+        List<LectureDetailDTO> dtoList = lectureEntityList.stream()
+                .map(board->modelMapper.map(board,LectureDetailDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
     }
 
     @Override
     public void registLectureReply(LectureReplyDTO lectureReplyDTO) {
-
+        LectureReplyEntity lectureReplyEntity = modelMapper.map(lectureReplyDTO,LectureReplyEntity.class);
+        lectureReplyRepository.save(lectureReplyEntity);
     }
 
     @Override
@@ -195,7 +261,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     }
 
     @Override
-    public void deleteLectureReply(LectureReplyDTO lectureReplyDTO) {
+    public void deleteLectureReply(int lectureReplyIdx) {
 
     }
 
@@ -205,12 +271,25 @@ public class LectureServiceImpl implements LectureServiceIf{
     }
 
     @Override
-    public LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lPageRequestDTO, int lectureIdx) {
-        return null;
+    public LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO, int lectureIdx) {
+        PageRequest pageable = lpageRequestDTO.getPageable();
+        Page<LectureReplyEntity> result = null;
+        result = lectureReplyRepository.findAllByLectureIdxOrderByLectureReplyIdxDesc(pageable,lectureIdx);
+        List<LectureReplyDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,LectureReplyDTO.class))
+                .collect(Collectors.toList());
+        return LPageResponseDTO.<LectureReplyDTO>withAll().lpageRequestDTO(lpageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 
     @Override
-    public int countCategory(String categoryName) {
-        return 0;
+    public int countCategory(String categoryIdx) {
+        lectureRepository.countByCategoryIdx(categoryIdx);
+        if(lectureRepository.countByCategoryIdx(categoryIdx)!=0) {
+            return lectureRepository.countByCategoryIdx(categoryIdx);
+        }
+        else{
+            return 0;
+        }
     }
 }

@@ -13,29 +13,23 @@ import java.time.LocalDateTime;
 @ToString
 @Table(name="hamt_lecture_reply")
 public class LectureReplyEntity extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false)
-    private int replyIdx;
-
+    private int lectureReplyIdx;
     @Column(nullable = false)
     private int lectureIdx;
-
-
     @Column(length = 300, nullable = false)
     private String reviewContent;
-
-    @Column(nullable = true)
+    @Column(length = 1, nullable = false)
     private int rating;
-
     @Column(length = 20, nullable = false)
     private String userId;
 
     public void modify(String reviewContent,int rating){
         this.reviewContent = reviewContent;
+        this.rating = rating;
         super.setModify_date(LocalDateTime.now());
-
 
     }
 }
