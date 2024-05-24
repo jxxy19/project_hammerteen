@@ -5412,7 +5412,7 @@ textarea.form-control-lg {
 
 @media(min-width: 576px) {
     .modal {
-        --bs-modal-margin: 1.75rem;
+        --bs-modal-margin: 10.75rem;
         --bs-modal-box-shadow: 0 2px 20px 0 rgba(67, 89, 113, 0.45)
     }
 

@@ -652,3 +652,16 @@
 .fc-theme-standard .fc-list {
     border: 0
 }
+
+.star-list {
+    padding: 0;
+    margin: 0;
+}
+
+.star-list #star_ul {
+    list-style: none;
+}
+
+.active-star {
+    color: #686BFF;
+}

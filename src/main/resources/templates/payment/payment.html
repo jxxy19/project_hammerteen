@@ -20,16 +20,7 @@
                                     <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
                                         <div class="d-lg-flex w-100 justify-content-start">
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1">
-                                                <a class="col-sm-12 btn btn-outline-primary" href="/lecture/list">목록</a>
-                                            </div>
-                                        </div>
-                                        <div class="d-lg-flex w-100 justify-content-end">
-                                            <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
-                                                <a class="col-sm-12 btn btn-outline-primary" href="#">삭제</a>
-                                            </div>
-                                            <div class="row m-lg-0 pb-sm-1 pb-md-1">
-                                                <a class="col-sm-12 btn btn-primary"
-                                                   href="/lecture/modify?lectureIdx=1">수정</a>
+                                                <a class="col-sm-12 btn btn-outline-primary" href="/lecture/view?lectureIdx=1">취소</a>
                                             </div>
                                         </div>
                                     </div>
@@ -85,22 +76,22 @@
                                             <div class="col-lg-4">
                                                 <div class="stick-top">
                                                     <!-- (구매 전) 결제 정보 -->
-                                                      <div class="card mb-4">
-                                                          <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
-                                                              결제정보
-                                                          </div>
-                                                          <div class="card-body py-4">
-                                                              <h4 class="text-start"><span class="text-primary fw-bold">10,000</span>원</h4>
-                                                              <div class="d-flex gap-1 justify-content-between">
-                                                                  <a href="/mypage/cart" type="button" class="btn btn-outline-primary w-100 px-0 text-primary">장바구니 담기</a>
-                                                                  <a href="/payment/payment?lectureIdx=1" type="button" class="btn btn-primary w-100 px-0 text-white">바로 결제하기</a>
-                                                              </div>
-                                                              <div class="d-flex gap-1 pt-3 justify-content-around">
-                                                                  <i class="bx bx-like bx-sm mx-4 btn-icons"></i>
-                                                                  <i class="bx bx-share bx-sm mx-4 btn-icons"></i>
-                                                              </div>
-                                                          </div>
-                                                      </div>
+                                                    <div class="card mb-4">
+                                                        <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
+                                                            결제정보
+                                                        </div>
+                                                        <div class="card-body py-4">
+                                                            <h4 class="text-start"><span class="text-primary fw-bold">10,000</span>원</h4>
+                                                            <div class="d-flex gap-1 justify-content-between">
+                                                                <a href="/mypage/cart" type="button" class="btn btn-outline-primary w-100 px-0 text-primary">장바구니 담기</a>
+                                                                <a href="/payment/payment" type="button" class="btn btn-primary w-100 px-0 text-white">바로 결제하기</a>
+                                                            </div>
+                                                            <div class="d-flex gap-1 pt-3 justify-content-around">
+                                                                <i class="bx bx-like bx-sm mx-4 btn-icons"></i>
+                                                                <i class="bx bx-share bx-sm mx-4 btn-icons"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <!-- (구매 후) 학습하러가기 -->
                                                     <div class="card mb-4">
                                                         <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
@@ -120,7 +111,7 @@
                                                                         <i class="lni lni-star-filled"></i>
                                                                     </span>
                                                                     <!-- 등록 전 -->
-<!--                                                  <span class="text-dark">평점 등록 전</span>-->
+                                                                    <!--                                                  <span class="text-dark">평점 등록 전</span>-->
                                                                 </button>
                                                             </div>
                                                             <div class="d-flex gap-1 pt-3 justify-content-around">
@@ -334,26 +325,6 @@
 <!-- build:js assets/vendor/js/core.js -->
 <th:block layout:fragment="script">
     <script src="/assets/js/plyr.js"></script>
-    <script>
-        let stars = document.querySelectorAll('#star_ul > i')
-        for (let star of stars) {
-            star.addEventListener("click", (event) => {
-                clickStart(star);
-            })
-        }
-
-        function clickStart(element) {
-            let realStars = document.querySelectorAll('#star_ul > i');
-            let score = element.dataset.score;
-            document.getElementById("rank").value = score;
-            for (let rStar of realStars) {
-                rStar.classList.remove('active-star');
-            }
-            for (let i = 0; i < score; i++) {
-                realStars[i].classList.add('active-star');
-            }
-        }
-    </script>
 </th:block>
 </body>
 </html>
