@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html
+        class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+        lang="en"
+        layout:decorate="~{/common/common.html}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Layout wrapper -->
+<th:block layout:fragment="content">
+    <section>
+        <div class="container">
+            <div class="layout-wrapper layout-content-navbar">
+                <div class="layout-container">
+                    <div class="content-wrapper">
+                        <!-- Content -->
+                        <form>
+                            <div class="container-xxl flex-grow-1 container-p-y">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
+                                        <div class="d-lg-flex w-100 justify-content-start">
+                                            <div class="row m-lg-0 pb-sm-1 pb-md-1">
+                                                <a class="col-sm-12 btn btn-outline-primary" href="/lecture/view?lectureIdx=1">취소</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <div class="card g-3">
+                                        <div class="card-body row g-3">
+                                            <div class="col-lg-8">
+                                                <div class="card academy-content shadow-none border">
+                                                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-1 m-0">
+                                                        <div class="row m-0 p-2 justify-content-between align-items-center">
+                                                            <div class="col-2">
+                                                                <img class="w-100 rounded" src="/assets/img/default.png">
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
+                                                                <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span>
+                                                                </p>
+                                                                <span class="badge bg-label-primary">과목</span>
+                                                            </div>
+                                                            <div class="d-flex align-items-center col-2">
+                                                                <span class="text-primary fw-bold">10,000</span><span>원</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row m-0 p-2 justify-content-between align-items-center">
+                                                            <div class="col-2">
+                                                                <img class="w-100 rounded" src="/assets/img/default.png">
+                                                            </div>
+                                                            <div class="col-8">
+                                                                <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
+                                                                <p class="mb-1">Prof. <span class="fw-medium"> Devonne Wallbridge </span>
+                                                                </p>
+                                                                <span class="badge bg-label-primary">과목</span>
+                                                            </div>
+                                                            <div class="d-flex align-items-center col-2">
+                                                                <span class="text-primary fw-bold">10,000</span><span>원</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="stick-top">
+                                                    <div class="card mb-4">
+                                                        <div class="card-header card-header-pills bg-primary m-0 text-white py-3 d-flex justify-content-between align-items-center">
+                                                            주문자정보
+                                                            <a href="/mypage/mypage" type="button" class="btn btn-icons px-0 text-white p-0"><i class='bx bxs-cog'></i></a>
+                                                        </div>
+                                                        <div class="card-body py-4">
+                                                            <div>
+                                                                <p>이름 : <span>장지현</span></p>
+                                                                <p>이메일 : <span>test@test.test</span></p>
+                                                                <p>휴대폰 : <span>010-0000-0000</span></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card mb-4">
+                                                        <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
+                                                            결제정보
+                                                        </div>
+                                                        <div class="card-body py-4">
+                                                            <h4 class="text-start"><span class="text-primary fw-bold">20,000</span>원</h4>
+                                                            <div class="d-flex gap-1 justify-content-between">
+                                                                <a type="button" class="btn btn-primary w-100 px-0 text-white">결제하기</a>
+                                                            </div>
+                                                            <div class="form-check mt-3">
+                                                                <input class="form-check-input" name="agreeCheck" type="checkbox" value="" id="agreeCheck">
+                                                                <label class="form-check-label" for="agreeCheck">
+                                                                    회원 본인은 주문내용을 확인했으며, 구매조건 및 개인정보처리방침과 결제에 동의합니다.
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- / Content -->
+                        <div class="content-backdrop fade"></div>
+                    </div>
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="reviewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="reviewModalLabel">나의 평점</h1>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div>
+                            <p class="p-0 m-0">별점을 선택해주세요.</p>
+                            <ul class="list star-list mb-1">
+                                <li id="star_ul">
+                                    <i class="lni lni-star-filled" data-score="1"></i>
+                                    <i class="lni lni-star-filled" data-score="2"></i>
+                                    <i class="lni lni-star-filled" data-score="3"></i>
+                                    <i class="lni lni-star-filled" data-score="4"></i>
+                                    <i class="lni lni-star-filled" data-score="5"></i>
+                                </li>
+                            </ul>
+                            <input id="rank" name="rank" type="hidden" value=""/>
+                            <div class="form-group">
+                                <textarea class="form-control different-control w-100" cols="30"
+                                          id="review_contents" maxlength="100" name="review_contents" placeholder="리뷰를 작성해주세요"
+                                          rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer p-0">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+                            <button class="btn btn-primary" type="submit">저장</button>
+                        </div>
+                    </form>
+                    <div>
+                        <ul class="list star-list mb-1">
+                            <i class="lni lni-star-filled active-star"></i>
+                            <i class="lni lni-star-filled active-star"></i>
+                            <i class="lni lni-star-filled active-star"></i>
+                            <i class="lni lni-star-filled"></i>
+                            <i class="lni lni-star-filled"></i>
+                        </ul>
+                        <div class="text-muted d-block ps-2 border rounded py-3">
+                            <p>저의 평점은 만점입니다!!</p>
+                            <p>모두 얼른 들으세요!</p>
+                        </div>
+                        <div class="modal-footer p-0">
+                            <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<!-- build:js assets/vendor/js/core.js -->
+<th:block layout:fragment="script">
+    <script src="/assets/js/plyr.js"></script>
+</th:block>
+</body>
+</html>

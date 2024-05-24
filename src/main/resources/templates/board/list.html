@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html
+        class="light-style layout-menu-fixed layout-navbar-fixed layout-wide"
+        lang="en"
+        layout:decorate="~{/common/common.html}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org">
+<!-- Layout wrapper -->
+<th:block layout:fragment="content">
+    <section style="padding:4rem">
+        <div class="container">
+            <div class="layout-wrapper layout-content-navbar">
+                <div class="layout-container">
+                    <!-- Layout container -->
+                    <!-- Content wrapper -->
+                    <div class="content-wrapper">
+                        <!-- Content -->
+                        <div class="row mb-2">
+                            <div class="category-sidebar p-0">
+                                <div class="container-xxl flex-grow-1 container-p-y p-3">
+                                    <div class="row justify-content-end mx-2 my-2">
+                                        <button class="btn btn-primary col-1"
+                                                onclick="window.location.href='/board/regist'"><i
+                                                class="lni lni-pencil-alt"></i>&nbsp;글쓰기
+                                        </button>
+                                    </div>
+                                    <div class="single-widget">
+                                        <h3>키워드</h3>
+                                        <div class="navbar-nav justify-content-center align-items-center flex-row">
+                                            <div class="input-group input-group-merge">
+                                        <span class="input-group-text" id="basic-icon-default-fullname2">
+                                            <i class="bx bx-search fs-4 lh-0"></i></span>
+                                                <input aria-describedby="basic-icon-default-fullname2" class="form-control" id="basic-icon-default-fullname"
+                                                       name="search_word" placeholder="키워드 검색"
+                                                       type="text"
+                                                />
+                                            </div>
+                                            <button class="btn rounded-pill btn-outline-primary" type="submit">
+                                                <i class='bx bx-search-alt-2 display-6 align-middle'></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <h5 class="card-header">자유게시판</h5>
+                                    <div class="my-items bg-white rounded shadow-sm m-5">
+                                        <!-- Start List Title -->
+                                        <div class="item-list-title rounded-top p-3 bg-primary">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-4 col-md-5 col-12 d-flex align-items-center">
+                                                    <p class="p-0 m-0 text-white">제목</p>
+                                                </div>
+                                                <div class="col-lg-2 col-md-3 col-12">
+                                                    <p class="p-0 m-0 text-white">작성자</p>
+                                                </div>
+                                                <div class="col-lg-2 col-md-3 col-12">
+                                                    <p class="p-0 m-0 text-white">댓글</p>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-12">
+                                                    <p class="p-0 m-0 text-white">조회수</p>
+                                                </div>
+                                                <div class="col-lg-2 col-md-2 col-12 align-right">
+                                                    <p class="p-0 m-0 text-white">등록일</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End List Title -->
+                                        <!-- Start Single List -->
+                                        <!--                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">-->
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                            <div class="cursor-pointer  border-bottom">
+                                                <!--                          th:each="dto:${pageResponseDTO.dtoList}-->
+                                                <div class="row align-items-center p-3"
+                                                     onclick="goToThisLink('/board/view?bbsIdx=',this)">
+                                                    <!--                            th:data-idx="${dto.bbsIdx}"-->
+                                                    <div class="col-lg-4 col-md-5 col-12">
+                                                        <p class="title p-0 m-0">제목입니다만?</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-3 col-12">
+                                                        <p class="p-0 m-0">이기영</p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-3 col-12">
+                                                        <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-12">
+                                                        <p class="p-0 m-0"><span
+                                                                class="badge rounded-pill bg-label-primary"><i
+                                                                class="lni lni-eye"></i>&nbsp;10</span></p>
+                                                    </div>
+                                                    <div class="col-lg-2 col-md-2 col-12 align-right">
+                                                        <p class="p-0 m-0">2024.02.23</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--                      </th:block>-->
+                                        <!--                        <div class="row">-->
+                                        <!--                            <div class="col-12">-->
+                                        <!--                                &lt;!&ndash; Pagination &ndash;&gt;-->
+                                        <!--                                <div class="pagination center">-->
+                                        <!--                                    <ul class="pagination-list">-->
+                                        <!--                                        <li th:if="${pageResponseDTO.prev_page_flag}">-->
+                                        <!--                                            <a th:href="|/${category1}@{/list(page=${pageResponseDTO.page_block_start -10})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-left"></i></a>-->
+                                        <!--                                        </li>-->
+                                        <!--                                        <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">-->
+                                        <!--                                            <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">-->
+                                        <!--                                                <a th:href="|/${category1}@{/list(page=${i})}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>-->
+                                        <!--                                            </li>-->
+
+                                        <!--                                        </th:block>-->
+                                        <!--                                        <li th:if="${pageResponseDTO.next_page_flag}">-->
+                                        <!--                                            <a th:href="|/${category1}@{/list(page=${pageResponseDTO.page_block_end +1})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-right"></i></a>-->
+                                        <!--                                        </li>-->
+                                        <!--                                    </ul>-->
+                                        <!--                                </div>-->
+                                        <!--                                &lt;!&ndash;/ End Pagination &ndash;&gt;-->
+                                        <!--                            </div>-->
+                                        <!--                        </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- / Content -->
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+            <!-- / Layout wrapper -->
+        </div>
+    </section>
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/assets/js/pages-account-settings-account.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+</th:block>
+</html>

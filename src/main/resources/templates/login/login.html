@@ -55,7 +55,7 @@
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
+        <div class="authentication-inner" style="width: 40%; min-width: 500px">
           <!-- Register -->
           <div class="card">
             <div class="card-body">
@@ -70,7 +70,6 @@
               <!-- /Logo -->
               <h4 class="mb-2">반가워요! 👋</h4>
               <p class="mb-4">해머틴과 여정을 떠나기 위해 로그인을 해주세요!</p>
-
               <form id="formAuthentication" class="mb-3" action="/login/login" method="POST">
                 <div class="mb-3">
                   <label for="email" class="form-label">아이디</label>
@@ -111,11 +110,13 @@
                 <div class="mb-3">
                   <button class="btn btn-primary d-grid w-100" type="submit">로그인</button>
                 </div>
-                <hr class="my-1">
+                <div class="divider divider-primary">
+                  <div class="divider-text text-muted">또는</div>
+                </div>
                 <p class="text-center mb-2"><small class="text-muted">소셜로그인하기</small></p>
                 <div class="d-flex justify-content-center text-center mb-2">
                   <a href="#"><img src="/assets/img/icons/brands/naver.png" width="50%" alt="네이버로고"></a>
-                  <a href="#"><img src="/assets/img/icons/brands/google.svg" width="50%" alt="구글로그"></a>
+                  <a th:href="@{/oauth2/authorization/google}" role="button"><img src="/assets/img/icons/brands/google.svg" width="50%" alt="구글로그"></a>
                 </div>
               </form>
               <p class="text-center my-2">
@@ -147,7 +148,6 @@
     <script src="/assets/js/main.js"></script>
 
     <!-- Page JS -->
-
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+
+<html
+        class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+        lang="en"
+        layout:decorate="~{/common/common.html}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Layout wrapper -->
+<th:block layout:fragment="content">
+    <section>
+        <div class="container">
+            <div class="layout-wrapper layout-content-navbar">
+                <div class="layout-container">
+                    <div class="content-wrapper">
+                        <div class="container-xxl flex-grow-1 container-p-y">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
+                                            <div class="d-lg-flex w-100 justify-content-start">
+                                                <div class="row m-lg-0 pb-sm-1 pb-md-1">
+                                                    <a class="col-sm-12 btn btn-outline-primary" href="/mypage/memberList">목록</a>
+                                                </div>
+                                            </div>
+                                            <div class="d-lg-flex w-100 justify-content-end">
+                                                <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
+                                                    <a class="col-sm-12 btn btn-outline-primary" href="#">탈퇴</a>
+                                                </div>
+                                                <div class="row m-lg-0 pb-sm-1 pb-md-1">
+                                                    <button class="col-sm-12 btn btn-primary" onclick="document.getElementById('formAccountSettings').submit()">수정</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card mb-4">
+                                        <h5 class="card-header">나의 계정 정보</h5>
+                                        <!-- Account -->
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+                                                <img src="/assets/img/image/images2.jpeg" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+                                                <div class="button-wrapper">
+                                                    <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                                        <span class="d-none d-sm-block">사진 올리기</span>
+                                                        <i class="bx bx-upload d-block d-sm-none"></i>
+                                                        <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg">
+                                                    </label>
+                                                    <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                                        <i class="bx bx-reset d-block d-sm-none"></i>
+                                                        <span class="d-none d-sm-block">초기화</span>
+                                                    </button>
+
+                                                    <p class="text-muted mb-0">800K사이즈의 JPG, GIF 또는 PNG만 업로드 가능합니다.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <hr class="my-0">
+                                        <div class="card-body">
+                                            <form id="formAccountSettings" method="POST" onsubmit="return false">
+                                                <div class="row">
+                                                    <div class="mb-3 col-md-12">
+                                                        <label for="role" class="form-label">회원구분</label>
+                                                        <select id="role" name="role" class="form-select">
+                                                            <option value="user">일반</option>
+                                                            <option value="teacher">선생님</option>
+                                                            <option value="admin">관리자</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="memberId" class="form-label">ID</label>
+                                                        <input class="form-control" type="text" name="memberId" id="memberId" value="kiyoung" disabled="">
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="name" class="form-label">이름</label>
+                                                        <input class="form-control" type="text" id="name" name="name" value="이기영" disabled="">
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="password1">비밀번호</label>
+                                                        <div class="input-group input-group-merge form-password-toggle">
+                                                            <input type="password" id="password1" class="form-control" name="password" placeholder="············" aria-describedby="password">
+                                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label class="form-label" for="password2">비밀번호 재입력</label>
+                                                        <div class="input-group input-group-merge form-password-toggle">
+                                                            <input type="password" id="password2" class="form-control" name="password" placeholder="············" aria-describedby="password">
+                                                            <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="birthday" class="form-label">생일</label>
+                                                        <input type="date" class="form-control" id="birthday" name="birthday" value="1960-03-05" disabled="">
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-8 col-sm-9 pe-lg-1">
+                                                                <label for="email" class="form-label">이메일</label>
+                                                                <input type="text" class="form-control" id="email" name="email" placeholder="abc@email.com">
+                                                            </div>
+                                                            <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
+                                                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailChekck">중복체크</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <label for="phoneNum" class="form-label">전화번호</label>
+                                                        <input class="form-control" type="text" id="phoneNum" name="phoneNum" value="" placeholder="010-1234-5678">
+                                                    </div>
+                                                    <div class="mb-3 col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-lg-8 col-sm-8 pe-lg-1 px-sm-2">
+                                                                <label for="zipcode" class="form-label">우편번호</label>
+                                                                <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly="">
+                                                            </div>
+                                                            <div class="col-lg-4 col-sm-4 align-content-end ps-lg-1">
+                                                                <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end">
+                                                    <div class="mb-3 col-md-6 ">
+                                                        <label for="addr1" class="form-label">주소</label>
+                                                        <input class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" readonly="">
+                                                    </div>
+                                                </div>
+                                                <div class="row justify-content-end">
+                                                    <div class="mb-3 col-md-6 ">
+                                                        <label for="addr2" class="form-label">상세 주소</label>
+                                                        <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!-- /Account -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Modal -->
+</th:block>
+<!-- build:js assets/vendor/js/core.js -->
+<th:block layout:fragment="script">
+    <script src="/assets/js/pages-account-settings-account.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        let zipcode = document.getElementById("zipCode");
+        let zipcodeBtn = document.getElementById("zipCodeBtn");
+        let addr1 = document.getElementById("addr1");
+
+        zipcodeBtn.addEventListener("click", ()=> {
+            zipCode(zipcode, addr1);
+        });
+    </script>
+</th:block>
+</body>
+</html>

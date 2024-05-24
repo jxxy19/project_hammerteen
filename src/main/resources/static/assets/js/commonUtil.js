@@ -150,4 +150,13 @@ function replaceName(element) {
     replaceBlank(element);
     element.value = element.value.replace(/[^ㄱ-ㅎ가-힣]/g, "");
 }
+// 다음 api 우편번호, 도로명주소 입력
+function zipCode(element1, element2) {
+    new daum.Postcode({
+        oncomplete: function (data) {
+            element1.value = data.zonecode;
+            element2.value = data.roadAddress;
+        }
+    }).open();
+}
 

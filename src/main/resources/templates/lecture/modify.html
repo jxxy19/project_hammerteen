@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html
+        class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+        lang="en"
+        layout:decorate="~{/common/common.html}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<!-- Layout wrapper -->
+<th:block layout:fragment="content">
+    <section>
+        <div class="container">
+            <div class="layout-wrapper layout-content-navbar">
+                <div class="layout-container">
+                    <div class="content-wrapper">
+                        <!-- Content -->
+                        <form>
+                            <div class="container-xxl flex-grow-1 container-p-y">
+                                <div class="row m-0 mb-4 ">
+                                        <div class="card p-0 m-0 row mb-3 col-12">
+                                            <h5 class="card-header bg-primary text-white">강의정보</h5>
+                                            <div class="card-body border rounded-bottom py-4 d-flex flex-column gap-3">
+                                                <div class="input-group input-group-merge">
+                                                    <label class="form-label" for="title">강의 명 <span class="text-danger fw-bold">*</span></label>
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="text" class="form-control" id="title" value="강의명이 들어갑니다.">
+                                                    </div>
+                                                </div>
+                                                <div class="input-group input-group-merge">
+                                                    <label class="form-label" for="category">과목 <span class="text-danger fw-bold">*</span></label>
+                                                    <div class="input-group input-group-merge">
+                                                        <select id="category" name="category" class="form-select">
+                                                            <option>선택</option>
+                                                            <option value="국어" selected>국어</option>
+                                                            <option value="수학">수학</option>
+                                                            <option value="영어">영어</option>
+                                                            <option value="한국사">한국사</option>
+                                                            <option value="사회">사회</option>
+                                                            <option value="과학">과학</option>
+                                                            <option value="직업">직업</option>
+                                                            <option value="제2외국어">제2외국어</option>
+                                                            <option value="일반/진로/교양">일반/진로/교양</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="input-group input-group-merge">
+                                                    <label class="form-label" for="price">강의 금액 <span class="text-danger fw-bold">*</span></label>
+                                                    <div class="input-group input-group-merge">
+                                                        <input type="number" class="form-control" id="price" value="50000">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">강의 맛보기 영상 <span class="text-danger fw-bold">*</span></label>
+                                                    <input class="form-control" name="sampleVideo" type="file" id="sampleVideo">
+                                                    <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
+                                                        <span>파일이름.mp4</span>
+                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label">썸네일 <span class="text-danger fw-bold">*</span></label>
+                                                    <input class="form-control" name="thumbnail" type="file" id="thumbnail">
+                                                    <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
+                                                        <span>파일이름.png</span>
+                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                    </span>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="form-label" >강의 소개 <span class="text-danger fw-bold">*</span></label>
+                                                        <textarea type="text" class="form-control w-100" id="summernote">입력한 내용이 들어갑니다.</textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card p-0 m-0 row mb-3 col-12">
+                                            <h5 class="card-header bg-primary text-white">회차정보</h5>
+                                            <div class="card-body border rounded-bottom py-4 d-flex flex-column gap-3">
+                                                <div class="text-end">
+                                                <button type="button" class="btn btn-primary" onclick="addInput()">추가</button>
+                                                </div>
+                                                <div id="subList" class="d-flex flex-column gap-3">
+                                                    <div class="sub row align-items-stretch gap-1">
+                                                        <div class="col-11 border rounded-start py-4">
+                                                            <div class="input-group input-group-merge d-flex flex-column ">
+                                                                <small class="d-block subNum text-primary fw-bold">1회차</small>
+                                                                <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
+                                                                <div class="input-group input-group-merge">
+                                                                    <input type="text" class="form-control" id="subTitle" value="회차명 1">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
+                                                                <input class="form-control" name="video1" type="file" id="video1">
+                                                                <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
+                                                                    <span>파일이름.mp4</span>
+                                                                    <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-1 rounded-end btn bg-white btn-outline-primary me-n1">
+                                                            <button type="button" class="btn h-100 w-100 text-primary btn-delete" onclick="deleteThis(this)">x</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-12 d-lg-flex d-md-flex justify-content-between">
+                                        <div class="row mb-3 m-0">
+                                            <a class="col-sm-12 col-md-12 btn btn-outline-primary" href="/lecture/list">취소</a>
+                                        </div>
+                                        <div class="row mb-3 m-0">
+                                            <button class="col-sm-12 col-md-12 btn btn-primary" type="submit">저장
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- / Content -->
+                        <div class="content-backdrop fade"></div>
+                    </div>
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+        </div>
+    </section>
+</th:block>
+<script src="/assets/js/regist.js" layout:fragment="script"></script>
+</body>
+</html>

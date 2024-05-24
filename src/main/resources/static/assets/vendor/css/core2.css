@@ -3515,7 +3515,7 @@ textarea.form-control-lg {
 }
 
 .nav-tabs .nav-link.active,.nav-tabs .nav-item.show .nav-link {
-    color: var(--bs-nav-tabs-link-active-color);
+    color: #686BFF !important;
     background-color: var(--bs-nav-tabs-link-active-bg);
     border-color: var(--bs-nav-tabs-link-active-border-color)
 }
@@ -5412,7 +5412,7 @@ textarea.form-control-lg {
 
 @media(min-width: 576px) {
     .modal {
-        --bs-modal-margin: 1.75rem;
+        --bs-modal-margin: 10.75rem;
         --bs-modal-box-shadow: 0 2px 20px 0 rgba(67, 89, 113, 0.45)
     }
 
@@ -12462,9 +12462,9 @@ html:not([dir=rtl]) .card .card-separator {
     background-image: none !important
 }
 
-.accordion .accordion-item.active {
-    box-shadow: 0 .25rem 1rem rgba(161,172,184,.45)
-}
+/*.accordion .accordion-item.active {*/
+/*    box-shadow: 0 .25rem 1rem rgba(161,172,184,.45)*/
+/*}*/
 
 .card.accordion-item {
     box-shadow: 0 .125rem .25rem rgba(161,172,184,.4)
