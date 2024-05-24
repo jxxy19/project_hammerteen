@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.domain.LectureDetailEntity;
 import org.fullstack4.hammerteen.domain.LectureEntity;
+import org.fullstack4.hammerteen.domain.LectureGoodEntity;
 import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.LectureDetailRepository;
+import org.fullstack4.hammerteen.repository.LectureGoodRepository;
 import org.fullstack4.hammerteen.repository.LectureReplyRepository;
 import org.fullstack4.hammerteen.repository.LectureRepository;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
@@ -15,7 +17,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public class LectureServiceImpl implements LectureServiceIf{
     private final LectureRepository lectureRepository;
     private final LectureDetailRepository lectureDetailRepository;
     private final LectureReplyRepository lectureReplyRepository;
+    private final LectureGoodRepository lectureGoodRepository;
+
 
     @Override
     public int regist(LectureDTO lectureDTO) {
@@ -290,6 +293,33 @@ public class LectureServiceImpl implements LectureServiceIf{
         }
         else{
             return 0;
+        }
+    }
+
+    @Override
+    public void registGood(LectureGoodDTO lectureGoodDTO) {
+        LectureGoodEntity board = modelMapper.map(lectureGoodDTO, LectureGoodEntity.class);
+        lectureGoodRepository.save(board);
+    }
+    @Override
+    public void deleteGood(LectureGoodDTO lectureGoodDTO) {
+        lectureGoodRepository.deleteById(lectureGoodDTO.getGoodIdx());
+    }
+
+    @Override
+    public List<LectureGoodDTO> listGood(String userId) {
+        List<LectureGoodEntity> lectureGoodEntityList = lectureGoodRepository.findAllByUserId(userId);
+        List<LectureGoodDTO> lectureGoodDTOList = lectureGoodEntityList.stream().map(board->modelMapper.map(board,LectureGoodDTO.class)).collect(Collectors.toList());
+        return lectureGoodDTOList;
+    }
+    @Override
+    public LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO) {
+        LectureGoodEntity bbsGoodEntity = lectureGoodRepository.findByLectureIdxAndUserId(lectureGoodDTO.getLectureIdx(),lectureGoodDTO.getUserId());
+        if(bbsGoodEntity!=null) {
+            return modelMapper.map(bbsGoodEntity, LectureGoodDTO.class);
+        }
+        else {
+            return null;
         }
     }
 }

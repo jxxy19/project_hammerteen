@@ -33,4 +33,9 @@ public interface LectureServiceIf {
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);
 
+    void registGood(LectureGoodDTO lectureGoodDTO);
+    void deleteGood(LectureGoodDTO lectureGoodDTO);
+    List<LectureGoodDTO> listGood(String userId);
+    LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO);
+
 }
