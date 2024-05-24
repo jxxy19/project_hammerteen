@@ -58,6 +58,14 @@
                                         <div class="card-body">
                                             <form id="formAccountSettings" method="POST" onsubmit="return false">
                                                 <div class="row">
+                                                    <div class="mb-3 col-md-12">
+                                                        <label for="role" class="form-label">회원구분</label>
+                                                        <select id="role" name="role" class="form-select">
+                                                            <option value="user">일반</option>
+                                                            <option value="teacher">선생님</option>
+                                                            <option value="admin">관리자</option>
+                                                        </select>
+                                                    </div>
                                                     <div class="mb-3 col-md-6">
                                                         <label for="memberId" class="form-label">ID</label>
                                                         <input class="form-control" type="text" name="memberId" id="memberId" value="kiyoung" disabled="">
