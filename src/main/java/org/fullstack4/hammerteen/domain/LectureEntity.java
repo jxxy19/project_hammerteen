@@ -21,7 +21,7 @@ public class LectureEntity extends BaseEntity{
     private int lectureIdx;
     @Column(nullable=false, length = 10)
     private String categoryIdx;
-    private int teacherIdx;
+    private int teacherName;
     @Column(nullable=false, length = 50)
     private String title;
     @Column(nullable=false, length = 500)
@@ -51,12 +51,14 @@ public class LectureEntity extends BaseEntity{
         this.endDate=end_date;
     }
 
-    public void modifyImg(){
-
+    public void modifyImg(String thumbnailImgDirectory, String thumbnailImgFile){
+        this.thumbnailImgDirectory = thumbnailImgDirectory;
+        this.thumbnailImgFile = thumbnailImgFile;
     }
 
-    public void modifyVideo(){
-
+    public void modifyVideo(String thumbnailVideoDirectory, String thumbnailVideoFile){
+        this.thumbnailVideoDirectory = thumbnailVideoDirectory;
+        this.thumbnailVideoFile = thumbnailVideoFile;
     }
 
 
