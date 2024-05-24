@@ -37,7 +37,6 @@ public class LectureReplyEntity extends BaseEntity {
         super.setModify_date(LocalDateTime.now());
 
 
-
     }
 }
 
