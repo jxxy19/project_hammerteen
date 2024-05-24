@@ -69,7 +69,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Page<LectureEntity> result = null;
         String categoryIdx = lpageRequestDTO.getCategoryIdx();
         String search_word = lpageRequestDTO.getSearch_word();
-        result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByOrderByLectureIdxDesc(
+        result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
                 pageable, categoryIdx, search_word, search_word);
         List<LectureDTO> dtoList = result.stream()
                 .map(board->modelMapper.map(board,LectureDTO.class))
@@ -96,7 +96,22 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     @Override
     public void modifyThumbnailImg(LectureDTO lectureDTO, MultipartHttpServletRequest files) {
-
+        Optional<LectureEntity> result = lectureRepository.findById(lectureDTO.getLectureIdx());
+        LectureEntity lectureEntity =result.orElse(null);
+        String saveDirectory = "D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
+        List<String> filenames = null;
+        filenames = commonFileUtil.thumbnailUploadVideo(files,saveDirectory);
+        if (lectureEntity != null) {
+            if(filenames!=null) {
+                if(lectureEntity.getThumbnailVideoDirectory()!=null) {
+                    commonFileUtil.fileDelite(lectureEntity.getThumbnailVideoDirectory(), lectureEntity.getThumbnailVideoFile());
+                }
+                for (String filename : filenames) {
+                    lectureEntity.modifyVideo(saveDirectory,filename);
+                }
+            }
+            lectureRepository.save(lectureEntity);
+        }
     }
 
     @Override
