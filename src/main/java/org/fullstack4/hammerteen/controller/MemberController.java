@@ -33,4 +33,13 @@ public class MemberController {
     public void cartGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "장바구니 내역"));
     }
+
+    @GetMapping("/memberList")
+    public void memberListGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
+    }
+    @GetMapping("/memberView")
+    public void memberViewGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
+    }
 }

@@ -122,3 +122,7 @@ function deleteThis(element) {
     }
 }
 
+function deleteThisNoLimit(element) {
+    element.parentElement.parentElement.remove();
+}
+
