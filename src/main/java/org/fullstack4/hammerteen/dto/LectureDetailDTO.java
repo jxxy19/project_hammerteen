@@ -1,5 +1,9 @@
 package org.fullstack4.hammerteen.dto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,21 +17,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LectureDTO {
+public class LectureDetailDTO {
+    private int lectureDetailIdx;
     private int lectureIdx;
-    private String lectureCategoryIdx;
-    @NotEmpty
     private String title;
-    @NotEmpty
     private String content;
-    private int price;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private String thumbnailVideoDirectory;
     private String thumbnailVideoFile;
     private String thumbnailImgDirectory;
     private String thumbnailImgFile;
-    private String lectureRecommendTag;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 

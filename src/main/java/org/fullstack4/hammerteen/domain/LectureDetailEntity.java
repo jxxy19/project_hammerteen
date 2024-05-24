@@ -1,11 +1,9 @@
 package org.fullstack4.hammerteen.domain;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -14,24 +12,17 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @Table(name="hamt_lecture")
-public class LectureEntity extends BaseEntity{
+public class LectureDetailEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique=true, nullable=false)
+    private int lectureDetailIdx;
+    @Column(nullable=false)
     private int lectureIdx;
-    @Column(nullable=false, length = 10)
-    private String categoryIdx;
-    private int teacherIdx;
-    @Column(nullable=false, length = 50)
+    @Column(nullable=false)
     private String title;
-    @Column(nullable=false, length = 500)
+    @Column(length=500,nullable=false)
     private String content;
-    @Column(nullable=false)
-    private int price;
-    @Column(nullable=false)
-    private LocalDate startDate;
-    @Column(nullable=false)
-    private LocalDate endDate;
     @Column(nullable=true, length = 100)
     private String thumbnailVideoDirectory;
     @Column(nullable=true, length = 50)
@@ -40,15 +31,10 @@ public class LectureEntity extends BaseEntity{
     private String thumbnailImgDirectory;
     @Column(nullable=true, length = 50)
     private String thumbnailImgFile;
-    @Column(nullable=true, length = 30)
-    private String lectureRecommendTag;
 
-    public void modify(String title, String content, int price, LocalDate start_date,LocalDate end_date){
+    public void modify(String title, String content){
         this.title=title;
         this.content=content;
-        this.price=price;
-        this.startDate=start_date;
-        this.endDate=end_date;
     }
 
     public void modifyImg(){
