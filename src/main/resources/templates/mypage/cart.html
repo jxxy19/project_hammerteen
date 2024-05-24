@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-fixed layout-wide "
+      data-theme="theme-default" data-assets-path="/assets/"
+      data-template="front-pages"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/common.html}">
+
+
+
+
+
+<!--
+ Page CSS -->
+  <th:block layout:fragment="topScript">
+  <link rel="stylesheet" href="/assets/vendor/css/pages/wizard-ex-checkout.css" />
+  <script src="/assets/vendor/js/template-customizer.js"></script>
+
+  </th:block>
+
+
+<th:block layout:fragment="content">
+<!-- Sections:Start -->
+
+<section class="section-py bg-body first-section-pt">
+  <div class="container">
+    <!--/ Checkout Wizard -->
+    <!-- Checkout Wizard -->
+<div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
+  <div class="bs-stepper-content border-top">
+    <form id="wizard-checkout-form" onSubmit="return false">
+      <!-- Cart -->
+      <div id="checkout-cart" class="content">
+        <div class="row">
+          <!-- Cart left -->
+          <div class="col-xl-12 mb-3 mb-xl-0">
+            <!-- Shopping bag -->
+            <h5>My Shopping Bag (2 Items)</h5>
+            <ul class="list-group mb-3">
+              <li class="list-group-item p-4">
+                <div class="d-flex gap-3">
+                  <div class="flex-shrink-0 d-flex align-items-center">
+                    <img src="/assets/img/image/m.png" alt="google home" class="w-px-100">
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="me-3 mb-0"><a href="/lecture/view" class="text-body">강의 명</a></p>
+                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1"><a href="javascript:void(0)" class="me-3">누구누구</a></span>선생님</div>
+                        <div class="read-only-ratings mb-3" data-rateyo-read-only="true"></div>
+                        <div class="read-only-ratings mb-3 jq-ry-container" data-rateyo-read-only="true" readonly="readonly" style="width: 100px;">
+                          <div class="jq-ry-group-wrapper"><div class="jq-ry-normal-group jq-ry-group">
+                            <!--?xml version="1.0" encoding="utf-8"?-->
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve"
+                                 width="20px" height="20px" fill="gray">
+                              <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427
+                              98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon>
+                            </svg><!--?xml version="1.0" encoding="utf-8"?-->
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve"
+                                 width="20px" height="20px" fill="gray" style="margin-left: 0px;">
+                              <polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427
+                              98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon>
+                            </svg><!--?xml version="1.0" encoding="utf-8"?-->
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="gray" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="gray" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="gray" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg></div><div class="jq-ry-rated-group jq-ry-group" style="width: 80%;"><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="#f39c12"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="#f39c12" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="#f39c12" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="#f39c12" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg><!--?xml version="1.0" encoding="utf-8"?--><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 12.705 512 486.59" x="0px" y="0px" xml:space="preserve" width="20px" height="20px" fill="#f39c12" style="margin-left: 0px;"><polygon points="256.814,12.705 317.205,198.566 512.631,198.566 354.529,313.435 414.918,499.295 256.814,384.427 98.713,499.295 159.102,313.435 1,198.566 196.426,198.566 "></polygon></svg></div></div></div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="text-md-end">
+                          <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
+                          <div class="my-2 my-md-4 mb-md-5"><span class="text-primary">39,900&#8361;</span></div>
+                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">찜하기</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <!-- Wishlist -->
+            <div class="list-group">
+              <a href="javascript:void(0)" class="list-group-item d-flex justify-content-between">
+                <span>Add more products from wishlist</span>
+                <i class="bx bx-sm bx-chevron-right scaleX-n1-rtl"></i>
+              </a>
+            </div>
+            <div class="d-flex my-3">
+              <button type="button" class="btn btn-label-primary w-100">결제하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+    </form>
+  </div>
+</div>
+<!--/ Checkout Wizard -->
+  </div>
+</section>
+
+<!-- / Sections:End -->
+
+
+
+
+
+
+
+</th:block>
+
+
+<th:block layout:fragment="script">
+  <script src="/assets/vendor/libs/popper/popper.js"></script>
+
+  <!-- Vendors JS -->
+  <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/select2/select2.js"></script>
+<script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+<script src="/assets/vendor/libs/rateyo/rateyo.js"></script>
+<script src="/assets/vendor/libs/cleavejs/cleave.js"></script>
+<script src="/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="/assets/vendor/libs/@form-validation/popular.js"></script>
+<script src="/assets/vendor/libs/@form-validation/bootstrap5.js"></script>
+<script src="/assets/vendor/libs/@form-validation/auto-focus.js"></script>
+
+<script src="/assets/js/modal-add-new-address.js"></script>
+<script src="/assets/js/wizard-ex-checkout.js"></script>
+</th:block>
+
+
+</html>
+
+<!-- beautify ignore:end -->
+

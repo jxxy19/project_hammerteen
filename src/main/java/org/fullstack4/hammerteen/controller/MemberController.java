@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Log4j2
 @Controller
-@RequestMapping(value="/member")
+@RequestMapping(value={"/member", "/mypage"})
 @RequiredArgsConstructor
 public class MemberController {
     private String menu1 = "마이페이지";
@@ -29,8 +29,8 @@ public class MemberController {
     public void myListGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "작성글 확인"));
     }
-    @GetMapping("/regiQna")
-    public void regiQna(Model model) {
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "1:1문의하기(QNA)"));
+    @GetMapping("/cart")
+    public void cartGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "장바구니 내역"));
     }
 }

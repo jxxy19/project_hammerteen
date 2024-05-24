@@ -171,7 +171,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('자료게시판') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/board/list">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>자유게시판</span>
                                             </a>
@@ -244,12 +244,6 @@
                                                 <span>작성글 확인</span>
                                             </a>
                                         </li>
-                                        <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('1:1문의하기(QNA)') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="/member/regiQna">
-                                                <i class='bx bx-radio-circle me-2'></i>
-                                                <span>1:1문의하기(QNA)</span>
-                                            </a>
-                                        </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('결제 내역') ? 'active':''}">
                                             <a class="nav-link mega-dropdown-link" href="#">
                                                 <i class='bx bx-radio-circle me-2'></i>
@@ -257,7 +251,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('장바구니 내역') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/mypage/cart">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>장바구니 내역</span>
                                             </a>

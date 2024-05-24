@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html
+        class="light-style layout-menu-fixed layout-navbar-fixed layout-wide"
+        lang="en"
+        layout:decorate="~{/common/common.html}"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:th="http://www.thymeleaf.org">
+<!-- Layout wrapper -->
+<th:block layout:fragment="content">
+    <section style="padding:4rem">
+        <div class="container">
+            <form id="regiFrm" name="regiFrm" action="/board/modify" method="post" enctype="multipart/form-data">
+            <div class="layout-wrapper layout-content-navbar">
+                <div class="layout-container">
+                    <!-- Layout container -->
+                    <!-- Content wrapper -->
+                    <div class="content-wrapper">
+                        <div class="row mb-2">
+                            <div class="category-sidebar p-0">
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card mb-4">
+                                    <div class="my-items bg-white rounded shadow-sm p-5">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="category">카테고리</label>
+                                            <select class="form-select" id="category">
+                                                <option selected value="">카테고리</option>
+                                                <option value="교육정보게시판">교육정보</option>
+                                                <option value="자료게시판">자료게시판</option>
+                                                <option value="자유게시판">자유게시판</option>
+                                                <option value="공지게시판">공지게시판</option>
+                                                <option value="QnA">QnA게시판</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="title">제목</label>
+                                            <input class="form-control" id="title" type="text" value=""/>
+                                        </div>
+                                        <div class="mb-3" >
+                                            <label for="formFile" class="form-label">파일 업로드</label>
+                                            <input class="form-control" type="file" id="formFile" multiple="multiple" value="" accept="image/*" />
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group my-4">
+                                                <textarea id="summernote" name="content"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row justify-content-end">
+                                    <input type="submit" class="btn btn-primary col-2" value="수정">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- / Content -->
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+            </form>
+            <!-- / Layout wrapper -->
+        </div>
+    </section>
+</th:block>
+<th:block layout:fragment="script">
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <!-- Page JS -->
+    <script src="/assets/js/pages-account-settings-account.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script src="/assets/js/regist.js"></script>
+    <script>
+        function textReset() {
+            let summernote = document.querySelector("#summernote");
+            let target = document.querySelector(".note-editable");
+            console.log("dd");
+            console.log(summernote);
+            summernote.innerText="";
+            target.innerHTML = "";
+        }
+
+    </script>
+</th:block>
+</html>
