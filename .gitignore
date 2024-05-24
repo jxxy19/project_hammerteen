@@ -42,3 +42,4 @@ out/
 
 
 application-oauth.properties
+/src/main/resources/apllication-oauth.properties
