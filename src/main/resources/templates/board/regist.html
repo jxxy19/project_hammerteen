@@ -26,8 +26,8 @@
                                 <div class="card mb-4">
                                     <div class="my-items bg-white rounded shadow-sm p-5">
                                         <div class="mb-3">
-                                            <label class="form-label" for="category">카테고리</label>
-                                            <select class="form-select" id="category">
+                                            <label class="form-label" for="boardCategory">카테고리</label>
+                                            <select class="form-select" id="boardCategory" name="boardCategory">
                                                 <option selected value="">카테고리</option>
                                                 <option value="교육정보게시판">교육정보</option>
                                                 <option value="자료게시판">자료게시판</option>
@@ -37,12 +37,24 @@
                                             </select>
                                         </div>
                                         <div class="mb-3">
+                                            <label class="form-label" for="lectureTitle">강의명</label>
+                                            <select class="form-select" id="lectureTitle" name="lectureTitle">
+                                                <option value="" selected>선택 안함</option>
+                                                <option value="강의">강의</option>
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
                                             <label class="form-label" for="title">제목</label>
                                             <input class="form-control" id="title" value="" type="text"/>
                                         </div>
                                         <div class="mb-3" >
                                             <label for="formFile" class="form-label">파일 업로드</label>
-                                            <input class="form-control" type="file" id="formFile" multiple="multiple" value="" accept="image/*" />
+                                            <input class="form-control" type="file" id="formFile" multiple="multiple" value="" onchange="fileList(this)" accept="image/*" />
+                                        </div>
+                                        <div class="ml-5">
+                                            <label class="regist-label">파일 리스트</label>
+                                            <ul id="file-list" class="form-group col-12 d-flex flex-column m-0 p-0" style="gap:5px">
+                                            </ul>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-group my-4">

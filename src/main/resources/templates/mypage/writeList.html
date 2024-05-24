@@ -63,18 +63,18 @@
                     <h5 class="card-header">내가 작성한 글 리스트</h5>
                     <div class="my-items bg-white rounded shadow-sm p-5">
                       <!-- Start List Title -->
-                      <div class="item-list-title rounded-top p-3" style="background-color: #686BFF;">
+                      <div class="item-list-title rounded-top p-3 bg-primary">
                         <div class="row align-items-center">
                           <div class="col-lg-5 col-md-5 col-12 d-flex align-items-center">
                             <p class="p-0 m-0 text-white">제목</p>
                           </div>
-                          <div class="col-lg-3 col-md-3 col-12">
-                            <p class="p-0 m-0 text-white">카테고리</p>
+                          <div class="col-lg-2 col-md-3 col-12">
+                            <p class="p-0 m-0 text-white">댓글</p>
                           </div>
                           <div class="col-lg-2 col-md-2 col-12">
-                            <p class="p-0 m-0 text-white">등록자</p>
+                            <p class="p-0 m-0 text-white">조회수</p>
                           </div>
-                          <div class="col-lg-2 col-md-2 col-12 align-right">
+                          <div class="col-lg-3 col-md-2 col-12 align-right">
                             <p class="p-0 m-0 text-white">등록일</p>
                           </div>
                         </div>
@@ -82,30 +82,24 @@
                       <!-- End List Title -->
                       <!-- Start Single List -->
 <!--                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">-->
-                        <div class="single-item-list cursor-pointer">
+                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
 <!--                          th:each="dto:${pageResponseDTO.dtoList}-->
-                          <div class="row align-items-center p-3"  onclick="goToThisLink('/board/view?bbsIdx=',this)">
+                          <div class="cursor-pointer row align-items-center p-3" onclick="goToThisLink('/board/view?bbsIdx=',this)">
 <!--                            th:data-idx="${dto.bbsIdx}"-->
                             <div class="col-lg-5 col-md-5 col-12">
-                              <p class="title">sdfsd</p>
+                              <p class="title">제목입니다.</p>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-12">
-                              <p class="mb-0">aa</p>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
+                                </p>
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
-                              <p>ss</p>
+                                <p class="p-0 m-0"><span
+                                        class="badge rounded-pill bg-label-primary"><i
+                                        class="lni lni-eye"></i>&nbsp;10</span></p>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-12 align-right">
-                              <p>d</p>
-                            </div>
-                          </div>
-                        </div>
-<!--                      </th:block>-->
-<!--                      <th:block th:unless="${pageResponseDTO.dtoList.size() > 0}">-->
-                        <div class="single-item-list" >
-                          <div class="row align-items-center p-3" >
-                            <div class="col-12">
-                              <p class="title text-center">게시글이 없습니다.</p>
+                            <div class="col-lg-3 col-md-2 col-12 align-right">
+                              <p>2024-05-24</p>
                             </div>
                           </div>
                         </div>
@@ -127,12 +121,11 @@
 </th:block>
 <th:block layout:fragment="script">
     <script src="/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-    <script src="/assets/vendor/js/menu.js"></script>
-    <script src="/assets/js/main.js"></script>
+<!--    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>-->
+<!--    <script src="/assets/vendor/js/menu.js"></script>-->
+<!--    <script src="/assets/js/main.js"></script>-->
     <!-- Page JS -->
     <script src="/assets/js/pages-account-settings-account.js"></script>
-    <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     </th:block>
 </html>
