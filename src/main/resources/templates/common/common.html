@@ -278,14 +278,17 @@
             <!-- Menu wrapper: End -->
             <!-- Toolbar: Start -->
             <ul class="navbar-nav flex-row align-items-center ms-auto gap-2">
-                <li>
+                <li th:if="${session.memberDTO != null}">
+                    <span th:text="|${session.memberDTO.name}님 환영합니다.|"></span>
+                </li>
+                <li th:if="${session.memberDTO == null || session.memberDTO.userId == null}">
                     <a href="/login/join" class="text-primary">가입하기</a>
                 </li>
-                <li class="p-1">
+                <li class="p-1" th:if="${session.memberDTO == null || session.memberDTO.userId == null}">
                     <a href="/login/login" class="btn btn-primary"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그인</span></a>
                 </li>
-                <li>
-                    <a href="#" class="btn btn-outline-primary"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그아웃</span></a>
+                <li th:if="${session.memberDTO != null && session.memberDTO.userId != null}">
+                    <a href="/login/logout" class="btn btn-outline-primary"><span class="tf-icons bx bx-user me-md-1"></span><span class="d-none d-md-block">로그아웃</span></a>
                 </li>
             </ul>
             <!-- Toolbar: End -->

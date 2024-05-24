@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface LoginRepository extends JpaRepository<MemberEntity, Integer> {
 
-
+    Optional<MemberEntity> findByUserId(String userId);
 }
