@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" class="light-style layout-navbar-fixed layout-wide "
+      data-theme="theme-default" data-assets-path="/assets/"
+      data-template="front-pages"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/common/common.html}">
+
+
+
+
+
+<!--
+ Page CSS -->
+  <th:block layout:fragment="topScript">
+  <link rel="stylesheet" href="/assets/vendor/css/pages/wizard-ex-checkout.css" />
+  <script src="/assets/vendor/js/template-customizer.js"></script>
+
+  </th:block>
+
+
+<th:block layout:fragment="content">
+<!-- Sections:Start -->
+
+<section class="section-py bg-body first-section-pt">
+  <div class="container">
+    <!--/ Checkout Wizard -->
+    <!-- Checkout Wizard -->
+<div id="wizard-checkout" class="bs-stepper wizard-icons wizard-icons-example mb-5">
+  <div class="bs-stepper-content border-top">
+    <form id="wizard-checkout-form" onSubmit="return false">
+      <!-- Cart -->
+      <div id="checkout-cart" class="content">
+        <div class="row">
+          <!-- Cart left -->
+          <div class="col-xl-12 mb-3 mb-xl-0">
+            <!-- Shopping bag -->
+            <h5>My Shopping Bag (2 Items)</h5>
+            <ul class="list-group mb-3">
+              <li class="list-group-item p-4">
+                <div class="d-flex gap-3">
+                  <div class="flex-shrink-0 d-flex align-items-center">
+                    <img src="/assets/img/products/1.png" alt="google home" class="w-px-100">
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="me-3"><a href="javascript:void(0)" class="text-body">Google - Google Home - White</a></p>
+                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1">Sold by:</span> <a href="javascript:void(0)" class="me-3">Apple</a> <span class="badge bg-label-success">In Stock</span></div>
+                        <div class="read-only-ratings mb-3" data-rateyo-read-only="true"></div>
+                        <input type="number" class="form-control form-control-sm w-px-100 mt-2" value="1" min="1" max="5">
+                      </div>
+                      <div class="col-md-4">
+                        <div class="text-md-end">
+                          <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
+                          <div class="my-2 my-md-4 mb-md-5"><span class="text-primary">$299/</span><s class="text-muted">$359</s></div>
+                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">Move to wishlist</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item p-4">
+                <div class="d-flex gap-3">
+                  <div class="flex-shrink-0 d-flex align-items-center">
+                    <img src="/assets/img/products/2.png" alt="google home" class="w-px-100">
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="me-3"><a href="javascript:void(0)" class="text-body">Apple iPhone 11 (64GB, Black)</a></p>
+                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1">Sold by:</span> <a href="javascript:void(0)" class="me-3">Apple</a> <span class="badge bg-label-success">In Stock</span></div>
+                        <div class="read-only-ratings mb-3" data-rateyo-read-only="true"></div>
+                        <input type="number" class="form-control form-control-sm w-px-100 mt-2" value="1" min="1" max="5">
+                      </div>
+                      <div class="col-md-4">
+                        <div class="text-md-end">
+                          <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
+                          <div class="my-2 my-md-4 mb-md-5"><span class="text-primary">$299/</span><s class="text-muted">$359</s></div>
+                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">Move to wishlist</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item p-4">
+                <div class="d-flex gap-3">
+                  <div class="flex-shrink-0 d-flex align-items-center">
+                    <img src="/assets/img/products/1.png" alt="google home" class="w-px-100">
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="me-3"><a href="javascript:void(0)" class="text-body">Google - Google Home - White</a></p>
+                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1">Sold by:</span> <a href="javascript:void(0)" class="me-3">Apple</a> <span class="badge bg-label-success">In Stock</span></div>
+                        <div class="read-only-ratings mb-3" data-rateyo-read-only="true"></div>
+                        <input type="number" class="form-control form-control-sm w-px-100 mt-2" value="1" min="1" max="5">
+                      </div>
+                      <div class="col-md-4">
+                        <div class="text-md-end">
+                          <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
+                          <div class="my-2 my-md-4 mb-md-5"><span class="text-primary">$299/</span><s class="text-muted">$359</s></div>
+                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">Move to wishlist</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="list-group-item p-4">
+                <div class="d-flex gap-3">
+                  <div class="flex-shrink-0 d-flex align-items-center">
+                    <img src="/assets/img/products/1.png" alt="google home" class="w-px-100">
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <p class="me-3"><a href="javascript:void(0)" class="text-body">Google - Google Home - White</a></p>
+                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1">Sold by:</span> <a href="javascript:void(0)" class="me-3">Apple</a> <span class="badge bg-label-success">In Stock</span></div>
+                        <div class="read-only-ratings mb-3" data-rateyo-read-only="true"></div>
+                        <input type="number" class="form-control form-control-sm w-px-100 mt-2" value="1" min="1" max="5">
+                      </div>
+                      <div class="col-md-4">
+                        <div class="text-md-end">
+                          <button type="button" class="btn-close btn-pinned" aria-label="Close"></button>
+                          <div class="my-2 my-md-4 mb-md-5"><span class="text-primary">$299/</span><s class="text-muted">$359</s></div>
+                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">Move to wishlist</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+
+            <!-- Wishlist -->
+            <div class="list-group">
+              <a href="javascript:void(0)" class="list-group-item d-flex justify-content-between">
+                <span>Add more products from wishlist</span>
+                <i class="bx bx-sm bx-chevron-right scaleX-n1-rtl"></i>
+              </a>
+            </div>
+            <div class="d-flex my-3">
+              <button type="button" class="btn btn-label-primary w-100">결제하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address -->
+    </form>
+  </div>
+</div>
+<!--/ Checkout Wizard -->
+  </div>
+</section>
+
+<!-- / Sections:End -->
+
+
+
+
+
+
+
+</th:block>
+
+
+<th:block layout:fragment="script">
+  <script src="/assets/vendor/libs/popper/popper.js"></script>
+
+  <!-- Vendors JS -->
+  <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="/assets/vendor/libs/select2/select2.js"></script>
+<script src="/assets/vendor/libs/bs-stepper/bs-stepper.js"></script>
+<script src="/assets/vendor/libs/rateyo/rateyo.js"></script>
+<script src="/assets/vendor/libs/cleavejs/cleave.js"></script>
+<script src="/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+<script src="/assets/vendor/libs/@form-validation/popular.js"></script>
+<script src="/assets/vendor/libs/@form-validation/bootstrap5.js"></script>
+<script src="/assets/vendor/libs/@form-validation/auto-focus.js"></script>
+
+<script src="/assets/js/modal-add-new-address.js"></script>
+<script src="/assets/js/wizard-ex-checkout.js"></script>
+</th:block>
+
+
+</html>
+
+<!-- beautify ignore:end -->
+
