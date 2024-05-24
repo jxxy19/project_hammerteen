@@ -123,6 +123,7 @@ function deleteThis(element) {
 }
 
 function deleteThisNoLimit(element) {
+    event.preventDefault();
     element.parentElement.parentElement.remove();
 }
 
