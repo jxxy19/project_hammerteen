@@ -8,16 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 @Log4j2
 @Controller
-@RequestMapping(value={"/member", "/mypage"})
+@RequestMapping(value="/mypage")
 @RequiredArgsConstructor
-public class MemberController {
+public class MyPageController {
     private String menu1 = "마이페이지";
 
     @GetMapping("/mypage")
@@ -41,5 +36,9 @@ public class MemberController {
     @GetMapping("/memberView")
     public void memberViewGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
+    }
+    @GetMapping("/likeList")
+    public void likeListGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));
     }
 }

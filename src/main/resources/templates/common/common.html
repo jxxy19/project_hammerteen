@@ -225,7 +225,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="/member/mypage" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('마이페이지') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/mypage/mypage" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('마이페이지') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
                             <span data-i18n="Pages">마이페이지</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -233,13 +233,13 @@
                                 <div class="col-12 col-lg">
                                     <ul class="nav flex-column">
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('회원정보 수정') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="/member/mypage">
+                                            <a class="nav-link mega-dropdown-link" href="/mypage/mypage">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>회원정보 수정</span>
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('작성글 확인') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="/member/writeList?category=qna">
+                                            <a class="nav-link mega-dropdown-link" href="/mypage/writeList?category=qna">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>작성글 확인</span>
                                             </a>
@@ -257,13 +257,13 @@
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('찜 내역') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="#">
+                                            <a class="nav-link mega-dropdown-link" href="/mypage/likeList">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>찜 내역</span>
                                             </a>
                                         </li>
                                         <li class="nav-item" th:classappend="${pageType != null and pageType.menu2.toString().equals('회원관리') ? 'active':''}">
-                                            <a class="nav-link mega-dropdown-link" href="/member/memberList">
+                                            <a class="nav-link mega-dropdown-link" href="/mypage/memberList">
                                                 <i class='bx bx-radio-circle me-2'></i>
                                                 <span>회원관리</span>
                                             </a>

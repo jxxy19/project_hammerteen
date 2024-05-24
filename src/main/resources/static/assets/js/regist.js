@@ -121,7 +121,6 @@ function deleteThis(element) {
         alert("최소 1개의 입력칸이 필요합니다.")
     }
 }
-
 function deleteThisNoLimit(element) {
     element.parentElement.parentElement.remove();
 }
