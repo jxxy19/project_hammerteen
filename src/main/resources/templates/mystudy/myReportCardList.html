@@ -15,9 +15,136 @@
           <div class="content-wrapper">
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
+                <!-- 학생이 보는 성적표 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive text-nowrap">
+                            <h3 class="text-primary">나의 성적표</h3>
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col style="width : 15%">
+                                    <col span="3" style="width : 20%">
+                                    <col style="width : 15%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="bg-label-primary">No</th>
+                                    <th class="bg-label-primary">강의명</th>
+                                    <th class="bg-label-primary">강사</th>
+                                    <th class="bg-label-primary">수강완료일</th>
+                                    <th class="bg-label-primary">점수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>5</td>
+                                    <td>강의명입니다만?</td>
+                                    <td><span>전주연</span>선생님</td>
+                                    <td>2024-05-24</td>
+                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>강의명입니다만?</td>
+                                    <td><span>전주연</span>선생님</td>
+                                    <td>2024-05-24</td>
+                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>강의명입니다만?</td>
+                                    <td><span>전주연</span>선생님</td>
+                                    <td>2024-05-24</td>
+                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>강의명입니다만?</td>
+                                    <td><span>전주연</span>선생님</td>
+                                    <td>2024-05-24</td>
+                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>강의명입니다만?</td>
+                                    <td><span>전주연</span>선생님</td>
+                                    <td>2024-05-24</td>
+                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- 선생님이 보는 성적표 -->
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive text-nowrap">
+                            <h3 class="text-primary">성적관리</h3>
+                            <form>
+                            <div class="d-flex mb-3">
+                                <p class="p-2 m-0 border rounded col-10 lecture-title">강의 명이 들어가지</p>
+                                <button type="button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#lectureModal">조회</button>
+                                <input type="hidden" id="lectureIdx" name="lectureIdx" value="0">
+                            </div>
+                            <div class="my-3 text-end">
+                                <button type="submit" class="btn btn-outline-primary">저장</button>
+                            </div>
+                            <!-- 강의 조회 전에는 데이터 없게 -->
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col style="width : 15%">
+                                    <col span="3" style="width : 20%">
+                                    <col style="width : 15%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="bg-label-primary">No</th>
+                                    <th class="bg-label-primary">수강생명</th>
+                                    <th class="bg-label-primary">아이디</th>
+                                    <th class="bg-label-primary">수강완료일</th>
+                                    <th class="bg-label-primary">점수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>3</td>
+                                    <td>전주연</td>
+                                    <td>test</td>
+                                    <td>2024-05-24</td>
+                                    <td>
+                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                        <input type="hidden" name="user_id" value="test">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>전주연</td>
+                                    <td>test</td>
+                                    <td>2024-05-24</td>
+                                    <td>
+                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                        <input type="hidden" name="user_id" value="test">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>전주연</td>
+                                    <td>test</td>
+                                    <td>2024-05-24</td>
+                                    <td>
+                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                        <input type="hidden" name="user_id" value="test">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- / Content -->
-            <div class="content-backdrop fade"></div>
           </div>
           <!-- Content wrapper -->
         </div>
@@ -25,6 +152,28 @@
       </div>
       </div>
     </section>
+    <div aria-hidden="true" aria-labelledby="lectureModalLabel" class="modal fade" id="lectureModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="lectureModalLabel">강의 리스트</h1>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <p><span class="text-primary">전주연</span>선생님</p>
+                        </div>
+                        <div id="lectureList" class="border card overflow-y-scroll list-group list-group-flush" style="max-height: 500px">
+                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="1" data-bs-dismiss="modal" aria-label="Close">강의명입니다1.</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="2" data-bs-dismiss="modal" aria-label="Close">강의명입니다2.</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="3" data-bs-dismiss="modal" aria-label="Close">강의명입니다3.</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="4" data-bs-dismiss="modal" aria-label="Close">강의명입니다4.</a>
+                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="5" data-bs-dismiss="modal" aria-label="Close">강의명입니다5.</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </th:block>
     <!-- build:js assets/vendor/js/core.js -->
     <th:block layout:fragment="script">
@@ -36,6 +185,23 @@
     <script src="/assets/js/pages-account-settings-account.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+        let lectureList = document.querySelectorAll('#lectureList a');
+        for(let lectureLi of lectureList) {
+            lectureLi.addEventListener("click", ()=>{
+                selectThis(lectureLi)
+            })
+        }
+
+        function selectThis(element){
+            event.preventDefault();
+            let idx = element.dataset.lectureIdx;
+            let title = element.innerText;
+            $('#lectureIdx').val(idx);
+            $('.lecture-title').text(title);
+            $('#lectureList').html("");
+        }
+    </script>
     </th:block>
 </body>
 </html>
