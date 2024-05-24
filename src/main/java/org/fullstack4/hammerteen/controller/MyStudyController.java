@@ -22,6 +22,10 @@ public class MyStudyController {
     public void myLectureViewGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
     }
+    @GetMapping("/myLecturePlay")
+    public void myLecturePlayGet(Model model) {
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
+    }
     @GetMapping("/myReportCardList")
     public void myReportCardListGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "성적표"));
