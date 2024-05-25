@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LectureRepository extends JpaRepository<LectureEntity, Integer> {
-    Page<LectureEntity> findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
+    Page<LectureEntity> findAllByCategoryIdxStartingWithAndTeacherIdxContainsOrTitleContainsOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
 
     int countByCategoryIdx(String categoryIdx);
 }

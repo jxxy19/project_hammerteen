@@ -20,6 +20,7 @@
                     <h5 class="card-header">나의 계정 정보</h5>
                     <!-- Account -->
                     <form id="frm" name="frm" action="/mypage/mypage" method="post" enctype="multipart/form-data">
+                      <input type="hidden" id="temFileName" name="temFileName" th:value="${session.memberDTO.fileName != null ? session.memberDTO.fileName : ''}" />
                       <input type="hidden" name="userState" id="userState" value="Y">
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
@@ -88,7 +89,7 @@
                             <div class="row">
                               <div class="col-lg-8 col-sm-9 pe-lg-1">
                                 <label for="email" class="form-label">이메일</label>
-                                <input type="text" class="form-control" id="email" name ="email" th:value="${session.memberDTO.birthday}" placeholder="abc@email.com" />
+                                <input type="text" class="form-control" id="email" name ="email" th:value="${session.memberDTO.email}" placeholder="abc@email.com" />
                               </div>
                               <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
                                 <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">중복체크</button>
@@ -231,9 +232,6 @@
       });
 
 
-
-
-
       const submit_button =document.querySelector("#submit_button");
       submit_button.addEventListener("click",function (e){
         e.preventDefault();
@@ -287,6 +285,10 @@
           const uploadedAvatar = document.getElementById("uploadedAvatar");
           // img 요소의 src 속성을 기본 이미지 경로로 변경
           uploadedAvatar.src = '/assets/img/image/images2.jpeg';
+          // 'temFileName' id를 가진 input 요소 선택
+          const temFileNameInput = document.getElementById("temFileName");
+          // input 요소의 값을 빈 문자열로 변경
+          temFileNameInput.value = "";
 
           // 콘솔에 로그 추가
           console.log("Image source reset to default");

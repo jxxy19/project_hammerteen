@@ -28,4 +28,9 @@ public interface MemberServiceIf {
 
     // 지현 추가 : 선생님 리스트 조회용(통계에서)
     List<MemberDTO> teacherList (String userIdOrName);
+
+    MemberDTO Detailview(String userId);
+
+    MemberDTO detailModify(MemberDTO memberDTO);
+
 }

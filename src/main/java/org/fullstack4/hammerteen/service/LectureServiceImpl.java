@@ -74,7 +74,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Page<LectureEntity> result = null;
         String categoryIdx = lpageRequestDTO.getCategoryIdx();
         String search_word = lpageRequestDTO.getSearch_word();
-        result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
+        result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherIdxContainsOrTitleContainsOrderByLectureIdxDesc(
                 pageable, categoryIdx, search_word, search_word);
         List<LectureDTO> dtoList = result.stream()
                 .map(board->modelMapper.map(board,LectureDTO.class))

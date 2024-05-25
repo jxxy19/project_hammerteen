@@ -44,7 +44,17 @@ public class MyPageController {
 
         List<String> filenames = null;
         String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
+        if(!memberDTO.getTemFileName().isEmpty()){
+            memberDTO.setFileName(memberDTO.getTemFileName());
+            MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
+            System.out.println("modifyDTO22"+modifyDTO);
 
+            request.getSession().setAttribute("memberDTO", modifyDTO);
+
+            return "redirect:/mypage/memberView?userId="+memberDTO.getUserId();
+
+
+        }
         filenames = commonFileUtil.fileuploads(file,realPath);
 
 
@@ -105,11 +115,62 @@ public class MyPageController {
     }
     @GetMapping("/memberView")
     public void memberViewGet(MemberDTO memberDTO, Model model) {
-        System.out.println("memberVIew로 들어와야함" + memberDTO);
 
 
+        MemberDTO resultDTO = memberServiceIf.Detailview(memberDTO.getUserId());
+
+
+        model.addAttribute("dto", resultDTO);
+        System.out.println("memberVIew로 dto" + resultDTO);
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
     }
+
+
+    @PostMapping("/memberView")
+    public String memberViewPost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
+
+
+
+        List<String> filenames = null;
+        String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
+        if(!memberDTO.getTemFileName().isEmpty()){
+            memberDTO.setFileName(memberDTO.getTemFileName());
+            MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
+            System.out.println("modifyDTO22"+modifyDTO);
+
+            request.getSession().setAttribute("memberDTO", modifyDTO);
+
+            return "redirect:/mypage/memberView?userId="+memberDTO.getUserId();
+
+
+        }
+
+
+
+        filenames = commonFileUtil.fileuploads(file,realPath);
+        System.out.println("memberDTO view post "+memberDTO);
+        if(filenames != null) {
+            memberDTO.setFileName(filenames.get(0));
+            memberDTO.setDirectory(realPath);
+        }
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+
+            return "redirect:/mypage/memberView?userId="+memberDTO.getUserId();
+        }
+
+        MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
+        System.out.println("modifyDTO22"+modifyDTO);
+
+        request.getSession().setAttribute("memberDTO", modifyDTO);
+
+        return "redirect:/mypage/memberView?userId="+memberDTO.getUserId();
+    }
+
+
+
+
     @GetMapping("/likeList")
     public void likeListGet(Model model) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));

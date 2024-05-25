@@ -99,11 +99,35 @@ public class MemberServiceImpl implements MemberServiceIf{
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 
+
     // 지현 추가 : 선생님 리스트 조회용(통계에서)
     @Override
     public List<MemberDTO> teacherList(String userIdOrName) {
-        List<MemberEntity> memberEntityList = memberRepository.findMemberEntityByUserIdLikeOrNameLikeAndRoleEquals("%"+userIdOrName+"%", "%"+userIdOrName+"%", "Y");
+        List<MemberEntity> memberEntityList = memberRepository.findMemberEntityByUserIdLikeOrNameLikeAndRoleEquals("%" + userIdOrName + "%", "%" + userIdOrName + "%", "Y");
         List<MemberDTO> memberDTOList = memberEntityList.stream().map(vo -> modelMapper.map(vo, MemberDTO.class)).collect(Collectors.toList());
         return memberDTOList;
+
+    }
+    
+    @Override
+    public MemberDTO Detailview(String userId) {
+        Optional<MemberEntity> result = memberRepository.findByUserId(userId);
+        MemberEntity member = result.orElse(null);
+        MemberDTO memberDTO = modelMapper.map(member,MemberDTO.class);
+
+        return memberDTO;
+    }
+
+    //회원관리 -> 회원정보 수정
+    @Override
+    public MemberDTO detailModify(MemberDTO memberDTO) {
+        Optional<MemberEntity> result = memberRepository.findByUserId(memberDTO.getUserId());
+        MemberEntity member = result.orElse(null);
+        member.DetailModify(memberDTO.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState(),memberDTO.getFileName(),memberDTO.getDirectory(),memberDTO.getRole());
+
+        memberRepository.save(member);
+        MemberDTO memberUpdateDTO = modelMapper.map(member,MemberDTO.class);
+        return memberUpdateDTO;
+
     }
 }
