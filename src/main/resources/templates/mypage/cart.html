@@ -41,7 +41,7 @@
                 <div class="d-flex gap-3">
                   <div class="form-check form-check-primary d-flex align-items-center">
                     <label class="form-check-label" for="customCheck"></label>
-                    <input class="form-check-input selectCheck" type="checkbox" id="customCheck" />
+                    <input class="form-check-input selectCheck" type="checkbox" id="customCheck" value="1" name="lectureIdx"/>
                   </div>
                   <div class="flex-shrink-0 d-flex align-items-center">
                     <img src="/assets/img/image/m.png" alt="강의 썸네일" class="w-px-100">
@@ -73,7 +73,7 @@
             </div>
             <div class="list-group">
               <div class="row m-0 my-3 justify-content-center">
-              <button type="button" class="btn btn-label-primary col-lg-6 col-sm-12 m-0 my-3" onclick="window.location.href='/payment/payment'">선택 강의 결제</button>
+              <button type="button" class="btn btn-label-primary col-lg-6 col-sm-12 m-0 my-3" onclick="goToPayment()">선택 강의 결제</button>
               </div>
             </div>
           </div>
@@ -109,6 +109,21 @@
     })
     function removeCart(element) {
       element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+    }
+
+    //결제 페이지 이동
+    function goToPayment() {
+      let lectureIdxArr = [];
+      let lectureIdxEl = document.querySelectorAll('input[name=lectureIdx]:checked');
+      if(lectureIdxEl.length > 0) {
+        for (let idxEl of lectureIdxEl) {
+          lectureIdxArr.push(idxEl.value);
+        }
+        let lectureIdx = lectureIdxArr.toString();
+        location.href = "/payment/payment?lectureIdx="+lectureIdx;
+      } else {
+        alert("선택된 강의가 없습니다.")
+      }
     }
   </script>
 </th:block>

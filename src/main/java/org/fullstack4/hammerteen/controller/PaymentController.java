@@ -42,11 +42,18 @@ public class PaymentController {
     }
     @PostMapping("/payment")
     public String paymentPost(PaymentDTO paymentDTO,
-                              String lectureIdxes,
                               BindingResult bindingResult,
+                              String lectureIdxes,
+                              HttpSession session,
                               RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         if(bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("info","결제 정보가 부족합니다.");
+        }
+        if(!memberDTO.getUserId().equals(paymentDTO.getUserId()) || !memberDTO.getName().equals(paymentDTO.getUserName())){
+            log.info("결제정보와 로그인 정보 불일치");
+            log.info("memberDTO : {}", memberDTO);
+            log.info("paymentDTO : {}", paymentDTO);
         }
         log.info("paymentDTO : {}", paymentDTO);
         log.info("lectureIdxes : {}", lectureIdxes);
