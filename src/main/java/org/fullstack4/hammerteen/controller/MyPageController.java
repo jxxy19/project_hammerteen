@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -49,12 +50,19 @@ public class MyPageController {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));
     }
     @GetMapping("/payList")
-    public void payListGet(Model model,
-                           HttpSession session) {
+    public String payListGet(Model model,
+                           HttpSession session,
+                           RedirectAttributes redirectAttributes) {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-        String userId = memberDTO.getUserId();
-        List<PaymentDTO> paymentDTOList = paymentServiceIf.selectPayment(userId);
-        model.addAttribute("paymentDTOList", paymentDTOList);
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "결제 내역"));
+        if(memberDTO != null) {
+            String userId = memberDTO.getUserId();
+            List<PaymentDTO> paymentDTOList = paymentServiceIf.selectPayment(userId);
+            model.addAttribute("paymentDTOList", paymentDTOList);
+            model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "결제 내역"));
+            return "/mypage/payList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
     }
 }
