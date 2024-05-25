@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,6 +40,10 @@ public class PaymentEntity extends BaseEntity{
     @Column(length = 50, nullable = false)
     private String paymentMethod;
 
+    @Column(length = 50, nullable = true)
+    @Builder.Default
+    private String applyNum="-";
+
     @Column(length = 50, nullable = false)
     private String paymentCompany;
 
@@ -54,7 +59,6 @@ public class PaymentEntity extends BaseEntity{
     @Column(length = 10, nullable = false)
     @Builder.Default
     private String paymentStatus="Y";
-
 
 }
 

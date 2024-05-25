@@ -29,6 +29,7 @@ public class PaymentDTO {
     private String userEmail;
     private String paymentMethod;
     private String paymentMethodConvert;
+    private String applyNum;
     private String paymentCompany;
     private String paymentMerchantId;
     private String paymentPgId;
@@ -150,5 +151,8 @@ public class PaymentDTO {
             default:
                 this.paymentMethodConvert = "기타";
         }
+    }
+    public void setOrderDTOOrderStatus() {
+        this.orderDTO.setOrderStatusToConvert();
     }
 }

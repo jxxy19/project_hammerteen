@@ -79,4 +79,50 @@ public class PaymentController {
             return "redirect:/";
         }
     }
+
+    @PostMapping("/confirm")
+    public String confirmPost(@RequestParam(name="paymentIdx", defaultValue= "0")String paymentIdx,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if (memberDTO != null) {
+            if(CommonUtil.parseInt(paymentIdx) > 0) {
+                int idx = paymentServiceIf.confirmPayment(CommonUtil.parseInt(paymentIdx));
+                if(idx > 0) {
+                    redirectAttributes.addFlashAttribute("info", "구매확정 성공");
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "구매확정 실패");
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("info", "잘못된 결제코드");
+            }
+            return "redirect:/mypage/payList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/refund")
+    public String refundPost(@RequestParam(name="paymentIdx", defaultValue= "0")String paymentIdx,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if (memberDTO != null) {
+            if(CommonUtil.parseInt(paymentIdx) > 0) {
+                int result = paymentServiceIf.refundPayment(CommonUtil.parseInt(paymentIdx));
+                if(result > 0) {
+                    redirectAttributes.addFlashAttribute("info", "환불요청 성공\n결제사에 따라 최대 일주일정도 소요될 수 있습니다.");
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "환불요청 실패");
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("info", "잘못된 결제코드");
+            }
+            return "redirect:/mypage/payList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
+    }
 }
