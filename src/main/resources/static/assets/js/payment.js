@@ -91,6 +91,12 @@ function payInfoSubmit(rsp, userId, lectureIdxes){
 
     inputEl = document.createElement('input');
     inputEl.type = 'hidden';
+    inputEl.name = 'applyNum';
+    inputEl.value = rsp.apply_num;
+    formEl.append(inputEl);
+
+    inputEl = document.createElement('input');
+    inputEl.type = 'hidden';
     inputEl.name = 'paymentCompany';
     inputEl.value = rsp.pg_provider;
     formEl.append(inputEl);
@@ -118,4 +124,44 @@ function payInfoSubmit(rsp, userId, lectureIdxes){
 
     document.body.append(formEl);
     formEl.submit();
+}
+
+function refundThis(element) {
+    if(confirm("환불신청하시겠습니까?")) {
+        const paymentIdx = element.dataset.paymentidx;
+
+        let formEl = document.createElement('form');
+        let inputEl = document.createElement('input');
+
+        inputEl.type = 'hidden';
+        inputEl.name = 'paymentIdx';
+        inputEl.value = paymentIdx;
+        formEl.append(inputEl);
+
+        formEl.method = 'post';
+        formEl.action = '/payment/refund';
+
+        document.body.append(formEl);
+        formEl.submit();
+    }
+}
+
+function confirmThis(element) {
+    if(confirm("구매확정 이후에는 환불이 불가합니다.\n구매확정하시겠습니까?")) {
+        const paymentIdx = element.dataset.paymentidx;
+
+        let formEl = document.createElement('form');
+        let inputEl = document.createElement('input');
+
+        inputEl.type = 'hidden';
+        inputEl.name = 'paymentIdx';
+        inputEl.value = paymentIdx;
+        formEl.append(inputEl);
+
+        formEl.method = 'post';
+        formEl.action = '/payment/confirm';
+
+        document.body.append(formEl);
+        formEl.submit();
+    }
 }

@@ -10,14 +10,17 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.MemberDTO;
 
 import org.fullstack4.hammerteen.service.MemberServiceIf;
+import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -26,6 +29,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MemberController {
     private final MemberServiceIf memberServiceIf;
+    private final CommonFileUtil commonFileUtil;
 
     /* @GetMapping("/view")
      public void view(){
@@ -70,7 +74,7 @@ public class MemberController {
     @ResponseBody
     public ResponseEntity<?> duplecheckGET(@RequestParam("userId") String userId, HttpServletRequest request, HttpServletResponse response,
                                            Model model) {
-        System.out.println("여기로 들어와야함 중복");
+
         Boolean result = false;
         result = memberServiceIf.idCheck(userId);
 
@@ -93,25 +97,66 @@ public class MemberController {
 
     }
 
+    //이메일 중복체크
+
+    @GetMapping("/emailduplecheck")
+    @ResponseBody
+    public ResponseEntity<?> emailduplecheckGET(@RequestParam("email") String email, HttpServletRequest request, HttpServletResponse response,
+                                           Model model) {
+        System.out.println("여기로 들어와야함 중복");
+        Boolean result = false;
+        result = memberServiceIf.emailCheck(email);
+
+        //아이디 중복으로 있으면 (true)
+        if (result) {
+            Map<String, Object> resp = new HashMap<>();
+            resp.put("success", false);
+            resp.put("message", "중복된 이메일입니다.");
+
+            return ResponseEntity.ok().body(resp);
+
+        } else {
+            Map<String, Object> resp = new HashMap<>();
+            resp.put("success", true);
+
+
+            return ResponseEntity.ok().body(resp);
+
+        }
+
+    }
     /*@GetMapping("/modify")
     public void modifyGET(){
     }*/
 
 
-    @PostMapping("/modify")
-    public String modifyPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+   /* @PostMapping("/mypage")
+    public String modifyPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
+
+        System.out.println("files" + file);
+        List<String> filenames = null;
+        String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
+
+        filenames = commonFileUtil.fileuploads(file,realPath);
+        System.out.println("filenames"+filenames);
+
+        memberDTO.setFileName(filenames.get(0));
+        memberDTO.setDirectory(realPath);
 
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             redirectAttributes.addFlashAttribute("info", "alert(`회원 정보 수정 실패 올바른 값을 입력해 주세요.`);");
-            return "redirect:/member/modify";
+            return "redirect:/member/mypage";
         }
+
         MemberDTO modifyDTO = memberServiceIf.modify(memberDTO);
+        System.out.println("modifyDTO22"+modifyDTO);
+
         request.getSession().setAttribute("memberDTO", modifyDTO);
         redirectAttributes.addFlashAttribute("info", "alert(`회원 정보 수정 성공`);");
-        return "redirect:/member/modify";
-    }
+        return "redirect:/member/mypage";
+    }*/
 
 
     @GetMapping("/modify")

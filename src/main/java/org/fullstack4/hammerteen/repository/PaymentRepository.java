@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<PaymentEntity, Integer> {
-    public List<PaymentEntity> findAllByUserIdEquals(String userId);
+    public List<PaymentEntity> findAllByUserIdEqualsOrderByPaymentIdxDesc(String userId);
+    public PaymentEntity findAllByPaymentIdx(int paymentIdx);
 
 }

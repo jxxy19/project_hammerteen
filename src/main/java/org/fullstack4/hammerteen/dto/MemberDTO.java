@@ -35,6 +35,10 @@ public class MemberDTO {
     @NotEmpty
     private String zipCode;
 
+
+    private String directory;
+    private String fileName;
+
     @NotEmpty
     private String userState;
 

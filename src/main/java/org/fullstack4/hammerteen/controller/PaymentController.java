@@ -27,36 +27,102 @@ public class PaymentController {
     private final PaymentServiceIf paymentServiceIf;
     private String menu1 = "결제";
     @GetMapping("/payment")
-    public void paymentGet(Model model,
+    public String paymentGet(Model model,
                            HttpSession session,
-                           String lectureIdx) {
-        List<LectureDTO> lectureDTOList = paymentServiceIf.selectLecture(lectureIdx.split(","));
-        int totalPrice = 0;
-        for(LectureDTO lectureDTO : lectureDTOList) {
-            totalPrice += lectureDTO.getPrice();
+                           String lectureIdx,
+                           RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            List<LectureDTO> lectureDTOList = paymentServiceIf.selectLecture(lectureIdx.split(","));
+            int totalPrice = 0;
+            for(LectureDTO lectureDTO : lectureDTOList) {
+                totalPrice += lectureDTO.getPrice();
+            }
+            log.info("lectureDTOList : {}", lectureDTOList);
+            model.addAttribute("totalPrice", CommonUtil.comma(String.valueOf(totalPrice)));
+            model.addAttribute("lectureDTOList", lectureDTOList);
+            model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "결제"));
+            return "/payment/payment";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
         }
-        log.info("lectureDTOList : {}", lectureDTOList);
-        model.addAttribute("totalPrice", CommonUtil.comma(String.valueOf(totalPrice)));
-        model.addAttribute("lectureDTOList", lectureDTOList);
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "결제"));
     }
     @PostMapping("/payment")
     public String paymentPost(PaymentDTO paymentDTO,
-                              String lectureIdxes,
                               BindingResult bindingResult,
+                              String lectureIdxes,
+                              HttpSession session,
                               RedirectAttributes redirectAttributes) {
-        if(bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("info","결제 정보가 부족합니다.");
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            if(bindingResult.hasErrors()) {
+                redirectAttributes.addFlashAttribute("info","결제 정보가 부족합니다.");
+            }
+            if(!memberDTO.getUserId().equals(paymentDTO.getUserId()) || !memberDTO.getName().equals(paymentDTO.getUserName())){
+                log.info("결제정보와 로그인 정보 불일치");
+                log.info("memberDTO : {}", memberDTO);
+                log.info("paymentDTO : {}", paymentDTO);
+            }
+            log.info("paymentDTO : {}", paymentDTO);
+            log.info("lectureIdxes : {}", lectureIdxes);
+            int idx = paymentServiceIf.registPayment(lectureIdxes.split(","),paymentDTO);
+            if(idx > 0) {
+                redirectAttributes.addFlashAttribute("info","결제가 완료되었습니다.");
+                return "redirect:/mypage/payList";
+            } else {
+                redirectAttributes.addFlashAttribute("info","결제가 실패하였습니다.");
+            }
+            return "redirect:/payment/payment";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
         }
-        log.info("paymentDTO : {}", paymentDTO);
-        log.info("lectureIdxes : {}", lectureIdxes);
-        int idx = paymentServiceIf.registPayment(lectureIdxes.split(","),paymentDTO);
-        if(idx > 0) {
-            redirectAttributes.addFlashAttribute("info","결제가 완료되었습니다.");
+    }
+
+    @PostMapping("/confirm")
+    public String confirmPost(@RequestParam(name="paymentIdx", defaultValue= "0")String paymentIdx,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if (memberDTO != null) {
+            if(CommonUtil.parseInt(paymentIdx) > 0) {
+                int idx = paymentServiceIf.confirmPayment(CommonUtil.parseInt(paymentIdx));
+                if(idx > 0) {
+                    redirectAttributes.addFlashAttribute("info", "구매확정 성공");
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "구매확정 실패");
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("info", "잘못된 결제코드");
+            }
             return "redirect:/mypage/payList";
         } else {
-            redirectAttributes.addFlashAttribute("info","결제가 실패하였습니다.");
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
         }
-        return "redirect:/payment/payment";
+    }
+
+    @PostMapping("/refund")
+    public String refundPost(@RequestParam(name="paymentIdx", defaultValue= "0")String paymentIdx,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if (memberDTO != null) {
+            if(CommonUtil.parseInt(paymentIdx) > 0) {
+                int result = paymentServiceIf.refundPayment(CommonUtil.parseInt(paymentIdx));
+                if(result > 0) {
+                    redirectAttributes.addFlashAttribute("info", "환불요청 성공\n결제사에 따라 최대 일주일정도 소요될 수 있습니다.");
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "환불요청 실패");
+                }
+            } else {
+                redirectAttributes.addFlashAttribute("info", "잘못된 결제코드");
+            }
+            return "redirect:/mypage/payList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
     }
 }

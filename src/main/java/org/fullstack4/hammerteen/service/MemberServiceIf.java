@@ -15,4 +15,7 @@ public interface MemberServiceIf {
 
     //아이디중복체크
     Boolean idCheck(String user_id);
+
+    //이메일중복체크
+    Boolean emailCheck(String user_id);
 }
