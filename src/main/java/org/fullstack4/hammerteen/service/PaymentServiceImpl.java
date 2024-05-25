@@ -71,6 +71,25 @@ public class PaymentServiceImpl implements PaymentServiceIf{
         List<PaymentEntity> paymentEntityList = paymentRepository.findAllByUserIdEquals(userId);
         if(paymentEntityList != null) {
             paymentDTOList = paymentEntityList.stream().map(vo ->modelMapper.map(vo, PaymentDTO.class)).collect(Collectors.toList());
+            paymentDTOList.forEach(dto ->
+                {
+                    dto.setPaymentAmountToComma();
+                    dto.setRegDateToString();
+                    dto.setPaymentMethodConvert();
+                    dto.setRegDateTimeToString();
+                    dto.setOrderDTO(modelMapper.map(orderRepository.findById(dto.getOrderIdx()),OrderDTO.class));
+                    List<OrderDetailDTO> orderDetailDTOList = new ArrayList<>();
+                    dto.setOrderDetailDTOList(
+                            orderDetailRepository.findAllByOrderIdx(dto.getOrderIdx()).stream().map(vo->modelMapper.map(vo, OrderDetailDTO.class)).collect(Collectors.toList())
+                    );
+                    List<LectureDTO> letureDTOList = new ArrayList<>();
+                    for(OrderDetailDTO orderDetailDTO:dto.getOrderDetailDTOList()) {
+                        LectureDTO lectureDTO = modelMapper.map(lectureRepository.findById(orderDetailDTO.getLectureIdx()), LectureDTO.class);
+                        letureDTOList.add(lectureDTO);
+                    }
+                    dto.setLectureDTOList(letureDTOList);
+                }
+            );
         }
         return paymentDTOList;
     }
