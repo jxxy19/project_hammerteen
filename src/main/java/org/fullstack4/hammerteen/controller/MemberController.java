@@ -11,6 +11,7 @@ import org.fullstack4.hammerteen.dto.MemberDTO;
 
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,4 +181,30 @@ public class MemberController {
             return "/member/modify";
         }
     }
+
+    //지현 추가 : 선생님 조회용
+    @RequestMapping(value = "/teacherList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String teacherList(@RequestParam(name = "userIdOrName", defaultValue = "") String userIdOrName) {
+        log.info("========================================== teacherList 시작");
+        log.info("userIdOrName : {}", userIdOrName);
+        JSONArray jsonArray = new JSONArray();
+        if(!userIdOrName.isEmpty()) {
+            List<MemberDTO> memberDTOList = memberServiceIf.teacherList(userIdOrName);
+            log.info("memberDTOList : {}", memberDTOList);
+            for(MemberDTO dto : memberDTOList) {
+                log.info("dto : {}", dto);
+                Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("\"userId\"", "\""+dto.getUserId()+"\"");
+                resultMap.put("\"name\"", "\""+dto.getUserId()+"\"");
+                log.info("resultMap : {}", resultMap);
+                jsonArray.put(resultMap);
+            }
+            log.info("jsonArray : {}", jsonArray);
+        }
+        log.info("========================================== teacherList 종료");
+        return jsonArray.toString();
+    }
+
+
 }

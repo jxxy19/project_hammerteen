@@ -98,4 +98,12 @@ public class MemberServiceImpl implements MemberServiceIf{
         return PageResponseDTO.<MemberDTO>withAll().pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
+
+    // 지현 추가 : 선생님 리스트 조회용(통계에서)
+    @Override
+    public List<MemberDTO> teacherList(String userIdOrName) {
+        List<MemberEntity> memberEntityList = memberRepository.findMemberEntityByUserIdLikeOrNameLikeAndRoleEquals("%"+userIdOrName+"%", "%"+userIdOrName+"%", "Y");
+        List<MemberDTO> memberDTOList = memberEntityList.stream().map(vo -> modelMapper.map(vo, MemberDTO.class)).collect(Collectors.toList());
+        return memberDTOList;
+    }
 }

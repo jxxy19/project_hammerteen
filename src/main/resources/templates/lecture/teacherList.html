@@ -3,6 +3,7 @@
 <html
   lang="en"
   class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+  xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{/common/common.html}">
 <body>
@@ -88,276 +89,267 @@
                           <div class="tab-content py-0" id="nav-tabContent">
                             <div class="tab-pane show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
                               <div class="row">
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                        <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                        <div>
+                                          <a href="/lecture/list?teacherId=test">
+                                            <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                          </a>
+                                        </div>
+                                        <div class="content d-flex flex-column gap-2">
+                                          <h3 class="title border-0 m-0">
+                                            <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                          </h3>
+                                          <div>
+                                            <a href="/lecture/list?teacherId=test">
+                                            <small class="badge bg-label-primary">과목</small>
+                                            </a>
+                                          </div>
+                                          <div>
+                                            <a href="/lecture/list?teacherId=test">
+                                            <small>난 전주연 모두 나를 따르라!!</small>
+                                            </a>
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                        <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                      <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                     </div>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
+                                  <div class="col-lg-4 col-md-6 col-12 position-relative">
+                                      <!-- Start Single Item -->
+                                      <div class="single-item-grid">
+                                          <div>
+                                              <a href="/lecture/list?teacherId=test">
+                                                  <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
+                                              </a>
+                                          </div>
+                                          <div class="content d-flex flex-column gap-2">
+                                              <h3 class="title border-0 m-0">
+                                                  <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
+                                              </h3>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small class="badge bg-label-primary">과목</small>
+                                                  </a>
+                                              </div>
+                                              <div>
+                                                  <a href="/lecture/list?teacherId=test">
+                                                      <small>난 전주연 모두 나를 따르라!!</small>
+                                                  </a>
+                                              </div>
+                                          </div>
                                       </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
+                                      <th:block th:if="${session.memberDTO != null and !session.memberDTO.role.toString().equals('user')}">
+                                          <a href="/lecture/saleStatic?teacherIdx=1" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
+                                      </th:block>
+                                      <!-- End Single Item -->
                                   </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
-                                      </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
-                                <div class="col-lg-4 col-md-6 col-12 position-relative">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div>
-                                      <a href="/lecture/list?teacherId=test">
-                                        <img class="w-100 rounded" src="/assets/img/image/images.jpeg">
-                                      </a>
-                                    </div>
-                                    <div class="content d-flex flex-column gap-2">
-                                      <h3 class="title border-0 m-0">
-                                        <a href="/lecture/list?teacherId=test"><span>전주연</span>선생님</a>
-                                      </h3>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small class="badge bg-label-primary">과목</small>
-                                        </a>
-                                      </div>
-                                      <div>
-                                        <a href="/lecture/list?teacherId=test">
-                                          <small>난 전주연 모두 나를 따르라!!</small>
-                                        </a>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <a href="/lecture/saleStatic?teacherId=test" class="btn btn-primary text-white fs-tiny position-absolute" style="top : 10px; right: 20px;">매출통계</a>
-                                  <!-- End Single Item -->
-                                </div>
                               </div>
                               <div class="row">
                                 <div class="col-12">

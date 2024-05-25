@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, Integer> {
@@ -23,4 +24,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Integer> {
     Page<MemberEntity> findAllByUserIdContainsOrNameContainsOrderByMemberIdxDesc(Pageable pageable , String userId , String name);
 
     Page<MemberEntity> findAllByOrderByMemberIdxDesc(Pageable pageable);
+
+    // 지현추가 : 선생님 리스트 조회용
+    List<MemberEntity> findMemberEntityByUserIdLikeOrNameLikeAndRoleEquals(String userId, String name, String role);
 }
