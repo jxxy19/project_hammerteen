@@ -5,11 +5,17 @@ import lombok.extern.log4j.Log4j2;
 
 import org.fullstack4.hammerteen.domain.MemberEntity;
 import org.fullstack4.hammerteen.dto.MemberDTO;
+import org.fullstack4.hammerteen.dto.PageRequestDTO;
+import org.fullstack4.hammerteen.dto.PageResponseDTO;
 import org.fullstack4.hammerteen.repository.MemberRepository;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -71,5 +77,25 @@ public class MemberServiceImpl implements MemberServiceIf{
         boolean result = memberRepository.existsByEmail(email);
 
         return result;
+    }
+
+    @Override
+    public PageResponseDTO<MemberDTO> list(PageRequestDTO pageRequestDTO) {
+        PageRequest pageable = pageRequestDTO.getPageable();
+        Page<MemberEntity> result = null;
+        String search_word = pageRequestDTO.getSearch_word();
+
+       if(pageRequestDTO.getSearch_word()!=null && !pageRequestDTO.getSearch_word().isEmpty()) {
+           result = memberRepository.findAllByUserIdContainsOrNameContainsOrderByMemberIdxDesc(pageable,search_word ,search_word);
+        }
+        else{
+            result = memberRepository.findAllByOrderByMemberIdxDesc(pageable);
+        }
+        List<MemberDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,MemberDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<MemberDTO>withAll().pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 }

@@ -6,6 +6,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.MemberDTO;
+import org.fullstack4.hammerteen.dto.PageRequestDTO;
+import org.fullstack4.hammerteen.dto.PageResponseDTO;
 import org.fullstack4.hammerteen.dto.PaymentDTO;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.service.PaymentServiceIf;
@@ -91,11 +93,21 @@ public class MyPageController {
     }
 
     @GetMapping("/memberList")
-    public void memberListGet(Model model) {
+    public void memberListGet(PageRequestDTO pageRequestDTO, Model model,
+                              HttpServletRequest request
+    ) {
+
+        PageResponseDTO<MemberDTO> pageResponseDTO = memberServiceIf.list(pageRequestDTO);
+
+
+        model.addAttribute("pageResponseDTO" , pageResponseDTO);
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
     }
     @GetMapping("/memberView")
-    public void memberViewGet(Model model) {
+    public void memberViewGet(MemberDTO memberDTO, Model model) {
+        System.out.println("memberVIew로 들어와야함" + memberDTO);
+
+
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
     }
     @GetMapping("/likeList")

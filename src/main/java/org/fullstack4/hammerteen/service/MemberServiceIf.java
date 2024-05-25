@@ -2,6 +2,8 @@ package org.fullstack4.hammerteen.service;
 
 
 import org.fullstack4.hammerteen.dto.MemberDTO;
+import org.fullstack4.hammerteen.dto.PageRequestDTO;
+import org.fullstack4.hammerteen.dto.PageResponseDTO;
 
 public interface MemberServiceIf {
 
@@ -18,4 +20,6 @@ public interface MemberServiceIf {
 
     //이메일중복체크
     Boolean emailCheck(String user_id);
+
+    PageResponseDTO<MemberDTO> list(PageRequestDTO pageRequestDTO);
 }
