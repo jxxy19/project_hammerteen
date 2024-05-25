@@ -64,6 +64,23 @@ public class MemberEntity extends BaseEntity {
         this.directory=directory;
 
     }
+
+    public void DetailModify(String pwd,String email,String phone_number,String addr1,String addr2,String zip_code,String user_state,String fileName, String directory ,String role){
+
+        this.pwd=pwd;
+        this.email=email;
+        this.phoneNumber=phone_number;
+        this.addr1=addr1;
+        this.addr2=addr2;
+        this.zipCode=zip_code;
+        this.userState=user_state;
+        this.fileName=fileName;
+        this.directory=directory;
+        this.role=role;
+
+    }
+
+
     public void delete(String user_state){
 
 

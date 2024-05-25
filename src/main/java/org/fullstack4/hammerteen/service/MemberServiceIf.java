@@ -22,4 +22,8 @@ public interface MemberServiceIf {
     Boolean emailCheck(String user_id);
 
     PageResponseDTO<MemberDTO> list(PageRequestDTO pageRequestDTO);
+
+    MemberDTO Detailview(String userId);
+
+    MemberDTO detailModify(MemberDTO memberDTO);
 }

@@ -38,6 +38,7 @@ public class MemberDTO {
 
     private String directory;
     private String fileName;
+    private String temFileName;
 
     @NotEmpty
     private String userState;
