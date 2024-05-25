@@ -123,7 +123,7 @@
                         <input type="text" class="form-control" id="email" name="email" placeholder="abc@email.com" />
                       </div>
                       <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
-                        <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailChekck">중복체크</button>
+                        <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">중복체크</button>
                       </div>
                     </div>
                     <div class="mb-3 row">
@@ -611,6 +611,50 @@
           idCheckButton.textContent = "중복체크";
         }
       });
+
+      //이메일 중복검사
+      const emailCheckButton = document.querySelector("#emailCheck");
+
+      emailCheckButton.addEventListener("click", function(e) {
+
+        e.preventDefault();
+
+        const emailInput = document.querySelector("#email");
+        const email = emailInput.value;
+
+        if (emailCheckButton.textContent === "중복체크") {
+          // AJAX 통신
+          $.ajax({
+            url: '/member/emailduplecheck',
+            type: 'GET',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            data: { email: email },
+
+            success: function(response) {
+              if (response.success) {
+                const confirm_msg = "이 이메일은 사용 가능합니다.\n 사용하시겠습니까?";
+                if (confirm(confirm_msg)) {
+                  emailInput.value = email;
+                  emailInput.readOnly = true;
+                  emailCheckButton.textContent = "다시입력";
+                }
+              } else {
+                alert(response.message);
+              }
+            },
+            error: function() {
+              alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+          });
+        } else if (emailCheckButton.textContent === "다시입력") {
+          // 다시입력 로직
+          emailInput.readOnly = false;
+          emailInput.value = '';
+          emailCheckButton.textContent = "중복체크";
+        }
+      });
+
 
       const submit_button = document.querySelector("#submit_button");
       submit_button.addEventListener("click",function (e){

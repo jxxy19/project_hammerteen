@@ -19,10 +19,17 @@
                   <div class="card mb-4">
                     <h5 class="card-header">나의 계정 정보</h5>
                     <!-- Account -->
+                    <form id="frm" name="frm" action="/mypage/mypage" method="post" enctype="multipart/form-data">
+                      <input type="hidden" name="userState" id="userState" value="Y">
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                         <img
-                                src="/assets/img/image/images2.jpeg" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
+                                th:src="${session.memberDTO.fileName != null ? '/upload/' + session.memberDTO.fileName : '/assets/img/image/images2.jpeg'}"
+                                alt="user-avatar"
+                                class="d-block rounded"
+                                height="100"
+                                width="100"
+                                id="uploadedAvatar" />
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">사진 올리기</span>
@@ -30,69 +37,73 @@
                             <input
                               type="file"
                               id="upload"
+                              name="file"
                               class="account-file-input"
                               hidden
-                              accept="image/png, image/jpeg"/>
+                              accept="image/png, image/jpeg"
+                              multiple/>
                           </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                          <button type="button" id="reset_button" class="btn btn-outline-secondary account-image-reset mb-4">
                             <i class="bx bx-reset d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">초기화</span>
                           </button>
 
-                          <p class="text-muted mb-0">800K사이즈의 JPG, GIF 또는 PNG만 업로드 가능합니다.</p>
+                          <p class="text-muted mb-0" >800K사이즈의 JPG, GIF 또는 PNG만 업로드 가능합니다.</p>
                         </div>
                       </div>
                     </div>
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="memberId" class="form-label">ID</label>
-                            <input class="form-control" type="text" name="memberId" id="memberId" value="kiyoung" disabled/>
+                            <input class="form-control" type="text" name="userId" id="memberId" th:value="${session.memberDTO.userId}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">이름</label>
-                            <input class="form-control" type="text" id="name" name="name" value="이기영" disabled/>
+                            <input class="form-control" type="text" id="name" name="name" th:value="${session.memberDTO.name}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6 form-password-toggle">
-                            <label class="form-label" for="password1">비밀번호</label>
+                            <label class="form-label" for="pwd">비밀번호</label>
                             <div class="input-group input-group-merge">
-                              <input type="password" id="password1" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <input type="password" id="pwd" class="form-control" name="pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                               <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6 form-password-toggle">
-                            <label class="form-label" for="password2">비밀번호 재입력</label>
+                            <label class="form-label" for="confirm_pwd">비밀번호 재입력</label>
                             <div class="input-group input-group-merge">
-                              <input type="password" id="password2" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <input type="password" id="confirm_pwd" class="form-control" name="confirm_pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                               <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+
                             </div>
+
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="birthday" class="form-label">생일</label>
-                            <input type="date" class="form-control"  id="birthday"  name="birthday" value="1960-03-05" disabled/>
+                            <input type="date" class="form-control"  id="birthday"  name="birthday" th:value="${session.memberDTO.birthday}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <div class="row">
                               <div class="col-lg-8 col-sm-9 pe-lg-1">
                                 <label for="email" class="form-label">이메일</label>
-                                <input type="text" class="form-control" id="email" name="email" placeholder="abc@email.com" />
+                                <input type="text" class="form-control" id="email" name ="email" th:value="${session.memberDTO.birthday}" placeholder="abc@email.com" />
                               </div>
                               <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
-                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailChekck">중복체크</button>
+                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">중복체크</button>
                               </div>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="phoneNum" class="form-label">전화번호</label>
-                            <input class="form-control" type="text" id="phoneNum" name="phoneNum" value="" placeholder="010-1234-5678"/>
+                            <label for="phoneNumber" class="form-label">전화번호</label>
+                            <input class="form-control" type="text" id="phoneNumber" name="phoneNumber" th:value="${session.memberDTO.phoneNumber}" placeholder="010-1234-5678"/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <div class="row">
                               <div class="col-lg-8 col-sm-8 pe-lg-1 px-sm-2">
                                 <label for="zipcode" class="form-label">우편번호</label>
-                                <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly/>
+                                <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly th:value="${session.memberDTO.zipCode}"/>
                               </div>
                               <div class="col-lg-4 col-sm-4 align-content-end ps-lg-1">
                                 <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
@@ -103,21 +114,22 @@
                         <div class="row justify-content-end">
                           <div class="mb-3 col-md-6 ">
                             <label for="addr1" class="form-label">주소</label>
-                            <input class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" readonly/>
+                            <input class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" th:value="${session.memberDTO.addr1}" readonly/>
                             </div>
                         </div>
                         <div class="row justify-content-end">
                           <div class="mb-3 col-md-6 ">
                             <label for="addr2" class="form-label">상세 주소</label>
-                            <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소"/>
+                            <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소" th:value="${session.memberDTO.addr2}"/>
                           </div>
                         </div>
                         <div class="mt-2">
-                          <button type="submit" class="btn btn-primary me-2">수정하기</button>
+                          <button type="submit"  id="submit_button" class="btn btn-primary me-2">수정하기</button>
                         </div>
-                      </form>
+
                     </div>
                     <!-- /Account -->
+                    </form>
                   </div>
 
                   <div class="row">
@@ -179,15 +191,17 @@
                             >회원 탈퇴에 동의합니다.</label
                           >
                         </div>
-                        <button type="submit" class="btn btn-danger deactivate-account">회원 탈퇴하기</button>
+                        <button type="submit" id="delete_button" class="btn btn-danger deactivate-account">회원 탈퇴하기</button>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+
             <!-- / Content -->
             <div class="content-backdrop fade"></div>
+
           </div>
           <!-- Content wrapper -->
         </div>
@@ -215,6 +229,88 @@
       zipcodeBtn.addEventListener("click", ()=> {
       zipCode(zipcode, addr1);
       });
+
+
+
+
+
+      const submit_button =document.querySelector("#submit_button");
+      submit_button.addEventListener("click",function (e){
+        e.preventDefault();
+        const pwd= document.querySelector("#pwd");
+        const confirm_pwd= document.querySelector("#confirm_pwd");
+
+
+        //비밀번호 일치
+        if(!passwordMatch(confirm_pwd,pwd)){
+          alert("비밀번호가 일치하지 않습니다.");
+          return false;
+        }
+
+        const confirm_msg ="정말로 수정하시겠습니까?";
+        if(confirm(confirm_msg)){
+          alert("정보가 수정되었습니다.");
+          document.frm.submit();
+        }
+
+
+      });
+
+
+      //파일업로드
+      document.getElementById('upload').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            document.getElementById('uploadedAvatar').src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function() {
+        // 콘솔에 로그 추가
+        console.log("DOM fully loaded and parsed");
+
+        // 이미지 리셋
+        document.getElementById("reset_button").addEventListener("click", function() {
+          // 콘솔에 로그 추가
+          console.log("Reset button clicked");
+
+          // 'upload' input 요소 선택
+          const uploadInput = document.getElementById("upload");
+          // input 요소의 값을 초기화
+          uploadInput.value = "";
+
+          // 'uploadedAvatar' id를 가진 img 요소 선택
+          const uploadedAvatar = document.getElementById("uploadedAvatar");
+          // img 요소의 src 속성을 기본 이미지 경로로 변경
+          uploadedAvatar.src = '/assets/img/image/images2.jpeg';
+
+          // 콘솔에 로그 추가
+          console.log("Image source reset to default");
+        });
+      });
+
+      const delete_button = document.querySelector("#delete_button");
+      delete_button.addEventListener("click",function (e){
+        e.preventDefault();
+        const confirm_msg = "정말로 탈퇴하시겠습니까?"
+        if(confirm(confirm_msg)){
+          alert("탈퇴되었습니다.")
+          location.href='/mypage/delete';
+
+        }
+
+      });
+
     </script>
+
+
+
+
+
+
     </th:block>
 </html>

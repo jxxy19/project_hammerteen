@@ -40,7 +40,7 @@ public class MemberServiceImpl implements MemberServiceIf{
     public MemberDTO modify(MemberDTO memberDTO) {
         Optional<MemberEntity> result = memberRepository.findByUserId(memberDTO.getUserId());
         MemberEntity member = result.orElse(null);
-        member.modify(memberDTO.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState());
+        member.modify(memberDTO.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState(),memberDTO.getFileName(),memberDTO.getDirectory());
 
         memberRepository.save(member);
         MemberDTO memberUpdateDTO = modelMapper.map(member,MemberDTO.class);
@@ -62,6 +62,13 @@ public class MemberServiceImpl implements MemberServiceIf{
     @Override
     public Boolean idCheck(String userId) {
         boolean result = memberRepository.existsByUserId(userId);
+
+        return result;
+    }
+
+    @Override
+    public Boolean emailCheck(String email) {
+        boolean result = memberRepository.existsByEmail(email);
 
         return result;
     }

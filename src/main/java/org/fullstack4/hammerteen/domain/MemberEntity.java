@@ -46,7 +46,12 @@ public class MemberEntity extends BaseEntity {
     @Column(length = 10,nullable = true)
     private String role;
 
-    public void modify(String pwd,String email,String phone_number,String addr1,String addr2,String zip_code,String user_state){
+    @Column(length = 1000,nullable = true)
+    private String directory;
+    @Column(length = 1000,nullable = true)
+    private String fileName;
+
+    public void modify(String pwd,String email,String phone_number,String addr1,String addr2,String zip_code,String user_state,String fileName, String directory){
 
         this.pwd=pwd;
         this.email=email;
@@ -55,6 +60,8 @@ public class MemberEntity extends BaseEntity {
         this.addr2=addr2;
         this.zipCode=zip_code;
         this.userState=user_state;
+        this.fileName=fileName;
+        this.directory=directory;
 
     }
     public void delete(String user_state){
