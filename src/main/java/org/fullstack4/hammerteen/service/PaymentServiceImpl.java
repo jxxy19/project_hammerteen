@@ -7,14 +7,8 @@ import org.fullstack4.hammerteen.domain.LectureEntity;
 import org.fullstack4.hammerteen.domain.OrderDetailEntity;
 import org.fullstack4.hammerteen.domain.OrderEntity;
 import org.fullstack4.hammerteen.domain.PaymentEntity;
-import org.fullstack4.hammerteen.dto.LectureDTO;
-import org.fullstack4.hammerteen.dto.OrderDTO;
-import org.fullstack4.hammerteen.dto.OrderDetailDTO;
-import org.fullstack4.hammerteen.dto.PaymentDTO;
-import org.fullstack4.hammerteen.repository.LectureRepository;
-import org.fullstack4.hammerteen.repository.OrderDetailRepository;
-import org.fullstack4.hammerteen.repository.OrderRepository;
-import org.fullstack4.hammerteen.repository.PaymentRepository;
+import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -31,6 +25,7 @@ public class PaymentServiceImpl implements PaymentServiceIf{
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final LectureRepository lectureRepository;
+    private final MemberRepository memberRepository;
     private final ModelMapper modelMapper;
     @Transactional
     @Override
@@ -49,7 +44,7 @@ public class PaymentServiceImpl implements PaymentServiceIf{
                     .lectureIdx(lectureEntity.getLectureIdx())
                             .orderIdx(orderIdx)
                             .price(lectureEntity.getPrice())
-                            .teacherName(lectureEntity.getTeacherName())
+                            .teacherIdx(lectureEntity.getTeacherIdx())
                             .title(lectureEntity.getTitle())
                             .build());
         }
@@ -137,6 +132,8 @@ public class PaymentServiceImpl implements PaymentServiceIf{
                     List<LectureDTO> letureDTOList = new ArrayList<>();
                     for(OrderDetailDTO orderDetailDTO:dto.getOrderDetailDTOList()) {
                         LectureDTO lectureDTO = modelMapper.map(lectureRepository.findById(orderDetailDTO.getLectureIdx()), LectureDTO.class);
+                        MemberDTO memberDTO = modelMapper.map(memberRepository.findById(lectureDTO.getTeacherIdx()), MemberDTO.class);
+                        lectureDTO.setTeacherName(memberDTO.getName());
                         letureDTOList.add(lectureDTO);
                     }
                     dto.setLectureDTOList(letureDTOList);
@@ -152,6 +149,10 @@ public class PaymentServiceImpl implements PaymentServiceIf{
         List<LectureEntity> lectureEntityList = lectureRepository.findAllById(Arrays.stream(lectureIdxes).map(CommonUtil::parseInt).collect(Collectors.toList()));
         if(lectureEntityList != null) {
             lectureDTOList = lectureEntityList.stream().map(vo->modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+            lectureDTOList.forEach(dto -> {
+                MemberDTO memberDTO = modelMapper.map(memberRepository.findById(dto.getTeacherIdx()), MemberDTO.class);
+                dto.setTeacherName(memberDTO.getName());
+            });
         }
         return lectureDTOList;
     }

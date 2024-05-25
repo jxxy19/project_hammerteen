@@ -32,5 +32,6 @@ public class LectureDTO {
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 
-
+    //지현 추가 강의 선생님이름 조회용 컬럼
+    private String teacherName;
 }

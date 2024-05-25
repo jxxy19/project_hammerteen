@@ -16,7 +16,7 @@ public class OrderDetailDTO {
     private int orderIdx;
     private int lectureIdx;
     private String title;
-    private String teacherName;
+    private int teacherIdx;
     private int price;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;

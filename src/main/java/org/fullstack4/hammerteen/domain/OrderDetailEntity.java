@@ -22,7 +22,7 @@ public class OrderDetailEntity extends BaseEntity {
     @Column(nullable=false, length = 50)
     private String title;
     @Column(nullable=false, length = 20)
-    private String teacherName;
+    private int teacherIdx;
     @Column(nullable=false)
     private int price;
 }
