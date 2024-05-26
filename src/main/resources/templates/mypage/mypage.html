@@ -98,7 +98,18 @@
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="phoneNumber" class="form-label">전화번호</label>
-                            <input class="form-control" type="text" id="phoneNumber" name="phoneNumber" th:value="${session.memberDTO.phoneNumber}" placeholder="010-1234-5678"/>
+                            <div class="input-group">
+                              <!-- Phone Number Prefix -->
+                              <input class="form-control" type="text" id="phoneNumber" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 0, 3)}" placeholder="010" style="width: 80px;" maxlength="3"/>
+                              <!-- Separator -->
+                              <span class="input-group-text">-</span>
+                              <!-- Phone Number Middle -->
+                              <input class="form-control" type="text" id="phoneNumber2" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 3, 7)}" placeholder="1234" style="width: 100px;" maxlength="4" />
+                              <!-- Separator -->
+                              <span class="input-group-text">-</span>
+                              <!-- Phone Number Suffix -->
+                              <input class="form-control" type="text" id="phoneNumber3" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 7, 11)}" placeholder="5678" style="width: 100px;" maxlength="4"/>
+                            </div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <div class="row">
@@ -298,6 +309,13 @@
       const delete_button = document.querySelector("#delete_button");
       delete_button.addEventListener("click",function (e){
         e.preventDefault();
+        const accountActivation = document.querySelector("#accountActivation");
+
+        if(!accountActivation.checked){
+          alert("필수약관에 동의해주세요.");
+          return false;
+        }
+
         const confirm_msg = "정말로 탈퇴하시겠습니까?"
         if(confirm(confirm_msg)){
           alert("탈퇴되었습니다.")

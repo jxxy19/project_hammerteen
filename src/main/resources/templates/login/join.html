@@ -107,7 +107,16 @@
                     <div class="mb-3 form-password-toggle">
                       <label class="form-label" for="phoneNumber">전화번호</label>
                       <div class="input-group input-group-merge">
-                        <input type="text" id="phoneNumber" class="form-control" name="phoneNumber" placeholder="010-1234-5678"/>
+                        <!-- 전화번호 앞자리 -->
+                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="010" aria-label="전화번호 앞자리"  maxlength="3" style="width: 100px;"/>
+                        <!-- 구분자 -->
+                        <span class="input-group-text">-</span>
+                        <!-- 전화번호 중간자리 -->
+                        <input type="text" class="form-control" name="phoneNumber" placeholder="1234" aria-label="전화번호 중간자리" maxlength="4" style="width: 120px;"/>
+                        <!-- 구분자 -->
+                        <span class="input-group-text">-</span>
+                        <!-- 전화번호 끝자리 -->
+                        <input type="text" class="form-control" name="phoneNumber" placeholder="5678" aria-label="전화번호 끝자리" maxlength="4" style="width: 120px;"/>
                       </div>
                     </div>
 
@@ -162,7 +171,7 @@
                               [필수] 이용약관&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms form-check-input" type="checkbox" id="terms1" name="terms1" value="Y" onclick="event.stopPropagation();" >
+                              <input class="terms form-check-input" type="checkbox" id="terms1" name="terms" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms1" onclick="event.stopPropagation();" >동의함</label>
                             </div>
                           </div>
@@ -367,7 +376,7 @@
                               [필수] 개인정보 수집 및 이용 동의&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms form-check-input" type="checkbox" id="terms2" name="terms2" value="Y" onclick="event.stopPropagation();" >
+                              <input class="terms form-check-input" type="checkbox" id="terms2" name="terms" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms2" onclick="event.stopPropagation();">동의함</label>
                             </div>
                           </div>
@@ -671,6 +680,10 @@
         const sample4_postcode= document.querySelector("#zipCode");
         const sample4_roadAddress= document.querySelector("#addr1");
 
+        //약관동의
+        const termsCheckboxes = document.querySelectorAll('input[name="terms"]');
+        let allChecked = true; // 모든 항목이 체크되었는지를 추적하는 변수
+
         //공백 체크
         if((!nullCheck(name)) ||(!nullCheck(userId)) || (!nullCheck(pwd)) ||(!nullCheck(confirm_pwd))  ||(!nullCheck(birthday)) || (!nullCheck(phone_number)) || (!nullCheck(sample4_postcode)) || !(!nullCheck(sample4_roadAddress)) ||(!nullCheck(email_div))){
           alert("필수 사항을 입력해주세요.");
@@ -688,6 +701,25 @@
           alert("비밀번호가 일치하지 않습니다.");
           return false;
         }
+
+
+        // 체크박스가 모두 체크되었는지 확인
+        for (let checkbox of termsCheckboxes) {
+          if (!checkbox.checked) {
+            allChecked = false;
+            break;
+          }
+        }
+
+        // 모든 체크박스가 체크되어 있지 않다면, submit을 방지하고 경고창 표시
+        if (!allChecked) {
+
+          alert('모든 필수 약관에 동의해주세요.');
+          return false;
+        }
+
+
+
 
         const confirm_msg = "가입하시겠습니까?";
         if(confirm(confirm_msg)){

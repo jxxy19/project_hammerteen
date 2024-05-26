@@ -44,8 +44,9 @@ public class MemberController {
     public String registPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
 
-        System.out.println("MemberDTO : " +   memberDTO);
-
+       //핸드폰번호 합치기
+        String[] phoneStr = memberDTO.getPhoneNumber().split(",");
+        memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
 
         /* memberDTO.setPassword(commonUtil.encryptPwd(memberDTO.getPassword()));*/
         if (bindingResult.hasErrors()) {

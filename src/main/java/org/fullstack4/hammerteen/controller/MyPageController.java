@@ -42,6 +42,11 @@ public class MyPageController {
     @PostMapping("/mypage")
     public String mypagePost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
 
+
+        //핸드폰번호 합치기
+        String[] phoneStr = memberDTO.getPhoneNumber().split(",");
+        memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
+
         List<String> filenames = null;
         String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
         if(!memberDTO.getTemFileName().isEmpty()){
@@ -129,7 +134,9 @@ public class MyPageController {
 
     @PostMapping("/memberView")
     public String memberViewPost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
-
+        //핸드폰번호 합치기
+        String[] phoneStr = memberDTO.getPhoneNumber().split(",");
+        memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
 
 
         List<String> filenames = null;

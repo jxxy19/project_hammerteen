@@ -41,7 +41,7 @@ public class MemberEntity extends BaseEntity {
     @Column(length =10 ,nullable=false) //회원상태
     private String userState;
     @LastModifiedDate
-    @Column(name="leave_date",insertable = false ,updatable = false,nullable = true) //탈퇴일자
+    @Column(name="leave_date" ,nullable = true) //탈퇴일자
     private LocalDateTime leaveDate;
     @Column(length = 10,nullable = true)
     private String role;
@@ -85,6 +85,7 @@ public class MemberEntity extends BaseEntity {
 
 
         this.userState=user_state;
+        this.leaveDate=LocalDateTime.now();
 
     }
 

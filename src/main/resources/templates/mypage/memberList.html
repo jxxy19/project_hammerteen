@@ -5,6 +5,15 @@
         lang="en"
         layout:decorate="~{/common/common.html}"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <style>
+        .disabled-row {
+            background-color: #f0f0f0;
+            color: #ccc;
+            pointer-events: none;
+        }
+    </style>
+</head>
 
 <body>
 <!-- Layout wrapper -->
@@ -57,6 +66,7 @@
                                  <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
                                      <tr th:each="dto, iterStat : ${pageResponseDTO.dtoList}"
                                          class="cursor-pointer"
+                                         th:classappend="${dto.userState != 'Y'} ? 'disabled-row'"
                                          th:data-idx="${dto.userId}" th:href="|/mypage/memberView?userId=${dto.userId}|"
                                          onclick="goToThisLink('/mypage/memberView?userId=', this)">
                                         <td th:text="${iterStat.count}">1</td>
