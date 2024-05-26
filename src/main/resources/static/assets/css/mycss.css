@@ -679,3 +679,12 @@
 .w-15px {
     width: 15px !important;
 }
+
+.myText {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100% !important;
+    max-width: 200px !important;
+    min-width: 100px !important;
+}

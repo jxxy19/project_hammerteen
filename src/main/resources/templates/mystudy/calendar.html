@@ -36,13 +36,13 @@
                 <div class="card shadow-none border-0">
                     <div class="card-body">
                         <div class="text-end py-3">
-                            <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#calendarOffcanvasBackdrop" aria-controls="calendarOffcanvasBackdrop">+ 일정등록</button>
+                            <button id="btnRegist" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#calendarOffcanvasBackdrop" aria-controls="calendarOffcanvasBackdrop" onclick="setCalendarOffCanvas('new', this.dataset.today)">+ 일정등록</button>
                             <button id="today" class="btn btn-label-primary" onclick="makeCalendar(this.dataset.today)">오늘</button>
                         </div>
                         <div class="table-responsive text-nowrap">
                             <table class="table table-bordered">
                                 <colgroup>
-                                    <col span="7" style="width:14.28%">
+                                    <col span="7" style="width:14.28% !important; min-width: 130px;overflow: hidden">
                                 </colgroup>
                                 <thead>
                                 <tr>
@@ -140,7 +140,7 @@
     <div class="offcanvas offcanvas-end " tabindex="-1" id="calendarOffcanvasBackdrop" aria-labelledby="calendarOffcanvasBackdropLabel" aria-modal="true" role="dialog">
         <div class="offcanvas-header">
             <h5 id="offcanvasBackdropLabel" class="offcanvas-title">일정</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" onclick="initCalendarOffCanvas()"></button>
         </div>
         <div class="offcanvas-body my-1 mx-0 flex-grow-0">
             <div class="mb-3">
@@ -162,8 +162,9 @@
             </div>
         </div>
         <div class="offcanvas-bottom p-3">
-            <button type="button" class="btn btn-primary mb-2 d-grid w-100" data-bs-dismiss="offcanvas">저장</button>
-            <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">닫기</button>
+            <button id="btnSave" type="button" class="btn btn-primary mb-2 d-grid w-100" data-bs-dismiss="offcanvas" onclick="registPlan()">저장</button>
+            <button id="btnDelete" type="button" class="btn btn-label-danger mb-2 d-grid w-100" data-bs-dismiss="offcanvas">삭제</button>
+            <button id="btnClose" type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas" onclick="initCalendarOffCanvas()">닫기</button>
         </div>
     </div>
     <script>
