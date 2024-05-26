@@ -2,6 +2,7 @@ package org.fullstack4.hammerteen.repository;
 
 
 import org.fullstack4.hammerteen.domain.MemberEntity;
+import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +28,5 @@ public interface MemberRepository extends JpaRepository<MemberEntity, Integer> {
 
     // 지현추가 : 선생님 리스트 조회용
     List<MemberEntity> findMemberEntityByUserIdLikeOrNameLikeAndRoleEquals(String userId, String name, String role);
+    MemberEntity findAllByMemberIdxAndRole(int memberIdx, String role);
 }

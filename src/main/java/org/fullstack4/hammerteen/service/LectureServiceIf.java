@@ -5,6 +5,7 @@ import org.fullstack4.hammerteen.dto.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LectureServiceIf {
     LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO);
@@ -38,4 +39,6 @@ public interface LectureServiceIf {
     List<LectureGoodDTO> listGood(String userId);
     LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO);
 
+    // 지현추가 : 선생님 통계 조회용
+    Map<String, Object> getStatics(int teacherIdx);
 }

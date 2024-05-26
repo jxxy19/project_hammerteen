@@ -8,19 +8,16 @@ import org.fullstack4.hammerteen.domain.LectureEntity;
 import org.fullstack4.hammerteen.domain.LectureGoodEntity;
 import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.fullstack4.hammerteen.dto.*;
-import org.fullstack4.hammerteen.repository.LectureDetailRepository;
-import org.fullstack4.hammerteen.repository.LectureGoodRepository;
-import org.fullstack4.hammerteen.repository.LectureReplyRepository;
-import org.fullstack4.hammerteen.repository.LectureRepository;
+import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -33,6 +30,9 @@ public class LectureServiceImpl implements LectureServiceIf{
     private final LectureDetailRepository lectureDetailRepository;
     private final LectureReplyRepository lectureReplyRepository;
     private final LectureGoodRepository lectureGoodRepository;
+
+    //지현추가 : 통계용
+    private final OrderDetailRepository orderDetailRepository;
 
 
     @Override
@@ -321,5 +321,34 @@ public class LectureServiceImpl implements LectureServiceIf{
         else {
             return null;
         }
+    }
+
+    // 지현추가 : 통계용
+    @Override
+    public Map<String, Object> getStatics(int teacherIdx) {
+        Map<String, Object> resultMap = new HashMap<>();
+        List<StaticDTO> staticDTOList = new ArrayList<>();
+        List<LectureEntity> lectureEntityList = lectureRepository.findAllByTeacherIdx(teacherIdx);
+        lectureEntityList.forEach(vo -> {
+            LectureDTO lectureDTO = modelMapper.map(vo, LectureDTO.class);
+            StaticDTO staticDTO = StaticDTO.builder()
+                    .lectureDTO(lectureDTO)
+                    .studentCnt(orderDetailRepository.countByLectureIdx(lectureDTO.getLectureIdx(),"1"))
+                    .revenue(orderDetailRepository.sumPriceByLectureIdx(lectureDTO.getLectureIdx(),"1"))
+                    .build();
+            staticDTO.setRevenueToString();
+            staticDTOList.add(staticDTO);
+        });
+        JSONArray staticDTOListJSON = new JSONArray();
+        for(StaticDTO dto : staticDTOList) {
+            Map<String, String> lectureMap = new HashMap<>();
+            lectureMap.put("\"lectureTitle\"", "\""+dto.getLectureDTO().getTitle()+"\"");
+            lectureMap.put("\"studentCnt\"", "\""+dto.getStudentCnt()+"\"");
+            lectureMap.put("\"revenue\"", "\""+dto.getRevenue()+"\"");
+            staticDTOListJSON.put(lectureMap);
+        }
+        resultMap.put("staticDTOList", staticDTOList);
+        resultMap.put("staticDTOListJSON", staticDTOListJSON.toString());
+        return resultMap;
     }
 }

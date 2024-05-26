@@ -108,6 +108,15 @@ public class MemberServiceImpl implements MemberServiceIf{
         return memberDTOList;
 
     }
+    @Override
+    public MemberDTO getMemberByIdx(int memberIdx) {
+        MemberDTO memberDTO = null;
+        MemberEntity memberEntity = memberRepository.findAllByMemberIdxAndRole(memberIdx, "teacher");
+        if(memberEntity != null) {
+            memberDTO = modelMapper.map(memberEntity, MemberDTO.class);
+        }
+        return memberDTO;
+    }
 
     @Override
     public MemberDTO Detailview(String userId) {

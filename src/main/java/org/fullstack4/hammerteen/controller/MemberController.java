@@ -185,23 +185,17 @@ public class MemberController {
     @RequestMapping(value = "/teacherList", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String teacherList(@RequestParam(name = "userIdOrName", defaultValue = "") String userIdOrName) {
-        log.info("========================================== teacherList 시작");
-        log.info("userIdOrName : {}", userIdOrName);
         JSONArray jsonArray = new JSONArray();
         if(!userIdOrName.isEmpty()) {
             List<MemberDTO> memberDTOList = memberServiceIf.teacherList(userIdOrName);
-            log.info("memberDTOList : {}", memberDTOList);
             for(MemberDTO dto : memberDTOList) {
-                log.info("dto : {}", dto);
                 Map<String, String> resultMap = new HashMap<>();
+                resultMap.put("\"idx\"", "\""+dto.getMemberIdx()+"\"");
                 resultMap.put("\"userId\"", "\""+dto.getUserId()+"\"");
-                resultMap.put("\"name\"", "\""+dto.getUserId()+"\"");
-                log.info("resultMap : {}", resultMap);
+                resultMap.put("\"name\"", "\""+dto.getName()+"\"");
                 jsonArray.put(resultMap);
             }
-            log.info("jsonArray : {}", jsonArray);
         }
-        log.info("========================================== teacherList 종료");
         return jsonArray.toString();
     }
 

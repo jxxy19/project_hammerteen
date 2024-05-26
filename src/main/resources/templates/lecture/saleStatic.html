@@ -6,9 +6,10 @@
         xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{/common/common.html}">
+
 <th:block layout:fragment="topScript">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
+    <script th:inline="javascript">
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
@@ -22,43 +23,48 @@
 
         function drawChart() {
             // Create the data table.
-
-            let color = ['#F58A94', '#F7A8A4', '#FED2B7', '#FFFAA8', '#DCEBC2', '#ADDCCA', '#A1C2FF', '#3D80D9', '#747EE8', '#A25FFF', '#E1C6FF', '#3E5969', '#CCC7C4', '#7F6657'];
-
-
-                var dayData = google.visualization.arrayToDataTable([
-                    ['일자', '총 매출액'],
-                    ['2024-05-01', 500],
-                    ['2024-05-02', 100],
-                    ['2024-05-03', 600],
-                    ['2024-05-04', 1000],
-                    ['2024-05-05', 300],
-                    ['2024-05-06', 100],
-                ]);
-
+            let orgData = [[${staticDTOListJSON}]];
+            let orgDataToJSON = JSON.parse(orgData.replaceAll("=",":"));
+            console.log("orgDataToJSON : " + orgDataToJSON);
+            console.log("test : " + setDataArr(orgDataToJSON));
+            console.log(Array.isArray(setDataArr(orgDataToJSON)));
+            var dayData = google.visualization.arrayToDataTable(setDataArr(orgDataToJSON));
             var revenueOptions = {
                 animation: {
                     startup: true,
                     duration: 500,
                     easing: 'in'
                 },
-                curveType: 'function',
-                legend: {position: 'bottom'},
+                legend: {position: 'none'},
                 backgroundColor: {
-                    fill: '#f8f8f8'
+                    fill: '#ffffff'
                 },
                 tooltip: {
                     ignoreBounds: 'false',
-                    textStyle: {ontSize: 16},
-                    showColorCode: true
+                    textStyle: {ontSize: 16}
                 },
                 height: 500,
-                colors: ['#ADDCCA', '#DCEBC2'],
-                lineWidth: 5
+                lineWidth: 5,
+                bars: 'horizontal',
+                bar: {
+                    groupWidth: "50%"
+                }
             };
-
-            var revenueDay = new google.visualization.LineChart(document.getElementById('revenue_div1'));
+            var revenueDay = new google.visualization.BarChart(document.getElementById('revenue_div1'));
             revenueDay.draw(dayData, revenueOptions);
+        }
+
+        function setDataArr(obj) {
+            console.log("obj : " + obj);
+            color = ['#F58A94', '#F7A8A4', '#FED2B7', '#FFFAA8', '#DCEBC2', '#ADDCCA', '#A1C2FF', '#3D80D9', '#747EE8', '#A25FFF', '#E1C6FF', '#3E5969', '#CCC7C4', '#7F6657'];
+            let arr = [];
+            arr.push(["강의명", "매출", { role: "style" }]);
+            for(let i = 0; i < obj.length; i++) {
+                let jsonObjEl = JSON.parse(obj[i]);
+                let el = [jsonObjEl["lectureTitle"], parseInt(jsonObjEl["revenue"]), color[i]];
+                arr.push(el);
+            }
+            return arr;
         }
     </script>
 </th:block>
@@ -79,7 +85,7 @@
                             </div>
                             <div class="row mb-3">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="조회할 선색님을 선택하세요" name="teacherName" value="장지현" aria-describedby="selectTeacher" readonly>
+                                    <input type="text" class="form-control" placeholder="조회할 선생님을 선택하세요" name="teacherName" th:value="${memberDTO.getName()}" aria-describedby="selectTeacher" readonly>
                                     <button class="btn btn-outline-primary" type="button" id="selectTeacher" data-bs-target="#modal" data-bs-toggle="modal" onclick="initModal()">조회</button>
                                 </div>
                             </div>
@@ -111,22 +117,32 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <div class="d-flex gap-1 cursor-pointer" onclick="location.href = '/lecture/view?lectureIdx=1'">
-                                                <img class="w-px-100 rounded" src="/assets/img/default.png">
-                                                <span>강의 제목입니다.</span>
-                                            </div>
-                                        </td>
-                                        <td>2024-05-24</td>
-                                        <td>
-                                            <span>00</span>명
-                                        </td>
-                                        <td>
-                                            <span>10,000</span>원
-                                        </td>
-                                    </tr>
+                                    <th:block th:if="${staticDTOList != null and staticDTOList.size() > 0}">
+                                        <tr th:each="dto, status : ${staticDTOList}">
+                                            <td th:text="${status.index}">1</td>
+                                            <td class="align-middle">
+                                                <div class="d-flex gap-1 cursor-pointer align-items-center" onclick="goToThisLick('/lecture/view','lectureIdx',[[${dto.lectureDTO.lectureIdx}]])">
+                                                    <img class="w-px-100 rounded" th:src="${dto.lectureDTO.thumbnailImgFile != null} ? ${dto.lectureDTO.thumbnailImgDirectory}+${dto.lectureDTO.thumbnailImgFile} : '/assets/img/default.png'">
+                                                    <span th:text="${dto.lectureDTO.title}">강의 제목입니다.</span>
+                                                </div>
+                                            </td>
+                                            <td th:text="${dto.lectureDTO.regDate.toString().substring(0,10)}">2024-05-24</td>
+                                            <td>
+                                                <span th:text="${dto.studentCnt}">00</span>명
+                                            </td>
+                                            <td>
+                                                <span th:text="${dto.revenueToString}">10,000</span>원
+                                            </td>
+                                        </tr>
+                                    </th:block>
+                                    <th:block th:unless="${staticDTOList != null and staticDTOList.size() > 0}">
+                                        <tr>
+                                            <td colspan="5" class="d-flex justify-content-center align-items-center">
+                                                <span>아직 등록된 강의가 없는 것 같아요!</span>
+                                                <a href="/lecture/regist" class="btn btn-label-primary">강의 등록하러 가기</a>
+                                            </td>
+                                        </tr>
+                                    </th:block>
                                     </tbody>
                                 </table>
                                 </div>
@@ -249,9 +265,10 @@
                             for(let i = 0; i < data.length; i++) {
                                 let target = data[i].replaceAll("=", ":");
                                 let obj = JSON.parse(target);
+                                let targetIdx = obj.idx;
                                 let targetId = obj.userId;
                                 let targetName = obj.name;
-                                $('#modal-tBody').append(`<tr><td class="text-center">${cnt}</td><td class="text-center">${targetId}</td><td class="text-center">${targetName}</td><td class="text-center"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-name="${targetName}" data-id="${targetId}" id="id-${targetId}">선택</button></td></tr>`);
+                                $('#modal-tBody').append(`<tr><td class="text-center">${cnt}</td><td class="text-center">${targetId}</td><td class="text-center">${targetName}</td><td class="text-center"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-name="${targetName}" data-id="${targetId}" id="id-${targetId}" onclick="location.href = '/lecture/saleStatic?teacherIdx=${targetIdx}'">선택</button></td></tr>`);
                                 cnt--;
                             }
                         } else {
