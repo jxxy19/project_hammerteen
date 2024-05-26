@@ -4,6 +4,7 @@ package org.fullstack4.hammerteen.service;
 import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.fullstack4.hammerteen.dto.PageRequestDTO;
 import org.fullstack4.hammerteen.dto.PageResponseDTO;
+import org.fullstack4.hammerteen.dto.TeacherDTO;
 
 import java.lang.reflect.Member;
 import java.util.List;
@@ -34,4 +35,11 @@ public interface MemberServiceIf {
 
     MemberDTO detailModify(MemberDTO memberDTO);
 
+    //선생님 페이지 리스트
+    PageResponseDTO<TeacherDTO> teacherMemberList (PageRequestDTO pageRequestDTO);
+
+    //카테고리별 선생님 인원
+    Long countTeachersByCategory(String categoryName);
+
+    PageResponseDTO<TeacherDTO> teacherMemberListByCategory(PageRequestDTO pageRequestDTO, String categoryName);
 }

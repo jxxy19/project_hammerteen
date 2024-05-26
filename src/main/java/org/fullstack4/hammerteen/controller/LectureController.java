@@ -1,7 +1,9 @@
 package org.fullstack4.hammerteen.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 import jakarta.servlet.http.HttpSession;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
@@ -101,6 +103,7 @@ public class LectureController {
         return "/lecture/modify";
     }
 
+
     @Transactional
     @PostMapping("/modify")
     public String modifyPost(LectureDTO lectureDTO, MultipartHttpServletRequest files, HttpServletRequest request){
@@ -134,8 +137,39 @@ public class LectureController {
         return "redirect:/lecture/list";
     }
 
+
+
+    // 선생님 페이지 리스트
+
     @GetMapping("/teacherList")
-    public void teacherListGet(Model model) {
+    public void teacherListGet(PageRequestDTO pageRequestDTO, Model model,
+                               HttpServletRequest request,@RequestParam(value = "categoryName", required = false) String categoryName) {
+        PageResponseDTO<TeacherDTO> pageResponseDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
+
+        // categoryName이 null이 아니라면, 특정 카테고리에 대한 선생님 리스트를 가져옵니다.
+        if (categoryName != null && !categoryName.isEmpty()) {
+            pageResponseDTO = memberServiceIf.teacherMemberListByCategory(pageRequestDTO, categoryName);
+        } else {
+            // categoryName이 null이거나 비어있다면, 모든 선생님 리스트를 가져옵니다.
+            pageResponseDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
+        }
+
+        model.addAttribute("pageResponseDTO" , pageResponseDTO);
+
+
+
+
+        //선생님 별 인원수
+        model.addAttribute("koreanCount", memberServiceIf.countTeachersByCategory("국어"));
+        model.addAttribute("mathCount", memberServiceIf.countTeachersByCategory("수학"));
+        model.addAttribute("englishCount", memberServiceIf.countTeachersByCategory("영어"));
+        model.addAttribute("historyCount", memberServiceIf.countTeachersByCategory("한국사"));
+        model.addAttribute("socialCount", memberServiceIf.countTeachersByCategory("사회"));
+        model.addAttribute("scienceCount", memberServiceIf.countTeachersByCategory("과학"));
+        model.addAttribute("jobCount", memberServiceIf.countTeachersByCategory("직업"));
+        model.addAttribute("languageCount", memberServiceIf.countTeachersByCategory("제2외국어"));
+        model.addAttribute("etcCount", memberServiceIf.countTeachersByCategory("일반/진로/교양"));
+
         model.addAttribute("pageType", CommonUtil.setPageType("선생님", "선생님"));
     }
     @GetMapping("/saleStatic")

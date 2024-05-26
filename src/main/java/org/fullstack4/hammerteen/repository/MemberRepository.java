@@ -2,8 +2,10 @@ package org.fullstack4.hammerteen.repository;
 
 
 import org.fullstack4.hammerteen.domain.MemberEntity;
+import org.fullstack4.hammerteen.domain.TeacherEntity;
 import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
