@@ -108,7 +108,7 @@ public class MemberServiceImpl implements MemberServiceIf{
         return memberDTOList;
 
     }
-    
+
     @Override
     public MemberDTO Detailview(String userId) {
         Optional<MemberEntity> result = memberRepository.findByUserId(userId);
@@ -122,8 +122,21 @@ public class MemberServiceImpl implements MemberServiceIf{
     @Override
     public MemberDTO detailModify(MemberDTO memberDTO) {
         Optional<MemberEntity> result = memberRepository.findByUserId(memberDTO.getUserId());
+
+        System.out.println("회원정보 수정 servceimpl  pwd: " + memberDTO.getPwd());
         MemberEntity member = result.orElse(null);
-        member.DetailModify(memberDTO.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState(),memberDTO.getFileName(),memberDTO.getDirectory(),memberDTO.getRole());
+        System.out.println("member.getPwd(): " + member.getPwd());
+        if(memberDTO.getPwd().isEmpty()){
+            System.out.println("여기로 들어옴?1");
+            member.DetailModify(member.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState(),memberDTO.getFileName(),memberDTO.getDirectory(),memberDTO.getRole());
+
+        }
+        else{
+            System.out.println("여기로 들어옴?2");
+            member.DetailModify(memberDTO.getPwd(), memberDTO.getEmail(),memberDTO.getPhoneNumber(),memberDTO.getAddr1(),memberDTO.getAddr2(),memberDTO.getZipCode(),memberDTO.getUserState(),memberDTO.getFileName(),memberDTO.getDirectory(),memberDTO.getRole());
+
+        }
+
 
         memberRepository.save(member);
         MemberDTO memberUpdateDTO = modelMapper.map(member,MemberDTO.class);

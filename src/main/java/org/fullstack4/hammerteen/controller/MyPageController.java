@@ -117,11 +117,12 @@ public class MyPageController {
     public void memberViewGet(MemberDTO memberDTO, Model model) {
 
 
+
         MemberDTO resultDTO = memberServiceIf.Detailview(memberDTO.getUserId());
 
 
         model.addAttribute("dto", resultDTO);
-        System.out.println("memberVIew로 dto" + resultDTO);
+
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
     }
 
@@ -136,7 +137,7 @@ public class MyPageController {
         if(!memberDTO.getTemFileName().isEmpty()){
             memberDTO.setFileName(memberDTO.getTemFileName());
             MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
-            System.out.println("modifyDTO22"+modifyDTO);
+
 
             request.getSession().setAttribute("memberDTO", modifyDTO);
 
@@ -148,7 +149,7 @@ public class MyPageController {
 
 
         filenames = commonFileUtil.fileuploads(file,realPath);
-        System.out.println("memberDTO view post "+memberDTO);
+
         if(filenames != null) {
             memberDTO.setFileName(filenames.get(0));
             memberDTO.setDirectory(realPath);

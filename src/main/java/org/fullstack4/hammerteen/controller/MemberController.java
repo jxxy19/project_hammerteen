@@ -169,16 +169,15 @@ public class MemberController {
     }
 
     @GetMapping("/delete")
-    public String deletePOST(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        MemberDTO dto = (MemberDTO) session.getAttribute("memberDTO");
-        String userId = dto.getUserId();
+    public String deletePOST(HttpServletRequest request,@RequestParam(name="userId",defaultValue = "") String userId) {
+
+
         int result = memberServiceIf.delete(userId);
         if (result > 0) {
             request.getSession().invalidate();
-            return "redirect:/login/logout";
+            return "redirect:/mypage/memberList";
         } else {
-            return "/member/modify";
+            return "/mypage/memberView?userId" +userId;
         }
     }
 

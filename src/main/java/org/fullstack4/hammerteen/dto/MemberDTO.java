@@ -18,7 +18,7 @@ public class MemberDTO {
     private int memberIdx;
     @NotEmpty
     private String userId;
-    @NotEmpty
+
     private String pwd;
     @NotEmpty
     private String name;

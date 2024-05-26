@@ -17,6 +17,7 @@
                             <div class="row">
                                 <form id="frm" name="frm" action="/mypage/memberView" method="post" enctype="multipart/form-data">
                                     <input type="hidden" id="temFileName" name="temFileName" th:value="${dto.fileName != null ? dto.fileName : ''}" />
+
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
@@ -248,10 +249,11 @@
         const delete_button = document.querySelector("#delete_button");
         delete_button.addEventListener("click",function (e){
             e.preventDefault();
-            const confirm_msg = "정말로 탈퇴하시겠습니까?"
+            const userId = document.querySelector("#userId").value;
+            const confirm_msg = "이 회원을 정말로 탈퇴시키겠습니까?"
             if(confirm(confirm_msg)){
                 alert("탈퇴되었습니다.")
-                location.href='/mypage/delete';
+                    location.href='/member/delete?userId='+userId;
 
             }
 
