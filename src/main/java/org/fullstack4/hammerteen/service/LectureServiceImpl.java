@@ -14,6 +14,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -70,12 +72,17 @@ public class LectureServiceImpl implements LectureServiceIf{
     }
     @Override
     public LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO) {
-        PageRequest pageable = lpageRequestDTO.getPageable();
+        PageRequest pageable = lpageRequestDTO.getPageable("lectureIdx");
         Page<LectureEntity> result = null;
         String categoryIdx = lpageRequestDTO.getCategoryIdx();
         String search_word = lpageRequestDTO.getSearch_word();
-        result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherIdxContainsOrTitleContainsOrderByLectureIdxDesc(
-                pageable, categoryIdx, search_word, search_word);
+        if(lpageRequestDTO.getSearch_word()!=null && !lpageRequestDTO.getSearch_word().isEmpty()) {
+            result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
+                    pageable, categoryIdx, search_word, search_word);
+        }
+        else{
+            result = lectureRepository.findAll(pageable);
+        }
         List<LectureDTO> dtoList = result.stream()
                 .map(board->modelMapper.map(board,LectureDTO.class))
                 .collect(Collectors.toList());
