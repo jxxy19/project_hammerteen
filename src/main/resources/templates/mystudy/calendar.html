@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html
+        class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="calendar">
+    <div class="card app-calendar-wrapper px-0 py-5">
+        <div class="row g-0">
+            <div class="w-100 d-flex align-items-center justify-content-center gap-3">
+                <div>
+                    <button id="prevMonth" class="btn text-primary p-1" onclick="makeCalendar(this.dataset.prevmonth)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-left-fill" viewBox="0 0 16 16">
+                            <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div>
+                    <h2 class="m-0 p-0 position-relative" id="calendarTitle">
+                        <strong id="targetYear" class="text-primary">2024</strong>년
+                        <strong id="targetMonth" class="text-primary">5</strong>월
+                        <input id="datepicker" type="text" class="position-absolute opacity-0" style="top: 0; left: 0; width: 100%; height: 100%" onchange="makeCalendar(this.value)">
+                    </h2>
+                </div>
+                <div>
+                    <button id="nextMonth" class="btn text-primary p-1" onclick="makeCalendar(this.dataset.nextmonth)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill" viewBox="0 0 16 16">
+                            <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row g-0">
+            <!-- Calendar & Modal -->
+            <div class="col app-calendar-content">
+                <div class="card shadow-none border-0">
+                    <div class="card-body">
+                        <div class="text-end py-3">
+                            <button class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#calendarOffcanvasBackdrop" aria-controls="calendarOffcanvasBackdrop">+ 일정등록</button>
+                            <button id="today" class="btn btn-label-primary" onclick="makeCalendar(this.dataset.today)">오늘</button>
+                        </div>
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-bordered">
+                                <colgroup>
+                                    <col span="7" style="width:14.28%">
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th class="text-center">일</th>
+                                    <th class="text-center">월</th>
+                                    <th class="text-center">화</th>
+                                    <th class="text-center">수</th>
+                                    <th class="text-center">목</th>
+                                    <th class="text-center">금</th>
+                                    <th class="text-center">토</th>
+                                </tr>
+                                </thead>
+                                <tbody id="calendarBody">
+                                <tr>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="p-1 align-top">
+                                        <div class="d-flex flex-column justify-content-between"  style="min-height: 130px">
+                                            <div class="d-flex justify-content-start">
+                                                <button class="btn btn-link p-1 pb-2" data-bs-toggle="modal" data-bs-target="#calendarModal">1</button>
+                                            </div>
+                                            <div>
+                                                <button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary" data-bs-toggle="modal" data-bs-target="#calendarModal">내용1</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-end " tabindex="-1" id="calendarOffcanvasBackdrop" aria-labelledby="calendarOffcanvasBackdropLabel" aria-modal="true" role="dialog">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasBackdropLabel" class="offcanvas-title">일정</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body my-1 mx-0 flex-grow-0">
+            <div class="mb-3">
+                <label for="startDate" class="form-label">일정 시작일시 <i class="text-danger">*</i></label>
+                <input type="text" class="form-control datetimepicker" id="startDate" name="startDate">
+            </div>
+            <div class="mb-3">
+                <label for="endDate" class="form-label">일정 종료일시 <i class="text-danger">*</i></label>
+                <input type="text" class="form-control datetimepicker" id="endDate" name="endDate">
+            </div>
+            <hr>
+            <div class="mb-3">
+                <label for="title" class="form-label">일정 제목 <i class="text-danger">*</i></label>
+                <input type="text" class="form-control" id="title" name="title" placeholder="일정 제목을 입력하세요">
+            </div>
+            <div>
+                <label for="description" class="form-label">일정 설명 <i class="text-danger">*</i></label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+            </div>
+        </div>
+        <div class="offcanvas-bottom p-3">
+            <button type="button" class="btn btn-primary mb-2 d-grid w-100" data-bs-dismiss="offcanvas">저장</button>
+            <button type="button" class="btn btn-label-secondary d-grid w-100" data-bs-dismiss="offcanvas">닫기</button>
+        </div>
+    </div>
+    <script>
+        $("#datepicker").flatpickr({
+            enableTime: false,
+            allowInput: false,
+            dateFormat: "Y-m-d",
+            "locale": "ko"
+        });
+
+        $(".datetimepicker").flatpickr({
+            enableTime: true,
+            allowInput: false,
+            dateFormat: "Y-m-d H:i",
+            "locale": "ko"
+        });
+    </script>
+</th:block>
+</html>
