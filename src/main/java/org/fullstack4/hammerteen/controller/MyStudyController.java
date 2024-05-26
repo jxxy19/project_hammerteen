@@ -88,23 +88,6 @@ public class MyStudyController {
         return resultJSON.toString().replace("=", ":");
     }
 
-    @RequestMapping(value = "/deletePlan", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
-    @ResponseBody
-    public String deletePlanPOST(ScheduleDTO scheduleDTO,
-                              HttpSession session) {
-        Map<String, String> resultMap = new HashMap<>();
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-        if(memberDTO != null) {
-            scheduleServiceIf.deleteSchedule(scheduleDTO.getScheduleIdx());
-            resultMap.put("result", "1");
-            resultMap.put("info", "삭제 성공");
-        } else {
-            resultMap.put("result", "0");
-            resultMap.put("info", "아이디 정보 없음");
-        }
-        JSONObject resultJSON = new JSONObject(resultMap);
-        return resultJSON.toString().replace("=", ":");
-    }
 
     @RequestMapping(value = "/listPlan", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     @ResponseBody
@@ -130,6 +113,55 @@ public class MyStudyController {
             } else {
                 resultMap.put("result", "0");
                 resultMap.put("info", "올바르지 않은 일자 조회");
+            }
+        } else {
+            resultMap.put("result", "0");
+            resultMap.put("info", "아이디 정보 없음");
+        }
+        JSONObject resultJSON = new JSONObject(resultMap);
+        return resultJSON.toString().replace("=", ":");
+    }
+
+    @RequestMapping(value = "/viewPlan", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String viewPlanPOST(HttpSession session,
+                               @RequestParam(name = "scheduleIdx", defaultValue = "0") String scheduleIdx) {
+        Map<String, Object> resultMap = new HashMap<>();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            if(!scheduleIdx.equals("0")) {
+                ScheduleDTO scheduleDTO = scheduleServiceIf.view(CommonUtil.parseInt(scheduleIdx));
+                Map map = objectMapper.convertValue(scheduleDTO, Map.class);
+                JSONObject obj = new JSONObject(map);
+                resultMap.put("result", "1");
+                resultMap.put("info", "조회성공");
+                resultMap.put("obj",obj);
+            } else {
+                resultMap.put("result", "0");
+                resultMap.put("info", "올바르지 않은 일정 인덱스 조회");
+            }
+        } else {
+            resultMap.put("result", "0");
+            resultMap.put("info", "아이디 정보 없음");
+        }
+        JSONObject resultJSON = new JSONObject(resultMap);
+        return resultJSON.toString().replace("=", ":");
+    }
+
+    @RequestMapping(value = "/deletePlan", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    @ResponseBody
+    public String deletePlanPOST(HttpSession session,
+                               @RequestParam(name = "scheduleIdx", defaultValue = "0") String scheduleIdx) {
+        Map<String, Object> resultMap = new HashMap<>();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            if(!scheduleIdx.equals("0")) {
+                scheduleServiceIf.deleteSchedule(CommonUtil.parseInt(scheduleIdx));
+                resultMap.put("result", "1");
+                resultMap.put("info", "삭제성공");
+            } else {
+                resultMap.put("result", "0");
+                resultMap.put("info", "올바르지 않은 일정 인덱스 조회");
             }
         } else {
             resultMap.put("result", "0");

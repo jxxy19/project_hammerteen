@@ -5,6 +5,10 @@ function initCalendarOffCanvas() {
     $('#calendarOffcanvasBackdrop #title').val("");
     $('#calendarOffcanvasBackdrop #description').text("");
     $('#btnDelete').addClass('d-none');
+    $('#calendarOffcanvasBackdrop #btnSave').removeAttr("onclick");
+    $('#calendarOffcanvasBackdrop #btnSave').removeAttr("data-idx");
+    $('#calendarOffcanvasBackdrop #btnDelete').removeAttr("onclick");
+    $('#calendarOffcanvasBackdrop #btnDelete').removeAttr("data-idx");
 }
 
 // 일정 offcanvas 조회
@@ -13,8 +17,11 @@ function setCalendarOffCanvas(type, date) {
     if(type === 'new') {
         $('#calendarOffcanvasBackdrop #startDate').val(date + " 09:00");
         $('#calendarOffcanvasBackdrop #endDate').val(date + " 10:00");
+        $('#calendarOffcanvasBackdrop #btnSave').attr("onclick", "registPlan()");
     } else {
         $('#btnDelete').removeClass('d-none');
+        $('#calendarOffcanvasBackdrop #btnSave').attr("onclick", "modifyPlan(this.dataset.idx)");
+        $('#calendarOffcanvasBackdrop #btnDelete').attr("onclick", "deletePlan(this.dataset.idx)");
     }
 }
 
@@ -50,9 +57,91 @@ function registPlan() {
 }
 
 // 일정삭제
-
+function deletePlan(idx) {
+    if(confirm("일정을 삭제하시겠습니까?")) {
+        let startDate =$('#calendarOffcanvasBackdrop #startDate').val();
+        $.ajax({
+            url: "/mystudy/deletePlan",
+            method: 'post',
+            dataType : 'json',
+            data : {
+                "scheduleIdx" : idx
+            },
+            success: function(data) {
+                console.log(data);
+                alert(data["info"]);
+                makeCalendar(startDate);
+            },
+            error : function(xhr, status, error) {
+                console.log("xhr! : " + xhr);
+                console.log("status! : " + status);
+                console.log("error! : " + error);
+            }
+        })
+    }
+}
 
 // 일정수정
+function viewPlan(idx) {
+    setCalendarOffCanvas("modify");
+    $.ajax({
+        url: "/mystudy/viewPlan",
+        method: 'post',
+        dataType : 'json',
+        data : {
+            "scheduleIdx" : idx,
+        },
+        success: function(data) {
+            if(data["result"] == "1" ) {
+                let resultObj = data["obj"];
+                $('#calendarOffcanvasBackdrop #startDate').val(resultObj["startDateTimeToString"]);
+                $('#calendarOffcanvasBackdrop #endDate').val(resultObj["endDateTimeToString"]);
+                $('#calendarOffcanvasBackdrop #title').val(resultObj["title"]);
+                $('#calendarOffcanvasBackdrop #description').text(resultObj["description"]);
+                $('#calendarOffcanvasBackdrop #btnSave').attr("data-idx",resultObj["scheduleIdx"] )
+                $('#calendarOffcanvasBackdrop #btnDelete').attr("data-idx",resultObj["scheduleIdx"] )
+            } else {
+                alert(data["info"]);
+            }
+        },
+        error : function(xhr, status, error) {
+            console.log("xhr! : " + xhr);
+            console.log("status! : " + status);
+            console.log("error! : " + error);
+        }
+    })
+}
+
+function modifyPlan(idx) {
+    if(confirm("일정을 수정하시겠습니까?")) {
+        let startDate =$('#calendarOffcanvasBackdrop #startDate').val();
+        let endDate =$('#calendarOffcanvasBackdrop #endDate').val();
+        let title = $('#calendarOffcanvasBackdrop #title').val();
+        let description = $('#calendarOffcanvasBackdrop #description').val();
+        $.ajax({
+            url: "/mystudy/registPlan",
+            method: 'post',
+            dataType : 'json',
+            data : {
+                "startDateTimeToString" : startDate,
+                "endDateTimeToString" : endDate,
+                "title" : title,
+                "description" : description,
+                "scheduleIdx" : idx
+            },
+            success: function(data) {
+                console.log(data);
+                alert(data["info"]);
+                makeCalendar(startDate);
+            },
+            error : function(xhr, status, error) {
+                console.log("xhr! : " + xhr);
+                console.log("status! : " + status);
+                console.log("error! : " + error);
+            }
+        })
+    }
+}
 
 
 // 캘린더 그리기
@@ -142,7 +231,7 @@ function makePlanEl(list, thisDate) {
         let title = list[i]["title"];
         let idx = list[i]["scheduleIdx"];
         if(startDateObj <= thisDateObj && endDateObj >= thisDateObj) {
-            planEl += `<button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary myText" data-bs-toggle="offcanvas" data-bs-target="#calendarOffcanvasBackdrop" aria-controls="calendarOffcanvasBackdrop" data-startdate="${startDate}" data-startdate="${endDate}" data-idx="${idx}" onclick="setCalendarOffCanvas('modify',this.dataset.startdate, this.dataset.enddate)">${title}</button>`
+            planEl += `<button class="btn bg-label-primary w-100 py-1 px-2 justify-content-start border-primary myText" data-bs-toggle="offcanvas" data-bs-target="#calendarOffcanvasBackdrop" aria-controls="calendarOffcanvasBackdrop" data-idx="${idx}" onclick="viewPlan(this.dataset.idx)">${title}</button>`
         }
     }
     return planEl;
