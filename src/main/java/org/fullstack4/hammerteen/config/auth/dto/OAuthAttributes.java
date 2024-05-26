@@ -46,7 +46,7 @@ public class OAuthAttributes {
                 .name(name)
                 .email(email)
                 .picture(picture)
-                .role(Role.USER) // 가입할 때 기본 권한
+                .role(Role.user) // 가입할 때 기본 권한
                 .build();
     }
 }

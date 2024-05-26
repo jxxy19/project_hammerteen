@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.fullstack4.hammerteen.config.auth.dto.OAuthAttributes;
 import org.fullstack4.hammerteen.config.auth.dto.SessionUser;
 import org.fullstack4.hammerteen.domain.User;
+import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.fullstack4.hammerteen.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -40,7 +41,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = saveOrUpdate(attributes);
         // User 클래스를 사용하지 않고 SessionUser클래스를 사용하는 이유는 오류 방지.
-        httpSession.setAttribute("user", new SessionUser(user)); // SessionUser : 세션에 사용자 정보를 저장하기 위한 Dto 클래스
+        httpSession.setAttribute("memberDTO", new SessionUser(user)); // SessionUser : 세션에 사용자 정보를 저장하기 위한 Dto 클래스
+
+        //세션합치기
+
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
