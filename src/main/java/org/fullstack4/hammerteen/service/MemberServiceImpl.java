@@ -4,10 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
 import org.fullstack4.hammerteen.domain.MemberEntity;
+import org.fullstack4.hammerteen.domain.TeacherEntity;
 import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.fullstack4.hammerteen.dto.PageRequestDTO;
 import org.fullstack4.hammerteen.dto.PageResponseDTO;
+import org.fullstack4.hammerteen.dto.TeacherDTO;
 import org.fullstack4.hammerteen.repository.MemberRepository;
+import org.fullstack4.hammerteen.repository.TeacherRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +26,7 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberServiceIf{
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
+    private final TeacherRepository teacherRepository;
     @Override
     public int regist(MemberDTO memberDTO) {
         MemberEntity member = modelMapper.map(memberDTO, MemberEntity.class);
@@ -151,5 +155,47 @@ public class MemberServiceImpl implements MemberServiceIf{
         MemberDTO memberUpdateDTO = modelMapper.map(member,MemberDTO.class);
         return memberUpdateDTO;
 
+    }
+
+    @Override
+    public PageResponseDTO<TeacherDTO> teacherMemberList(PageRequestDTO pageRequestDTO) {
+        PageRequest pageable = pageRequestDTO.getPageable();
+        Page<TeacherEntity> result = null;
+        String search_word = pageRequestDTO.getSearch_word();
+
+        if(pageRequestDTO.getSearch_word()!=null && !pageRequestDTO.getSearch_word().isEmpty()) {
+            result = teacherRepository.findAllByNameContainsOrderByTeacherIdxDesc(pageable,search_word );
+        }
+        else{
+            result = teacherRepository.findAllByOrderByTeacherIdxDesc(pageable);
+        }
+        List<TeacherDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,TeacherDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<TeacherDTO>withAll().pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
+    }
+
+    @Override
+    public Long countTeachersByCategory(String categoryName) {
+        return teacherRepository.countByCategoryName(categoryName);
+    }
+
+    //카테고리별 선생님 검색
+    @Override
+    public PageResponseDTO<TeacherDTO> teacherMemberListByCategory(PageRequestDTO pageRequestDTO, String categoryName) {
+        PageRequest pageable = pageRequestDTO.getPageable();
+        Page<TeacherEntity> result = teacherRepository.findAllByCategoryNameOrderByTeacherIdxDesc(pageable, categoryName);
+
+        List<TeacherDTO> dtoList = result.stream()
+                .map(teacher -> modelMapper.map(teacher, TeacherDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<TeacherDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total_count((int) result.getTotalElements())
+                .build();
     }
 }
