@@ -29,17 +29,58 @@ public class User extends BaseEntity {
     @Column
     private String picture;
 
+    @Column
+    @Builder.Default
+    private String userId = "socialTest";
+
+    @Column
+    @Builder.Default
+    private String phoneNumber="01066664444";
+    @Column
+    @Builder.Default
+    private String birthday="1998-12-24";
+    @Column
+    @Builder.Default
+    private String addr1="서울시 노원구";
+    @Column
+    @Builder.Default
+    private String addr2="2층";
+    @Column
+    @Builder.Default
+    private String zipCode="01665";
+    @Column
+    @Builder.Default
+    private String userState="Y";
+
+    @Column
+    @Builder.Default
+    private String directory="";
+    @Column
+    @Builder.Default
+    private String fileName="26e87dcaprofile.png";
+
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
 
-    public User(String name, String email, String picture, Role role) {
+    public User(String name, String email, String picture, Role role,String UserId,String phoneNumber,String birthday,String addr1,String addr2,String zipCode,String userState,String directory,String fileName) {
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
+        this.userId =  UserId;
+        this.phoneNumber = phoneNumber;
+        this.birthday = birthday;
+        this.addr1 = addr1;
+        this.addr2 = addr2;
+        this.zipCode = zipCode;
+        this.userState = userState;
+        this.directory = directory;
+        this.fileName = fileName;
+
+
     }
     public User update(String name, String picture) {
         this.name = name;
