@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html  lang="ko"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{common/common.html}"
+       class="light-style layout-navbar-fixed layout-wide">
+<body>
+<!-- Sections:Start -->
+<th:block layout:fragment="content">
+    <!-- Help Center Header: Start -->
+    <section class="section-py first-section-pt help-center-header position-relative overflow-hidden">
+        <img class="banner-bg-img" src="/assets/img/pages/header.jpg" alt="Help center header">
+        <h3 class="text-center fw-bold"> 오늘은 어떤 강의를 들어볼까? </h3>
+        <form>
+            <div class="input-wrapper my-3 input-group input-group-lg input-group-merge position-relative mx-auto">
+                <span class="input-group-text" id="basic-addon1"><i class="bx bx-search bx-sm"></i></span>
+                <input type="text" class="form-control" placeholder="검색어 입력 후 엔터를 눌러주세요" aria-label="Search" aria-describedby="basic-addon1" />
+            </div>
+        </form>
+    </section>
+    <!-- Help Center Header: End -->
+
+    <!-- Popular Articles: Start -->
+    <section class="section-py">
+        <div class="container">
+            <h3 class="text-center mb-4">추천 콘텐츠 ⭐</h3>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <ul class="nav justify-content-center flex-row flex-wrap">
+                        <li class="m-1"><p><a href="#" ><span class="capsule"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
+                        <li class="m-1"><p><a href="#" ><span class="capsule"><span class="capsule-icon">🫨</span> 제가 ,, 보이시나요 ,,?</span></a></p></li>
+                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🎯</span> 시험 적중 강의</span></a></p></li>
+                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🍀</span> 럭키 아삽 발견 !</span></a></p></li>
+                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🤫</span> 나만 알고 싶은 비밀 강의</span></a></p></li>
+                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="badge badge-center shadow-sm rounded-pill bg-label-light">😱</span> 이 강의에는 전설이 있대.. !</span></a></p></li>
+                        <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
+                    </ul>
+                </div>
+                <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
+                    <div class="row justify-content-between gap-lg-0 gap-3">
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body row p-0 ">
+                                    <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                            <small><span>전주연</span> 선생님</small>
+                                            <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body text-center row p-0 ">
+                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
+                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body text-center row p-0 ">
+                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
+                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-between gap-lg-0 gap-3">
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body text-center row p-0 ">
+                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
+                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body text-center row p-0 ">
+                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
+                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                            <div class="card border shadow-none overflow-hidden">
+                                <div class="card-body text-center row p-0 ">
+                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
+                                        <img src="/assets/img/image/images.jpeg">
+                                    </div>
+                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
+                                        <div class="d-flex flex-column gap-2">
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
+                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                                        </div>
+                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Popular Articles: End -->
+
+    <!-- Knowledge Base: Start -->
+    <section class="section-py bg-body">
+        <div class="container">
+            <div class="row justify-content-center text-center mb-4">
+                <h3 class="text-center mb-4">선생님이 궁금해요❣️</h3>
+                <small>선생님을 낱낱히 파헤쳐드립니다.</small>
+            </div>
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <div class="row">
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper mb-3">
+                                <th:block th:if="${teacherDTO.dtoList.size() > 0}">
+                                <div class="col-md-4 col-sm-6 mb-4 swiper-slide" th:each="dto, iterStat : ${teacherDTO.dtoList}">
+                                    <div class="card">
+                                        <div class="card-body ">
+                                            <div>
+                                                <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.profile}"height="200"
+                                                     width="100">
+                                            </div>
+                                            <div class="d-flex flex-column gap-2 py-3">
+                                                <h4 class="p-0 m-0"><span class="text-primary fw-bold border-primary border-bottom"  th:text="${dto.name}" >전주연</span>선생님</h4>
+                                                <small th:text="${dto.categoryName}" >과목</small>
+                                                <small th:text="${dto.writing}" >난 전주연 모두 나를 따르라!!</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </th:block>
+
+
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Knowledge Base: End -->
+
+    <!-- Keep Learning: Start -->
+    <section class="section-py">
+        <div class="container">
+            <h3 class="text-center mb-4">가장 인기있는 강의💜</h3>
+            <div class="row">
+                <div class="col-lg-10 mx-auto mb-4">
+                    <div class="row">
+                        <div class="swiper mySwiper2">
+                            <div class="swiper-wrapper mb-5">
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+                                    <div class="card border shadow-none overflow-hidden">
+                                        <div class="card-body row p-0 ">
+                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                                <img src="/assets/img/image/images.jpeg">
+                                            </div>
+                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                                <div class="d-flex flex-column gap-2">
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
+                                                    <small><span>전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                </div>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Keep Learning: End -->
+
+    <!-- Help Area: Start -->
+    <section class="section-py bg-body">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-10 text-center">
+                    <h3>커뮤니티✉️️</h3>
+                    <p class="mb-3">오늘 헤머틴에선은 어떤이링 일어나고 있을까요? 우리들만의 속닥속닥 커뮤니티</p>
+                    <div class="d-flex justify-content-center flex-wrap gap-3">
+                        <div class="col-md-5 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <span class="capsule-icon p-2">🔥</span>
+                                        <h5 class="mb-0 ms-1 fw-bold">지금 인기글</h5>
+                                    </div>
+                                    <ul class="list-unstyled my-4">
+                                        <th:block th:if="${hotBoardDTO.dtoList.size() > 0}">
+                                            <li class="mb-2" th:each="boardDto, iterStat : ${hotBoardDTO.dtoList}">
+                                                <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                    <div class="d-flex flex-column">
+                                                        <span class="text-truncate me-2 me-lg-4"  th:text="${boardDto.title}">게시글 제목</span>
+                                                    </div>
+                                                    <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                                </a>
+                                            </li>
+                                        </th:block>
+                                    </ul>
+                                    <p class="mb-0 fw-medium mt-4">
+                                        <a href="#" class="d-flex align-items-center btn btn-primary">
+                                            <span class="me-2">더 보러 가기</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <span class="capsule-icon p-2">✏️</span>
+                                        <h5 class="mb-0 ms-1 fw-bold">강의 후기</h5>
+                                    </div>
+                                    <ul class="list-unstyled my-4">
+                                        <li class="mb-2">
+                                            <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <span class="text-truncate me-2 me-lg-4">게시글 제목</span>
+                                                </div>
+                                                <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="mb-2">
+                                            <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <span class="text-truncate me-2 me-lg-4">게시글 제목</span>
+                                                </div>
+                                                <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="mb-2">
+                                            <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <span class="text-truncate me-2 me-lg-4">게시글 제목</span>
+                                                </div>
+                                                <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="mb-2">
+                                            <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <span class="text-truncate me-2 me-lg-4">게시글 제목</span>
+                                                </div>
+                                                <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                            </a>
+                                        </li>
+                                        <li class="mb-2">
+                                            <a href="#" class="text-body d-flex justify-content-between align-items-center">
+                                                <div class="d-flex flex-column">
+                                                    <span class="text-truncate me-2 me-lg-4">게시글 제목</span>
+                                                </div>
+                                                <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <p class="mb-0 fw-medium mt-4">
+                                        <a href="#" class="d-flex align-items-center btn btn-primary">
+                                            <span class="me-2">더 보러 가기</span>
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Help Area: End -->
+</th:block>
+<!-- / Sections:End -->
+<th:block layout:fragment="script">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var mySwiper = $('.mySwiper').find('.swiper-slide');
+        var mySwiper2 = $('.mySwiper2').find('.swiper-slide2');
+
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            loop : true,
+            loopAdditionalSlides : 1,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            resistance : false
+        });
+
+        var swiper2 = new Swiper(".mySwiper2", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            loop : true,
+            loopAdditionalSlides : 1,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            resistance : false
+        });
+
+    </script>
+</th:block>
+</body>
+</html>

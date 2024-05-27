@@ -15,6 +15,7 @@ import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -139,6 +140,20 @@ public class BbsServiceImpl implements BbsServiceIf{
         BbsFileEntity bbsFileEntity = modelMapper.map(bbsFileDTO, BbsFileEntity.class);
         bbsFileRepository.delete(bbsFileEntity);
         commonFileUtil.fileDelite(bbsFileDTO.getDirectory(),bbsFileDTO.getFileName());
+    }
+
+    @Override
+    public PageResponseDTO<BbsDTO> hotboardList(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setPage_size(5);
+        PageRequest pageable = pageRequestDTO.getPageable();
+        Page<BbsEntity> result = null;
+        result = bbsRepository.findAllByOrderByReadCntDesc(pageable);
+
+        List<BbsDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,BbsDTO.class))
+                .collect(Collectors.toList());
+        return PageResponseDTO.<BbsDTO>withAll().pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 
 
