@@ -27,7 +27,7 @@
             <div class="row">
                 <div class="col-lg-10 mx-auto">
                     <ul class="nav justify-content-center flex-row flex-wrap">
-                        <li class="m-1"><p><a href="#" ><span class="capsule"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
+                        <li class="m-1"><p><a href="/?lectureRecommendTag=기출정복" ><span class="capsule"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
                         <li class="m-1"><p><a href="#" ><span class="capsule"><span class="capsule-icon">🫨</span> 제가 ,, 보이시나요 ,,?</span></a></p></li>
                         <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🎯</span> 시험 적중 강의</span></a></p></li>
                         <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🍀</span> 럭키 아삽 발견 !</span></a></p></li>
@@ -37,8 +37,9 @@
                     </ul>
                 </div>
                 <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
-                    <div class="row justify-content-between gap-lg-0 gap-3">
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
+                    <th:block th:if="${recommendLectureDTO != null}">
+                    <div class="row justify-content-between gap-lg-0 gap-3" >
+                        <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index < 3}">
                             <div class="card border shadow-none overflow-hidden">
                                 <div class="card-body row p-0 ">
                                     <div class="col-5 d-flex justify-content-center overflow-hidden">
@@ -46,97 +47,39 @@
                                     </div>
                                     <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                         <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                            <small><span>전주연</span> 선생님</small>
-                                            <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                            <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${dto.title}">이 세상 밈의 절대고수.</h5>
+                                            <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
+                                            <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
                                         </div>
                                         <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
-                            <div class="card border shadow-none overflow-hidden">
-                                <div class="card-body text-center row p-0 ">
-                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
-                                    </div>
-                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
-                                        <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
-                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
-                                        </div>
-                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
-                            <div class="card border shadow-none overflow-hidden">
-                                <div class="card-body text-center row p-0 ">
-                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
-                                    </div>
-                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
-                                        <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
-                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
-                                        </div>
-                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
-                    <div class="row justify-content-between gap-lg-0 gap-3">
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
-                            <div class="card border shadow-none overflow-hidden">
-                                <div class="card-body text-center row p-0 ">
-                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
-                                    </div>
-                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
-                                        <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
-                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
+                    </th:block>
+                    <th:block th:if="${recommendLectureDTO != null}">
+                        <div class="row justify-content-between gap-lg-0 gap-3" >
+                            <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index >=3 && iterStat.index<6}">
+                                <div class="card border shadow-none overflow-hidden">
+                                    <div class="card-body row p-0 ">
+                                        <div class="col-5 d-flex justify-content-center overflow-hidden">
+                                            <img src="/assets/img/image/images.jpeg">
                                         </div>
-                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
+                                        <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
+                                            <div class="d-flex flex-column gap-2">
+                                                <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${dto.title}">이 세상 밈의 절대고수.</h5>
+                                                <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
+                                                <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                            </div>
+                                            <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
-                            <div class="card border shadow-none overflow-hidden">
-                                <div class="card-body text-center row p-0 ">
-                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
-                                    </div>
-                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
-                                        <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
-                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
-                                        </div>
-                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-12 mb-md-0 mb-4">
-                            <div class="card border shadow-none overflow-hidden">
-                                <div class="card-body text-center row p-0 ">
-                                    <div class="col-5  d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
-                                    </div>
-                                    <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-5 flex-wrap ">
-                                        <div class="d-flex flex-column gap-2">
-                                            <h5 class="p-0 m-0 text-start fw-bold text-primary">강의 제목 입니다.</h5>
-                                            <p class="p-0 m-0 text-start"> 강의 소개입니다. </p>
-                                        </div>
-                                        <a class="btn btn-sm btn-label-primary" href="#">바로가기</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    </th:block>
+
                     </div>
                 </div>
             </div>

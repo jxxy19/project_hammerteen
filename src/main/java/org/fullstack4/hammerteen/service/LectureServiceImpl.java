@@ -3,10 +3,7 @@ package org.fullstack4.hammerteen.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.fullstack4.hammerteen.domain.LectureDetailEntity;
-import org.fullstack4.hammerteen.domain.LectureEntity;
-import org.fullstack4.hammerteen.domain.LectureGoodEntity;
-import org.fullstack4.hammerteen.domain.LectureReplyEntity;
+import org.fullstack4.hammerteen.domain.*;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
@@ -410,5 +407,26 @@ public class LectureServiceImpl implements LectureServiceIf{
     @Override
     public int countList(String userId) {
         return lectureGoodRepository.countAllByUserId(userId);
+    }
+
+    //메인페이지 추천강의
+    @Override
+    public PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setPage_size(6);
+        PageRequest pageable = pageRequestDTO.getPageable();
+
+        Page<LectureEntity> result = null;
+        String recommendTag = pageRequestDTO.getLectureRecommendTag();
+
+
+        result = lectureRepository.findAllByLectureRecommendTagContainsOrderByLectureIdxDesc(pageable,recommendTag );
+
+
+        List<LectureDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,LectureDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<LectureDTO>withAll().pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 }

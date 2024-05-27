@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
+import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.LoginServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.util.CookieUtil;
@@ -28,12 +29,19 @@ import java.util.List;
 public class MainController {
     private final MemberServiceIf memberServiceIf;
     private final BbsServiceIf bbsServiceIf;
+    private final LectureServiceIf lectureServiceIf;
     @GetMapping("/")
     public String mainGET(Model model, PageRequestDTO pageRequestDTO){
         PageResponseDTO<TeacherDTO> teacherDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
         PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
-        System.out.println("메인 : " + hotBoardDTO);
+        PageResponseDTO<LectureDTO> recommendLectureDTO = null;
+        if(pageRequestDTO.getLectureRecommendTag() !=null ) {
+            recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
 
+            System.out.println("LectureDTO adad : " + recommendLectureDTO);
+        }
+
+        model.addAttribute("recommendLectureDTO", recommendLectureDTO);
         model.addAttribute("teacherDTO", teacherDTO);
         model.addAttribute("hotBoardDTO", hotBoardDTO);
         return "index";

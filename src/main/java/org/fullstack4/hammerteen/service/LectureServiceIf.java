@@ -49,4 +49,5 @@ public interface LectureServiceIf {
     List<LectureGoodDTO> listGood(String userId);
     int countList(String userId);
 
+    PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO);
 }

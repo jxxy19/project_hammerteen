@@ -32,6 +32,7 @@ public class PageResponseDTO<E> {
     private String orderby;
     private LocalDate reg_date_start;
     private LocalDate reg_date_end;
+    private String lectureRecommendTag;
 
     private List<E> dtoList;
 
@@ -64,6 +65,7 @@ public class PageResponseDTO<E> {
         this.reg_date_start = pageRequestDTO.getReg_date_start();
         this.reg_date_end = pageRequestDTO.getReg_date_end();
         this.linkParams = pageRequestDTO.getLinkParams();
+        this.lectureRecommendTag = pageRequestDTO.getLectureRecommendTag();
 
         log.info("pageRequestDTO : " + pageRequestDTO);
         log.info("dtoList : " + dtoList);
