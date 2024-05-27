@@ -70,6 +70,16 @@ public class LectureServiceImpl implements LectureServiceIf{
     public void delete(int lectureIdx) {
         lectureRepository.deleteById(lectureIdx);
     }
+
+    @Override
+    public LectureDetailDTO view(LectureDetailDTO lectureDetailDTO) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
+        LectureDetailEntity lectureDetailEntity = result.orElse(null);
+        LectureDetailDTO resultDTO = modelMapper.map(lectureDetailEntity, LectureDetailDTO.class);
+
+        return resultDTO;
+    }
+
     @Override
     public LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO) {
         PageRequest pageable = lpageRequestDTO.getPageable("lectureIdx");
@@ -210,7 +220,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
         if (lectureDetailEntity != null) {
-            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle(),Integer.parseInt(lectureDetailDTO.getVideoLength()));
+            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle(),Integer.parseInt(lectureDetailDTO.getVideoLength()),lectureDetailDTO.getVideoDirectory(),lectureDetailDTO.getVideoFile());
             lectureDetailRepository.save(lectureDetailEntity);
         }
     }
