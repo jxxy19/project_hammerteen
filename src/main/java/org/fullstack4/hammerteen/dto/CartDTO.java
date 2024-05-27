@@ -25,4 +25,7 @@ public class CartDTO {
 
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
+
+    //데이터 조회용
+    private LectureDTO lectureDTO;
 }
