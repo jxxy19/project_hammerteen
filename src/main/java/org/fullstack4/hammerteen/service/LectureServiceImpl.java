@@ -132,8 +132,8 @@ public class LectureServiceImpl implements LectureServiceIf{
                 for (String filename : filenames) {
                     lectureEntity.modifyImg(saveDirectory,filename);
                 }
+                lectureRepository.save(lectureEntity);
             }
-            lectureRepository.save(lectureEntity);
         }
     }
 
@@ -166,8 +166,8 @@ public class LectureServiceImpl implements LectureServiceIf{
                 for (String filename : filenames) {
                     lectureEntity.modifyVideo(saveDirectory,filename);
                 }
+                lectureRepository.save(lectureEntity);
             }
-            lectureRepository.save(lectureEntity);
         }
     }
 

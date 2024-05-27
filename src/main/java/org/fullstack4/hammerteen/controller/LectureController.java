@@ -171,36 +171,26 @@ public class LectureController {
         if(!(memberDTO.getMemberIdx()==(lectureDTO.getTeacherIdx()))){
             return "redirect:/";
         }
+        lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
+        lectureDTO.setTeacherName(memberDTO.getUserId());
+        log.info(lectureDTO+ "lectureDTO");
         if(files!=null) {
             lectureServiceIf.modifyThumbnailImg(lectureDTO,files);
             lectureServiceIf.modifyThumbnailVideo(lectureDTO,files);
         }
-        log.info(lectureDetailDTO+ "lectureDetailDTO");
-        if(lectureDetailDTO.getDetailTitle()!=null&& lectureDetailDTO.getDetailTitle().length()>0) {
-            int resultidx = lectureDTO.getLectureIdx();
-            lectureServiceIf.deleteLectureDetailAll(resultidx);
-            List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
+        List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
+        if(lectureDetailDTO.getDetailTitle()!=null) {
             String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
             String[] lengthList = lectureDetailDTO.getVideoLength().split(",");
-            String[] lectureDetailIdxList = String.valueOf(lectureDetailDTO.getLectureDetailIdx()).split(",");
-            for (int i = 0; i < titleList.length; i++) {
-                if(lectureDetailIdxList[i]!=null){
-                    LectureDetailDTO lectureDetailDTO1 = LectureDetailDTO.builder().lectureDetailIdx(Integer.parseInt(lectureDetailIdxList[i])).build();
-                    LectureDetailDTO resultDTO = lectureServiceIf.view(lectureDetailDTO1);
-                    lectureServiceIf.modifyLectureDetail(resultDTO);
-
-                }else {
-                    LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(resultidx)
-                            .build();
-                    lectureDetailList.add(tempDTO);
-                }
+            for(int i =0; i<titleList.length;i++){
+                LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(lectureDTO.getLectureIdx()).build();
+                lectureDetailList.add(tempDTO);
             }
-            log.info("lectureDetailList "+lectureDetailList);
-            for (int i = 0; files.getFile("video" + (i + 1)) != null; i++) {
-                lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video" + (i + 1));
-                lectureDetailList.get(i).setLectureIdx(resultidx);
-                lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
-            }
+        }
+        for(int i = 0; files.getFile("video"+(i+1))!=null; i++) {
+            lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video"+(i+1));
+            lectureDetailList.get(i).setLectureIdx(lectureDTO.getLectureIdx());
+            lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
         }
         lectureServiceIf.modify(lectureDTO);
         return "redirect:/lecture/view?lectureIdx="+lectureDTO.getLectureIdx();

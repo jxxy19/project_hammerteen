@@ -74,31 +74,25 @@
                                             </div>
                                         </div>
                                         <div class="card p-0 m-0 row mb-3 col-12">
-                                            <h5 class="card-header bg-primary text-white">회차정보</h5>
+                                            <h5 class="card-header bg-primary text-white">기존회차정보</h5>
                                             <div class="card-body border rounded-bottom py-4 d-flex flex-column gap-3">
-                                                <div class="text-end">
-                                                <button type="button" class="btn btn-primary" onclick="addInput()">추가</button>
-                                                </div>
-                                                <div id="subList" class="d-flex flex-column gap-3">
+                                                <div class="d-flex flex-column gap-3">
                                                     <div class="sub row align-items-stretch gap-1" th:each="dto,status:${lectureDetailDTOList}">
                                                         <div class="col-11 border rounded-start py-4">
                                                             <div class="input-group input-group-merge d-flex flex-column ">
                                                                 <small class="d-block subNum text-primary fw-bold">1회차</small>
                                                                 <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
                                                                 <div class="input-group input-group-merge">
-                                                                    <input type="text" name="detailTitle" class="form-control" id="subTitle" th:value="${dto.detailTitle}">
+                                                                    <input type="text" class="form-control" id="subTitle" th:value="${dto.detailTitle}" readonly>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-group">
-                                                                    <input type="hidden" name="lectureDetailIdx" th:value="${dto.lectureDetailIdx}">
-                                                                    <input type="hidden" name="videoDirectory" th:value="${dto.videoDirectory}">
-                                                                    <input type="hidden" name="videoFile" th:value="${dto.videoFile}">
                                                                     <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
-                                                                    <input th:onchange="|videolength(this,${status.count})|" class="form-control" th:name="|video${status.count}|" type="file" th:id="|video1${status.count}|">
+                                                                    <input th:onchange="|videolength(this,${status.count})|" class="form-control" type="file" readonly >
                                                                 </div>
-                                                                <input class="videolength" th:value="${dto.videoLength}" type="hidden" name="videoLength" th:id="|videoLength${status.count}|">
-                                                                <video src="" style="display: none" th:id="|videotemp${status.count}|"></video>
+                                                                <input class="videolength" th:value="${dto.videoLength}" type="hidden" readonly>
+                                                                <video src="" style="display: none" ></video>
                                                                 <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
                                                                     <span>[[${dto.videoFile}]]</span>
                                                                     <span><a class="text-danger font-weight-bold pr-2" href="#" th:onclick="|deleteThisFile3(this,${dto.lectureDetailIdx},${lectureDTO.teacherIdx})|" onclick="deleteThisNoLimit(this)">X</a></span>
@@ -109,6 +103,17 @@
                                                             <button type="button" class="btn h-100 w-100 text-primary btn-delete" th:onclick="|deleteThisFile4(this,${dto.lectureDetailIdx},${lectureDTO.teacherIdx})|">x</button>
                                                         </div>
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card p-0 m-0 row mb-3 col-12">
+                                            <h5 class="card-header bg-primary text-white">추가회차정보</h5>
+                                            <div class="card-body border rounded-bottom py-4 d-flex flex-column gap-3">
+                                                <div class="text-end">
+                                                    <button type="button" class="btn btn-primary" onclick="addInput()">추가</button>
+                                                </div>
+                                                <div id="subList" class="d-flex flex-column gap-3">
+
                                                 </div>
                                             </div>
                                         </div>
