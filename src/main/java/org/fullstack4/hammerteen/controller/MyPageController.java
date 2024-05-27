@@ -10,10 +10,7 @@ import org.fullstack4.hammerteen.dto.PageRequestDTO;
 import org.fullstack4.hammerteen.dto.PageResponseDTO;
 import org.fullstack4.hammerteen.dto.PaymentDTO;
 import org.fullstack4.hammerteen.dto.*;
-import org.fullstack4.hammerteen.service.BbsServiceIf;
-import org.fullstack4.hammerteen.service.CartServiceIf;
-import org.fullstack4.hammerteen.service.MemberServiceIf;
-import org.fullstack4.hammerteen.service.PaymentServiceIf;
+import org.fullstack4.hammerteen.service.*;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.fullstack4.hammerteen.util.CommonUtil;
 import org.springframework.stereotype.Controller;
@@ -40,6 +37,7 @@ public class MyPageController {
     private final CommonFileUtil commonFileUtil;
     private final BbsServiceIf bbsServiceIf;
     private final CartServiceIf cartServiceIf;
+    private final LectureServiceIf lectureServiceIf;
     private String menu1 = "마이페이지";
 
     @GetMapping("/mypage")
@@ -263,9 +261,52 @@ public class MyPageController {
 
 
     @GetMapping("/likeList")
-    public void likeListGet(Model model) {
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));
+    public String likeListGet(Model model,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            List<LectureGoodDTO> goodDTOList = lectureServiceIf.listGood(memberDTO.getUserId());
+            int totalCnt = lectureServiceIf.countList(memberDTO.getUserId());
+            log.info("goodDTOList : {}", goodDTOList);
+            model.addAttribute("totalCnt", totalCnt);
+            model.addAttribute("goodDTOList",goodDTOList);
+            model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "찜 내역"));
+            return "/mypage/likeList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보가 없습니다.");
+            return "redirect:/";
+        }
     }
+
+    @PostMapping("/deleteGood")
+    public String deleteLikePOST(Model model, RedirectAttributes redirectAttributes,
+                                 @RequestParam(name="goodIdx", defaultValue = "") String goodIdx, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        log.info("goodIdx : {}", goodIdx);
+        if(memberDTO != null) {
+            for(String idx : goodIdx.split(",")) {
+                lectureServiceIf.deleteGood(CommonUtil.parseInt(idx));
+            }
+            redirectAttributes.addFlashAttribute("info", "삭제가 완료되었습니다.");
+            return "redirect:/mypage/likeList";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보가 없습니다.");
+            return "redirect:/";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     @GetMapping("/payList")
     public String payListGet(Model model,
                            HttpSession session,

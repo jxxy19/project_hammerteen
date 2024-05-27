@@ -78,7 +78,7 @@
                                             <div class="col-lg-4">
                                                 <div class="stick-top">
                                                     <!-- (구매 전) 결제 정보 -->
-                                                      <div class="card mb-4">
+                                                      <div class="card mb-4" th:if="${checkOrder == null || checkOrder == 0}">
                                                           <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
                                                               결제정보
                                                           </div>
@@ -95,7 +95,7 @@
                                                           </div>
                                                       </div>
                                                     <!-- (구매 후) 학습하러가기 -->
-                                                    <div class="card mb-4">
+                                                    <div class="card mb-4" th:if="${checkOrder != null && checkOrder > 0}">
                                                         <div class="card-header card-header-pills bg-primary m-0 text-white py-3">
                                                             구매한 강의 입니다.
                                                         </div>
@@ -115,12 +115,11 @@
                                                                 </button>
                                                             </div>
                                                             <div class="d-flex gap-1 pt-3 justify-content-around">
-                                                                <i class="bx bx-like bx-sm mx-4 btn-icons"></i>
+                                                                <a th:href="'/lecture/addGood?lectureIdx='+${lectureDTO.lectureIdx}"><i class="bx bx-like bx-sm mx-4 btn-icons"></i></a>
                                                                 <i class="bx bx-share bx-sm mx-4 btn-icons"></i>
                                                             </div>
                                                         </div>
-                                                    </div>
-
+                                                        </div>
                                                     <div class="accordion accordion-bordered" id="courseContent">
                                                         <div class="accordion-item shadow-none border border-bottom-0 mb-0 active">
                                                             <div class="accordion-header" id="heading1">
@@ -234,6 +233,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
                                         </div>

@@ -39,6 +39,7 @@ public class LectureController {
     private final LectureServiceIf lectureServiceIf;
     private final CartServiceIf cartServiceIf;
 
+
     private String menu1 = "강의";
     @GetMapping("/list")
     public void listGet(Model model, LPageRequestDTO lpageRequestDTO,
@@ -91,6 +92,10 @@ public class LectureController {
         }
         log.info(resultDTO.getThumbnailVideoFile()+" getThumbnailVideoFile test");
         lectureDTO.setThumbnailVideoFile(videoName);
+        // 지현추가 : 기존 구매여부 확인용
+        int checkOrder = lectureServiceIf.checkOrder(userId, lectureDTO.getLectureIdx());
+
+        model.addAttribute("checkOrder", checkOrder);
         model.addAttribute("lectureDTO", resultDTO);
         model.addAttribute("lectureReplyDTO", lectureReplyDTO);
         model.addAttribute("lectureReplyDTOList", lectureReplyDTOList);
@@ -323,18 +328,14 @@ public class LectureController {
     public String addGood(@RequestParam(name="lectureIdx", defaultValue = "")String lectureIdx,
                           HttpSession session,
                           RedirectAttributes redirectAttributes) {
-        log.info("================================= 들어와????????????????????????????????????????????????===========");
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         if (memberDTO != null) {
-            log.info("============================================");
-            log.info(lectureIdx);
             // 찜 리스트 확인
             List<LectureGoodDTO> myGoodList = lectureServiceIf.listGood(memberDTO.getUserId());
-            log.info(myGoodList);
             int already = 0;
             for(LectureGoodDTO lectureGoodDTO : myGoodList) {
                 if(lectureGoodDTO.getLectureIdx() == CommonUtil.parseInt(lectureIdx)) {
-                    redirectAttributes.addFlashAttribute("info", "이미 담긴 강의 입니다.");
+                    redirectAttributes.addFlashAttribute("info", "이미 찜한 강의 입니다.");
                     already++;
                     break;
                 }
@@ -344,7 +345,6 @@ public class LectureController {
                         .lectureIdx(CommonUtil.parseInt(lectureIdx))
                         .userId(memberDTO.getUserId())
                         .build();
-                log.info(lectureGoodDTO);
                 int result = lectureServiceIf.registGood(lectureGoodDTO);
                 if(result > 0) {
                     redirectAttributes.addFlashAttribute("info", "찜 추가 성공");

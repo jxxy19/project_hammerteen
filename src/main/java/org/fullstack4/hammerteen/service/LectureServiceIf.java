@@ -36,6 +36,9 @@ public interface LectureServiceIf {
     int countCategory(String categoryIdx);
     LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO);
 
+    // 지현추가 : 기존 구매여부 확인용
+    int checkOrder(String userId, int lectureIdx);
+
     // 지현추가 : 선생님 통계 조회용
     Map<String, Object> getStatics(int teacherIdx);
 

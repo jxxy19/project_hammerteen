@@ -20,4 +20,7 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetailEntity, 
         @Query(value = "SELECT orderDetailEntity FROM OrderDetailEntity orderDetailEntity where orderDetailEntity.orderIdx in (select orderEntity.orderIdx from OrderEntity orderEntity where orderEntity.userId = :userId and orderEntity.orderStatus != '0')")
         List<OrderDetailEntity> findAllByUserId(@Param("userId")String userId);
 
+        @Query(value = "SELECT count(orderdetailEntity) FROM OrderDetailEntity orderdetailEntity inner join OrderEntity orderEntity on orderdetailEntity.orderIdx = orderEntity.orderIdx where orderEntity.userId = :userId and orderdetailEntity.lectureIdx = :lectureIdx")
+        int countAllByUserIdAndLectureIdx(@Param("userId")String userId, @Param("lectureIdx")int lectureIdx);
+
 }

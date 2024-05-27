@@ -335,6 +335,12 @@ public class LectureServiceImpl implements LectureServiceIf{
         }
     }
 
+    // 지현추가 : 기존 구매 여부 확인용
+    @Override
+    public int checkOrder(String userId, int lectureIdx) {
+        return orderDetailRepository.countAllByUserIdAndLectureIdx(userId, lectureIdx);
+    }
+
     // 지현추가 : 통계용
     @Override
     public Map<String, Object> getStatics(int teacherIdx) {
