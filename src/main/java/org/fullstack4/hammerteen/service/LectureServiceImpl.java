@@ -416,7 +416,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     // 성적관리용
     @Override
     public List<MyLectureDTO> myLectureList(String userId) {
-        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByUserId(userId);
+        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByUserIdAndStatus(userId, "Y");
         List<MyLectureDTO> myLectureDTOList = null;
         if(myLectureEntityList != null) {
             myLectureDTOList = myLectureEntityList.stream()
@@ -468,7 +468,7 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     @Override
     public List<MyLectureDTO> studentList(int lectureIdx) {
-        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByLectureIdx(lectureIdx);
+        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByLectureIdxAndStatus(lectureIdx, "Y");
         List<MyLectureDTO> myLectureDTOList = null;
         if(myLectureEntityList != null) {
             myLectureDTOList = myLectureEntityList.stream()

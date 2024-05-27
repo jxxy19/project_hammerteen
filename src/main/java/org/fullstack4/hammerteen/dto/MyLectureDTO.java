@@ -33,6 +33,8 @@ public class MyLectureDTO {
 
     public void setDateToString() {
         this.regDateToString = this.regDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        this.modifyDateToString = this.modifyDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        if(modifyDate != null) {
+            this.modifyDateToString = this.modifyDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        }
     }
 }

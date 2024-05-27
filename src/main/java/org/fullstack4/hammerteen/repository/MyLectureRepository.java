@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MyLectureRepository extends JpaRepository<MyLectureEntity, Integer> {
-    List<MyLectureEntity> findAllByLectureIdx(int lectureIdx);
-    List<MyLectureEntity> findAllByUserId(String userId);
-    MyLectureEntity findAllByUserIdAndLectureIdx(String userId, int lectureIdx);
-
+    List<MyLectureEntity> findAllByLectureIdxAndStatus(int lectureIdx, String status);
+    List<MyLectureEntity> findAllByUserIdAndStatus(String userId, String status);
+    MyLectureEntity findAllByUserIdAndLectureIdxAndStatus(String userId, int lectureIdx, String status);
 }

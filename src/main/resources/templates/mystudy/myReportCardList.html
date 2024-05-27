@@ -49,7 +49,10 @@
                                     </th:block>
                                     <th:block th:unless="${myLectureDTOList != null && myLectureDTOList.size() > 0}">
                                         <tr>
-                                            <td colspan="5" class="align-middle text-center">아직 수강중인 강의가 없네요!</td>
+                                            <td colspan="5" class="align-middle text-center">
+                                                <p>아직 수강중인 강의가 없네요!</p>
+                                                <a href="/lecture/list" class="btn btn-primary">강의 둘러보러가기</a>
+                                            </td>
                                         </tr>
                                     </th:block>
                                     </tbody>
@@ -63,15 +66,17 @@
                         <div class="card-body">
                             <div class="table-responsive text-nowrap">
                                 <h3 class="text-primary">성적관리</h3>
-                                <form>
+                                <form id="frmScore" method="post" action="/mystudy/myReportCardList">
                                     <div class="d-flex mb-3">
-                                        <p class="p-2 m-0 border rounded col-10 lecture-title">강의 명이 들어가지</p>
+                                        <p class="p-2 m-0 border rounded col-10 lecture-title" th:text="${lectureDTO != null} ? ${lectureDTO.title} : '강의를 선택해주세요'">강의 명이 들어가지</p>
                                         <button type="button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#lectureModal">조회</button>
-                                        <input type="hidden" id="lectureIdx" name="lectureIdx" value="0">
+                                        <input type="hidden" id="lectureIdx" name="lectureIdx" th:value="${lectureDTO != null} ? ${lectureDTO.lectureIdx} : '0'">
                                     </div>
+                                    <th:block th:if="${studentList != null && studentList.size() > 0}">
                                     <div class="my-3 text-end">
                                         <button type="submit" class="btn btn-outline-primary">저장</button>
                                     </div>
+                                    </th:block>
                                     <!-- 강의 조회 전에는 데이터 없게 -->
                                     <table class="table table-bordered">
                                         <colgroup>
@@ -89,36 +94,23 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>전주연</td>
-                                            <td>test</td>
-                                            <td>2024-05-24</td>
-                                            <td>
-                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                                <input type="hidden" name="user_id" value="test">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>전주연</td>
-                                            <td>test</td>
-                                            <td>2024-05-24</td>
-                                            <td>
-                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                                <input type="hidden" name="user_id" value="test">
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>전주연</td>
-                                            <td>test</td>
-                                            <td>2024-05-24</td>
-                                            <td>
-                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                                <input type="hidden" name="user_id" value="test">
-                                            </td>
-                                        </tr>
+                                        <th:block th:if="${studentList != null && studentList.size() > 0}">
+                                            <tr th:each="student, status : ${studentList}">
+                                                <td th:text="${status.count}">3</td>
+                                                <td th:text="${student.memberDTO.name}">전주연</td>
+                                                <td th:text="${student.userId}">test</td>
+                                                <td th:text="${student.regDateToString}">2024-05-24</td>
+                                                <td>
+                                                    <input type="number" class="form-control d-inline w-75" max="100" name="score" th:value="${student.lectureScoreDTO != null} ? ${student.lectureScoreDTO.lectureScore} : ''"><span>점</span>
+                                                    <input type="hidden" name="userId" th:value="${student.userId}">
+                                                </td>
+                                            </tr>
+                                        </th:block>
+                                        <th:block th:unless="${studentList != null && studentList.size() > 0}">
+                                            <tr>
+                                                <td class="text-center align-middle" colspan="5">아직 수강생이 없습니다😢</td>
+                                            </tr>
+                                        </th:block>
                                         </tbody>
                                     </table>
                                 </form>
@@ -144,16 +136,17 @@
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                     </div>
                     <div class="modal-body">
-                        <div>
-                            <p><span class="text-primary">전주연</span>선생님</p>
-                        </div>
                         <div id="lectureList" class="border card overflow-y-scroll list-group list-group-flush" style="max-height: 500px">
-                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="1" data-bs-dismiss="modal" aria-label="Close">강의명입니다1.</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="2" data-bs-dismiss="modal" aria-label="Close">강의명입니다2.</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="3" data-bs-dismiss="modal" aria-label="Close">강의명입니다3.</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="4" data-bs-dismiss="modal" aria-label="Close">강의명입니다4.</a>
-                            <a href="#" class="list-group-item list-group-item-action" data-lectureIdx="5" data-bs-dismiss="modal" aria-label="Close">강의명입니다5.</a>
+                        <th:block th:if="${lectureList != null && lectureList.size() > 0}">
+                                <a th:each="lecture : ${lectureList}" th:href="'/mystudy/myReportCardList?lectureIdx='+${lecture.lectureIdx}" th:text="${lecture.title}" class="list-group-item list-group-item-action">강의명입니다1.</a>
+                        </th:block>
+                        <th:block th:unless="${lectureList != null && lectureList.size() > 0}">
+                                <p class="text-center">아직 등록한 강의가 없는 것 같아요!</p>
+                                <a href="/lecture/regist" class="btn btn-primary">강의 등록하러가기</a>
+                        </th:block>
                         </div>
+
+
                     </div>
                 </div>
             </div>
@@ -170,21 +163,19 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
-        let lectureList = document.querySelectorAll('#lectureList a');
-        for(let lectureLi of lectureList) {
-            lectureLi.addEventListener("click", ()=>{
-                selectThis(lectureLi)
-            })
-        }
-
-        function selectThis(element){
+        document.getElementById('frmScore').addEventListener("submit", (event)=> {
             event.preventDefault();
-            let idx = element.dataset.lectureIdx;
-            let title = element.innerText;
-            $('#lectureIdx').val(idx);
-            $('.lecture-title').text(title);
-            $('#lectureList').html("");
-        }
+            let inputEl = document.querySelectorAll('input[name=score]');
+            for(let el of inputEl) {
+                if(!nullCheck2($(el))){
+                    alert("빈칸이 있습니다. \n모든 항목을 입력해주세요");
+                    $(el).focus();
+                    return false;
+                }
+            }
+            document.getElementById('frmScore').submit();
+        })
+
     </script>
     </th:block>
 </body>

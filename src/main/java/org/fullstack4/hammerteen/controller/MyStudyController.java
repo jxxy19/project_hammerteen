@@ -78,12 +78,15 @@ public class MyStudyController {
                 }
                 if(!lectureIdx.equals("0")) {
                     List<MyLectureDTO> myLectureDTOList = lectureServiceIf.studentList(CommonUtil.parseInt(lectureIdx));
+                    LectureDTO lectureDTO = lectureServiceIf.selectLectureDTOByIdx(CommonUtil.parseInt(lectureIdx));
                     myLectureDTOList.forEach(dto->{
                         dto.setMemberDTO(memberServiceIf.view(dto.getUserId()));
                         dto.setLectureDTO(lectureServiceIf.selectLectureDTOByIdx(CommonUtil.parseInt(lectureIdx)));
                         dto.setLectureScoreDTO(lectureServiceIf.myScore(dto.getUserId(), CommonUtil.parseInt(lectureIdx)));
+                        dto.setDateToString();
                     });
                     model.addAttribute("studentList", myLectureDTOList);
+                    model.addAttribute("lectureDTO", lectureDTO);
                 }
             }
             model.addAttribute("memberRole", memberRole);

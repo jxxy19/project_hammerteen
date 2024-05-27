@@ -76,7 +76,7 @@ public class PaymentServiceImpl implements PaymentServiceIf{
         List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderIdx(paymentEntity.getOrderIdx());
         List<MyLectureEntity> myLectureEntityList = new ArrayList<>();
         for(OrderDetailEntity orderDetailEntity : orderDetailEntityList) {
-            myLectureEntityList.add(myLectureRepository.findAllByUserIdAndLectureIdx(paymentEntity.getUserId(), orderDetailEntity.getLectureIdx()));
+            myLectureEntityList.add(myLectureRepository.findAllByUserIdAndLectureIdxAndStatus(paymentEntity.getUserId(), orderDetailEntity.getLectureIdx(), "Y"));
         }
 
         String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
