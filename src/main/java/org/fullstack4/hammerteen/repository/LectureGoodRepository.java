@@ -12,8 +12,6 @@ import java.util.List;
 
 public interface LectureGoodRepository extends JpaRepository<LectureGoodEntity, Integer> {
     List<LectureGoodEntity> findAllByUserId(String userId);
-
     LectureGoodEntity findByLectureIdxAndUserId(int lectureId, String userId);
-
-
+    int countAllByUserId(String userId);
 }

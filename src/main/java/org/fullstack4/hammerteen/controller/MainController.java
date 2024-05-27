@@ -24,20 +24,18 @@ import java.util.List;
 
 @Log4j2
 @Controller
-@RequestMapping(value="/main")
 @RequiredArgsConstructor
 public class MainController {
     private final MemberServiceIf memberServiceIf;
     private final BbsServiceIf bbsServiceIf;
-    @GetMapping("/main")
-    public void mainGET(Model model, PageRequestDTO pageRequestDTO){
-
+    @GetMapping("/")
+    public String mainGET(Model model, PageRequestDTO pageRequestDTO){
         PageResponseDTO<TeacherDTO> teacherDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
         PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
         System.out.println("메인 : " + hotBoardDTO);
 
         model.addAttribute("teacherDTO", teacherDTO);
         model.addAttribute("hotBoardDTO", hotBoardDTO);
-
+        return "index";
     }
 }
