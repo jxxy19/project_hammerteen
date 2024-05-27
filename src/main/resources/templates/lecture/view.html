@@ -40,9 +40,7 @@
                                             <div class="col-lg-8">
                                                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
                                                     <div class="me-1">
-                                                        [[${lectureDTO}]]
                                                         [[${lectureReplyDTOList}]]
-                                                        [[${lectureDetailDTOList}]]
                                                         <h5 class="mb-1 text-primary fw-bold">[[${lectureDTO.title}]]</h5>
                                                         <p class="mb-1"><span> [[${lectureDTO.teacherName}]] </span> 선생님</p>
                                                     </div>
@@ -60,8 +58,7 @@
                                                     </div>
                                                     <div class="card-body">
                                                         <h5 class="fw-bold">강의소개</h5>
-                                                        <p class="mb-4">
-                                                            [[${lectureDTO.content}]]
+                                                        <p class="mb-4" th:utext="${lectureDTO.content}">
                                                         </p>
                                                         <hr class="my-4">
                                                         <h5 class="fw-bold">강사정보</h5>
@@ -109,15 +106,13 @@
                                                                 <button class="btn btn-outline-primary w-100 px-0 d-flex flex-column" data-bs-target="#reviewModal" data-bs-toggle="modal" type="button">
                                                                     <span>나의 평점</span>
                                                                     <!-- 등록 후 -->
-                                                                    <span class="text-secondary">
-                                                                        <i class="lni lni-star-filled active-star"></i>
-                                                                        <i class="lni lni-star-filled"></i>
-                                                                        <i class="lni lni-star-filled"></i>
-                                                                        <i class="lni lni-star-filled"></i>
-                                                                        <i class="lni lni-star-filled"></i>
+                                                                    <span class="text-secondary" th:if="${lectureReplyDTO!=null}">
+                                                                        <ul class="list star-list mb-1" >
+                                                                            <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=lectureReplyDTO.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
+                                                                        </ul>
                                                                     </span>
                                                                     <!-- 등록 전 -->
-<!--                                                  <span class="text-dark">평점 등록 전</span>-->
+                                                                <span class="text-secondary" th:if="${lectureReplyDTO==null}">평점 등록 전</span>
                                                                 </button>
                                                             </div>
                                                             <div class="d-flex gap-1 pt-3 justify-content-around">
@@ -137,35 +132,17 @@
                                                                         type="button">
                                                   <span class="d-flex flex-column">
                                                     <span class="h6 mb-1 fw-bold">회차정보</span>
-                                                    <span class="fw-normal">총 11회차</span>
+                                                    <span class="fw-normal">총 [[${lectureDetailDTOList.size}]]회차</span>
                                                   </span>
                                                                 </button>
                                                             </div>
                                                             <div class="accordion-collapse collapse show" data-bs-parent="#courseContent"
                                                                  id="chapter1" style="">
                                                                 <div class="accordion-body py-3 border-top">
-                                                                    <div class="d-flex align-items-center">
+                                                                    <div class="d-flex align-items-center" th:each="dto,status:${lectureDetailDTOList}">
                                                                         <p class="p-0 m-0">
-                                                                            <span class="h6"><i>1</i><span class="ps-2">강의 오리엔테이션</span></span>
+                                                                            <span class="h6"><i>[[${status.count}]]</i><span class="ps-2">[[${dto.detailTitle}]]</span></span>
                                                                             <span class="text-muted d-block ps-3">23분</span>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <p class="p-0 m-0">
-                                                                            <span class="h6"><i>2</i><span class="ps-2">IP 주소의 이해</span></span>
-                                                                            <span class="text-muted d-block ps-3">62분</span>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <p class="p-0 m-0">
-                                                                            <span class="h6"><i>3</i><span class="ps-2">같은 네트워크에서의 통신</span></span>
-                                                                            <span class="text-muted d-block ps-3">44분</span>
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="d-flex align-items-center">
-                                                                        <p class="p-0 m-0">
-                                                                            <span class="h6"><i>4</i><span class="ps-2">스위치를 이용한 통신 기술</span></span>
-                                                                            <span class="text-muted d-block ps-3">12분</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
@@ -283,41 +260,37 @@
                     <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div>
+                    <form action="/lecture/registreply" method="post">
+                        <input type="hidden" name="lectureIdx" th:value="${lectureDTO.lectureIdx}">
+                        <div th:if="${lectureReplyDTO}==null">
                             <p class="p-0 m-0">별점을 선택해주세요.</p>
                             <ul class="list star-list mb-1">
                                 <li id="star_ul">
-                                    <i class="lni lni-star-filled" data-score="1"></i>
-                                    <i class="lni lni-star-filled" data-score="2"></i>
-                                    <i class="lni lni-star-filled" data-score="3"></i>
+                                    <i class="lni lni-star-filled active-star" data-score="1"></i>
+                                    <i class="lni lni-star-filled active-star" data-score="2"></i>
+                                    <i class="lni lni-star-filled active-star" data-score="3"></i>
                                     <i class="lni lni-star-filled" data-score="4"></i>
                                     <i class="lni lni-star-filled" data-score="5"></i>
                                 </li>
                             </ul>
-                            <input id="rank" name="rank" type="hidden" value=""/>
+                            <input id="rank" name="rating" type="hidden" value="3">
                             <div class="form-group">
                                 <textarea class="form-control different-control w-100" cols="30"
-                                          id="review_contents" maxlength="100" name="review_contents" placeholder="리뷰를 작성해주세요"
+                                          id="review_contents" maxlength="100" name="reviewContent" placeholder="리뷰를 작성해주세요"
                                           rows="5"></textarea>
                             </div>
                         </div>
-                        <div class="modal-footer p-0">
+                        <div class="modal-footer p-0" th:if="${lectureReplyDTO}==null">
                             <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>
                             <button class="btn btn-primary" type="submit">저장</button>
                         </div>
                     </form>
-                    <div>
-                        <ul class="list star-list mb-1">
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled active-star"></i>
-                            <i class="lni lni-star-filled"></i>
-                            <i class="lni lni-star-filled"></i>
+                    <div th:if="${lectureReplyDTO!=null}">
+                        <ul class="list star-list mb-1" >
+                            <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=lectureReplyDTO.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
                         </ul>
                         <div class="text-muted d-block ps-2 border rounded py-3">
-                            <p>저의 평점은 만점입니다!!</p>
-                            <p>모두 얼른 들으세요!</p>
+                            <p>[[${lectureReplyDTO.reviewContent}]]</p>
                         </div>
                         <div class="modal-footer p-0">
                             <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">닫기</button>

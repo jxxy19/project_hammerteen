@@ -88,7 +88,7 @@ function addInput() {
                     <small class="d-block subNum text-primary fw-bold">${subsCnt}회차</small>
                     <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
                     <div class="input-group input-group-merge">
-                        <input type="text" class="form-control" id="subTitle">
+                        <input type="text" class="form-control" id="subTitle" name="detailTitle">
                     </div>
                 </div>
                 <div class="form-group">

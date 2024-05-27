@@ -20,8 +20,7 @@ import java.time.LocalDateTime;
 public class LectureDetailDTO {
     private int lectureDetailIdx;
     private int lectureIdx;
-    private String title;
-    private String content;
+    private String detailTitle;
     private String VideoDirectory;
     private String VideoFile;
     private LocalDateTime regDate;

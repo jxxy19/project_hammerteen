@@ -14,7 +14,7 @@
                 <div class="layout-container">
                     <div class="content-wrapper">
                         <!-- Content -->
-                        <form>
+                        <form action="/lecture/regist" method="post" enctype="multipart/form-data">
                             <div class="container-xxl flex-grow-1 container-p-y">
                                 <div class="row m-0 mb-4 ">
                                         <div class="card p-0 m-0 row mb-3 col-12">
@@ -23,43 +23,43 @@
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="title">강의 명 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" id="title">
+                                                        <input type="text" class="form-control" id="title" name="title">
                                                     </div>
                                                 </div>
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="category">과목 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <select id="category" name="category" class="form-select">
+                                                        <select id="category" name="categoryIdx" class="form-select">
                                                             <option>선택</option>
-                                                            <option value="국어">국어</option>
-                                                            <option value="수학">수학</option>
-                                                            <option value="영어">영어</option>
-                                                            <option value="한국사">한국사</option>
-                                                            <option value="사회">사회</option>
-                                                            <option value="과학">과학</option>
-                                                            <option value="직업">직업</option>
-                                                            <option value="제2외국어">제2외국어</option>
-                                                            <option value="일반/진로/교양">일반/진로/교양</option>
+                                                            <option value="100000">국어</option>
+                                                            <option value="200000">수학</option>
+                                                            <option value="300000">영어</option>
+                                                            <option value="400000">한국사</option>
+                                                            <option value="500000">사회</option>
+                                                            <option value="600000">과학</option>
+                                                            <option value="700000">직업</option>
+                                                            <option value="800000">제2외국어</option>
+                                                            <option value="900000">일반/진로/교양</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="price">강의 금액 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" id="price">
+                                                        <input type="text" class="form-control" id="price" name="price">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label">강의 맛보기 영상 <span class="text-danger fw-bold">*</span></label>
-                                                    <input class="form-control" name="sampleVideo" type="file" id="sampleVideo">
+                                                    <input class="form-control" name="thumbnailVideo" type="file" id="sampleVideo">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label">썸네일 <span class="text-danger fw-bold">*</span></label>
-                                                    <input class="form-control" name="thumbnail" type="file" id="thumbnail">
+                                                    <input class="form-control" name="thumbnailImg" type="file" id="thumbnail">
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" >강의 소개 <span class="text-danger fw-bold">*</span></label>
-                                                        <textarea type="text" class="form-control w-100" id="summernote"></textarea>
+                                                        <textarea type="text" class="form-control w-100" id="summernote" name="content"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                                                 <small class="d-block subNum text-primary fw-bold">1회차</small>
                                                                 <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
                                                                 <div class="input-group input-group-merge">
-                                                                    <input type="text" class="form-control" id="subTitle">
+                                                                    <input type="text" class="form-control" id="subTitle" name="detailTitle">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">

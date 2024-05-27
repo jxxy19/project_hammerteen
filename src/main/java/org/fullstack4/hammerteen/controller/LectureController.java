@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 @Log4j2
 @Controller
 @RequestMapping(value="/lecture")
@@ -61,19 +62,26 @@ public class LectureController {
         model.addAttribute("categoryCodeListName" , categoryCodeListName);
     }
     @GetMapping("/view")
-    public void viewGet(Model model, LectureDTO lectureDTO,LPageRequestDTO lpageRequestDTO) {
+    public void viewGet(Model model, LectureDTO lectureDTO,LPageRequestDTO lpageRequestDTO,HttpSession session) {
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
         String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
         String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
-            for(int i =0; i<categoryCodeListName.length; i++) {
-                if (resultDTO.getCategoryIdx().equals(categoryCodeList[i])){
-                    resultDTO.setCategoryName(categoryCodeListName[i]);
-                }
+        for(int i =0; i<categoryCodeListName.length; i++) {
+            if (resultDTO.getCategoryIdx().equals(categoryCodeList[i])){
+                resultDTO.setCategoryName(categoryCodeListName[i]);
             }
+        }
+        String userId=null;
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO!=null){
+            userId= memberDTO.getUserId();
+        }
+        LectureReplyDTO lectureReplyDTO = lectureServiceIf.viewReply(LectureReplyDTO.builder().userId("test").lectureIdx(lectureDTO.getLectureIdx()).build());
         model.addAttribute("lectureDTO", resultDTO);
+        model.addAttribute("lectureReplyDTO", lectureReplyDTO);
         model.addAttribute("lectureReplyDTOList", lectureReplyDTOList);
         model.addAttribute("lectureDetailDTOList", lectureDetailDTOList);
 
@@ -90,7 +98,7 @@ public class LectureController {
     }
     @Transactional
     @PostMapping("/regist")
-    public String registPost(LectureDTO lectureDTO, MultipartHttpServletRequest files, HttpServletRequest request){
+    public String registPost(LectureDTO lectureDTO, LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files, HttpServletRequest request){
 //        HttpSession session = request.getSession();
 //        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
 //        if(memberDTO.getRole().equals("user")){
@@ -98,11 +106,28 @@ public class LectureController {
 //        }
 //        lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
 //        lectureDTO.setTeacherName(memberDTO.getUserId());
+        lectureDTO.setTeacherIdx(1);
+        lectureDTO.setTeacherName("test");
+        log.info("lectureDTO " +lectureDTO);
+        log.info("lectureDetailDTO  " + lectureDetailDTO);
         if(files!=null) {
             lectureDTO = lectureServiceIf.registThumbnailImg(lectureDTO,files);
             lectureDTO = lectureServiceIf.registThumbnailVideo(lectureDTO,files);
+
         }
         int resultidx = lectureServiceIf.regist(lectureDTO);
+        List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
+        String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
+        for(int i =0; i<titleList.length;i++){
+            LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).lectureIdx(resultidx).build();
+            lectureDetailList.add(tempDTO);
+        }
+        log.info("lectureDetailList  " + lectureDetailList);
+        for(int i = 0; files.getFile("video"+(i+1))!=null; i++) {
+            lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video"+(i+1));
+            lectureDetailList.get(i).setLectureIdx(resultidx);
+            lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
+        }
         return "redirect:/lecture/view?lectureIdx="+resultidx;
     }
 
@@ -152,6 +177,18 @@ public class LectureController {
         lectureServiceIf.deleteThumbnailVideo(lectureDTO.getLectureIdx());
         lectureServiceIf.delete(lectureDTO.getLectureIdx());
         return "redirect:/lecture/list";
+    }
+
+    @PostMapping("/registreply")
+    public String registReply(LectureReplyDTO lectureReplyDTO, HttpSession session){
+//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+//        if(memberDTO==null){
+//            return "redirect:/";
+//        }
+        lectureReplyDTO.setUserId("test");
+        lectureServiceIf.registLectureReply(lectureReplyDTO);
+
+        return "redirect:/lecture/view?lectureIdx="+lectureReplyDTO.getLectureIdx();
     }
 
 

@@ -23,8 +23,6 @@ public class LectureDTO {
     @NotEmpty
     private String content;
     private int price;
-    private LocalDate startDate;
-    private LocalDate endDate;
     private String thumbnailVideoDirectory;
     private String thumbnailVideoFile;
     private String thumbnailImgDirectory;

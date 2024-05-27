@@ -31,10 +31,6 @@ public class LectureEntity extends BaseEntity{
     private String content;
     @Column(nullable=false)
     private int price;
-    @Column(nullable=false)
-    private LocalDate startDate;
-    @Column(nullable=false)
-    private LocalDate endDate;
     @Column(nullable=true, length = 100)
     private String thumbnailVideoDirectory;
     @Column(nullable=true, length = 50)
@@ -46,12 +42,10 @@ public class LectureEntity extends BaseEntity{
     @Column(nullable=true, length = 30)
     private String lectureRecommendTag;
 
-    public void modify(String title, String content, int price, LocalDate start_date,LocalDate end_date){
+    public void modify(String title, String content, int price){
         this.title=title;
         this.content=content;
         this.price=price;
-        this.startDate=start_date;
-        this.endDate=end_date;
     }
 
     public void modifyImg(String thumbnailImgDirectory, String thumbnailImgFile){

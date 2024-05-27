@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name="hamt_lecture")
+@Table(name="hamt_lecture_Detail")
 public class LectureDetailEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,17 +20,14 @@ public class LectureDetailEntity extends BaseEntity{
     @Column(nullable=false)
     private int lectureIdx;
     @Column(nullable=false)
-    private String title;
-    @Column(length=500,nullable=false)
-    private String content;
+    private String detailTitle;
     @Column(nullable=true, length = 100)
     private String videoDirectory;
     @Column(nullable=true, length = 50)
     private String videoFile;
 
-    public void modify(String title, String content){
-        this.title=title;
-        this.content=content;
+    public void modify(String title){
+        this.detailTitle=title;
     }
 
     public void modifyVideo(String videoDirectory, String videoFile){

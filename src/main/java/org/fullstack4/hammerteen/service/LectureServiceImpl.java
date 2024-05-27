@@ -60,7 +60,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureEntity> result = lectureRepository.findById(lectureDTO.getLectureIdx());
         LectureEntity lectureEntity =result.orElse(null);
         if (lectureEntity != null) {
-            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice(),lectureDTO.getStartDate(),lectureDTO.getEndDate());
+            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice());
             lectureRepository.save(lectureEntity);
         }
 
@@ -130,7 +130,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     public LectureDTO registThumbnailVideo(LectureDTO lectureDTO, MultipartHttpServletRequest files) {
         String saveDirectory = "D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
         List<String> filenames = null;
-        filenames = commonFileUtil.thumbnailUploadImg(files,saveDirectory);
+        filenames = commonFileUtil.thumbnailUploadVideo(files,saveDirectory);
         if(filenames!=null) {
             for (String filename : filenames) {
                 lectureDTO.setThumbnailVideoDirectory(saveDirectory);
@@ -202,7 +202,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
         if (lectureDetailEntity != null) {
-            lectureDetailEntity.modify(lectureDetailDTO.getTitle(),lectureDetailDTO.getContent());
+            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle());
             lectureDetailRepository.save(lectureDetailEntity);
         }
     }
@@ -263,6 +263,15 @@ public class LectureServiceImpl implements LectureServiceIf{
     public void registLectureReply(LectureReplyDTO lectureReplyDTO) {
         LectureReplyEntity lectureReplyEntity = modelMapper.map(lectureReplyDTO,LectureReplyEntity.class);
         lectureReplyRepository.save(lectureReplyEntity);
+    }
+    @Override
+    public LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO) {
+        LectureReplyEntity lectureReplyEntity = lectureReplyRepository.findByUserIdAndLectureIdx(lectureReplyDTO.getUserId(),lectureReplyDTO.getLectureIdx());
+        if(lectureReplyEntity!=null) {
+            LectureReplyDTO ResultDTO = modelMapper.map(lectureReplyEntity, LectureReplyDTO.class);
+            return ResultDTO;
+        }
+        return null;
     }
 
     @Override

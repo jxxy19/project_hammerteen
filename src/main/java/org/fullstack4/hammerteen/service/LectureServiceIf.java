@@ -33,7 +33,7 @@ public interface LectureServiceIf {
     void deleteLectureReplyAll(int lectureIdx);
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);
-
+    LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO);
     void registGood(LectureGoodDTO lectureGoodDTO);
     void deleteGood(LectureGoodDTO lectureGoodDTO);
     List<LectureGoodDTO> listGood(String userId);
