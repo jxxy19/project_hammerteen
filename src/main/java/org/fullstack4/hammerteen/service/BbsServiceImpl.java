@@ -4,15 +4,20 @@ package org.fullstack4.hammerteen.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.domain.BbsEntity;
+import org.fullstack4.hammerteen.domain.BbsFileEntity;
 import org.fullstack4.hammerteen.dto.BbsDTO;
+import org.fullstack4.hammerteen.dto.BbsFileDTO;
 import org.fullstack4.hammerteen.dto.PageRequestDTO;
 import org.fullstack4.hammerteen.dto.PageResponseDTO;
+import org.fullstack4.hammerteen.repository.BbsFileRepository;
 import org.fullstack4.hammerteen.repository.BbsRepository;
+import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +29,8 @@ import java.util.stream.Collectors;
 public class BbsServiceImpl implements BbsServiceIf{
     private final ModelMapper modelMapper;
     private final BbsRepository bbsRepository;
+    private final CommonFileUtil commonFileUtil;
+    private final BbsFileRepository bbsFileRepository;
 //    게시글 등록
     @Override
     public int regist(BbsDTO bbsDTO) {
@@ -98,6 +105,32 @@ public class BbsServiceImpl implements BbsServiceIf{
     @Override
     public void updateReadCnt(int bbsIdx) {
         bbsRepository.updateReadCnt(bbsIdx);
+    }
+
+    @Override
+    public void registFile(BbsFileDTO bbsFileDTO, MultipartHttpServletRequest files) {
+
+        String saveDirectory = "D:\\java4\\springboot\\hammerteen\\src\\main\\resources\\static\\upload";
+        List<String> filenames = null;
+        filenames = commonFileUtil.fileuploads(files,saveDirectory);;
+        if(filenames!=null) {
+            for (String filename : filenames) {
+                bbsFileDTO.setFileName(filename);
+                bbsFileDTO.setDirectory(saveDirectory);
+                BbsFileEntity bbsFileEntity = modelMapper.map(bbsFileDTO, BbsFileEntity.class);
+                bbsFileRepository.save(bbsFileEntity);
+            }
+        }
+
+    }
+
+    @Override
+    public List<BbsFileDTO> listFile(int bbsIdx) {
+        List<BbsFileEntity> result = bbsFileRepository.findAllByBbsIdx(bbsIdx);
+        List<BbsFileDTO> dtoList = result.stream()
+                .map(board->modelMapper.map(board,BbsFileDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
     }
 
 

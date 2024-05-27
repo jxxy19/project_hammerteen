@@ -20,7 +20,9 @@ public class HandlerInterceptorConfigure implements WebMvcConfigurer {
         registry.addInterceptor(loginCheckInterceptor)
                 .addPathPatterns("/**/regist")
                 .addPathPatterns("/**/modify")
-                .addPathPatterns("/**/delete");
+                .addPathPatterns("/**/delete")
+                .excludePathPatterns("/member/regist");
+
 
     }
 }
