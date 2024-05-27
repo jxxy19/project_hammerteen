@@ -43,6 +43,7 @@ public class MemberController {
     @PostMapping("/regist")
     public String registPOST(@Valid MemberDTO memberDTO, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
+        System.out.println("여기로 들어옴/ 회원가입1");
 
        //핸드폰번호 합치기
         String[] phoneStr = memberDTO.getPhoneNumber().split(",");
@@ -50,15 +51,17 @@ public class MemberController {
 
         /* memberDTO.setPassword(commonUtil.encryptPwd(memberDTO.getPassword()));*/
         if (bindingResult.hasErrors()) {
-
+            System.out.println("여기로 들어옴/ 회원가입2");
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("memberDTO", memberDTO);
             return "/member/regist";
         }
+        System.out.println("회원가입 : " +memberDTO );
         int result = memberServiceIf.regist(memberDTO);
         System.out.println("result : " + result) ;
 
         if (result > 0) {
+            System.out.println("여기로 들어옴/ 회원가입3");
             redirectAttributes.addFlashAttribute("info", "alert(`가입이 완료되었습니다.`);");
             return "redirect:/login/login";
         } else {
