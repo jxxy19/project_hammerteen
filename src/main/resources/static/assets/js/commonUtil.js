@@ -172,6 +172,10 @@ function uncomma(str) {
     return str.replace(/[^\d]+/g, '');
 }
 
+function goToLink (url) {
+    url = String(url);
+    return window.location.href=url;
+}
 // 링크 이동영
 function goToThisLick(link, param, value) {
     location.href = link + "?" + param + "=" + value;

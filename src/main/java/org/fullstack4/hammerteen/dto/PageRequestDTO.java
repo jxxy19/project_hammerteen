@@ -44,6 +44,7 @@ public class PageRequestDTO {
     private String category2;
     private String linkParams;
     private String orderby;
+    private String userId;
 
     private LocalDate reg_date_start;
     private LocalDate reg_date_end;
