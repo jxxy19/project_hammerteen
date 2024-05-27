@@ -33,11 +33,11 @@ public class LectureEntity extends BaseEntity{
     private int price;
     @Column(nullable=true, length = 200)
     private String thumbnailVideoDirectory;
-    @Column(nullable=true, length = 50)
+    @Column(nullable=true, length = 200)
     private String thumbnailVideoFile;
     @Column(nullable=true, length = 200)
     private String thumbnailImgDirectory;
-    @Column(nullable=true, length = 50)
+    @Column(nullable=true, length = 200)
     private String thumbnailImgFile;
     @Column(nullable=true, length = 30)
     private String lectureRecommendTag;

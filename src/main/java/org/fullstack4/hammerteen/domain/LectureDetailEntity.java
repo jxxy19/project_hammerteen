@@ -21,9 +21,9 @@ public class LectureDetailEntity extends BaseEntity{
     private int lectureIdx;
     @Column(nullable=false)
     private String detailTitle;
-    @Column(nullable=true, length = 100)
+    @Column(nullable=true, length = 200)
     private String videoDirectory;
-    @Column(nullable=true, length = 50)
+    @Column(nullable=true, length = 200)
     private String videoFile;
 
     public void modify(String title){
