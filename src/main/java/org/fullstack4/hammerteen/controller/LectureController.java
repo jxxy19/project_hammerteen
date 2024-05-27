@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.service.CartServiceIf;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.util.CommonUtil;
@@ -35,6 +36,7 @@ import java.util.Map;
 public class LectureController {
     private final MemberServiceIf memberServiceIf;
     private final LectureServiceIf lectureServiceIf;
+    private final CartServiceIf cartServiceIf;
 
     private String menu1 = "강의";
     @GetMapping("/list")
@@ -267,10 +269,57 @@ public class LectureController {
         return "redirect:/lecture/view?lectureIdx="+lectureReplyDTO.getLectureIdx();
     }
 
+    // 장바구니 담기
+    @GetMapping("/addCart")
+    public String addCart(@RequestParam(name="lectureIdx", defaultValue = "")String lectureIdx,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes){
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            // 장바구니 확인
+            List<CartDTO> myCartList = cartServiceIf.myCartList(memberDTO.getUserId());
+            int already = 0;
+            for(CartDTO cartDTO : myCartList) {
+                if(cartDTO.getLectureIdx() == CommonUtil.parseInt(lectureIdx)) {
+                    redirectAttributes.addFlashAttribute("info", "이미 담긴 강의 입니다.");
+                    already++;
+                    break;
+                }
+            }
+            // 결제 내역 확인
+            List<OrderDetailDTO> myOrderList = cartServiceIf.myOrderList(memberDTO.getUserId());
+            for(OrderDetailDTO orderDetailDTO : myOrderList) {
+                if(orderDetailDTO.getLectureIdx() == CommonUtil.parseInt(lectureIdx)) {
+                    redirectAttributes.addFlashAttribute("info", "이미 구매한 강의 입니다.");
+                    already++;
+                    break;
+                }
+            }
+            if(already == 0) {
+                CartDTO cartDTO = CartDTO.builder()
+                        .lectureIdx(CommonUtil.parseInt(lectureIdx))
+                        .userId(memberDTO.getUserId())
+                        .build();
+                int result = cartServiceIf.addCart(cartDTO);
+                if(result > 0) {
+                    redirectAttributes.addFlashAttribute("info", "장바구니 추가 성공");
+                    return "redirect:/mypage/cart";
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "장바구니 추가 실패");
+                    return "redirect:/lecture/list";
+                }
+            } else {
+                return "redirect:/lecture/list";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
+    }
+
 
 
     // 선생님 페이지 리스트
-
     @GetMapping("/teacherList")
     public void teacherListGet(PageRequestDTO pageRequestDTO, Model model,
                                HttpServletRequest request,@RequestParam(value = "categoryName", required = false) String categoryName) {

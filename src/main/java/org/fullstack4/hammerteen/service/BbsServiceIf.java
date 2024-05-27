@@ -11,10 +11,10 @@ import java.util.List;
 
 public interface BbsServiceIf {
     int regist(BbsDTO bbsDTO);
-    BbsDTO view(BbsDTO bbsDTO);
+    BbsDTO view(int bbsIdx);
     PageResponseDTO<BbsDTO> list(PageRequestDTO pageRequestDTO);
     void modify(BbsDTO bbsDTO);
-    void delete(BbsDTO bbsDTO);
+    void delete(int bbsIdx);
     PageResponseDTO<BbsDTO> myList(PageRequestDTO pageRequestDTO, String userId);
     void updateReadCnt (int bbsIdx);
 
@@ -24,4 +24,6 @@ public interface BbsServiceIf {
     List<BbsFileDTO> listFile( int bbsIdx);
 
     void deleteFile(BbsFileDTO bbsFileDTO);
+    PageResponseDTO<BbsDTO> hotboardList(PageRequestDTO pageRequestDTO);
+
 }

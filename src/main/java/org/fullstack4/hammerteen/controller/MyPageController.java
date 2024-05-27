@@ -11,6 +11,7 @@ import org.fullstack4.hammerteen.dto.PageResponseDTO;
 import org.fullstack4.hammerteen.dto.PaymentDTO;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
+import org.fullstack4.hammerteen.service.CartServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.service.PaymentServiceIf;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
@@ -21,10 +22,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UrlPathHelper;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Log4j2
@@ -36,6 +39,7 @@ public class MyPageController {
     private final MemberServiceIf memberServiceIf;
     private final CommonFileUtil commonFileUtil;
     private final BbsServiceIf bbsServiceIf;
+    private final CartServiceIf cartServiceIf;
     private String menu1 = "마이페이지";
 
     @GetMapping("/mypage")
@@ -151,8 +155,39 @@ public class MyPageController {
 
     }
     @GetMapping("/cart")
-    public void cartGet(Model model) {
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "장바구니 내역"));
+    public String cartGet(Model model,
+                        HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO != null) {
+            List<CartDTO> cartDTOList = cartServiceIf.myCartList(memberDTO.getUserId());
+            int totalCnt = cartServiceIf.countList(memberDTO.getUserId());
+            log.info("cartDTOList : {}", cartDTOList);
+            model.addAttribute("totalCnt", totalCnt);
+            model.addAttribute("cartDTOList",cartDTOList);
+            model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "장바구니 내역"));
+            return "/mypage/cart";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보가 없습니다.");
+            return "redirect:/";
+        }
+    }
+
+    @PostMapping("/deleteCart")
+    public String deleteCartPOST(Model model, RedirectAttributes redirectAttributes,
+                                 @RequestParam(name="cartIdx", defaultValue = "") String cartIdx, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        log.info("cartIdx : {}", cartIdx);
+        if(memberDTO != null) {
+            for(String idx : cartIdx.split(",")) {
+                cartServiceIf.deleteCart(CommonUtil.parseInt(idx));
+            }
+            redirectAttributes.addFlashAttribute("info", "삭제가 완료되었습니다.");
+            return "redirect:/mypage/cart";
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보가 없습니다.");
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/memberList")

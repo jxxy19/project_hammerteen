@@ -3,6 +3,7 @@ package org.fullstack4.hammerteen.repository;
 
 import org.fullstack4.hammerteen.domain.BbsEntity;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,4 +18,6 @@ public interface BbsRepository extends JpaRepository<BbsEntity, Integer> {
     @Modifying
     @Query(value = "update BbsEntity b set b.readCnt=b.readCnt+1 where b.bbsIdx=:bbsIdx")
     void updateReadCnt(@Param("bbsIdx") int bbsIdx);
+
+    Page<BbsEntity> findAllByOrderByReadCntDesc(PageRequest pageable);
 }

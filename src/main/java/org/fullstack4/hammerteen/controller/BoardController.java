@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UrlPathHelper;
@@ -148,7 +149,8 @@ public class BoardController {
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+resultidx;
     }
     @GetMapping("/view")
-    public void viewGet(BbsDTO bbsDTO, Model model, HttpServletRequest req) {
+    public void viewGet(@RequestParam(name="bbsIdx") int bbsIdx,
+                        BbsDTO bbsDTO, Model model, HttpServletRequest req) {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
         bbsServiceIf.updateReadCnt(bbsDTO.getBbsIdx());
@@ -156,7 +158,8 @@ public class BoardController {
         System.out.println("bbsDto.bbsFileDTOList ; " +  bbsFileDTOList);
 
         bbsDTO.setReadCnt(bbsDTO.getReadCnt());
-        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO);
+        bbsServiceIf.updateReadCnt(bbsIdx);
+        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsIdx);
         model.addAttribute("bbsDTO",resultbbsDTO);
         model.addAttribute("bbsFileDTOList",bbsFileDTOList);
         if (url.contains("board")) {
@@ -183,7 +186,7 @@ public class BoardController {
     @GetMapping("/modify")
     public String modifyGet(BbsDTO bbsDTO, PageRequestDTO pageRequestDTO,
                           Model model, HttpServletRequest req){
-        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO);
+        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO.getBbsIdx());
         List<BbsFileDTO> bbsFileDTOList = bbsServiceIf.listFile(bbsDTO.getBbsIdx());
         HttpSession session = req.getSession();
         model.addAttribute("bbsDTO",resultbbsDTO);
@@ -208,8 +211,7 @@ public class BoardController {
         return null;
     }
     @PostMapping("/modify")
-    public String modifyPost(BbsDTO bbsDTO, HttpServletRequest request,MultipartHttpServletRequest files){
-        HttpSession session = request.getSession();
+    public String modifyPost(BbsDTO bbsDTO, HttpServletRequest req,MultipartHttpServletRequest files){
 
         if(files!=null) {
             BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(bbsDTO.getBbsIdx()).userId(bbsDTO.getUserId()).build();
@@ -238,9 +240,10 @@ public class BoardController {
         }
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+ bbsDTO.getBbsIdx();
     }
-    @GetMapping("/delete")
-    public String delete(BbsDTO bbsDTO, HttpServletRequest req) {
-        BbsDTO view = bbsServiceIf.view(bbsDTO);
+    @PostMapping("/delete")
+    public String delete(@RequestParam(name="bbsIdx") int bbsIdx, BbsDTO bbsDTO, HttpServletRequest req) {
+        BbsDTO view = bbsServiceIf.view(bbsIdx);
+        log.info(view);
         HttpSession session = req.getSession();
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         String categoryEng = "";
@@ -263,13 +266,10 @@ public class BoardController {
             categoryEng = "qna";
         }
         if (memberDTO != null) {
-            if (!memberDTO.getUserId().equals(view.getUserId()) && memberDTO.getRole().equals("user")) {
-                return "redirect:/";
-            } else {
-                bbsServiceIf.delete(bbsDTO);
-                return "redirect:/board/list?category1=" + categoryEng;
+                bbsServiceIf.delete(bbsIdx);
+                return "redirect:/board/list?category1="+categoryEng;
             }
-        }
+
         if (memberDTO == null) {
             return "redirect:/board/view?category1=" + categoryEng + "&bbsIdx=" + bbsDTO.getBbsIdx();
         }
