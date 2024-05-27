@@ -1,11 +1,13 @@
 package org.fullstack4.hammerteen.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
+import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.fullstack4.hammerteen.util.CommonUtil;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BbsServiceIf bbsServiceIf;
+    private final CommonFileUtil commonFileUtil;
     private String menuB = "자유게시판";
     private String menuQ = "QNA(1:1)";
     private String menuR = "후기게시판";
@@ -115,6 +118,12 @@ public class BoardController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         bbsDTO.setUserId(memberDTO.getUserId());
         int resultidx = bbsServiceIf.regist(bbsDTO);
+
+        if(files!=null) {
+            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(resultidx).userId(bbsDTO.getUserId()).build();
+            bbsServiceIf.registFile(bbsFileDTO, files);
+        }
+
         String categoryEng = "";
         if(bbsDTO.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
@@ -141,11 +150,13 @@ public class BoardController {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
         bbsServiceIf.updateReadCnt(bbsDTO.getBbsIdx());
-        System.out.println("bbsDto.getRead_cnt ; " +  bbsDTO.getReadCnt());
+        List<BbsFileDTO> bbsFileDTOList = bbsServiceIf.listFile(bbsDTO.getBbsIdx());
+        System.out.println("bbsDto.bbsFileDTOList ; " +  bbsFileDTOList);
 
         bbsDTO.setReadCnt(bbsDTO.getReadCnt());
         BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO);
         model.addAttribute("bbsDTO",resultbbsDTO);
+        model.addAttribute("bbsFileDTOList",bbsFileDTOList);
         if (url.contains("board")) {
             model.addAttribute("category1", "board");
             model.addAttribute("pageType", CommonUtil.setPageType(menuB, "글 상세"));
@@ -171,8 +182,10 @@ public class BoardController {
     public String modifyGet(BbsDTO bbsDTO, PageRequestDTO pageRequestDTO,
                           Model model, HttpServletRequest req){
         BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO);
+        List<BbsFileDTO> bbsFileDTOList = bbsServiceIf.listFile(bbsDTO.getBbsIdx());
         HttpSession session = req.getSession();
         model.addAttribute("bbsDTO",resultbbsDTO);
+        model.addAttribute("bbsFileDTOList",bbsFileDTOList);
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
         if (url.contains("board")) {
@@ -254,4 +267,15 @@ public class BoardController {
         }
         return null;
     }
+
+    @GetMapping("/downloadfile")
+    public void downloadFile(BbsFileDTO bbsFileDTO, HttpServletResponse response, HttpServletRequest request){
+        String saveDirectory = "D:\\java4\\springboot\\hammerteen\\src\\main\\resources\\static\\upload";
+        commonFileUtil.fileDownload(saveDirectory,bbsFileDTO.getFileName(),response,request);
+    }
+/*    @GetMapping("/deletefile")
+    public String deleteFile(BbsFileDTO bbsFileDTO){
+        bbsServiceIf.deleteFile(bbsFileDTO);
+        return "redirect:/";
+    }*/
 }
