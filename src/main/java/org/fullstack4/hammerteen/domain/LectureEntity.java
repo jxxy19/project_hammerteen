@@ -31,11 +31,11 @@ public class LectureEntity extends BaseEntity{
     private String content;
     @Column(nullable=false)
     private int price;
-    @Column(nullable=true, length = 100)
+    @Column(nullable=true, length = 200)
     private String thumbnailVideoDirectory;
     @Column(nullable=true, length = 50)
     private String thumbnailVideoFile;
-    @Column(nullable=true, length = 100)
+    @Column(nullable=true, length = 200)
     private String thumbnailImgDirectory;
     @Column(nullable=true, length = 50)
     private String thumbnailImgFile;
