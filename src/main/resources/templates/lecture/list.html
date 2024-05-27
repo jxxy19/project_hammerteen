@@ -18,7 +18,7 @@
               <div class="row justify-content-end">
                 <div class="col-sm-12 col-md-12 px-lg-4 d-lg-flex d-md-flex justify-content-end">
                   <div class="row px-md-4 px-lg-4 mb-3 m-0">
-                    <a href="/lecture/regist" class="col-sm-12 col-md-12 btn btn-primary">등록</a>
+                    <a th:if="${session.memberDTO!=null && session.memberDTO.role.equals('teacher')}" href="/lecture/regist" class="col-sm-12 col-md-12 btn btn-primary">등록</a>
                   </div>
                 </div>
               </div>

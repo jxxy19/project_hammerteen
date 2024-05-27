@@ -10,17 +10,19 @@ import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.util.CommonUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UrlPathHelper;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +81,13 @@ public class LectureController {
         if(memberDTO!=null){
             userId= memberDTO.getUserId();
         }
+        String videoName = "";
         LectureReplyDTO lectureReplyDTO = lectureServiceIf.viewReply(LectureReplyDTO.builder().userId("test").lectureIdx(lectureDTO.getLectureIdx()).build());
+        if(resultDTO.getThumbnailVideoFile()!=null) {
+            videoName = URLEncoder.encode(resultDTO.getThumbnailVideoFile(), StandardCharsets.UTF_8);
+        }
+        log.info(resultDTO.getThumbnailVideoFile()+" getThumbnailVideoFile test");
+        lectureDTO.setThumbnailVideoFile(videoName);
         model.addAttribute("lectureDTO", resultDTO);
         model.addAttribute("lectureReplyDTO", lectureReplyDTO);
         model.addAttribute("lectureReplyDTOList", lectureReplyDTOList);
@@ -88,28 +96,24 @@ public class LectureController {
     }
     @GetMapping("/regist")
     public String registGet(Model model, HttpServletRequest request) {
-//        HttpSession session = request.getSession();
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-//        if(memberDTO.getRole().equals("user")){
-//            return "redirect:/";
-//        }
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO.getRole().equals("user")){
+            return "redirect:/";
+        }
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
         return "/lecture/regist";
     }
     @Transactional
     @PostMapping("/regist")
     public String registPost(LectureDTO lectureDTO, LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files, HttpServletRequest request){
-//        HttpSession session = request.getSession();
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-//        if(memberDTO.getRole().equals("user")){
-//            return "redirect:/";
-//        }
-//        lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
-//        lectureDTO.setTeacherName(memberDTO.getUserId());
-        lectureDTO.setTeacherIdx(1);
-        lectureDTO.setTeacherName("test");
-        log.info("lectureDTO " +lectureDTO);
-        log.info("lectureDetailDTO  " + lectureDetailDTO);
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO.getRole().equals("user")){
+            return "redirect:/";
+        }
+        lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
+        lectureDTO.setTeacherName(memberDTO.getUserId());
         if(files!=null) {
             lectureDTO = lectureServiceIf.registThumbnailImg(lectureDTO,files);
             lectureDTO = lectureServiceIf.registThumbnailVideo(lectureDTO,files);
@@ -118,11 +122,13 @@ public class LectureController {
         int resultidx = lectureServiceIf.regist(lectureDTO);
         List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
         String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
+        String[] lengthList = lectureDetailDTO.getVideoLength().split(",");
+
         for(int i =0; i<titleList.length;i++){
-            LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).lectureIdx(resultidx).build();
+            LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(resultidx).build();
             lectureDetailList.add(tempDTO);
         }
-        log.info("lectureDetailList  " + lectureDetailList);
+
         for(int i = 0; files.getFile("video"+(i+1))!=null; i++) {
             lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video"+(i+1));
             lectureDetailList.get(i).setLectureIdx(resultidx);
@@ -134,12 +140,14 @@ public class LectureController {
     @GetMapping("/modify")
     public String modifyGet(Model model, LectureDTO lectureDTO, HttpServletRequest request) {
         LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
-//        HttpSession session = request.getSession();
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
-//        if(!(memberDTO.getMemberIdx()==(viewDTO.getLectureIdx())) && memberDTO.getRole().equals("user")){
-//            return "redirect:/";
-//        }
+        List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(viewDTO.getTeacherIdx()))){
+            return "redirect:/";
+        }
         model.addAttribute("lectureDTO",viewDTO);
+        model.addAttribute("lectureDetailDTOList",lectureDetailDTOList);
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
 
         return "/lecture/modify";
@@ -148,16 +156,33 @@ public class LectureController {
 
     @Transactional
     @PostMapping("/modify")
-    public String modifyPost(LectureDTO lectureDTO, MultipartHttpServletRequest files, HttpServletRequest request){
-//        HttpSession session = request.getSession();
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
-//        if(memberDTO.getRole().equals("user")){
-//            return "redirect:/";
-//        }
+    public String modifyPost(LectureDTO lectureDTO,LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(lectureDTO.getTeacherIdx()))){
+            return "redirect:/";
+        }
         if(files!=null) {
             lectureServiceIf.modifyThumbnailImg(lectureDTO,files);
             lectureServiceIf.modifyThumbnailVideo(lectureDTO,files);
         }
+        int resultidx = lectureDTO.getLectureIdx();
+        List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
+        String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
+        String[] lengthList = lectureDetailDTO.getVideoLength().split(",");
+
+        for(int i =0; i<titleList.length;i++){
+            LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(resultidx).build();
+            lectureDetailList.add(tempDTO);
+        }
+
+        for(int i = 0; files.getFile("video"+(i+1))!=null; i++) {
+            lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video"+(i+1));
+            lectureDetailList.get(i).setLectureIdx(resultidx);
+            lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
+        }
+        lectureServiceIf.modify(lectureDTO);
+        lectureServiceIf.modifyLectureDetail(lectureDetailDTO);
         return "redirect:/lecture/view?lectureIdx="+lectureDTO.getLectureIdx();
     }
 
@@ -165,12 +190,12 @@ public class LectureController {
     @Transactional
     @GetMapping("/delete")
     public String delete(LectureDTO lectureDTO, HttpServletRequest request){
-//        LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
-//        HttpSession session = request.getSession();
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
-//        if(!memberDTO.getUserId().equals(viewDTO.getTeacherName()) && memberDTO.getRole().equals("user")){
-//            return "redirect:/";
-//        }
+        LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(viewDTO.getTeacherIdx()))){
+            return "redirect:/";
+        }
         lectureServiceIf.deleteLectureDetailAll(lectureDTO.getLectureIdx());
         lectureServiceIf.deleteLectureReplyAll(lectureDTO.getLectureIdx());
         lectureServiceIf.deleteThumbnailImg(lectureDTO.getLectureIdx());
@@ -179,13 +204,64 @@ public class LectureController {
         return "redirect:/lecture/list";
     }
 
+    @Transactional
+    @ResponseBody
+    @PostMapping("/deletethumbnailimg")
+    public HttpStatus deleteThumbnailImg(LectureDTO lectureDTO, HttpServletRequest request){
+        LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(viewDTO.getTeacherIdx()))){
+            return HttpStatus.FORBIDDEN;
+        }
+        lectureServiceIf.deleteThumbnailImg(lectureDTO.getLectureIdx());
+        return HttpStatus.OK;
+    }
+    @Transactional
+    @ResponseBody
+    @PostMapping("/deletethumbnailvideo")
+    public HttpStatus deleteThumbnailVideo(LectureDTO lectureDTO, HttpServletRequest request){
+        LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(viewDTO.getTeacherIdx()))){
+            return HttpStatus.FORBIDDEN;
+        }
+        lectureServiceIf.deleteThumbnailVideo(lectureDTO.getLectureIdx());
+        return HttpStatus.OK;
+    }
+    @Transactional
+    @ResponseBody
+    @PostMapping("/deletelecturedetailfile")
+    public HttpStatus deleteLectureDetailFile(LectureDetailDTO lectureDetailDTO,int teacherIdx, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(teacherIdx))){
+            return HttpStatus.FORBIDDEN;
+        }
+        lectureServiceIf.deleteThumbnailDetailFile(lectureDetailDTO.getLectureDetailIdx());
+        return HttpStatus.OK;
+    }
+    @Transactional
+    @ResponseBody
+    @PostMapping("/deletelecturedetail")
+    public HttpStatus deleteLectureDetail(LectureDetailDTO lectureDetailDTO,int teacherIdx, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+        if(!(memberDTO.getMemberIdx()==(teacherIdx))){
+            return HttpStatus.FORBIDDEN;
+        }
+        lectureServiceIf.deleteLectureDetail(lectureDetailDTO.getLectureDetailIdx());
+        return HttpStatus.OK;
+    }
+
     @PostMapping("/registreply")
     public String registReply(LectureReplyDTO lectureReplyDTO, HttpSession session){
-//        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-//        if(memberDTO==null){
-//            return "redirect:/";
-//        }
-        lectureReplyDTO.setUserId("test");
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO==null){
+            return "redirect:/";
+        }
+        lectureReplyDTO.setUserId(memberDTO.getUserId());
         lectureServiceIf.registLectureReply(lectureReplyDTO);
 
         return "redirect:/lecture/view?lectureIdx="+lectureReplyDTO.getLectureIdx();

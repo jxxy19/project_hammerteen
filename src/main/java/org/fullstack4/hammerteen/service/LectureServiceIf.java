@@ -30,6 +30,7 @@ public interface LectureServiceIf {
     void registLectureReply(LectureReplyDTO lectureReplyDTO);
     void modifyLectureReply(LectureReplyDTO lectureReplyDTO);
     void deleteLectureReply(int lectureReplyIdx);
+    void deleteThumbnailDetailFile(int lectureDetailIdx);
     void deleteLectureReplyAll(int lectureIdx);
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);

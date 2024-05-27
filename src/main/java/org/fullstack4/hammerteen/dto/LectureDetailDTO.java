@@ -21,8 +21,9 @@ public class LectureDetailDTO {
     private int lectureDetailIdx;
     private int lectureIdx;
     private String detailTitle;
-    private String VideoDirectory;
-    private String VideoFile;
+    private String videoDirectory;
+    private String videoFile;
+    private String videoLength;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 

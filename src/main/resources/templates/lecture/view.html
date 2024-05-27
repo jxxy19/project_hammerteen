@@ -25,10 +25,10 @@
                                         </div>
                                         <div class="d-lg-flex w-100 justify-content-end">
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
-                                                <a class="col-sm-12 btn btn-outline-primary" th:href="|/lecture/delete?lectureIdx=${lectureDTO.lectureIdx}|">삭제</a>
+                                                <a th:if="|${session.memberDTO!=null && session.memberDTO.memberIdx.equals(lectureDTO.teacherIdx)}|" class="col-sm-12 btn btn-outline-primary" th:href="|/lecture/delete?lectureIdx=${lectureDTO.lectureIdx}|">삭제</a>
                                             </div>
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1">
-                                                <a class="col-sm-12 btn btn-primary"
+                                                <a class="col-sm-12 btn btn-primary" th:if="|${session.memberDTO!=null && session.memberDTO.memberIdx.equals(lectureDTO.teacherIdx)}|"
                                                    th:href="|/lecture/modify?lectureIdx=${lectureDTO.lectureIdx}|">수정</a>
                                             </div>
                                         </div>
@@ -40,7 +40,6 @@
                                             <div class="col-lg-8">
                                                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
                                                     <div class="me-1">
-                                                        [[${lectureReplyDTOList}]]
                                                         <h5 class="mb-1 text-primary fw-bold">[[${lectureDTO.title}]]</h5>
                                                         <p class="mb-1"><span> [[${lectureDTO.teacherName}]] </span> 선생님</p>
                                                     </div>
@@ -102,7 +101,7 @@
                                                         </div>
                                                         <div class="card-body py-4">
                                                             <div class="d-flex gap-1 justify-content-between">
-                                                                <a class="btn btn-primary w-100 px-0 text-white" type="button">학습하러 가기</a>
+                                                                <a th:href="|/mystudy/myLectureView?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-primary w-100 px-0 text-white" type="button">학습하러 가기</a>
                                                                 <button class="btn btn-outline-primary w-100 px-0 d-flex flex-column" data-bs-target="#reviewModal" data-bs-toggle="modal" type="button">
                                                                     <span>나의 평점</span>
                                                                     <!-- 등록 후 -->

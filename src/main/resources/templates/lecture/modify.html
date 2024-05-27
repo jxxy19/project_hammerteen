@@ -14,7 +14,9 @@
                 <div class="layout-container">
                     <div class="content-wrapper">
                         <!-- Content -->
-                        <form>
+                        <form action="/lecture/modify" method="post" enctype="multipart/form-data">
+                            <input type="hidden" th:value="${lectureDTO.teacherIdx}" name="teacherIdx">
+                            <input type="hidden" th:value="${lectureDTO.lectureIdx}" name="lectureIdx">
                             <div class="container-xxl flex-grow-1 container-p-y">
                                 <div class="row m-0 mb-4 ">
                                         <div class="card p-0 m-0 row mb-3 col-12">
@@ -23,51 +25,51 @@
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="title">강의 명 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <input type="text" class="form-control" id="title" value="강의명이 들어갑니다.">
+                                                        <input type="text" class="form-control" id="title" name="title" th:value="${lectureDTO.title}">
                                                     </div>
                                                 </div>
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="category">과목 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <select id="category" name="category" class="form-select">
-                                                            <option>선택</option>
-                                                            <option value="국어" selected>국어</option>
-                                                            <option value="수학">수학</option>
-                                                            <option value="영어">영어</option>
-                                                            <option value="한국사">한국사</option>
-                                                            <option value="사회">사회</option>
-                                                            <option value="과학">과학</option>
-                                                            <option value="직업">직업</option>
-                                                            <option value="제2외국어">제2외국어</option>
-                                                            <option value="일반/진로/교양">일반/진로/교양</option>
+                                                        <select id="category" name="categoryIdx" class="form-select">
+                                                            <option value="">선택</option>
+                                                            <option th:selected="|${lectureDTO.categoryIdx.equals('100000')}|" value="100000">국어</option>
+                                                            <option value="200000" th:selected="|${lectureDTO.categoryIdx.equals('200000')}|">수학</option>
+                                                            <option value="300000" th:selected="|${lectureDTO.categoryIdx.equals('300000')}|">영어</option>
+                                                            <option value="400000" th:selected="|${lectureDTO.categoryIdx.equals('400000')}|">한국사</option>
+                                                            <option value="500000" th:selected="|${lectureDTO.categoryIdx.equals('500000')}|">사회</option>
+                                                            <option value="600000" th:selected="|${lectureDTO.categoryIdx.equals('600000')}|">과학</option>
+                                                            <option value="700000" th:selected="|${lectureDTO.categoryIdx.equals('700000')}|">직업</option>
+                                                            <option value="800000" th:selected="|${lectureDTO.categoryIdx.equals('800000')}|">제2외국어</option>
+                                                            <option value="900000" th:selected="|${lectureDTO.categoryIdx.equals('900000')}|">일반/진로/교양</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div class="input-group input-group-merge">
                                                     <label class="form-label" for="price">강의 금액 <span class="text-danger fw-bold">*</span></label>
                                                     <div class="input-group input-group-merge">
-                                                        <input type="number" class="form-control" id="price" value="50000">
+                                                        <input type="number" class="form-control" id="price" name="price" th:value="${lectureDTO.price}">
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label">강의 맛보기 영상 <span class="text-danger fw-bold">*</span></label>
-                                                    <input class="form-control" name="sampleVideo" type="file" id="sampleVideo">
+                                                    <input class="form-control" name="thumbnailVideo" type="file" id="sampleVideo">
                                                     <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
-                                                        <span>파일이름.mp4</span>
-                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                        <span>[[${lectureDTO.thumbnailVideoFile}]]</span>
+                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" th:onclick="|deleteThisFile2(this,${lectureDTO.lectureIdx},${lectureDTO.teacherIdx},'/deletethumbnailvideo')|">X</a></span>
                                                     </span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label">썸네일 <span class="text-danger fw-bold">*</span></label>
-                                                    <input class="form-control" name="thumbnail" type="file" id="thumbnail">
+                                                    <input class="form-control" name="thumbnailImg" type="file" id="thumbnail">
                                                     <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
-                                                        <span>파일이름.png</span>
-                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                        <span>[[${lectureDTO.thumbnailImgFile}]]</span>
+                                                        <span><a class="text-danger font-weight-bold pr-2" href="#" th:onclick="|deleteThisFile2(this,${lectureDTO.lectureIdx},${lectureDTO.teacherIdx},'/deletethumbnailimg')|">X</a></span>
                                                     </span>
                                                 </div>
                                                 <div class="form-group">
                                                     <label class="form-label" >강의 소개 <span class="text-danger fw-bold">*</span></label>
-                                                        <textarea type="text" class="form-control w-100" id="summernote">입력한 내용이 들어갑니다.</textarea>
+                                                        <textarea name="content" type="text" class="form-control w-100" id="summernote" th:utext="${lectureDTO.content}"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -78,26 +80,30 @@
                                                 <button type="button" class="btn btn-primary" onclick="addInput()">추가</button>
                                                 </div>
                                                 <div id="subList" class="d-flex flex-column gap-3">
-                                                    <div class="sub row align-items-stretch gap-1">
+                                                    <div class="sub row align-items-stretch gap-1" th:each="dto,status:${lectureDetailDTOList}">
                                                         <div class="col-11 border rounded-start py-4">
                                                             <div class="input-group input-group-merge d-flex flex-column ">
                                                                 <small class="d-block subNum text-primary fw-bold">1회차</small>
                                                                 <label class="form-label" for="subTitle">회차 명 <span class="text-danger fw-bold">*</span></label>
                                                                 <div class="input-group input-group-merge">
-                                                                    <input type="text" class="form-control" id="subTitle" value="회차명 1">
+                                                                    <input type="text" name="detailTitle" class="form-control" id="subTitle" th:value="${dto.detailTitle}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
-                                                                <input class="form-control" name="video1" type="file" id="video1">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
+                                                                    <input onchange="videolength(this,1)" class="form-control" name="video1" type="file" id="video1">
+                                                                </div>
+                                                                <input class="videolength" value="" type="hidden" name="videoLength" id="videoLength1">
+                                                                <video src="" style="display: none" id="videotemp1"></video>
                                                                 <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
-                                                                    <span>파일이름.mp4</span>
-                                                                    <span><a class="text-danger font-weight-bold pr-2" href="#" onclick="deleteThisNoLimit(this)">X</a></span>
+                                                                    <span>[[${dto.videoFile}]]</span>
+                                                                    <span><a class="text-danger font-weight-bold pr-2" href="#" th:onclick="|deleteThisFile3(this,${dto.lectureDetailIdx},${lectureDTO.teacherIdx})|" onclick="deleteThisNoLimit(this)">X</a></span>
                                                                 </span>
                                                             </div>
                                                         </div>
                                                         <div class="col-1 rounded-end btn bg-white btn-outline-primary me-n1">
-                                                            <button type="button" class="btn h-100 w-100 text-primary btn-delete" onclick="deleteThis(this)">x</button>
+                                                            <button type="button" class="btn h-100 w-100 text-primary btn-delete" th:onclick="|deleteThisFile4(this,${dto.lectureDetailIdx},${lectureDTO.teacherIdx})|">x</button>
                                                         </div>
                                                     </div>
                                                 </div>

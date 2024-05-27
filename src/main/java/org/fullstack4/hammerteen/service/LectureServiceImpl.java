@@ -60,7 +60,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureEntity> result = lectureRepository.findById(lectureDTO.getLectureIdx());
         LectureEntity lectureEntity =result.orElse(null);
         if (lectureEntity != null) {
-            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice());
+            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice(),lectureDTO.getCategoryIdx());
             lectureRepository.save(lectureEntity);
         }
 
@@ -167,6 +167,10 @@ public class LectureServiceImpl implements LectureServiceIf{
         if (lectureEntity != null && lectureEntity.getThumbnailImgFile()!=null) {
             commonFileUtil.fileDelite(lectureEntity.getThumbnailImgDirectory(), lectureEntity.getThumbnailImgFile());
         }
+        if(lectureEntity !=null) {
+            lectureEntity.modifyImg(null,null);
+            lectureRepository.save(lectureEntity);
+        }
     }
 
     @Override
@@ -175,6 +179,10 @@ public class LectureServiceImpl implements LectureServiceIf{
         LectureEntity lectureEntity =result.orElse(null);
         if (lectureEntity != null && lectureEntity.getThumbnailVideoFile()!=null) {
             commonFileUtil.fileDelite(lectureEntity.getThumbnailVideoDirectory(), lectureEntity.getThumbnailVideoFile());
+        }
+        if(lectureEntity !=null) {
+            lectureEntity.modifyVideo(null,null);
+            lectureRepository.save(lectureEntity);
         }
     }
 
@@ -202,7 +210,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
         if (lectureDetailEntity != null) {
-            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle());
+            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle(),Integer.parseInt(lectureDetailDTO.getVideoLength()));
             lectureDetailRepository.save(lectureDetailEntity);
         }
     }
@@ -231,12 +239,26 @@ public class LectureServiceImpl implements LectureServiceIf{
     public void deleteLectureDetail(int lectureDetailIdx) {
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailIdx);
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        log.info("result " + result);
         if (lectureDetailEntity != null) {
             if(lectureDetailEntity.getVideoDirectory()!=null) {
                 commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
             }
         }
         lectureDetailRepository.deleteById(lectureDetailIdx);
+    }
+    @Override
+    public void deleteThumbnailDetailFile(int lectureDetailIdx) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailIdx);
+        LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        log.info("result2" + result);
+        if (lectureDetailEntity != null && lectureDetailEntity.getVideoDirectory()!=null) {
+            commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
+        }
+        if(lectureDetailEntity !=null) {
+            lectureDetailEntity.modifyVideo(null,null);
+            lectureDetailRepository.save(lectureDetailEntity);
+        }
     }
 
     @Override
