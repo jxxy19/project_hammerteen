@@ -2,7 +2,6 @@ package org.fullstack4.hammerteen.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.BbsDTO;
@@ -10,28 +9,26 @@ import org.fullstack4.hammerteen.dto.BbsReplyDTO;
 import org.fullstack4.hammerteen.dto.MemberDTO;
 import org.fullstack4.hammerteen.service.BbsReplyServiceIf;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
-import org.springframework.http.MediaType;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
+import org.fullstack4.hammerteen.util.CommonUtil;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UrlPathHelper;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Objects;
 
 @Log4j2
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/board")
 public class BoardReplyController {
     private final BbsServiceIf bbsServiceIf;
     private final BbsReplyServiceIf bbsReplyServiceIf;
 
-    @PostMapping("/registr")
-    public void ReplyRPost(BbsReplyDTO bbsReplyDTO, HttpServletRequest req,
+    @PostMapping("/replyRegist")
+    public String ReplyRPost(BbsReplyDTO bbsReplyDTO, HttpServletRequest req,
                              @RequestParam(name = "category1") String category1,
-                             @RequestParam(name = "bbsIdx") int bbsIdx
+                             @RequestParam(name = "bbsIdx") int bbsIdx,
+                             RedirectAttributes redirectAttributes
                              ){
         HttpSession session = req.getSession();
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
@@ -44,27 +41,110 @@ public class BoardReplyController {
         if(category1.equals("자유게시판")) {
             categoryEng = "board";
         }
-        if(category1.equals("자료게시판")) {
+        else if(category1.equals("자료게시판")) {
             categoryEng = "data";
         }
-        if(category1.equals("후기게시판")) {
+        else if(category1.equals("후기게시판")) {
             categoryEng = "review";
         }
-        if(category1.equals("교육정보게시판")) {
+        else if(category1.equals("교육정보게시판")) {
             categoryEng = "eduInfo";
         }
-        if(category1.equals("공지사항")) {
+        else if(category1.equals("공지사항")) {
             categoryEng = "notice";
         }
-        if(category1.equals("QnA게시판")) {
+        else if(category1.equals("QnA게시판")) {
             categoryEng = "qna";
         }
-        if ( result <0 ) {
-            System.out.println("dd여기 들어와지냐?전주연이다");
-         /*   return "redirect:/board/view?category1=" + categoryEng + "&bbsIdx=" + bbsDTO.getBbsIdx();*/
-
+        redirectAttributes.addAttribute("category1", categoryEng);
+        redirectAttributes.addAttribute("bbsIdx", bbsReplyDTO.getBbsIdx());
+        if ( result > 0 ) {
+             return "redirect:/board/view";
         }
+        return null;
+    }
 
+    @PostMapping("/replyDelete")
+    public String replyDelete(@RequestParam(name="replyIdx") int replyIdx,
+                              @RequestParam(name="category") String category1,
+                              BbsReplyDTO bbsReplyDTO, BbsDTO bbsDTO,
+                              RedirectAttributes redirectAttributes,
+                              HttpServletRequest req) {
+        log.info("replyIdx : "+replyIdx);
+        HttpSession session = req.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        String userId = memberDTO.getUserId();
+        String categoryEng = "";
+        if(category1.equals("자유게시판")) {
+            categoryEng = "board";
         }
+        else if(category1.equals("자료게시판")) {
+            categoryEng = "data";
+        }
+        else if(category1.equals("후기게시판")) {
+            categoryEng = "review";
+        }
+        else if(category1.equals("교육정보게시판")) {
+            categoryEng = "eduInfo";
+        }
+        else if(category1.equals("공지사항")) {
+            categoryEng = "notice";
+        }
+        else if(category1.equals("QnA게시판")) {
+            categoryEng = "qna";
+        }
+        redirectAttributes.addAttribute("category1", categoryEng);
+        redirectAttributes.addAttribute("bbsIdx", bbsReplyDTO.getBbsIdx());
+        if(bbsReplyDTO != null && userId.equals(bbsReplyDTO.getUserId())) {
+            bbsReplyServiceIf.replyDelete(replyIdx);
+            return "redirect:/board/view";
+        }
+        else{
+            return null;
+        }
+    }
+    @PostMapping("/replyModify")
+    public String replyModify(BbsReplyDTO bbsReplyDTO, HttpServletRequest req,
+                              @RequestParam(name="content") String content,
+                              @RequestParam(name="replyIdx") int replyIdx,
+                              @RequestParam(name="category") String category1,
+                              RedirectAttributes redirectAttributes) {
+        log.info("replyIdx : "+replyIdx );
+        log.info(bbsReplyDTO);
+        bbsReplyDTO.setContent(content);
+        log.info("바ㅏ뀐 값은 ??? : " + bbsReplyDTO);
+        HttpSession session = req.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        String userId = memberDTO.getUserId();
+        String categoryEng = "";
+        if(category1.equals("자유게시판")) {
+            categoryEng = "board";
+        }
+        else if(category1.equals("자료게시판")) {
+            categoryEng = "data";
+        }
+        else if(category1.equals("후기게시판")) {
+            categoryEng = "review";
+        }
+        else if(category1.equals("교육정보게시판")) {
+            categoryEng = "eduInfo";
+        }
+        else if(category1.equals("공지사항")) {
+            categoryEng = "notice";
+        }
+        else if(category1.equals("QnA게시판")) {
+            categoryEng = "qna";
+        }
+        redirectAttributes.addAttribute("category1", categoryEng);
+        redirectAttributes.addAttribute("bbsIdx", bbsReplyDTO.getBbsIdx());
+        if(bbsReplyDTO != null && userId.equals(bbsReplyDTO.getUserId())) {
+            bbsReplyServiceIf.replyModify(bbsReplyDTO);
+            return "redirect:/board/view";
+        }
+        else{
+            return null;
+        }
+    }
+
 
 }
