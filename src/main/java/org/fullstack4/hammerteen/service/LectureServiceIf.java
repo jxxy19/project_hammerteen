@@ -35,11 +35,14 @@ public interface LectureServiceIf {
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);
     LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO);
-    void registGood(LectureGoodDTO lectureGoodDTO);
-    void deleteGood(LectureGoodDTO lectureGoodDTO);
-    List<LectureGoodDTO> listGood(String userId);
-    LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO);
 
     // 지현추가 : 선생님 통계 조회용
     Map<String, Object> getStatics(int teacherIdx);
+
+    // 지현작업 : 찜 관련
+    int registGood(LectureGoodDTO lectureGoodDTO);
+    void deleteGood(int goodsIdx);
+    List<LectureGoodDTO> listGood(String userId);
+    int countList(String userId);
+
 }

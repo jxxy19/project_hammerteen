@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.repository.LectureGoodRepository;
 import org.fullstack4.hammerteen.service.CartServiceIf;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
@@ -306,10 +307,54 @@ public class LectureController {
                     return "redirect:/mypage/cart";
                 } else {
                     redirectAttributes.addFlashAttribute("info", "장바구니 추가 실패");
-                    return "redirect:/lecture/list";
+                    return "redirect:/lecture/view?lectureIdx="+lectureIdx;
                 }
             } else {
-                return "redirect:/lecture/list";
+                return "redirect:/lecture/view?lectureIdx="+lectureIdx;
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");
+            return "redirect:/";
+        }
+    }
+
+    // 찜하기
+    @GetMapping("/addGood")
+    public String addGood(@RequestParam(name="lectureIdx", defaultValue = "")String lectureIdx,
+                          HttpSession session,
+                          RedirectAttributes redirectAttributes) {
+        log.info("================================= 들어와????????????????????????????????????????????????===========");
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if (memberDTO != null) {
+            log.info("============================================");
+            log.info(lectureIdx);
+            // 찜 리스트 확인
+            List<LectureGoodDTO> myGoodList = lectureServiceIf.listGood(memberDTO.getUserId());
+            log.info(myGoodList);
+            int already = 0;
+            for(LectureGoodDTO lectureGoodDTO : myGoodList) {
+                if(lectureGoodDTO.getLectureIdx() == CommonUtil.parseInt(lectureIdx)) {
+                    redirectAttributes.addFlashAttribute("info", "이미 담긴 강의 입니다.");
+                    already++;
+                    break;
+                }
+            }
+            if(already == 0) {
+                LectureGoodDTO lectureGoodDTO = LectureGoodDTO.builder()
+                        .lectureIdx(CommonUtil.parseInt(lectureIdx))
+                        .userId(memberDTO.getUserId())
+                        .build();
+                log.info(lectureGoodDTO);
+                int result = lectureServiceIf.registGood(lectureGoodDTO);
+                if(result > 0) {
+                    redirectAttributes.addFlashAttribute("info", "찜 추가 성공");
+                    return "redirect:/mypage/likeList";
+                } else {
+                    redirectAttributes.addFlashAttribute("info", "찜 추가 실패");
+                    return "redirect:/lecture/view?lectureIdx="+lectureIdx;
+                }
+            } else {
+                return "redirect:/lecture/view?lectureIdx="+lectureIdx;
             }
         } else {
             redirectAttributes.addFlashAttribute("info", "로그인 정보 없음");

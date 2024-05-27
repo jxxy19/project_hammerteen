@@ -11,7 +11,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @ToString
 @Table(name="hamt_lecture_good")
-public class LectureGoodEntity {
+public class LectureGoodEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique=true, nullable=false)

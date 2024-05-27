@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.*;
@@ -334,33 +335,6 @@ public class LectureServiceImpl implements LectureServiceIf{
         }
     }
 
-    @Override
-    public void registGood(LectureGoodDTO lectureGoodDTO) {
-        LectureGoodEntity board = modelMapper.map(lectureGoodDTO, LectureGoodEntity.class);
-        lectureGoodRepository.save(board);
-    }
-    @Override
-    public void deleteGood(LectureGoodDTO lectureGoodDTO) {
-        lectureGoodRepository.deleteById(lectureGoodDTO.getGoodIdx());
-    }
-
-    @Override
-    public List<LectureGoodDTO> listGood(String userId) {
-        List<LectureGoodEntity> lectureGoodEntityList = lectureGoodRepository.findAllByUserId(userId);
-        List<LectureGoodDTO> lectureGoodDTOList = lectureGoodEntityList.stream().map(board->modelMapper.map(board,LectureGoodDTO.class)).collect(Collectors.toList());
-        return lectureGoodDTOList;
-    }
-    @Override
-    public LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO) {
-        LectureGoodEntity bbsGoodEntity = lectureGoodRepository.findByLectureIdxAndUserId(lectureGoodDTO.getLectureIdx(),lectureGoodDTO.getUserId());
-        if(bbsGoodEntity!=null) {
-            return modelMapper.map(bbsGoodEntity, LectureGoodDTO.class);
-        }
-        else {
-            return null;
-        }
-    }
-
     // 지현추가 : 통계용
     @Override
     public Map<String, Object> getStatics(int teacherIdx) {
@@ -388,5 +362,37 @@ public class LectureServiceImpl implements LectureServiceIf{
         resultMap.put("staticDTOList", staticDTOList);
         resultMap.put("staticDTOListJSON", staticDTOListJSON.toString());
         return resultMap;
+    }
+
+    // 지현작업 : 찜 관련
+    @Override
+    public int registGood(LectureGoodDTO lectureGoodDTO) {
+        LectureGoodEntity board = modelMapper.map(lectureGoodDTO, LectureGoodEntity.class);
+        int idx = lectureGoodRepository.save(board).getGoodIdx();
+        return idx;
+    }
+
+    @Transactional
+    @Override
+    public void deleteGood(int goodsIdx) {
+        lectureGoodRepository.deleteById(goodsIdx);
+    }
+
+    @Override
+    public List<LectureGoodDTO> listGood(String userId) {
+        List<LectureGoodEntity> lectureGoodEntityList = lectureGoodRepository.findAllByUserId(userId);
+        List<LectureGoodDTO> lectureGoodDTOList = null;
+        if(lectureGoodEntityList != null) {
+            lectureGoodDTOList = lectureGoodEntityList.stream().map(board->modelMapper.map(board,LectureGoodDTO.class)).collect(Collectors.toList());
+            lectureGoodDTOList.forEach(dto -> {
+                dto.setLectureDTO(modelMapper.map(lectureRepository.findById(dto.getLectureIdx()), LectureDTO.class));
+            });
+        }
+        return lectureGoodDTOList;
+    }
+
+    @Override
+    public int countList(String userId) {
+        return lectureGoodRepository.countAllByUserId(userId);
     }
 }
