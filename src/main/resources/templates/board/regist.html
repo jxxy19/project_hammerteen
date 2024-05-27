@@ -26,30 +26,30 @@
                                 <div class="card mb-4">
                                     <div class="my-items bg-white rounded shadow-sm p-5">
                                         <div class="mb-3">
-                                            <label class="form-label" for="boardCategory">카테고리</label>
-                                            <select class="form-select" id="boardCategory" name="boardCategory">
+                                            <label class="form-label" for="category1">카테고리</label>
+                                            <select class="form-select" id="category1" name="category1">
                                                 <option selected value="">카테고리</option>
-                                                <option value="교육정보게시판">교육정보</option>
-                                                <option value="자료게시판">자료게시판</option>
-                                                <option value="자유게시판">자유게시판</option>
-                                                <option value="공지게시판">공지게시판</option>
-                                                <option value="QnA">QnA게시판</option>
+                                                <option value="교육정보게시판" th:selected="${param.category1.toString() =='eduInfo'}">교육정보</option>
+                                                <option value="자료게시판" th:selected="${param.category1.toString() =='data'}">자료게시판</option>
+                                                <option value="자유게시판" th:selected="${param.category1.toString() =='board'}">자유게시판</option>
+                                                <option value="공지게시판" th:selected="${param.category1.toString() =='notice'}">공지게시판</option>
+                                                <option value="QnA" th:selected="${param.category1.toString() =='qna'}">QnA게시판</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label" for="lectureTitle">강의명</label>
-                                            <select class="form-select" id="lectureTitle" name="lectureTitle">
+                                            <label class="form-label" for="category2">강의명</label>
+                                            <select class="form-select" id="category2" name="category2">
                                                 <option value="" selected>선택 안함</option>
                                                 <option value="강의">강의</option>
                                             </select>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="title">제목</label>
-                                            <input class="form-control" id="title" value="" type="text"/>
+                                            <input class="form-control" id="title" name="title" value="" type="text"/>
                                         </div>
                                         <div class="mb-3" >
                                             <label for="formFile" class="form-label">파일 업로드</label>
-                                            <input class="form-control" type="file" id="formFile" multiple="multiple" value="" onchange="fileList(this)" accept="image/*" />
+                                            <input class="form-control" type="file" name="file" id="formFile" multiple="multiple" value="" onchange="fileList(this)" accept="image/*" />
                                         </div>
                                         <div class="ml-5">
                                             <label class="regist-label">파일 리스트</label>
@@ -69,7 +69,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- / Content -->
                     <!-- Content wrapper -->
                 </div>
