@@ -25,6 +25,8 @@ public class TeacherDTO {
 
     @NotEmpty
     private String name;
+    @NotEmpty
+    private String userId;
 
     private String profile;
     private String writing;

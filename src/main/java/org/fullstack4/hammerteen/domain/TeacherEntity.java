@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class TeacherEntity extends BaseEntity {
 
     @Id // 필수
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique=true, nullable=false)
     private int teacherIdx;
 
@@ -26,10 +25,13 @@ public class TeacherEntity extends BaseEntity {
     private String education;
     @Column(length=100,nullable=false)
     private String writing;
-    @Column(length=300,nullable=false)
+    @Column(length=300,nullable=true)
     private String profile;
     @Column(length=300,nullable=false)
     private String name;
+    @Column(length=300,nullable=false)
+    private String userId;
+
 
 
 

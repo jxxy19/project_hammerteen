@@ -207,26 +207,44 @@ public class MyPageController {
 
 
         MemberDTO resultDTO = memberServiceIf.Detailview(memberDTO.getUserId());
+        TeacherDTO teacherDTO = memberServiceIf.teacherView(memberDTO.getUserId());
 
 
         model.addAttribute("dto", resultDTO);
+        model.addAttribute("teacherDTO", teacherDTO);
 
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "회원관리"));
     }
 
 
     @PostMapping("/memberView")
-    public String memberViewPost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
+    public String memberViewPost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file,
+
+        @RequestParam(name="categoryName",defaultValue = "")String categoryName , @RequestParam(name="education",defaultValue = "") String education, @RequestParam(name="writing",defaultValue = "") String writing){
         //핸드폰번호 합치기
         String[] phoneStr = memberDTO.getPhoneNumber().split(",");
         memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
+        TeacherDTO teacherDTO = new TeacherDTO();
+        if(memberDTO.getRole().equals("teacher")){
+
+
+            teacherDTO.setCategoryName(categoryName);
+            teacherDTO.setEducation(education);
+            teacherDTO.setWriting(writing);
+            teacherDTO.setName(memberDTO.getName());
+            teacherDTO.setUserId(memberDTO.getUserId());
+        }
+
 
 
         List<String> filenames = null;
-        String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
+        String realPath ="D:\\java4\\springboot\\hammerteen\\src\\main\\resources\\static\\upload";
         if(!memberDTO.getTemFileName().isEmpty()){
             memberDTO.setFileName(memberDTO.getTemFileName());
             MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
+            if(memberDTO.getRole().equals("teacher")) {
+                int result = memberServiceIf.registTeacher(teacherDTO, memberDTO.getUserId());
+            }
 
 
             request.getSession().setAttribute("memberDTO", modifyDTO);
@@ -237,22 +255,34 @@ public class MyPageController {
         }
 
 
-
         filenames = commonFileUtil.fileuploads(file,realPath);
+     
 
         if(filenames != null) {
-            memberDTO.setFileName(filenames.get(0));
-            memberDTO.setDirectory(realPath);
+            if (memberDTO.getRole().equals("teacher")) {
+
+                teacherDTO.setProfile(filenames.get(0));
+
+            }
+            else {
+
+                memberDTO.setFileName(filenames.get(0));
+                memberDTO.setDirectory(realPath);
+            }
         }
-
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
 
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
             return "redirect:/mypage/memberView?userId="+memberDTO.getUserId();
         }
 
+
         MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
-        System.out.println("modifyDTO22"+modifyDTO);
+
+        if(memberDTO.getRole().equals("teacher")) {
+            int result = memberServiceIf.registTeacher(teacherDTO, memberDTO.getUserId());
+        }
+
 
         request.getSession().setAttribute("memberDTO", modifyDTO);
 

@@ -25,4 +25,8 @@ public interface TeacherRepository extends JpaRepository<TeacherEntity, Integer>
     //카테고리별 선생님 리스트
     Page<TeacherEntity> findAllByCategoryNameOrderByTeacherIdxDesc(Pageable pageable, String categoryName);
 
+    //선생님 존재 여부
+    Optional<TeacherEntity> findByName(String name);
+
+    Optional<TeacherEntity> findByUserId(String userId);
 }

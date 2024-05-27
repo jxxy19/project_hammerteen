@@ -42,4 +42,8 @@ public interface MemberServiceIf {
     Long countTeachersByCategory(String categoryName);
 
     PageResponseDTO<TeacherDTO> teacherMemberListByCategory(PageRequestDTO pageRequestDTO, String categoryName);
+
+    int registTeacher(TeacherDTO teacherDTO,String userId);
+
+    TeacherDTO teacherView(String userId);
 }

@@ -198,4 +198,35 @@ public class MemberServiceImpl implements MemberServiceIf{
                 .total_count((int) result.getTotalElements())
                 .build();
     }
+
+    @Override
+    public int registTeacher(TeacherDTO teacherDTO,String userId) {
+        Optional<MemberEntity> result  = memberRepository.findByUserId(userId) ;
+        MemberEntity member = result.orElse(null);
+        int teacherIdx = member.getMemberIdx();
+        teacherDTO.setTeacherIdx(teacherIdx);
+
+        TeacherEntity teacher = modelMapper.map(teacherDTO, TeacherEntity.class);
+
+
+
+       int idx = teacherRepository.save(teacher).getTeacherIdx();
+
+
+
+
+       return idx;
+    }
+
+    @Override
+    public TeacherDTO teacherView(String userId) {
+        Optional<TeacherEntity> result = teacherRepository.findByUserId(userId);
+
+        TeacherEntity teacher = result.orElse(null);
+        TeacherDTO teacherDTO=null;
+        if(teacher !=null) {
+            teacherDTO = modelMapper.map(teacher, TeacherDTO.class);
+        }
+        return teacherDTO;
+    }
 }

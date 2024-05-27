@@ -5,7 +5,9 @@
         lang="en"
         layout:decorate="~{/common/common.html}"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <body>
+
 <!-- Layout wrapper -->
 <th:block layout:fragment="content">
     <section>
@@ -17,6 +19,7 @@
                             <div class="row">
                                 <form id="frm" name="frm" action="/mypage/memberView" method="post" enctype="multipart/form-data">
                                     <input type="hidden" id="temFileName" name="temFileName" th:value="${dto.fileName != null ? dto.fileName : ''}" />
+                                    <input type="hidden" id="memberidx" name="memberidx" th:value="${session.memberDTO.memberIdx}" />
 
                                 <div class="col-md-12">
                                     <div class="row">
@@ -80,7 +83,7 @@
                                                         <label for="role" class="form-label">회원구분</label>
                                                         <select id="role" name="role" class="form-select">
                                                             <option th:value="user" th:selected="${dto.role == 'user'}">일반</option>
-                                                            <option th:value="teacher" th:selected="${dto.role == 'teacher'}">선생님</option>
+                                                                <option th:value="teacher" th:selected="${dto.role == 'teacher'}">선생님</option>
                                                             <option th:value="admin" th:selected="${dto.role == 'admin'}">관리자</option>
                                                         </select>
                                                     </div>
@@ -160,6 +163,28 @@
                                                         <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소" th:value="${dto.addr2}" >
                                                     </div>
                                                 </div>
+                                                <hr>
+
+                                                <div class="teacher_info" th:style="'display:' + (${dto.role == 'teacher'} ? 'block' : 'none') + ';'">
+                                                    <div style="text-align: center;font-weight: bold">
+                                                        <span > 선생님정보 입력란</span>
+                                                    </div>
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="userId" class="form-label">과목</label>
+                                                    <input class="form-control" type="text" name="categoryName" id="categoryName" th:value="${teacherDTO!=null ? teacherDTO.categoryName : ''}" th:disabled="${dto.role != 'teacher'}"  >
+                                                </div>
+
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="userId" class="form-label">대학교</label>
+                                                    <input class="form-control" type="text" name="education" id="education" th:value="${teacherDTO!=null ? teacherDTO.education : ''}" th:disabled="${dto.role != 'teacher'}" >
+                                                </div>
+
+                                                <div class="mb-3 col-md-6">
+                                                    <label for="userId" class="form-label">소개</label>
+                                                    <input class="form-control" type="text" name="writing" id="writing" th:value="${teacherDTO!=null ? teacherDTO.writing : ''}"  th:disabled="${dto.role != 'teacher'}">
+                                                </div>
+                                                </div>
+
                                             </form>
                                         </div>
                                         <!-- /Account -->
@@ -270,6 +295,31 @@
 
         });
 
+        const role = document.querySelector("#role");
+        role.addEventListener("change",function (e){
+            e.preventDefault();
+            const categoryName = document.querySelector("#categoryName");
+            const education = document.querySelector("#education");
+            const writing = document.querySelector("#writing");
+            const teacher_info = document.querySelector(".teacher_info");
+            if(role.value=="teacher"){
+
+                teacher_info.style.display="block";
+                categoryName.disabled = false;
+                education.disabled = false;
+                writing.disabled = false;
+
+
+            }
+            else{
+                teacher_info.style.display="none";
+                categoryName.disabled = true;
+                education.disabled = true;
+                writing.disabled = true;
+            }
+
+
+        })
 
 
 
