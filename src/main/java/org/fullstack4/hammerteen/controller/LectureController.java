@@ -26,8 +26,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 
 @Log4j2
@@ -90,7 +92,6 @@ public class LectureController {
         if(resultDTO.getThumbnailVideoFile()!=null) {
             videoName = URLEncoder.encode(resultDTO.getThumbnailVideoFile(), StandardCharsets.UTF_8);
         }
-        log.info(resultDTO.getThumbnailVideoFile()+" getThumbnailVideoFile test");
         lectureDTO.setThumbnailVideoFile(videoName);
         // 지현추가 : 기존 구매여부 확인용
         int checkOrder = lectureServiceIf.checkOrder(userId, lectureDTO.getLectureIdx());
@@ -174,23 +175,34 @@ public class LectureController {
             lectureServiceIf.modifyThumbnailImg(lectureDTO,files);
             lectureServiceIf.modifyThumbnailVideo(lectureDTO,files);
         }
-        int resultidx = lectureDTO.getLectureIdx();
-        List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
-        String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
-        String[] lengthList = lectureDetailDTO.getVideoLength().split(",");
+        log.info(lectureDetailDTO+ "lectureDetailDTO");
+        if(lectureDetailDTO.getDetailTitle()!=null&& lectureDetailDTO.getDetailTitle().length()>0) {
+            int resultidx = lectureDTO.getLectureIdx();
+            lectureServiceIf.deleteLectureDetailAll(resultidx);
+            List<LectureDetailDTO> lectureDetailList = new ArrayList<>();
+            String[] titleList = lectureDetailDTO.getDetailTitle().split(",");
+            String[] lengthList = lectureDetailDTO.getVideoLength().split(",");
+            String[] lectureDetailIdxList = String.valueOf(lectureDetailDTO.getLectureDetailIdx()).split(",");
+            for (int i = 0; i < titleList.length; i++) {
+                if(lectureDetailIdxList[i]!=null){
+                    LectureDetailDTO lectureDetailDTO1 = LectureDetailDTO.builder().lectureDetailIdx(Integer.parseInt(lectureDetailIdxList[i])).build();
+                    LectureDetailDTO resultDTO = lectureServiceIf.view(lectureDetailDTO1);
+                    lectureServiceIf.modifyLectureDetail(resultDTO);
 
-        for(int i =0; i<titleList.length;i++){
-            LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(resultidx).build();
-            lectureDetailList.add(tempDTO);
-        }
-
-        for(int i = 0; files.getFile("video"+(i+1))!=null; i++) {
-            lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video"+(i+1));
-            lectureDetailList.get(i).setLectureIdx(resultidx);
-            lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
+                }else {
+                    LectureDetailDTO tempDTO = LectureDetailDTO.builder().detailTitle(titleList[i]).videoLength(lengthList[i]).lectureIdx(resultidx)
+                            .build();
+                    lectureDetailList.add(tempDTO);
+                }
+            }
+            log.info("lectureDetailList "+lectureDetailList);
+            for (int i = 0; files.getFile("video" + (i + 1)) != null; i++) {
+                lectureServiceIf.registLectureDetailVideo(lectureDetailList.get(i), files, "video" + (i + 1));
+                lectureDetailList.get(i).setLectureIdx(resultidx);
+                lectureServiceIf.registLectureDetail(lectureDetailList.get(i));
+            }
         }
         lectureServiceIf.modify(lectureDTO);
-        lectureServiceIf.modifyLectureDetail(lectureDetailDTO);
         return "redirect:/lecture/view?lectureIdx="+lectureDTO.getLectureIdx();
     }
 

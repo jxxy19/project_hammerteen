@@ -91,11 +91,14 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-group">
+                                                                    <input type="hidden" name="lectureDetailIdx" th:value="${dto.lectureDetailIdx}">
+                                                                    <input type="hidden" name="videoDirectory" th:value="${dto.videoDirectory}">
+                                                                    <input type="hidden" name="videoFile" th:value="${dto.videoFile}">
                                                                     <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
-                                                                    <input onchange="videolength(this,1)" class="form-control" name="video1" type="file" id="video1">
+                                                                    <input th:onchange="|videolength(this,${status.count})|" class="form-control" th:name="|video${status.count}|" type="file" th:id="|video1${status.count}|">
                                                                 </div>
-                                                                <input class="videolength" value="" type="hidden" name="videoLength" id="videoLength1">
-                                                                <video src="" style="display: none" id="videotemp1"></video>
+                                                                <input class="videolength" th:value="${dto.videoLength}" type="hidden" name="videoLength" th:id="|videoLength${status.count}|">
+                                                                <video src="" style="display: none" th:id="|videotemp${status.count}|"></video>
                                                                 <span class="card border d-flex flex-row justify-content-between p-2 fileListNodes my-1" data-idx="0">
                                                                     <span>[[${dto.videoFile}]]</span>
                                                                     <span><a class="text-danger font-weight-bold pr-2" href="#" th:onclick="|deleteThisFile3(this,${dto.lectureDetailIdx},${lectureDTO.teacherIdx})|" onclick="deleteThisNoLimit(this)">X</a></span>

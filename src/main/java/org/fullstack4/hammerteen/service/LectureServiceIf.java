@@ -20,6 +20,7 @@ public interface LectureServiceIf {
     void modify(LectureDTO lectureDTO);
     void delete(int lectureIdx);
 
+    LectureDetailDTO view(LectureDetailDTO lectureDetailDTO);
     void registLectureDetail(LectureDetailDTO lectureDetailDTO);
     public void registLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam);
     void modifyLectureDetail(LectureDetailDTO lectureDetailDTO);

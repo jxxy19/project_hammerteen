@@ -28,9 +28,11 @@ public class LectureDetailEntity extends BaseEntity{
     @Column(nullable=true, length = 200)
     private String videoFile;
 
-    public void modify(String title, int videoLength){
+    public void modify(String title, int videoLength, String videoDirectory, String videoFile){
         this.detailTitle=title;
         this.videoLength = videoLength;
+        this.videoDirectory = videoDirectory;
+        this.videoFile = videoFile;
     }
 
     public void modifyVideo(String videoDirectory, String videoFile){
