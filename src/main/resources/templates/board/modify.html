@@ -11,55 +11,58 @@
     <section style="padding:4rem">
         <div class="container">
             <form id="regiFrm" name="regiFrm" action="/board/modify" method="post" enctype="multipart/form-data">
-            <div class="layout-wrapper layout-content-navbar">
-                <div class="layout-container">
-                    <!-- Layout container -->
-                    <!-- Content wrapper -->
-                    <div class="content-wrapper">
-                        <div class="row mb-2">
-                            <div class="category-sidebar p-0">
-                            </div>
-                            <div class="col-md-12">
-                                <div class="card mb-4">
-                                    <div class="my-items bg-white rounded shadow-sm p-5">
-                                        <div class="mb-3">
-                                            <label class="form-label" for="category">카테고리</label>
-                                            <select class="form-select" id="category">
-                                                <option selected value="">카테고리</option>
-                                                <option value="교육정보게시판">교육정보</option>
-                                                <option value="자료게시판">자료게시판</option>
-                                                <option value="자유게시판">자유게시판</option>
-                                                <option value="공지게시판">공지게시판</option>
-                                                <option value="QnA">QnA게시판</option>
-                                            </select>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="title">제목</label>
-                                            <input class="form-control" id="title" type="text" value=""/>
-                                        </div>
-                                        <div class="mb-3" >
-                                            <label for="formFile" class="form-label">파일 업로드</label>
-                                            <input class="form-control" type="file" id="formFile" multiple="multiple" value="" accept="image/*" />
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-group my-4">
-                                                <textarea id="summernote" name="content"></textarea>
+                <input type="hidden" name="category1" th:value="${bbsDTO.getCategory1()}">
+                <input type="hidden" name="bbsIdx" th:value="${bbsDTO.getBbsIdx()}">
+                <input type="hidden" name="userId" th:value="test">
+                <div class="layout-wrapper layout-content-navbar">
+                    <div class="layout-container">
+                        <!-- Layout container -->
+                        <!-- Content wrapper -->
+                        <div class="content-wrapper">
+                            <div class="row mb-2">
+                                <div class="category-sidebar p-0">
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card mb-4">
+                                        <div class="my-items bg-white rounded shadow-sm p-5">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="category">카테고리</label>
+                                                <select class="form-select" id="category">
+                                                    <option value="">카테고리</option>
+                                                    <option value="교육정보게시판" th:selected="${bbsDTO.category1 =='교육정보게시판'}">교육정보</option>
+                                                    <option value="자료게시판" th:selected="${bbsDTO.category1 =='자료게시판'}">자료게시판</option>
+                                                    <option value="자유게시판" th:selected="${bbsDTO.category1 =='자유게시판'}">자유게시판</option>
+                                                    <option value="공지게시판" th:selected="${bbsDTO.category1 =='공지게시판'}">공지게시판</option>
+                                                    <option value="QnA" th:selected="${bbsDTO.category1 =='QnA'}">QnA게시판</option>
+                                                </select>
                                             </div>
-                                        </div>
-                                        <div class="row justify-content-end">
-                                    <input type="submit" class="btn btn-primary col-2" value="수정">
+                                            <div class="mb-3">
+                                                <label class="form-label" for="title">제목</label>
+                                                <input class="form-control" id="title" name="title" type="text" th:value="${bbsDTO.title}"/>
+                                            </div>
+                                            <div class="mb-3" >
+                                                <label for="formFile" class="form-label">파일 업로드</label>
+                                                <input class="form-control" type="file" name="file" id="formFile" multiple="multiple" value="" accept="image/*" />
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group my-4">
+                                                    <textarea id="summernote" name="content">[[${bbsDTO.content}]]</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-end">
+                                        <input type="submit" class="btn btn-primary col-2" value="수정">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- / Content -->
-                    <!-- Content wrapper -->
+                        <!-- / Content -->
+                        <!-- Content wrapper -->
+                    </div>
+                    <!-- / Layout page -->
                 </div>
-                <!-- / Layout page -->
-            </div>
             </form>
             <!-- / Layout wrapper -->
         </div>

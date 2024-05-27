@@ -35,6 +35,8 @@ public class PageResponseDTO<E> {
 
     private List<E> dtoList;
 
+    private int read_cnt;
+
     PageResponseDTO(){}
 
     @Builder(builderMethodName = "withAll")

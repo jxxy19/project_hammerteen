@@ -41,6 +41,7 @@ public class LectureController {
         List<Integer> categoryLists = new ArrayList<>();
         int categoryTotalCount = 0;
         String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
+        String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
         for(String category : categoryCodeList){
             int count = lectureServiceIf.countCategory(category);
             categoryLists.add(count);
@@ -50,6 +51,14 @@ public class LectureController {
         model.addAttribute("pageResponseDTO" , pageResponseDTO);
         model.addAttribute("categoryTotalCount" , categoryTotalCount);
         model.addAttribute("categoryLists" , categoryLists);
+        for(LectureDTO lectureDTO : pageResponseDTO.getDtoList()){
+            for(int i =0; i<categoryCodeListName.length; i++) {
+                if (lectureDTO.getCategoryIdx().equals(categoryCodeList[i])){
+                    lectureDTO.setCategoryName(categoryCodeListName[i]);
+                }
+            }
+        }
+        model.addAttribute("categoryCodeListName" , categoryCodeListName);
     }
     @GetMapping("/view")
     public void viewGet(Model model, LectureDTO lectureDTO,LPageRequestDTO lpageRequestDTO) {
@@ -57,9 +66,17 @@ public class LectureController {
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
+        String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
+        String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
+            for(int i =0; i<categoryCodeListName.length; i++) {
+                if (resultDTO.getCategoryIdx().equals(categoryCodeList[i])){
+                    resultDTO.setCategoryName(categoryCodeListName[i]);
+                }
+            }
         model.addAttribute("lectureDTO", resultDTO);
         model.addAttribute("lectureReplyDTOList", lectureReplyDTOList);
         model.addAttribute("lectureDetailDTOList", lectureDetailDTOList);
+
     }
     @GetMapping("/regist")
     public String registGet(Model model, HttpServletRequest request) {
@@ -92,11 +109,11 @@ public class LectureController {
     @GetMapping("/modify")
     public String modifyGet(Model model, LectureDTO lectureDTO, HttpServletRequest request) {
         LectureDTO viewDTO = lectureServiceIf.view(lectureDTO);
-        HttpSession session = request.getSession();
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
-        if(!(memberDTO.getMemberIdx()==(viewDTO.getLectureIdx())) && memberDTO.getRole().equals("user")){
-            return "redirect:/";
-        }
+//        HttpSession session = request.getSession();
+//        MemberDTO memberDTO = (MemberDTO) session.getAttribute( "memberDTO");
+//        if(!(memberDTO.getMemberIdx()==(viewDTO.getLectureIdx())) && memberDTO.getRole().equals("user")){
+//            return "redirect:/";
+//        }
         model.addAttribute("lectureDTO",viewDTO);
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
 

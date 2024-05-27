@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @Builder
 public class LectureDTO {
     private int lectureIdx;
-    private String lectureCategoryIdx;
+    private String CategoryIdx;
+    private String CategoryName;
     private int teacherIdx;
     @NotEmpty
     private String title;

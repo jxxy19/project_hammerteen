@@ -24,7 +24,7 @@ public class LPageRequestDTO {
     @Builder.Default
     private int page = 1;
     @Builder.Default
-    private int page_size = 10;
+    private int page_size = 9;
     @Builder.Default
     private int total_page = 1;
     @Builder.Default

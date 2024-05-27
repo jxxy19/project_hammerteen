@@ -23,30 +23,30 @@
                       <aside id="layout-menu" class="menu-vertical menu bg-menu-theme">
                           <ul>
                               <li class="menu-item">
-                                  <a href="/mypage/writeList?category=qna" class="menu-link">
+                                  <a href="/mypage/writeList?category1=qna" class="menu-link">
                                       <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
                                       <div data-i18n="Misc">작성한 QnA</div>
                                   </a>
                               <li class="menu-item">
-                                  <a href="/mypage/writeList?category=review" class="menu-link">
+                                  <a href="/mypage/writeList?category1=review" class="menu-link">
                                       <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
                                       <div data-i18n="Misc">작성한 후기</div>
                                   </a>
                               </li>
                               <li class="menu-item">
-                                  <a href="/mypage/writeList?category=eduInfo" class="menu-link">
+                                  <a href="/mypage/writeList?category1=eduInfo" class="menu-link">
                                       <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
                                       <div data-i18n="Under Maintenance">작성한 교육정보</div>
                                   </a>
                               </li>
                               <li class="menu-item">
-                                  <a href="/mypage/writeList?category=data" class="menu-link">
+                                  <a href="/mypage/writeList?category1=data" class="menu-link">
                                       <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
                                       <div data-i18n="Under Maintenance">작성한 자료실</div>
                                   </a>
                               </li>
                               <li class="menu-item">
-                                  <a href="/mypage/writeList?category=free" class="menu-link">
+                                  <a href="/mypage/writeList?category1=board" class="menu-link">
                                       <i class="menu-icon tf-icons bx bx bxs-circle" style="font-size: 13px"></i>
                                       <div data-i18n="Under Maintenance">작성한 자유게시판</div>
                                   </a>
@@ -60,7 +60,7 @@
                   </div>
                 <div class="col-md-9">
                   <div class="card mb-4">
-                    <h5 class="card-header">내가 작성한 글 리스트</h5>
+                    <h5 class="card-header">작성한 글 리스트</h5>
                     <div class="my-items bg-white rounded shadow-sm m-5">
                       <!-- Start List Title -->
                       <div class="item-list-title rounded-top p-3 bg-primary">
@@ -81,13 +81,12 @@
                       </div>
                       <!-- End List Title -->
                       <!-- Start Single List -->
-<!--                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">-->
-                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
-<!--                          th:each="dto:${pageResponseDTO.dtoList}-->
-                          <div class="cursor-pointer row align-items-center p-3" onclick="goToThisLink('/board/view?bbsIdx=',this)">
-<!--                            th:data-idx="${dto.bbsIdx}"-->
+                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
+                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto:${pageResponseDTO.dtoList}">
+                          <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.bbsIdx}"
+                               th:href="|/board/view?category1=${dto.category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
                             <div class="col-lg-5 col-md-5 col-12">
-                              <p class="title p-0 m-0">제목입니다.</p>
+                              <p class="title p-0 m-0">[[${dto.title}]]</p>
                             </div>
                             <div class="col-lg-2 col-md-3 col-12">
                                 <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
@@ -96,15 +95,57 @@
                             <div class="col-lg-2 col-md-2 col-12">
                                 <p class="p-0 m-0"><span
                                         class="badge rounded-pill bg-label-primary"><i
-                                        class="lni lni-eye"></i>&nbsp;10</span></p>
+                                        class="lni lni-eye"></i>&nbsp;[[${dto.read_cnt}]]</span></p>
                             </div>
                             <div class="col-lg-3 col-md-2 col-12 align-right">
-                              <p class="p-0 m-0">2024-05-24</p>
+                              <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
                             </div>
                           </div>
                         </div>
-<!--                      </th:block>-->
+                      </th:block>
+                        <th:block th:if="${pageResponseDTO.dtoList.size() == 0}">
+                            <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                <div class="cursor-pointer border-bottom">
+                                    <div class="row align-items-center p-3">
+                                        <div class="col-lg-4 col-md-5 col-12">
+                                            <p class="title p-0 m-0">작성된 글이 없습니다</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
+                      <div class="row my-2">
+                          <div class="col-12">
+                              <!-- Pagination -->
+                              <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
+                                  <ul class="pagination">
+                                      <li class="page-item prev">
+                                          <a class="page-link" href="#"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                      </li>
+                                      <li class="page-item active">
+                                          <a class="page-link" href="#">1</a>
+                                      </li>
+                                      <li class="page-item">
+                                          <a class="page-link" href="#">2</a>
+                                      </li>
+                                      <li class="page-item">
+                                          <a class="page-link" href="#">3</a>
+                                      </li>
+                                      <li class="page-item">
+                                          <a class="page-link" href="#">4</a>
+                                      </li>
+                                      <li class="page-item">
+                                          <a class="page-link" href="#">5</a>
+                                      </li>
+                                      <li class="page-item next">
+                                          <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                      </li>
+                                  </ul>
+                              </nav>
+                              <!--/ End Pagination -->
+                          </div>
+                      </div>
                   </div>
                 </div>
               </div>
