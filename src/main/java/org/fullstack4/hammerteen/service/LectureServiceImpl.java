@@ -7,6 +7,7 @@ import org.fullstack4.hammerteen.domain.*;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
+import org.fullstack4.hammerteen.util.CommonUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,9 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     //지현추가 : 통계용
     private final OrderDetailRepository orderDetailRepository;
+    //지현추가 : 성적관리용
+    private final LectureScoreRepository lectureScoreRepository;
+    private final MyLectureRepository myLectureRepository;
 
 
     @Override
@@ -408,6 +412,101 @@ public class LectureServiceImpl implements LectureServiceIf{
     public int countList(String userId) {
         return lectureGoodRepository.countAllByUserId(userId);
     }
+
+    // 성적관리용
+    @Override
+    public List<MyLectureDTO> myLectureList(String userId) {
+        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByUserId(userId);
+        List<MyLectureDTO> myLectureDTOList = null;
+        if(myLectureEntityList != null) {
+            myLectureDTOList = myLectureEntityList.stream()
+                    .map(vo-> modelMapper.map(vo, MyLectureDTO.class))
+                    .toList();
+        }
+        return  myLectureDTOList;
+    }
+
+    @Override
+    public List<LectureScoreDTO> myScoreList(String userId) {
+        List<LectureScoreEntity> lectureScoreEntityList = lectureScoreRepository.findAllByUserId(userId);
+        List<LectureScoreDTO> lectureScoreDTOList = null;
+        if(lectureScoreEntityList != null) {
+            lectureScoreDTOList = lectureScoreEntityList.stream().map(vo -> modelMapper.map(vo, LectureScoreDTO.class)).collect(Collectors.toList());
+        }
+        return lectureScoreDTOList;
+    }
+
+    @Override
+    public LectureScoreDTO myScore(String userId, int lectureIdx) {
+        LectureScoreEntity lectureScoreEntity = lectureScoreRepository.findAllByLectureIdxAndUserId(lectureIdx, userId);
+        LectureScoreDTO lectureScoreDTO = null;
+        if(lectureScoreEntity != null) {
+            lectureScoreDTO = modelMapper.map(lectureScoreEntity, LectureScoreDTO.class);
+        }
+        return lectureScoreDTO;
+    }
+
+    @Override
+    public List<LectureDTO> lectureListForTeacher(int teacherIdx) {
+        List<LectureEntity> lectureEntityList = lectureRepository.findAllByTeacherIdx(teacherIdx);
+        List<LectureDTO> lectureDTOList = null;
+        if(lectureEntityList != null) {
+            lectureDTOList = lectureEntityList.stream().map(vo -> modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+        }
+        return lectureDTOList;
+    }
+
+    @Override
+    public List<LectureDTO> lectureListForAdmin() {
+        List<LectureEntity> lectureEntityList = lectureRepository.findAll();
+        List<LectureDTO> lectureDTOList = null;
+        if(lectureEntityList != null) {
+            lectureDTOList = lectureEntityList.stream().map(vo -> modelMapper.map(vo, LectureDTO.class)).collect(Collectors.toList());
+        }
+        return lectureDTOList;
+    }
+
+    @Override
+    public List<MyLectureDTO> studentList(int lectureIdx) {
+        List<MyLectureEntity> myLectureEntityList = myLectureRepository.findAllByLectureIdx(lectureIdx);
+        List<MyLectureDTO> myLectureDTOList = null;
+        if(myLectureEntityList != null) {
+            myLectureDTOList = myLectureEntityList.stream()
+                    .map(vo -> modelMapper.map(vo, MyLectureDTO.class))
+                    .toList();
+        }
+        return myLectureDTOList;
+    }
+
+    @Override
+    public int saveLectureScore(LectureScoreDTO lectureScoreDTO) {
+        return lectureScoreRepository.save(modelMapper.map(lectureScoreDTO, LectureScoreEntity.class)).getScoreIdx();
+    }
+
+    @Override
+    public LectureDTO selectLectureDTOByIdx(int lectureIdx) {
+        LectureEntity lectureEntity = lectureRepository.findAllByLectureIdx(lectureIdx);
+        LectureDTO lectureDTO = null;
+        if(lectureEntity != null) {
+            lectureDTO = modelMapper.map(lectureEntity, LectureDTO.class);
+        }
+        return lectureDTO;
+    }
+//
+//    @Override
+//    public String getMemberId(int orderIdx) {
+//        return orderDetailRepository.findUserId(orderIdx);
+//    }
+//
+//    @Override
+//    public LectureScoreDTO getLectureScoreDTO(int lectureIdx, String userId) {
+//        LectureScoreEntity lectureScoreEntity = lectureScoreRepository.findAllByLectureIdxAndUserId(lectureIdx, userId);
+//        LectureScoreDTO lectureScoreDTO = null;
+//        if(lectureScoreEntity != null) {
+//            lectureScoreDTO = modelMapper.map(lectureScoreEntity, LectureScoreDTO.class);
+//        }
+//        return lectureScoreDTO;
+//    }
 
     //메인페이지 추천강의
     @Override

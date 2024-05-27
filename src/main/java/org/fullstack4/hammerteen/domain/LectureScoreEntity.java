@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@EntityListeners(value = {AuditingEntityListener.class})
 @Getter
 @Builder
 @AllArgsConstructor
@@ -28,11 +27,6 @@ public class LectureScoreEntity extends BaseEntity{
 
     @Column(nullable = false)
     private String userId;
-
-    public void modify(int lectureScore){
-        this.lectureScore=lectureScore;
-        super.setModify_date(LocalDateTime.now());
-    }
 }
 
 

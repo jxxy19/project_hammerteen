@@ -3,6 +3,7 @@
 <html
   lang="en"
   class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
+  xmlns:th="http://www.thymeleaf.org"
   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{/common/common.html}">
 <body>
@@ -16,133 +17,116 @@
             <!-- Content -->
             <div class="container-xxl flex-grow-1 container-p-y">
                 <!-- 학생이 보는 성적표 -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                            <h3 class="text-primary">나의 성적표</h3>
-                            <table class="table table-bordered">
-                                <colgroup>
-                                    <col style="width : 15%">
-                                    <col span="3" style="width : 20%">
-                                    <col style="width : 15%">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th class="bg-label-primary">No</th>
-                                    <th class="bg-label-primary">강의명</th>
-                                    <th class="bg-label-primary">강사</th>
-                                    <th class="bg-label-primary">수강완료일</th>
-                                    <th class="bg-label-primary">점수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>5</td>
-                                    <td>강의명입니다만?</td>
-                                    <td><span>전주연</span>선생님</td>
-                                    <td>2024-05-24</td>
-                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>강의명입니다만?</td>
-                                    <td><span>전주연</span>선생님</td>
-                                    <td>2024-05-24</td>
-                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>강의명입니다만?</td>
-                                    <td><span>전주연</span>선생님</td>
-                                    <td>2024-05-24</td>
-                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>강의명입니다만?</td>
-                                    <td><span>전주연</span>선생님</td>
-                                    <td>2024-05-24</td>
-                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>강의명입니다만?</td>
-                                    <td><span>전주연</span>선생님</td>
-                                    <td>2024-05-24</td>
-                                    <td><span class="badge bg-label-primary me-1">100</span>점</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                <th:block th:if="${memberRole.equals('user')}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive text-nowrap">
+                                <h3 class="text-primary">나의 성적표</h3>
+                                <table class="table table-bordered">
+                                    <colgroup>
+                                        <col style="width : 15%">
+                                        <col span="3" style="width : 20%">
+                                        <col style="width : 15%">
+                                    </colgroup>
+                                    <thead>
+                                    <tr>
+                                        <th class="bg-label-primary">No</th>
+                                        <th class="bg-label-primary">강의명</th>
+                                        <th class="bg-label-primary">강사</th>
+                                        <th class="bg-label-primary">수강완료일</th>
+                                        <th class="bg-label-primary">점수</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <th:block th:if="${myLectureDTOList != null && myLectureDTOList.size() > 0}">
+                                        <tr th:each="dto, status : ${myLectureDTOList}">
+                                            <td th:text="${status.count}">5</td>
+                                            <td th:text="${dto.lectureDTO.title}">강의명입니다만?</td>
+                                            <td th:text="${dto.lectureDTO.teacherName}"><span>전주연</span>선생님</td>
+                                            <td th:text="${dto.regDateToString}">2024-05-24</td>
+                                            <td><span class="badge bg-label-primary me-1" th:text="${dto.lectureScoreDTO != null ? dto.lectureScoreDTO.score : '-' }">100</span>점</td>
+                                        </tr>
+                                    </th:block>
+                                    <th:block th:unless="${myLectureDTOList != null && myLectureDTOList.size() > 0}">
+                                        <tr>
+                                            <td colspan="5" class="align-middle text-center">아직 수강중인 강의가 없네요!</td>
+                                        </tr>
+                                    </th:block>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </th:block>
+                <th:block th:unless="${memberRole.equals('user')}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive text-nowrap">
+                                <h3 class="text-primary">성적관리</h3>
+                                <form>
+                                    <div class="d-flex mb-3">
+                                        <p class="p-2 m-0 border rounded col-10 lecture-title">강의 명이 들어가지</p>
+                                        <button type="button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#lectureModal">조회</button>
+                                        <input type="hidden" id="lectureIdx" name="lectureIdx" value="0">
+                                    </div>
+                                    <div class="my-3 text-end">
+                                        <button type="submit" class="btn btn-outline-primary">저장</button>
+                                    </div>
+                                    <!-- 강의 조회 전에는 데이터 없게 -->
+                                    <table class="table table-bordered">
+                                        <colgroup>
+                                            <col style="width : 15%">
+                                            <col span="3" style="width : 20%">
+                                            <col style="width : 15%">
+                                        </colgroup>
+                                        <thead>
+                                        <tr>
+                                            <th class="bg-label-primary">No</th>
+                                            <th class="bg-label-primary">수강생명</th>
+                                            <th class="bg-label-primary">아이디</th>
+                                            <th class="bg-label-primary">수강완료일</th>
+                                            <th class="bg-label-primary">점수</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>전주연</td>
+                                            <td>test</td>
+                                            <td>2024-05-24</td>
+                                            <td>
+                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                                <input type="hidden" name="user_id" value="test">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>전주연</td>
+                                            <td>test</td>
+                                            <td>2024-05-24</td>
+                                            <td>
+                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                                <input type="hidden" name="user_id" value="test">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>전주연</td>
+                                            <td>test</td>
+                                            <td>2024-05-24</td>
+                                            <td>
+                                                <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
+                                                <input type="hidden" name="user_id" value="test">
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
                 <!-- 선생님이 보는 성적표 -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="table-responsive text-nowrap">
-                            <h3 class="text-primary">성적관리</h3>
-                            <form>
-                            <div class="d-flex mb-3">
-                                <p class="p-2 m-0 border rounded col-10 lecture-title">강의 명이 들어가지</p>
-                                <button type="button" class="btn btn-primary col-2" data-bs-toggle="modal" data-bs-target="#lectureModal">조회</button>
-                                <input type="hidden" id="lectureIdx" name="lectureIdx" value="0">
-                            </div>
-                            <div class="my-3 text-end">
-                                <button type="submit" class="btn btn-outline-primary">저장</button>
-                            </div>
-                            <!-- 강의 조회 전에는 데이터 없게 -->
-                            <table class="table table-bordered">
-                                <colgroup>
-                                    <col style="width : 15%">
-                                    <col span="3" style="width : 20%">
-                                    <col style="width : 15%">
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th class="bg-label-primary">No</th>
-                                    <th class="bg-label-primary">수강생명</th>
-                                    <th class="bg-label-primary">아이디</th>
-                                    <th class="bg-label-primary">수강완료일</th>
-                                    <th class="bg-label-primary">점수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>3</td>
-                                    <td>전주연</td>
-                                    <td>test</td>
-                                    <td>2024-05-24</td>
-                                    <td>
-                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                        <input type="hidden" name="user_id" value="test">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>전주연</td>
-                                    <td>test</td>
-                                    <td>2024-05-24</td>
-                                    <td>
-                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                        <input type="hidden" name="user_id" value="test">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>전주연</td>
-                                    <td>test</td>
-                                    <td>2024-05-24</td>
-                                    <td>
-                                        <input type="number" class="form-control d-inline w-75" max="100" name="score"><span>점</span>
-                                        <input type="hidden" name="user_id" value="test">
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
             </div>
             <!-- / Content -->
           </div>

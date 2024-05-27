@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,4 +21,8 @@ public class OrderDetailDTO {
     private int price;
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
+
+    //성적 조회용
+    private LectureScoreDTO lectureScoreDTO;
+    private MemberDTO memberDTO;
 }

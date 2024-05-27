@@ -49,5 +49,18 @@ public interface LectureServiceIf {
     List<LectureGoodDTO> listGood(String userId);
     int countList(String userId);
 
+    // 지현작업 : 성적관련
+    List<MyLectureDTO> myLectureList(String userId);
+    List<LectureScoreDTO> myScoreList(String userId);
+    LectureScoreDTO myScore(String userId, int lectureIdx);
+
+    List<LectureDTO> lectureListForTeacher(int teacherIdx);
+    List<LectureDTO> lectureListForAdmin();
+
+    List<MyLectureDTO> studentList(int lectureIdx);
+    int saveLectureScore(LectureScoreDTO lectureScoreDTO);
+    LectureDTO selectLectureDTOByIdx(int lectureIdx);
+//    String getMemberId(int orderIdx);
+//    LectureScoreDTO getLectureScoreDTO(int lectureIdx, String userId);
     PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO);
 }

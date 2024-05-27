@@ -3,10 +3,7 @@ package org.fullstack4.hammerteen.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import net.minidev.json.parser.JSONParser;
-import org.fullstack4.hammerteen.domain.LectureEntity;
-import org.fullstack4.hammerteen.domain.OrderDetailEntity;
-import org.fullstack4.hammerteen.domain.OrderEntity;
-import org.fullstack4.hammerteen.domain.PaymentEntity;
+import org.fullstack4.hammerteen.domain.*;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonUtil;
@@ -26,7 +23,9 @@ public class PaymentServiceImpl implements PaymentServiceIf{
     private final OrderDetailRepository orderDetailRepository;
     private final LectureRepository lectureRepository;
     private final MemberRepository memberRepository;
+    private final MyLectureRepository myLectureRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public int registPayment(String[] lectureIdxes, PaymentDTO paymentDTO) {
@@ -41,11 +40,16 @@ public class PaymentServiceImpl implements PaymentServiceIf{
         }
         for(LectureEntity lectureEntity : lectureEntityList) {
             orderDetailRepository.save(OrderDetailEntity.builder()
-                    .lectureIdx(lectureEntity.getLectureIdx())
+                            .lectureIdx(lectureEntity.getLectureIdx())
                             .orderIdx(orderIdx)
                             .price(lectureEntity.getPrice())
                             .teacherIdx(lectureEntity.getTeacherIdx())
                             .title(lectureEntity.getTitle())
+                            .build());
+            myLectureRepository.save(MyLectureEntity.builder()
+                            .lectureIdx(lectureEntity.getLectureIdx())
+                            .userId(paymentDTO.getUserId())
+                            .status("Y")
                             .build());
         }
         paymentDTO.setOrderIdx(orderIdx);
@@ -69,6 +73,11 @@ public class PaymentServiceImpl implements PaymentServiceIf{
         int result = 0;
         PaymentEntity paymentEntity = paymentRepository.findAllByPaymentIdx(paymentIdx);
         OrderEntity orderEntity = orderRepository.findAllByOrderIdx(paymentEntity.getOrderIdx());
+        List<OrderDetailEntity> orderDetailEntityList = orderDetailRepository.findAllByOrderIdx(paymentEntity.getOrderIdx());
+        List<MyLectureEntity> myLectureEntityList = new ArrayList<>();
+        for(OrderDetailEntity orderDetailEntity : orderDetailEntityList) {
+            myLectureEntityList.add(myLectureRepository.findAllByUserIdAndLectureIdx(paymentEntity.getUserId(), orderDetailEntity.getLectureIdx()));
+        }
 
         String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
         String IMPORT_CANCEL_URL = "https://api.iamport.kr/payments/cancel";
@@ -104,7 +113,13 @@ public class PaymentServiceImpl implements PaymentServiceIf{
             orderEntity.setOrderStatus("0");
             int oIdx = orderRepository.save(orderEntity).getOrderIdx();
             int pIdx = paymentRepository.save(paymentEntity).getPaymentIdx();
-            if(oIdx > 0 && pIdx > 0) {
+            int myIdx = 0;
+            for(MyLectureEntity myLectureEntity : myLectureEntityList) {
+                myLectureEntity.setStatus("N");
+                int midx = myLectureRepository.save(myLectureEntity).getMyLectureIdx();
+                myIdx += midx;
+            }
+            if(oIdx > 0 && pIdx > 0 && myIdx > 0) {
                 result = 1;
             }
         }
