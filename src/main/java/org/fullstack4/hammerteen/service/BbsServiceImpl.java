@@ -17,6 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
@@ -39,8 +40,8 @@ public class BbsServiceImpl implements BbsServiceIf{
     }
 //    게시글 상세
     @Override
-    public BbsDTO view(BbsDTO bbsDTO) {
-        Optional<BbsEntity> result = bbsRepository.findById(bbsDTO.getBbsIdx());
+    public BbsDTO view(int bbsIdx) {
+        Optional<BbsEntity> result = bbsRepository.findById(bbsIdx);
         BbsEntity board = result.orElse(null);
         BbsDTO resultbbsDTO = modelMapper.map(board, BbsDTO.class);
 
@@ -80,8 +81,8 @@ public class BbsServiceImpl implements BbsServiceIf{
     }
 //    게시글 삭제
     @Override
-    public void delete(BbsDTO bbsDTO) {
-        bbsRepository.deleteById(bbsDTO.getBbsIdx());
+    public void delete(@RequestParam(name="bbsIdx") int bbsIdx) {
+        bbsRepository.deleteById(bbsIdx);
     }
 //    내가 작성한 게시글 리스트
     @Override

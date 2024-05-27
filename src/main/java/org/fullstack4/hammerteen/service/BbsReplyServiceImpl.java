@@ -19,6 +19,6 @@ public class BbsReplyServiceImpl implements BbsReplyServiceIf{
     public int regist(BbsReplyDTO bbsReplyDTO) {
         BbsReplyEntity bbsReply = modelMapper.map(bbsReplyDTO, BbsReplyEntity.class);
         int result = bbsReplyRepository.save(bbsReply).getBbsIdx();
-        return 0;
+        return result;
     }
 }

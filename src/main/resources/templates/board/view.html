@@ -25,16 +25,18 @@
                                                 onclick="goToLink(this.attributes.href.nodeValue)"><i class="lni lni-list"></i>목록</button>
                                         </div>
                                         <div class="col-6 row justify-content-end">
+                                        <form id="viewFrm" name="viewFrm" method="post" class="row justify-content-end">
+                                            <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
                                             <th:block th:if="${session.memberDTO != null}">
                                                 <th:block th:if="${session.memberDTO.getUserId() == bbsDTO.userId}">
-                                                <button type="button" id="modifyBtn" class="btn btn-outline-primary col-2 mx-1"
-                                                        th:href="|/board/delete?category1=${category1}&bbsIdx=${bbsDTO.bbsIdx}|"
-                                                        onclick="goToLink(this.attributes.href.nodeValue)"><i class="bx bxs-trash"></i>삭제</button>
-                                                <button type="button" id="deleteBtn" class="btn btn-primary col-2 mx-1"
+                                                <button type="button" id="modifyBtn" class="btn btn-primary col-2 mx-1"
                                                         th:href="|/board/modify?category1=${category1}&bbsIdx=${bbsDTO.bbsIdx}|"
                                                         onclick="goToLink(this.attributes.href.nodeValue)"><i class="lni lni-write"></i>수정</button>
+                                                <button type="button" id="deleteBtn" class="btn btn-outline-primary col-2 mx-1"
+                                                        onclick="delPost()"><i class="bx bxs-trash"></i>삭제</button>
                                                 </th:block>
                                             </th:block>
+                                        </form>
                                         </div>
                                     </div>
                                 </div>
@@ -103,23 +105,29 @@
                             <div class="row m-0 mt-3">
                                 <div class="post-comments">
                                     <h3 class="comment-title"><span>댓글</span></h3>
-                                    <form class="m-0 mb-5 row" method="post">
+                                    <form class="m-0 mb-5 row" method="post" id="regiFrm" name="regiFrm" action="/board/registr" >
                                         <div class="col-lg-11 col-12 p-0">
-                                            <input type="hidden" name="bbsIdx">
-                                            <input type="hidden" name="category1" >
-                                            <textarea class="form-control" name="content" rows="3"></textarea>
+                                            <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
+                                            <input type="hidden" name="category1" th:value="${bbsDTO.category1}">
+                                            <th:block th:if="${session.memberDTO.getUserId() != null}">
+                                                <textarea class="form-control" name="content" rows="3"></textarea>
+                                            </th:block>
+                                            <th:block th:if="${session.memberDTO.getUserId() == null}">
+                                                <textarea class="form-control" name="content" rows="3" disabled>로그인 후 등록 가능합니다.</textarea>
+                                            </th:block>
                                         </div>
-                                        <div class="col-lg-1 col-12 p-0" >
-                                            <button class="btn btn-primary w-100 h-100" onclick="">등록</button>
-                                        </div>
+
+                                            <div class="col-lg-1 col-12 p-0" >
+                                                <input type="button" class="btn btn-primary w-100 h-100"  id="regiReplyBtn">등록</input>
+                                            </div>
                                     </form>
                                     <ul class="comments-list">
                                         <li>
                                             <div class="comment-desc pb-5 mt-5 border-bottom">
                                                 <form method="post">
-                                                    <input type="hidden" name="replyIdx" value="">
-                                                    <input type="hidden" name="bbsIdx" value="">
-                                                    <input type="hidden" name="userId" value="">
+                                                    <input type="hidden" name="replyIdx">
+                                                    <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
+                                                    <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
                                                     <div class="desc-top d-flex justify-content-between w-100">
                                                         <div>
                                                             <span class="date">등록일시 :</span>
@@ -158,5 +166,19 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="/assets/js/regist.js"></script>
+    <script>
+        function delPost() {
+            document.getElementById("viewFrm").action='/board/delete';
+            document.getElementById("viewFrm").submit();
+        }
+
+    const  regiReplyBtn =document.querySelector("#regiReplyBtn");
+        regiReplyBtn.addEventListener("click",function(e){
+           e.preventDefault();
+
+           alert("댓글등륵알림");
+           document.regiFrm.submit();
+        });
+    </script>
 </th:block>
 </html>
