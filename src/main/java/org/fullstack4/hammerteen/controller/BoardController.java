@@ -43,6 +43,7 @@ public class BoardController {
             pageRequestDTO.setCategory1("자유게시판");
             model.addAttribute("pageType", CommonUtil.setPageType(menuB, "글목록"));
             PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.list(pageRequestDTO);
+            System.out.println("pageResponseDTO : + "+pageResponseDTO);
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "board");
 
@@ -140,7 +141,9 @@ public class BoardController {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
         bbsServiceIf.updateReadCnt(bbsDTO.getBbsIdx());
-        bbsDTO.setRead_cnt(bbsDTO.getRead_cnt());
+        System.out.println("bbsDto.getRead_cnt ; " +  bbsDTO.getReadCnt());
+
+        bbsDTO.setReadCnt(bbsDTO.getReadCnt());
         BbsDTO resultbbsDTO = bbsServiceIf.view(bbsDTO);
         model.addAttribute("bbsDTO",resultbbsDTO);
         if (url.contains("board")) {

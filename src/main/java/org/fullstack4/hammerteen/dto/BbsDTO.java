@@ -25,8 +25,8 @@ public class BbsDTO {
     @NotEmpty
     private String category1;
     private String category2;
-    private int read_cnt;
-    private int reply_cnt;
+    private int readCnt;
+    private int replyCnt;
     private String location;
 
 

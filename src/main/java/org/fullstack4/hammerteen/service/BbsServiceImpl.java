@@ -93,7 +93,7 @@ public class BbsServiceImpl implements BbsServiceIf{
         return PageResponseDTO.<BbsDTO>withAll().pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
-
+//조회수 체크
     @Transactional
     @Override
     public void updateReadCnt(int bbsIdx) {
