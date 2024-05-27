@@ -13,4 +13,5 @@ public interface BbsServiceIf {
     void delete(BbsDTO bbsDTO);
     PageResponseDTO<BbsDTO> myList(PageRequestDTO pageRequestDTO, String userId);
     void updateReadCnt (int bbsIdx);
+
 }
