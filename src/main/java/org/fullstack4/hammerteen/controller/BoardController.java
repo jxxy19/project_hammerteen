@@ -9,11 +9,13 @@ import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.fullstack4.hammerteen.util.CommonUtil;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UrlPathHelper;
 
@@ -206,8 +208,14 @@ public class BoardController {
         return null;
     }
     @PostMapping("/modify")
-    public String modifyPost(BbsDTO bbsDTO, HttpServletRequest request){
+    public String modifyPost(BbsDTO bbsDTO, HttpServletRequest request,MultipartHttpServletRequest files){
         HttpSession session = request.getSession();
+
+        if(files!=null) {
+            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(bbsDTO.getBbsIdx()).userId(bbsDTO.getUserId()).build();
+            bbsServiceIf.registFile(bbsFileDTO, files);
+        }
+
         bbsServiceIf.modify(bbsDTO);
         String categoryEng = "";
         if(bbsDTO.getCategory1().equals("자유게시판")) {
@@ -273,9 +281,12 @@ public class BoardController {
         String saveDirectory = "D:\\java4\\springboot\\hammerteen\\src\\main\\resources\\static\\upload";
         commonFileUtil.fileDownload(saveDirectory,bbsFileDTO.getFileName(),response,request);
     }
-/*    @GetMapping("/deletefile")
-    public String deleteFile(BbsFileDTO bbsFileDTO){
+    @ResponseBody
+    @GetMapping("/deletefile")
+    public HttpStatus deleteFile(BbsFileDTO bbsFileDTO){
+        System.out.println("여기로 들어옴? ㅏ일삭제임");
         bbsServiceIf.deleteFile(bbsFileDTO);
-        return "redirect:/";
-    }*/
+
+        return HttpStatus.OK;
+    }
 }

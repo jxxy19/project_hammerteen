@@ -22,4 +22,6 @@ public interface BbsServiceIf {
 
 
     List<BbsFileDTO> listFile( int bbsIdx);
+
+    void deleteFile(BbsFileDTO bbsFileDTO);
 }

@@ -133,5 +133,12 @@ public class BbsServiceImpl implements BbsServiceIf{
         return dtoList;
     }
 
+    @Override
+    public void deleteFile(BbsFileDTO bbsFileDTO) {
+        BbsFileEntity bbsFileEntity = modelMapper.map(bbsFileDTO, BbsFileEntity.class);
+        bbsFileRepository.delete(bbsFileEntity);
+        commonFileUtil.fileDelite(bbsFileDTO.getDirectory(),bbsFileDTO.getFileName());
+    }
+
 
 }
