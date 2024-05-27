@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.service.BbsReplyServiceIf;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.fullstack4.hammerteen.util.CommonUtil;
@@ -28,6 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardController {
     private final BbsServiceIf bbsServiceIf;
+    private final BbsReplyServiceIf bbsReplyServiceIf;
     private final CommonFileUtil commonFileUtil;
     private String menuB = "자유게시판";
     private String menuQ = "QNA(1:1)";
@@ -126,40 +128,39 @@ public class BoardController {
             BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(resultidx).userId(bbsDTO.getUserId()).build();
             bbsServiceIf.registFile(bbsFileDTO, files);
         }
-
         String categoryEng = "";
         if(bbsDTO.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
         }
-        if(bbsDTO.getCategory1().equals("자료게시판")) {
+        else if(bbsDTO.getCategory1().equals("자료게시판")) {
             categoryEng = "data";
         }
-        if(bbsDTO.getCategory1().equals("후기게시판")) {
+        else if(bbsDTO.getCategory1().equals("후기게시판")) {
             categoryEng = "review";
         }
-        if(bbsDTO.getCategory1().equals("교육정보게시판")) {
+        else if(bbsDTO.getCategory1().equals("교육정보게시판")) {
             categoryEng = "eduInfo";
         }
-        if(bbsDTO.getCategory1().equals("공지사항")) {
+        else if(bbsDTO.getCategory1().equals("공지사항")) {
             categoryEng = "notice";
         }
-        if(bbsDTO.getCategory1().equals("QnA게시판")) {
+        else if(bbsDTO.getCategory1().equals("QnA게시판")) {
             categoryEng = "qna";
         }
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+resultidx;
     }
     @GetMapping("/view")
     public void viewGet(@RequestParam(name="bbsIdx") int bbsIdx,
-                        BbsDTO bbsDTO, Model model, HttpServletRequest req) {
+                        BbsDTO bbsDTO, Model model, HttpServletRequest req,BbsReplyDTO bbsReplyDTO) {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
         bbsServiceIf.updateReadCnt(bbsDTO.getBbsIdx());
         List<BbsFileDTO> bbsFileDTOList = bbsServiceIf.listFile(bbsDTO.getBbsIdx());
-        System.out.println("bbsDto.bbsFileDTOList ; " +  bbsFileDTOList);
-
         bbsDTO.setReadCnt(bbsDTO.getReadCnt());
         bbsServiceIf.updateReadCnt(bbsIdx);
         BbsDTO resultbbsDTO = bbsServiceIf.view(bbsIdx);
+        List<BbsReplyDTO> replyDTO = bbsReplyServiceIf.replyList(bbsReplyDTO);
+        model.addAttribute("replyDTO", replyDTO);
         model.addAttribute("bbsDTO",resultbbsDTO);
         model.addAttribute("bbsFileDTOList",bbsFileDTOList);
         if (url.contains("board")) {
@@ -223,19 +224,19 @@ public class BoardController {
         if(bbsDTO.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
         }
-        if(bbsDTO.getCategory1().equals("자료게시판")) {
+        else if(bbsDTO.getCategory1().equals("자료게시판")) {
             categoryEng = "data";
         }
-        if(bbsDTO.getCategory1().equals("후기게시판")) {
+        else if(bbsDTO.getCategory1().equals("후기게시판")) {
             categoryEng = "review";
         }
-        if(bbsDTO.getCategory1().equals("교육정보게시판")) {
+        else if(bbsDTO.getCategory1().equals("교육정보게시판")) {
             categoryEng = "eduInfo";
         }
-        if(bbsDTO.getCategory1().equals("공지사항")) {
+        else if(bbsDTO.getCategory1().equals("공지사항")) {
             categoryEng = "notice";
         }
-        if(bbsDTO.getCategory1().equals("QnA게시판")) {
+        else if(bbsDTO.getCategory1().equals("QnA게시판")) {
             categoryEng = "qna";
         }
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+ bbsDTO.getBbsIdx();
@@ -247,22 +248,22 @@ public class BoardController {
         HttpSession session = req.getSession();
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         String categoryEng = "";
-        if (view.getCategory1().equals("자유게시판")) {
+        if(view.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
         }
-        if (view.getCategory1().equals("자료게시판")) {
+        else if(view.getCategory1().equals("자료게시판")) {
             categoryEng = "data";
         }
-        if (view.getCategory1().equals("후기게시판")) {
+        else if(view.getCategory1().equals("후기게시판")) {
             categoryEng = "review";
         }
-        if (view.getCategory1().equals("교육정보게시판")) {
+        else if(view.getCategory1().equals("교육정보게시판")) {
             categoryEng = "eduInfo";
         }
-        if (view.getCategory1().equals("공지사항")) {
+        else if(view.getCategory1().equals("공지사항")) {
             categoryEng = "notice";
         }
-        if (view.getCategory1().equals("QnA게시판")) {
+        else if(view.getCategory1().equals("QnA게시판")) {
             categoryEng = "qna";
         }
         if (memberDTO != null) {

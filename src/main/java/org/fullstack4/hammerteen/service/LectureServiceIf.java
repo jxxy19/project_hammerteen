@@ -20,6 +20,7 @@ public interface LectureServiceIf {
     void modify(LectureDTO lectureDTO);
     void delete(int lectureIdx);
 
+    LectureDetailDTO view(LectureDetailDTO lectureDetailDTO);
     void registLectureDetail(LectureDetailDTO lectureDetailDTO);
     public void registLectureDetailVideo(LectureDetailDTO lectureDetailDTO, MultipartHttpServletRequest files,String videoParam);
     void modifyLectureDetail(LectureDetailDTO lectureDetailDTO);
@@ -30,15 +31,22 @@ public interface LectureServiceIf {
     void registLectureReply(LectureReplyDTO lectureReplyDTO);
     void modifyLectureReply(LectureReplyDTO lectureReplyDTO);
     void deleteLectureReply(int lectureReplyIdx);
+    void deleteThumbnailDetailFile(int lectureDetailIdx);
     void deleteLectureReplyAll(int lectureIdx);
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);
     LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO);
-    void registGood(LectureGoodDTO lectureGoodDTO);
-    void deleteGood(LectureGoodDTO lectureGoodDTO);
-    List<LectureGoodDTO> listGood(String userId);
-    LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO);
+
+    // 지현추가 : 기존 구매여부 확인용
+    int checkOrder(String userId, int lectureIdx);
 
     // 지현추가 : 선생님 통계 조회용
     Map<String, Object> getStatics(int teacherIdx);
+
+    // 지현작업 : 찜 관련
+    int registGood(LectureGoodDTO lectureGoodDTO);
+    void deleteGood(int goodsIdx);
+    List<LectureGoodDTO> listGood(String userId);
+    int countList(String userId);
+
 }

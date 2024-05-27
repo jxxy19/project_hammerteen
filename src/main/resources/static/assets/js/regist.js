@@ -93,14 +93,31 @@ function addInput() {
                 </div>
                 <div class="form-group">
                     <label class="form-label">강의 영상 <span class="text-danger fw-bold">*</span></label>
-                    <input class="form-control" name="video${subsCnt}" type="file" id="video${subsCnt}">
+                    <input onchange="videolength(this,${subsCnt})" class="form-control videofile" name="video${subsCnt}" type="file" id="video${subsCnt}">
                 </div>
             </div>
             <div class="col-1 rounded-end btn bg-white btn-outline-primary me-n1">
                 <button type="button" class="btn h-100 w-100 text-primary btn-delete" onclick="deleteThis(this)">x</button>
             </div>
+            <input value="" class="videolength" type="hidden" name="videoLength" id="videoLength${subsCnt}">
+            <video src="" style="display: none" id="videotemp${subsCnt}"></video>
         </div>
     `);
+}
+function videolength(e,subsCnt){
+    let src = URL.createObjectURL(e.files[0]);
+    let a = 'videotemp'+subsCnt;
+    let b = 'videoLength'+subsCnt;
+    let video = document.getElementById(a);
+    let length = document.getElementById(b);
+    video.src = src;
+
+    video.addEventListener("loadedmetadata",()=>{
+        console.log(video.duration);
+        let times = Math.ceil(video.duration);
+        console.log(times);
+        length.value=times;
+    })
 }
 
 function deleteThis(element) {
@@ -121,6 +138,73 @@ function deleteThis(element) {
         alert("최소 1개의 입력칸이 필요합니다.")
     }
 }
+
+function deleteThisFile2(element,lectureIdx,teacherIdx,url) {
+    if(confirm("파일을 삭제하시겠습니까?")) {
+        event.preventDefault();
+        element.parentElement.parentElement.remove();
+
+        $.ajax({
+            url: `/lecture${url}`,
+            type: 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            data: {lectureIdx: lectureIdx, teacherIdx: teacherIdx},
+
+            success: function (response) {
+                alert("삭제가 성공하였습니다.");
+            },
+            error: function () {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    }
+}
+
+function deleteThisFile3(element,lectureDetailIdx,teacherIdx) {
+    if(confirm("파일을 삭제하시겠습니까?")) {
+        event.preventDefault();
+        element.parentElement.parentElement.remove();
+
+        $.ajax({
+            url: `/lecture/deletelecturedetailfile`,
+            type: 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            data: {lectureDetailIdx: lectureDetailIdx, teacherIdx: teacherIdx},
+
+            success: function (response) {
+                alert("삭제가 성공하였습니다.");
+            },
+            error: function () {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    }
+}
+
+function deleteThisFile4(element,lectureDetailIdx,teacherIdx) {
+    if(confirm("파일을 삭제하시겠습니까?")) {
+        event.preventDefault();
+        element.parentElement.parentElement.remove();
+
+        $.ajax({
+            url: `/lecture/deletelecturedetail`,
+            type: 'post',
+            contentType: 'application/x-www-form-urlencoded',
+            dataType: 'json',
+            data: {lectureDetailIdx: lectureDetailIdx, teacherIdx: teacherIdx},
+
+            success: function (response) {
+                alert("삭제가 성공하였습니다.");
+            },
+            error: function () {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+            }
+        });
+    }
+}
+
 function deleteThisNoLimit(element) {
     event.preventDefault();
     element.parentElement.parentElement.remove();

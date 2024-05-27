@@ -16,7 +16,7 @@
 <th:block layout:fragment="content">
 <!-- Sections:Start -->
 
-<section class="section-py bg-body">
+<section class="section-py">
   <div class="container">
     <form id="wizard-checkout-form" class="card p-5" onSubmit="return false">
       <!-- Cart -->
@@ -56,7 +56,7 @@
                         <div class="col-md-4">
                           <div class="text-md-end">
                             <button type="button" class="btn-close btn-pinned" aria-label="Close" th:data-cartidx="${dto.cartIdx}" onclick="removeCart(this)"></button>
-                            <div class="my-2 my-md-4 mb-md-5"><span class="text-primary" th:text="${dto.lectureDTO.price}">39,900&#8361;</span></div>
+                            <div class="my-2 my-md-4 mb-md-5"><span class="text-primary" th:text="${dto.lectureDTO.price}">39,900</span> 원</div>
                             <!--                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">찜하기</button>-->
                           </div>
                         </div>
@@ -119,7 +119,7 @@
     }
 
     function removeCarts() {
-      let idxes = document.querySelectorAll('.selectCheck:checked').values();
+      let idxes = document.querySelectorAll('.selectCheck:checked');
       if(idxes.length > 0) {
         let idxesArr = [];
         for(let idx of idxes) {

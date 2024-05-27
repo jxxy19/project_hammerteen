@@ -105,7 +105,7 @@
                             <div class="row m-0 mt-3">
                                 <div class="post-comments">
                                     <h3 class="comment-title"><span>댓글</span></h3>
-                                    <form class="m-0 mb-5 row" method="post" id="regiFrm" name="regiFrm" action="/board/registr" >
+                                    <form class="m-0 mb-5 row" method="post" id="regiFrm" name="regiFrm" action="/board/replyRegist" >
                                         <div class="col-lg-11 col-12 p-0">
                                             <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
                                             <input type="hidden" name="category1" th:value="${bbsDTO.category1}">
@@ -118,30 +118,56 @@
                                         </div>
 
                                             <div class="col-lg-1 col-12 p-0" >
-                                                <input type="button" class="btn btn-primary w-100 h-100"  id="regiReplyBtn">등록</input>
+                                                <button type="submit" class="btn btn-primary w-100 h-100"  id="regiReplyBtn">등록</button>
                                             </div>
                                     </form>
                                     <ul class="comments-list">
-                                        <li>
-                                            <div class="comment-desc pb-5 mt-5 border-bottom">
-                                                <form method="post">
-                                                    <input type="hidden" name="replyIdx">
-                                                    <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
-                                                    <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
-                                                    <div class="desc-top d-flex justify-content-between w-100">
-                                                        <div>
-                                                            <span class="date">등록일시 :</span>
-                                                            <span class="date">수정일시 : </span>
-                                                        </div>
-                                                        <div class="d-flex gap-1 align-items-center">
-                                                            <a href="#" class="reply-link position-sticky"><i class="lni lni-brush-alt"></i>수정</a>
-                                                            <a href="#" class="reply-link position-sticky"><i class="lni lni-eraser"></i>삭제</a>
+                                        <th:block th:if="${replyDTO != null}">
+                                            <li th:each="dto:${replyDTO}" style="list-style: none">
+                                            <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                                <div class="cursor-pointer border-bottom">
+                                                        <div class="comment-desc pb-5 mt-5 border-bottom">
+                                                            <form id="replyFrm" name="replyFrm" method="post">
+                                                                <input type="hidden" name="replyIdx" th:value="${dto.replyIdx}">
+                                                                <input type="hidden" name="bbsIdx" th:value="${dto.bbsIdx}">
+                                                                <input type="hidden" name="category" th:value="${bbsDTO.category1}">
+                                                                <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
+                                                                <div class="desc-top d-flex justify-content-between w-100">
+                                                                    <div>
+                                                                        <span class="date">등록일시 :<span th:text="${#strings.substring(dto.regDate,0,10)}">등록일</span></span>
+                                                                        <th:block th:if="${dto.modifyDate != null}"><span class="date">수정일시 : </span><span th:text="${#strings.substring(dto.modifyDate,0,10)}">&nbsp;수정일</span></th:block>
+                                                                    </div>
+                                                                    <div class="d-flex gap-1 align-items-center">
+                                                                        <th:block th:if="${dto.userId == session.memberDTO.getUserId()}">
+                                                                        <a class="reply-link position-sticky" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>
+                                                                        <a  class="reply-link position-sticky" onclick="delReply()"><i class="lni lni-eraser"></i>삭제</a>
+                                                                        </th:block>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="text-area" th:utext="${dto.content}"></p>
+                                                            </form>
                                                         </div>
                                                     </div>
-                                                    <p class="text-area"></p>
-                                                </form>
-                                            </div>
-                                        </li>
+                                                </div>
+                                            </li>
+                                        </th:block>
+                                        <th:block th:if="${replyDTO.size() < 1}">
+                                            <li style="list-style: none">
+                                                <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                                    <div class="cursor-pointer border-bottom">
+                                                        <div class="comment-desc pb-5 mt-5 border-bottom">
+                                                                <div class="desc-top d-flex justify-content-between w-100">
+                                                                    <div>
+                                                                    </div>
+                                                                    <div class="d-flex gap-1 align-items-center">
+                                                                    </div>
+                                                                </div>
+                                                                <p class="text-area">아직 등록된 댓글이 없습니다.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </th:block>
                                     </ul>
                                 </div>
                             </div>
@@ -172,13 +198,36 @@
             document.getElementById("viewFrm").submit();
         }
 
-    const  regiReplyBtn =document.querySelector("#regiReplyBtn");
+        const regiReplyBtn =document.querySelector("#regiReplyBtn");
         regiReplyBtn.addEventListener("click",function(e){
            e.preventDefault();
-
-           alert("댓글등륵알림");
            document.regiFrm.submit();
         });
+        function delReply() {
+            document.getElementById("replyFrm").action="/board/replyDelete";
+            document.getElementById("replyFrm").submit();
+        }
+        function modifyReply() {
+            document.getElementById("replyFrm").action="/board/replyModify";
+            document.getElementById("replyFrm").submit();
+        }
+        function changeToModifyForm(element) {
+            event.preventDefault();
+            event.stopPropagation();
+            let textArea = element.parentElement.parentElement.parentElement.querySelector('.text-area');
+            textArea.outerHTML = `<textarea name="content" class="form-control" rows="3" wrap="hard" >${textArea.innerText}</textarea>`;
+            element.outerHTML = `<a class="reply-link position-sticky" onclick="modifyReply()" ><i class="lni lni-save"></i>저장</a>`
+        }
+        function changeToView(element) {
+            event.preventDefault();
+            event.stopPropagation();
+            let textArea = element.parentElement.parentElement.parentElement.querySelector('textarea');
+            let textAreaVal = textArea.value.replaceAll('\n', '<br>');
+            console.log("????????" +textAreaVal);
+            textArea.outerHTML = `<p class="text-area"></p>`;
+            element.parentElement.parentElement.parentElement.querySelector('.text-area').innerHTML = textAreaVal;
+            element.outerHTML = `<a class="reply-link position-sticky" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>`
+        }
     </script>
 </th:block>
 </html>

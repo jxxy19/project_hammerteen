@@ -118,8 +118,8 @@
                                             <!-- Pagination -->
                                             <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
                                                 <ul class="pagination">
-                                                    <li th:if="${pageResponseDTO.prev_page_flag}">
-                                                        <a th:href="|/board/list?category=${category1}@{(page=${pageResponseDTO.page_block_start -10})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-left"></i></a>
+                                                    <li class="page-item prev" th:if="${pageResponseDTO.prev_page_flag}">
+                                                        <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
                                                     </li>
                                                     <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
                                                         <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">
@@ -127,8 +127,8 @@
                                                         </li>
 
                                                     </th:block>
-                                                    <li th:if="${pageResponseDTO.next_page_flag}">
-                                                        <a th:href="|/board/list?category=${category1}@{(page=${pageResponseDTO.page_block_end +1})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-right"></i></a>
+                                                    <li class="page-item next" th:if="${pageResponseDTO.next_page_flag}">
+                                                        <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
                                                     </li>
                                                 </ul>
                                             </nav>

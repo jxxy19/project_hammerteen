@@ -21,8 +21,11 @@ public class HandlerInterceptorConfigure implements WebMvcConfigurer {
                 .addPathPatterns("/**/regist")
                 .addPathPatterns("/**/modify")
                 .addPathPatterns("/**/delete")
+                .addPathPatterns("/mypage/**")
+                .addPathPatterns("/mystudy/**")
+                .addPathPatterns("/payment/**")
+                .addPathPatterns("/lecture/addCart")
+                .addPathPatterns("/lecture/addGood")
                 .excludePathPatterns("/member/regist");
-
-
     }
 }

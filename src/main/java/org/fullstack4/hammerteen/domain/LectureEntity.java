@@ -42,10 +42,11 @@ public class LectureEntity extends BaseEntity{
     @Column(nullable=true, length = 30)
     private String lectureRecommendTag;
 
-    public void modify(String title, String content, int price){
+    public void modify(String title, String content, int price, String categoryIdx){
         this.title=title;
         this.content=content;
         this.price=price;
+        this.categoryIdx = categoryIdx;
     }
 
     public void modifyImg(String thumbnailImgDirectory, String thumbnailImgFile){

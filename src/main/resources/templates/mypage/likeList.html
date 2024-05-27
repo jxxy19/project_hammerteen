@@ -16,7 +16,7 @@
 <th:block layout:fragment="content">
     <!-- Sections:Start -->
 
-    <section class="section-py bg-body">
+    <section class="section-py">
         <div class="container">
             <form id="wizard-checkout-form" class="card p-5" onSubmit="return false">
                 <!-- Cart -->
@@ -25,45 +25,51 @@
                         <!-- Cart left -->
                         <div class="col-xl-12 mb-3 mb-xl-0">
                             <!-- Shopping bag -->
-                            <h5>n 개의 찜 목록</h5>
+                            <h5><strong class="text-primary" th:text="${totalCnt}"></strong> 개의 강의</h5>
                             <div class="d-flex align-items-center m-0">
                                 <div class="form-check form-check-primary col-6">
                                     <input class="form-check-input" type="checkbox" id="checkAll" />
                                     <label class="form-check-label" for="checkAll">&nbsp; 전체 선택</label>
                                 </div>
                                 <div class="col-6 row justify-content-end">
-                                    <button type="button" class="btn btn-label-danger col-lg-3 col-md-5 col-sm-12 m-0 my-3">선택 찜 삭제</button>
+                                    <button type="button" class="btn btn-label-danger col-lg-3 col-sm-12 m-0 my-3" onclick="removeGoods()">선택 강의 삭제</button>
                                 </div>
                             </div>
                             <hr class="mt-1">
                             <ul class="list-group mb-3">
-                                <li class="list-group-item p-2">
-                                    <div class="d-flex gap-3">
-                                        <div class="form-check form-check-primary d-flex align-items-center">
-                                            <label class="form-check-label" for="customCheck"></label>
-                                            <input class="form-check-input selectCheck" type="checkbox" id="customCheck" />
-                                        </div>
-                                        <div class="flex-shrink-0 d-flex align-items-center">
-                                            <img src="/assets/img/image/m.png" alt="강의 썸네일" class="w-px-100">
-                                        </div>
-                                        <div class="flex-grow-1">
-                                            <div class="row align-items-center">
-                                                <div class="col-md-8">
-                                                    <p class="me-3 mb-0"><a href="/lecture/view" class="text-body">강의 명</a></p>
-                                                    <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1"><a href="javascript:void(0)" class="me-3">누구누구</a></span>선생님</div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="text-md-end">
-                                                        <button type="button" class="btn-close btn-pinned px-2" aria-label="Close" onclick="removeCart(this)"></button>
-                                                        <div class="my-2 my-md-4 mb-md-5 px-2"><span class="text-primary">39,900&#8361;</span></div>
-                                                        <button type="button" class="btn btn-sm btn-label-primary mt-md-3">장바구니 추가</button>
+                                <th:block th:if="${goodDTOList != null and goodDTOList.size() > 0}">
+                                    <li class="list-group-item p-4" th:each="dto, status : ${goodDTOList}" th:if="${dto.lectureDTO != null}">
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check form-check-primary d-flex align-items-center">
+                                                <label class="form-check-label" for="customCheck"></label>
+                                                <input class="form-check-input selectCheck" type="checkbox" id="customCheck" th:data-goodIdx="${dto.goodIdx}" th:value="${dto.lectureIdx}" name="lectureIdx"/>
+                                            </div>
+                                            <div class="flex-shrink-0 d-flex align-items-center">
+                                                <img th:src="${dto.lectureDTO != null and dto.lectureDTO.thumbnailImgFile != null} ? '/upload/'+${dto.lectureDTO.thumbnailImgFile} : '/assets/img/default.png'" alt="강의 썸네일" class="w-px-100">
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-8">
+                                                        <p class="me-3 mb-0"><a th:href="'/lecture/view?lectureIdx='+${dto.lectureIdx}" class="text-body" th:text="${dto.lectureDTO.title}">강의 명</a></p>
+                                                        <div class="text-muted mb-2 d-flex flex-wrap"><span class="me-1"><a th:href="'/lecture/view?lectureIdx='+${dto.lectureIdx}" th:text="${dto.lectureDTO.teacherName}">누구누구</a></span> 선생님</div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="text-md-end">
+                                                            <button type="button" class="btn-close btn-pinned" aria-label="Close" th:data-goodIdx="${dto.goodIdx}" onclick="removeGood(this)"></button>
+                                                            <div class="my-2 my-md-4 mb-md-5"><span class="text-primary" th:text="${dto.lectureDTO.price}">39,900</span> 원</div>
+                                                            <!--                          <button type="button" class="btn btn-sm btn-label-primary mt-md-3">찜하기</button>-->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-
+                                    </li>
+                                </th:block>
+                                <th:block th:unless="${goodDTOList != null and goodDTOList.size() > 0}">
+                                    <li class="list-group-item p-4">
+                                        <p>찜 내역이 없습니다.</p>
+                                    </li>
+                                </th:block>
                             </ul>
                             <!-- Wishlist -->
                             <div class="list-group">
@@ -71,11 +77,6 @@
                                     <span>더 많은 강의 찜️🩷 하러 가기️</span>
                                     <i class="bx bx-sm bx-chevron-right scaleX-n1-rtl"></i>
                                 </a>
-                            </div>
-                            <div class="list-group">
-                                <div class="row m-0 my-3 justify-content-center">
-                                    <button type="button" class="btn btn-label-primary col-lg-6 col-sm-12 m-0 my-3" onclick="window.location.href='#'">선택 장바구니 담기</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -108,8 +109,45 @@
                 }
             }
         })
-        function removeCart(element) {
-            element.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement.remove();
+        function removeGood(element) {
+            removePOST(element.dataset.goodidx);
+        }
+
+        function removeGoods() {
+            let idxes = document.querySelectorAll('.selectCheck:checked');
+            if(idxes.length > 0) {
+                let idxesArr = [];
+                for(let idx of idxes) {
+                    idxesArr.push(idx.dataset.goodidx);
+                }
+                removePOST(idxesArr);
+            } else {
+                alert("선택된 강의가 없습니다.")
+            }
+        }
+
+        function removePOST(strOrArr) {
+            let formEl = document.createElement('form');
+            formEl.action = '/mypage/deleteGood';
+            formEl.method = 'post';
+            let inputEl;
+            if(typeof strOrArr.valueOf() == "string") {
+                inputEl = document.createElement('input');
+                inputEl.type = 'hidden';
+                inputEl.name = 'goodIdx';
+                inputEl.value = strOrArr;
+                formEl.append(inputEl);
+            } else {
+                for(let str of strOrArr) {
+                    inputEl = document.createElement('input');
+                    inputEl.type = 'hidden';
+                    inputEl.name = 'goodIdx';
+                    inputEl.value = str;
+                    formEl.append(inputEl);
+                }
+            }
+            document.body.append(formEl);
+            formEl.submit();
         }
     </script>
 </th:block>

@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.*;
@@ -60,7 +61,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureEntity> result = lectureRepository.findById(lectureDTO.getLectureIdx());
         LectureEntity lectureEntity =result.orElse(null);
         if (lectureEntity != null) {
-            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice());
+            lectureEntity.modify(lectureDTO.getTitle(),lectureDTO.getContent(),lectureDTO.getPrice(),lectureDTO.getCategoryIdx());
             lectureRepository.save(lectureEntity);
         }
 
@@ -70,6 +71,16 @@ public class LectureServiceImpl implements LectureServiceIf{
     public void delete(int lectureIdx) {
         lectureRepository.deleteById(lectureIdx);
     }
+
+    @Override
+    public LectureDetailDTO view(LectureDetailDTO lectureDetailDTO) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
+        LectureDetailEntity lectureDetailEntity = result.orElse(null);
+        LectureDetailDTO resultDTO = modelMapper.map(lectureDetailEntity, LectureDetailDTO.class);
+
+        return resultDTO;
+    }
+
     @Override
     public LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO) {
         PageRequest pageable = lpageRequestDTO.getPageable("lectureIdx");
@@ -167,6 +178,10 @@ public class LectureServiceImpl implements LectureServiceIf{
         if (lectureEntity != null && lectureEntity.getThumbnailImgFile()!=null) {
             commonFileUtil.fileDelite(lectureEntity.getThumbnailImgDirectory(), lectureEntity.getThumbnailImgFile());
         }
+        if(lectureEntity !=null) {
+            lectureEntity.modifyImg(null,null);
+            lectureRepository.save(lectureEntity);
+        }
     }
 
     @Override
@@ -175,6 +190,10 @@ public class LectureServiceImpl implements LectureServiceIf{
         LectureEntity lectureEntity =result.orElse(null);
         if (lectureEntity != null && lectureEntity.getThumbnailVideoFile()!=null) {
             commonFileUtil.fileDelite(lectureEntity.getThumbnailVideoDirectory(), lectureEntity.getThumbnailVideoFile());
+        }
+        if(lectureEntity !=null) {
+            lectureEntity.modifyVideo(null,null);
+            lectureRepository.save(lectureEntity);
         }
     }
 
@@ -202,7 +221,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
         if (lectureDetailEntity != null) {
-            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle());
+            lectureDetailEntity.modify(lectureDetailDTO.getDetailTitle(),Integer.parseInt(lectureDetailDTO.getVideoLength()),lectureDetailDTO.getVideoDirectory(),lectureDetailDTO.getVideoFile());
             lectureDetailRepository.save(lectureDetailEntity);
         }
     }
@@ -231,12 +250,26 @@ public class LectureServiceImpl implements LectureServiceIf{
     public void deleteLectureDetail(int lectureDetailIdx) {
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailIdx);
         LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        log.info("result " + result);
         if (lectureDetailEntity != null) {
             if(lectureDetailEntity.getVideoDirectory()!=null) {
                 commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
             }
         }
         lectureDetailRepository.deleteById(lectureDetailIdx);
+    }
+    @Override
+    public void deleteThumbnailDetailFile(int lectureDetailIdx) {
+        Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailIdx);
+        LectureDetailEntity lectureDetailEntity =result.orElse(null);
+        log.info("result2" + result);
+        if (lectureDetailEntity != null && lectureDetailEntity.getVideoDirectory()!=null) {
+            commonFileUtil.fileDelite(lectureDetailEntity.getVideoDirectory(), lectureDetailEntity.getVideoFile());
+        }
+        if(lectureDetailEntity !=null) {
+            lectureDetailEntity.modifyVideo(null,null);
+            lectureDetailRepository.save(lectureDetailEntity);
+        }
     }
 
     @Override
@@ -312,31 +345,10 @@ public class LectureServiceImpl implements LectureServiceIf{
         }
     }
 
+    // 지현추가 : 기존 구매 여부 확인용
     @Override
-    public void registGood(LectureGoodDTO lectureGoodDTO) {
-        LectureGoodEntity board = modelMapper.map(lectureGoodDTO, LectureGoodEntity.class);
-        lectureGoodRepository.save(board);
-    }
-    @Override
-    public void deleteGood(LectureGoodDTO lectureGoodDTO) {
-        lectureGoodRepository.deleteById(lectureGoodDTO.getGoodIdx());
-    }
-
-    @Override
-    public List<LectureGoodDTO> listGood(String userId) {
-        List<LectureGoodEntity> lectureGoodEntityList = lectureGoodRepository.findAllByUserId(userId);
-        List<LectureGoodDTO> lectureGoodDTOList = lectureGoodEntityList.stream().map(board->modelMapper.map(board,LectureGoodDTO.class)).collect(Collectors.toList());
-        return lectureGoodDTOList;
-    }
-    @Override
-    public LectureGoodDTO viewGood(LectureGoodDTO lectureGoodDTO) {
-        LectureGoodEntity bbsGoodEntity = lectureGoodRepository.findByLectureIdxAndUserId(lectureGoodDTO.getLectureIdx(),lectureGoodDTO.getUserId());
-        if(bbsGoodEntity!=null) {
-            return modelMapper.map(bbsGoodEntity, LectureGoodDTO.class);
-        }
-        else {
-            return null;
-        }
+    public int checkOrder(String userId, int lectureIdx) {
+        return orderDetailRepository.countAllByUserIdAndLectureIdx(userId, lectureIdx);
     }
 
     // 지현추가 : 통계용
@@ -366,5 +378,37 @@ public class LectureServiceImpl implements LectureServiceIf{
         resultMap.put("staticDTOList", staticDTOList);
         resultMap.put("staticDTOListJSON", staticDTOListJSON.toString());
         return resultMap;
+    }
+
+    // 지현작업 : 찜 관련
+    @Override
+    public int registGood(LectureGoodDTO lectureGoodDTO) {
+        LectureGoodEntity board = modelMapper.map(lectureGoodDTO, LectureGoodEntity.class);
+        int idx = lectureGoodRepository.save(board).getGoodIdx();
+        return idx;
+    }
+
+    @Transactional
+    @Override
+    public void deleteGood(int goodsIdx) {
+        lectureGoodRepository.deleteById(goodsIdx);
+    }
+
+    @Override
+    public List<LectureGoodDTO> listGood(String userId) {
+        List<LectureGoodEntity> lectureGoodEntityList = lectureGoodRepository.findAllByUserId(userId);
+        List<LectureGoodDTO> lectureGoodDTOList = null;
+        if(lectureGoodEntityList != null) {
+            lectureGoodDTOList = lectureGoodEntityList.stream().map(board->modelMapper.map(board,LectureGoodDTO.class)).collect(Collectors.toList());
+            lectureGoodDTOList.forEach(dto -> {
+                dto.setLectureDTO(modelMapper.map(lectureRepository.findById(dto.getLectureIdx()), LectureDTO.class));
+            });
+        }
+        return lectureGoodDTOList;
+    }
+
+    @Override
+    public int countList(String userId) {
+        return lectureGoodRepository.countAllByUserId(userId);
     }
 }

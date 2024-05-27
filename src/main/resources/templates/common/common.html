@@ -198,7 +198,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="/mystudy/myLectureList" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/mystudy/myLectureList" th:if="${session.memberDTO != null && session.memberDTO.userId != null}" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
                             <span data-i18n="Pages">나의 학습방</span>
                         </a>
                         <div class="dropdown-menu p-4">
