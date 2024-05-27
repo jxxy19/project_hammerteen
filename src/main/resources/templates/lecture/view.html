@@ -25,11 +25,11 @@
                                         </div>
                                         <div class="d-lg-flex w-100 justify-content-end">
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
-                                                <a class="col-sm-12 btn btn-outline-primary" href="#">삭제</a>
+                                                <a class="col-sm-12 btn btn-outline-primary" th:href="|/lecture/delete?lectureIdx=${lectureDTO.lectureIdx}|">삭제</a>
                                             </div>
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1">
                                                 <a class="col-sm-12 btn btn-primary"
-                                                   href="/lecture/modify?lectureIdx=1">수정</a>
+                                                   th:href="|/lecture/modify?lectureIdx=${lectureDTO.lectureIdx}|">수정</a>
                                             </div>
                                         </div>
                                     </div>
@@ -43,11 +43,11 @@
                                                         [[${lectureDTO}]]
                                                         [[${lectureReplyDTOList}]]
                                                         [[${lectureDetailDTOList}]]
-                                                        <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
-                                                        <p class="mb-1"><span> 전주연 </span> 선생님</p>
+                                                        <h5 class="mb-1 text-primary fw-bold">[[${lectureDTO.title}]]</h5>
+                                                        <p class="mb-1"><span> [[${lectureDTO.teacherName}]] </span> 선생님</p>
                                                     </div>
                                                     <div class="d-flex align-items-center">
-                                                        <span class="badge bg-label-primary">과목</span>
+                                                        <span class="badge bg-label-primary">[[${lectureDTO.categoryName}]]</span>
 
                                                     </div>
                                                 </div>
@@ -55,18 +55,13 @@
                                                     <div class="p-2">
                                                         <div>
                                                             <video class="w-100 rounded" controls
-                                                                   src="/assets/video/test.MP4"></video>
+                                                                   th:src="|${lectureDTO.thumbnailVideoDirectory}/${lectureDTO.thumbnailVideoFile}|"></video>
                                                         </div>
                                                     </div>
                                                     <div class="card-body">
                                                         <h5 class="fw-bold">강의소개</h5>
                                                         <p class="mb-4">
-                                                            강의소개를 한번 해볼까 합니다!<br>
-                                                        </p>
-                                                        <p class="mb-4">
-                                                            여러분 인건 정말 좋은 강의에요 한번 들어보쇼
-                                                        </p>
-                                                        <p> "최고 입니다. 여러분 이 시대 꼭 들어야하는 강의!" — 장지현
+                                                            [[${lectureDTO.content}]]
                                                         </p>
                                                         <hr class="my-4">
                                                         <h5 class="fw-bold">강사정보</h5>
@@ -77,7 +72,7 @@
                                                                         src="/assets/img/default.png"></div>
                                                             </div>
                                                             <div class="d-flex flex-column">
-                                                                <span class="fw-medium"><span>전주연</span> 선생님</span>
+                                                                <span class="fw-medium"><span>[[${lectureDTO.teacherName}]]</span> 선생님</span>
                                                                 <small class="text-muted">풀스택 4기</small>
                                                             </div>
                                                         </div>
@@ -92,7 +87,7 @@
                                                               결제정보
                                                           </div>
                                                           <div class="card-body py-4">
-                                                              <h4 class="text-start"><span class="text-primary fw-bold">10,000</span>원</h4>
+                                                              <h4 class="text-start"><span class="text-primary fw-bold">[[${lectureDTO.price}]]</span>원</h4>
                                                               <div class="d-flex gap-1 justify-content-between">
                                                                   <a href="/mypage/cart" type="button" class="btn btn-outline-primary w-100 px-0 text-primary">장바구니 담기</a>
                                                                   <a href="/payment/payment?lectureIdx=1" type="button" class="btn btn-primary w-100 px-0 text-white">바로 결제하기</a>
