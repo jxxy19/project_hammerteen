@@ -47,7 +47,7 @@
                                         <div class="card-body">
                                             <div class="d-flex align-items-start align-items-sm-center gap-4">
                                                 <img
-                                                        th:src="${dto.fileName != null ? '/upload/' + dto.fileName : '/assets/img/image/images2.jpeg'}"
+                                                        th:src="${dto.role != 'teacher' ? (dto.fileName != null ? '/upload/' + dto.fileName : '/assets/img/image/images2.jpeg') : (teacherDTO.profile != null ? '/upload/' + teacherDTO.profile : '/assets/img/image/images2.jpeg')}"
                                                         alt="user-avatar"
                                                         class="d-block rounded"
                                                         height="100"

@@ -54,7 +54,7 @@ public class MyPageController {
         memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
 
         List<String> filenames = null;
-        String realPath ="D:\\java\\hammer\\src\\main\\resources\\static\\upload";
+        String realPath ="D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
         if(!memberDTO.getTemFileName().isEmpty()){
             memberDTO.setFileName(memberDTO.getTemFileName());
             MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
@@ -236,7 +236,7 @@ public class MyPageController {
 
 
         List<String> filenames = null;
-        String realPath ="D:\\java4\\springboot\\hammerteen\\src\\main\\resources\\static\\upload";
+        String realPath ="D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
         if(!memberDTO.getTemFileName().isEmpty()){
             memberDTO.setFileName(memberDTO.getTemFileName());
             MemberDTO modifyDTO = memberServiceIf.detailModify(memberDTO);
