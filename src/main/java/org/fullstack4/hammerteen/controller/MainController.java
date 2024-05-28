@@ -23,6 +23,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Log4j2
 @Controller
@@ -46,6 +48,14 @@ public class MainController {
         //가장인기있는강의
         List<LectureDTO> popularLectureList =new ArrayList<>();
         popularLectureList = lectureServiceIf.popularLecutreList();
+
+
+        List<LectureDTO> filteredList = popularLectureList.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+
+
         PageResponseDTO<LectureDTO> recommendLectureDTO = null;
 
         //강의후기(메인페이지)
@@ -61,7 +71,7 @@ public class MainController {
 
 
         log.info("======================================================================== recommendLectureDTO : {}", recommendLectureDTO);
-        log.info("======================================================================== popularLectureList : {}", popularLectureList);
+        log.info("======================================================================== filteredList : {}", filteredList);
 
 
 
@@ -69,7 +79,7 @@ public class MainController {
         model.addAttribute("recommendLectureDTO", recommendLectureDTO);
         model.addAttribute("lectureReplyList", lectureReplyList);
         model.addAttribute("recommendName", recommendName);
-        model.addAttribute("popularLectureList", popularLectureList);
+        model.addAttribute("popularLectureList", filteredList);
         model.addAttribute("teacherDTO", teacherDTO);
         model.addAttribute("hotBoardDTO", hotBoardDTO);
         return "index";
