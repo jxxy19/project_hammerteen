@@ -28,7 +28,7 @@
                                         <form id="viewFrm" name="viewFrm" method="post" class="row justify-content-end">
                                             <input type="hidden" name="bbsIdx" th:value="${bbsDTO.bbsIdx}">
                                             <th:block th:if="${session.memberDTO != null}">
-                                                <th:block th:if="${session.memberDTO.getUserId() == bbsDTO.userId}">
+                                                <th:block th:if="${session.memberDTO.getUserId() == bbsDTO.userId || session.memberDTO.getRole() == 'admin'}">
                                                 <button type="button" id="modifyBtn" class="btn btn-primary col-2 mx-1"
                                                         th:href="|/board/modify?category1=${category1}&bbsIdx=${bbsDTO.bbsIdx}|"
                                                         onclick="goToLink(this.attributes.href.nodeValue)"><i class="lni lni-write"></i>수정</button>
@@ -123,28 +123,31 @@
                                     </form>
                                     <ul class="comments-list">
                                         <th:block th:if="${replyDTO != null}">
-                                            <li th:each="dto:${replyDTO}" style="list-style: none">
+                                            <li th:each="dto:${replyDTO}" th:id="'list'+${dto.replyIdx}" style="list-style: none">
                                             <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
                                                 <div class="cursor-pointer border-bottom">
                                                         <div class="comment-desc pb-5 mt-5 border-bottom">
-                                                            <form id="replyFrm" name="replyFrm" method="post">
-                                                                <input type="hidden" name="replyIdx" th:value="${dto.replyIdx}">
-                                                                <input type="hidden" name="bbsIdx" th:value="${dto.bbsIdx}">
-                                                                <input type="hidden" name="category" th:value="${bbsDTO.category1}">
-                                                                <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
+                                                            <form th:id="'replyFrm'+${dto.replyIdx}" class="replyFrm" name="replyFrm" method="post">
                                                                 <div class="desc-top d-flex justify-content-between w-100">
+                                                                    <input type="hidden" name="replyIdx" th:value="${dto.replyIdx}">
+                                                                    <input type="hidden" name="bbsIdx" th:value="${dto.bbsIdx}">
+                                                                    <input type="hidden" name="category" th:value="${bbsDTO.category1}">
+                                                                    <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
                                                                     <div>
                                                                         <span class="date">등록일시 :<span th:text="${#strings.substring(dto.regDate,0,10)}">등록일</span></span>
                                                                         <th:block th:if="${dto.modifyDate != null}"><span class="date">수정일시 : </span><span th:text="${#strings.substring(dto.modifyDate,0,10)}">&nbsp;수정일</span></th:block>
                                                                     </div>
                                                                     <div class="d-flex gap-1 align-items-center">
-                                                                        <th:block th:if="${dto.userId == session.memberDTO.getUserId()}">
-                                                                        <a class="reply-link position-sticky" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>
-                                                                        <a  class="reply-link position-sticky" onclick="delReply()"><i class="lni lni-eraser"></i>삭제</a>
+                                                                        <th:block th:if="${dto.userId == session.memberDTO.getUserId()|| session.memberDTO.getRole() == 'admin'}">
+                                                                        <a class="reply-link position-sticky" th:data-idx="${dto.replyIdx}" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>
+                                                                        <a  class="reply-link position-sticky" th:data-idx="${dto.replyIdx}" onclick="delReply(this)"><i class="lni lni-eraser"></i>삭제</a>
                                                                         </th:block>
                                                                     </div>
                                                                 </div>
-                                                                <p class="text-area" th:utext="${dto.content}"></p>
+                                                                <div class="targetArea">
+                                                                    <p class="text-area"  th:utext="${dto.content}"></p>
+
+                                                                </div>
                                                             </form>
                                                         </div>
                                                     </div>
@@ -203,30 +206,100 @@
            e.preventDefault();
            document.regiFrm.submit();
         });
-        function delReply() {
-            document.getElementById("replyFrm").action="/board/replyDelete";
-            document.getElementById("replyFrm").submit();
+        function delReply(element) {
+            let idx = element.dataset.idx
+            let idxToformId = '#replyFrm'+idx;
+            let frm = $('#replyFrm'+idx);
+            let listfrm = $('#list'+idx);
+            let replyIdx = $(idxToformId + " input[name=replyIdx]").val();
+            let bbsIdx = $(idxToformId + " input[name=bbsIdx]").val();
+            let userId = $(idxToformId + " input[name=userId]").val();
+
+            $.ajax({
+                url: "/board/replyDelete",
+                method: 'post',
+                dataType : 'text',
+                data : {
+                    "replyIdx" : replyIdx,
+                    "bbsIdx" : bbsIdx,
+                    "userId" : userId
+                },
+                success: function(data) {
+                    if(data === "1") {
+                        listfrm.remove();
+                    }
+
+
+                },
+                error : function(xhr, status, error) {
+                    console.log("xhr! : " + xhr);
+                    console.log("status! : " + status);
+                    console.log("error! : " + error);
+                }
+            })
+
         }
-        function modifyReply() {
-            document.getElementById("replyFrm").action="/board/replyModify";
-            document.getElementById("replyFrm").submit();
+        function modifyReply(element) {
+            // $(element).parent().parent().parent().$(input)
+            let idx = element.dataset.idx
+            let idxToformId = '#replyFrm'+idx;
+            let frm = $('#replyFrm'+idx);
+            let replyIdx = $(idxToformId + " input[name=replyIdx]").val();
+            let bbsIdx = $(idxToformId + " input[name=bbsIdx]").val();
+            let category = $(idxToformId + " input[name=category]").val();
+            let userId = $(idxToformId + " input[name=userId]").val();
+            let content = $(idxToformId + " textarea[name=content]").val();
+
+            $.ajax({
+                url: "/board/replyModify",
+                method: 'post',
+                dataType : 'text',
+                data : {
+                    "replyIdx" : replyIdx,
+                    "bbsIdx" : bbsIdx,
+                    "category" : category,
+                    "userId" : userId,
+                    "content" : content
+                },
+                success: function(data) {
+                    console.log(data);
+                    if(data.length > 0) {
+                        changeToView(element);
+                        $(idxToformId + " .text-area").text(data);
+                    }
+                },
+                error : function(xhr, status, error) {
+                    console.log("xhr! : " + xhr);
+                    console.log("status! : " + status);
+                    console.log("error! : " + error);
+                }
+            })
         }
         function changeToModifyForm(element) {
             event.preventDefault();
             event.stopPropagation();
+            let idx = element.dataset.idx;
             let textArea = element.parentElement.parentElement.parentElement.querySelector('.text-area');
             textArea.outerHTML = `<textarea name="content" class="form-control" rows="3" wrap="hard" >${textArea.innerText}</textarea>`;
-            element.outerHTML = `<a class="reply-link position-sticky" onclick="modifyReply()" ><i class="lni lni-save"></i>저장</a>`
+            element.outerHTML = `<a class="reply-link position-sticky" data-idx="${idx}" onclick="modifyReply(this)" ><i class="lni lni-save"></i>저장</a>`
         }
         function changeToView(element) {
             event.preventDefault();
             event.stopPropagation();
+            let idx = element.dataset.idx;
             let textArea = element.parentElement.parentElement.parentElement.querySelector('textarea');
             let textAreaVal = textArea.value.replaceAll('\n', '<br>');
             console.log("????????" +textAreaVal);
             textArea.outerHTML = `<p class="text-area"></p>`;
             element.parentElement.parentElement.parentElement.querySelector('.text-area').innerHTML = textAreaVal;
-            element.outerHTML = `<a class="reply-link position-sticky" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>`
+            element.outerHTML = `<a class="reply-link position-sticky" data-idx="${idx}" onclick="changeToModifyForm(this)"><i class="lni lni-brush-alt"></i>수정</a>`
+        }
+
+        function delView(element) {
+            event.preventDefault();
+            event.stopPropagation();
+            let idx = element.dataset.idx;
+
         }
     </script>
 </th:block>
