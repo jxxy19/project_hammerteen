@@ -26,13 +26,9 @@
             <h3 class="text-center mb-4">추천 콘텐츠 ⭐</h3>
             <div class="row">
                 <div class="col-lg-10 mx-auto">
-                    <ul class="nav justify-content-center flex-row flex-wrap">
-                        <li class="m-1"><p><a href="/?lectureRecommendTag=기출정복" ><span class="capsule"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
-                        <li class="m-1"><p><a href="#" ><span class="capsule"><span class="capsule-icon">🫨</span> 제가 ,, 보이시나요 ,,?</span></a></p></li>
-                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🎯</span> 시험 적중 강의</span></a></p></li>
-                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🍀</span> 럭키 아삽 발견 !</span></a></p></li>
-                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="capsule-icon">🤫</span> 나만 알고 싶은 비밀 강의</span></a></p></li>
-                        <li class="m-1"><p><a href="#"><span class="capsule"><span class="badge badge-center shadow-sm rounded-pill bg-label-light">😱</span> 이 강의에는 전설이 있대.. !</span></a></p></li>
+                    <ul class="nav justify-content-center flex-row flex-wrap" >
+                            <li class="m-1" th:each="dto, iterStat : ${recommendName}"><p>  <a th:href="@{'/?lectureRecommendTag=' + ${iterStat.index + 1}}"> <span class="capsule" th:text="${dto.name}"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
+
                         <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
                     </ul>
                 </div>
@@ -137,8 +133,11 @@
                 <div class="col-lg-10 mx-auto mb-4">
                     <div class="row">
                         <div class="swiper mySwiper2">
+
                             <div class="swiper-wrapper mb-5">
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
+
+                                <th:block th:if="${popularLectureList !=null}">
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide" th:each="popularList : ${popularLectureList}">
                                     <div class="card border shadow-none overflow-hidden">
                                         <div class="card-body row p-0 ">
                                             <div class="col-5 d-flex justify-content-center overflow-hidden">
@@ -146,103 +145,20 @@
                                             </div>
                                             <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                                 <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${popularList.title}">이 세상 밈의 절대고수.</h5>
+                                                    <small><span th:text="${popularList.teacherName}">전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start" th:text="${popularList.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
                                                 </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                                <a class="btn btn-sm btn-label-primary mt-2" href="/lecture/list">바로가기</a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
-                                    <div class="card border shadow-none overflow-hidden">
-                                        <div class="card-body row p-0 ">
-                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
-                                            </div>
-                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
-                                                </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
-                                    <div class="card border shadow-none overflow-hidden">
-                                        <div class="card-body row p-0 ">
-                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
-                                            </div>
-                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
-                                                </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
-                                    <div class="card border shadow-none overflow-hidden">
-                                        <div class="card-body row p-0 ">
-                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
-                                            </div>
-                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
-                                                </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
-                                    <div class="card border shadow-none overflow-hidden">
-                                        <div class="card-body row p-0 ">
-                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
-                                            </div>
-                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
-                                                </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide">
-                                    <div class="card border shadow-none overflow-hidden">
-                                        <div class="card-body row p-0 ">
-                                            <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
-                                            </div>
-                                            <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
-                                                <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary">이 세상 밈의 절대고수.</h5>
-                                                    <small><span>전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
-                                                </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                </th:block>
                             <div class="swiper-pagination"></div>
+
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -278,7 +194,7 @@
                                         </th:block>
                                     </ul>
                                     <p class="mb-0 fw-medium mt-4">
-                                        <a href="#" class="d-flex align-items-center btn btn-primary">
+                                        <a href="/board/list?category1=data" class="d-flex align-items-center btn btn-primary">
                                             <span class="me-2">더 보러 가기</span>
                                         </a>
                                     </p>

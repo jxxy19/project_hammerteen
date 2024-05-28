@@ -22,28 +22,36 @@
                                     <div class="row justify-content-end mx-2 my-2">
                                         <th:block th:if="${userId != null}">
                                             <button class="btn btn-primary col-1"
-                                                    th:href="|/board/regist?category1=${category1}|"
-                                                    onclick="goToLink(this.attributes.href.nodeValue)"><i
+                                                    onclick="goToLink(this.attributes.href.nodeValue)"
+                                                    th:href="|/board/regist?category1=${category1}|"><i
                                                     class="lni lni-pencil-alt"></i>&nbsp;글쓰기
                                             </button>
                                         </th:block>
                                     </div>
                                     <div class="single-widget">
-                                        <h3>키워드</h3>
-                                        <div class="navbar-nav justify-content-center align-items-center flex-row">
-                                            <div class="input-group input-group-merge">
-                                        <span class="input-group-text" id="basic-icon-default-fullname2">
+                                        <form th:action="|/board/list?category1=${category1}|">
+                                            <h3>키워드</h3>
+                                            <div class="navbar-nav justify-content-center align-items-center flex-row">
+                                                <div class="input-group input-group-merge">
+                                                    <input name="category1" th:value="${category1}" type="hidden"/>
+                                                    <input name="search_type" type="hidden" value="t"/>
+                                                    <input name="search_type" type="hidden" value="c"/>
+                                                    <input name="search_type" type="hidden" value="u"/>
+                                                    <span class="input-group-text" id="basic-icon-default-fullname2">
                                             <i class="bx bx-search fs-4 lh-0"></i></span>
-                                                <input aria-describedby="basic-icon-default-fullname2" class="form-control" id="basic-icon-default-fullname"
-                                                       name="search_word" placeholder="키워드 검색"
-                                                       type="text"
-                                                />
+                                                    <input aria-describedby="basic-icon-default-search"
+                                                           class="form-control" id="basic-icon-default-search"
+                                                           name="search_word" placeholder="키워드 검색"
+                                                           type="text"
+                                                    />
+                                                    <button class="btn rounded-pill btn-outline-primary" type="submit">
+                                                        <i class='bx bx-search-alt-2 display-6 align-middle'></i>
+                                                    </button>
+                                                </div>
+
                                             </div>
-                                            <button class="btn rounded-pill btn-outline-primary" type="submit">
-                                                <i class='bx bx-search-alt-2 display-6 align-middle'></i>
-                                            </button>
-                                        </div>
                                     </div>
+                                    </form>
                                 </div>
                             </div>
 
@@ -73,34 +81,40 @@
                                         </div>
                                         <!-- End List Title -->
                                         <!-- Start Single List -->
-                                      <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
-                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
-                                            <div class="cursor-pointer border-bottom" th:each="dto:${pageResponseDTO.dtoList}">
-                                                <div class="row align-items-center p-3"
-                                                     th:data-idx="${dto.bbsIdx}" th:href="|/board/view?category1=${category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
-                                                    <!--                            th:data-idx="${dto.bbsIdx}"-->
-                                                    <div class="col-lg-4 col-md-5 col-12">
-                                                        <p class="title p-0 m-0">[[${dto.title}]]</p>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-3 col-12">
-                                                        <p class="p-0 m-0">[[${dto.userId}]]</p>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-3 col-12">
-                                                        <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-12">
-                                                        <p class="p-0 m-0"><span
-                                                                class="badge rounded-pill bg-label-primary"><i
-                                                                class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span></p>
-                                                    </div>
-                                                    <div class="col-lg-2 col-md-2 col-12 align-right">
-                                                        <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
+                                        <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
+                                            <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                                <div class="cursor-pointer border-bottom"
+                                                     th:each="dto:${pageResponseDTO.dtoList}">
+                                                    <div class="row align-items-center p-3"
+                                                         onclick="goToLink(this.attributes.href.nodeValue)"
+                                                         th:data-idx="${dto.bbsIdx}"
+                                                         th:href="|/board/view?category1=${category1}&bbsIdx=${dto.bbsIdx}|">
+                                                        <!--                            th:data-idx="${dto.bbsIdx}"-->
+                                                        <div class="col-lg-4 col-md-5 col-12">
+                                                            <p class="title p-0 m-0">[[${dto.title}]]</p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <p class="p-0 m-0">[[${dto.userId}]]</p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <p class="p-0 m-0"><span
+                                                                    class="badge rounded-pill bg-primary">10</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-12">
+                                                            <p class="p-0 m-0"><span
+                                                                    class="badge rounded-pill bg-label-primary"><i
+                                                                    class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col-lg-2 col-md-2 col-12 align-right">
+                                                            <p class="p-0 m-0">
+                                                                [[${#strings.substring(dto.regDate,0,10)}]]</p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                      </th:block>
+                                        </th:block>
                                         <th:block th:if="${pageResponseDTO.dtoList.size() == 0}">
                                             <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
                                                 <div class="cursor-pointer border-bottom">
@@ -116,19 +130,28 @@
                                     <div class="row my-2">
                                         <div class="col-12">
                                             <!-- Pagination -->
-                                            <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
+                                            <nav aria-label="Page navigation"
+                                                 class="d-flex align-items-center justify-content-center">
                                                 <ul class="pagination">
-                                                    <li class="page-item prev" th:if="${pageResponseDTO.prev_page_flag}">
-                                                        <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                                    <li class="page-item prev"
+                                                        th:if="${pageResponseDTO.prev_page_flag}">
+                                                        <a class="page-link"
+                                                           th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i
+                                                                class="tf-icon bx bx-chevron-left"></i></a>
                                                     </li>
-                                                    <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
+                                                    <th:block
+                                                            th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
                                                         <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">
-                                                            <a th:href="|/board/list?category=${category1}&page=${i}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                                            <a class="page-link"
+                                                               th:data-num="${i}" th:href="|/board/list?category=${category1}&page=${i}${pageResponseDTO.linkParams}|">[[${i}]]</a>
                                                         </li>
 
                                                     </th:block>
-                                                    <li class="page-item next" th:if="${pageResponseDTO.next_page_flag}">
-                                                        <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                                    <li class="page-item next"
+                                                        th:if="${pageResponseDTO.next_page_flag}">
+                                                        <a class="page-link"
+                                                           th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i
+                                                                class="tf-icon bx bx-chevron-right"></i></a>
                                                     </li>
                                                 </ul>
                                             </nav>

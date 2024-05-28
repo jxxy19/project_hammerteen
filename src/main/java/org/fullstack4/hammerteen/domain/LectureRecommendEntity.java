@@ -17,9 +17,9 @@ public class LectureRecommendEntity {
     @Column(unique = true, nullable = false)
     private int recommendIdx;
 
-    @Column(length = 10, nullable = false)
+    @Column(length = 30, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int lectureIdx;
+    /*@Column(nullable = false)
+    private int lectureIdx;*/
 }

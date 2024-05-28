@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
@@ -32,16 +33,35 @@ public class MainController {
     private final LectureServiceIf lectureServiceIf;
     @GetMapping("/")
     public String mainGET(Model model, PageRequestDTO pageRequestDTO){
-        PageResponseDTO<TeacherDTO> teacherDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
-        PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
-        PageResponseDTO<LectureDTO> recommendLectureDTO = null;
-        if(pageRequestDTO.getLectureRecommendTag() !=null ) {
-            recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
 
-            System.out.println("LectureDTO adad : " + recommendLectureDTO);
+        //선생님이 궁금해요
+        PageResponseDTO<TeacherDTO> teacherDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
+        //커뮤니티
+        PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
+
+        //추천태그이름
+        List<LectureRecommendDTO> recommendName=null;
+        recommendName = lectureServiceIf.recommendNameList();
+
+        //가장인기있는강의
+        List<LectureDTO> popularLectureList = lectureServiceIf.popularLecutreList();
+        PageResponseDTO<LectureDTO> recommendLectureDTO = null;
+
+        /*//강의후기(메인페이지)
+        List<LectureReplyDTO> lectureReplyList = lectureServiceIf.lectureReplyList();*/
+
+        if(pageRequestDTO.getLectureRecommendTag() == null) {
+            pageRequestDTO.setLectureRecommendTag("1");
         }
 
+            recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
+
+
+
+
         model.addAttribute("recommendLectureDTO", recommendLectureDTO);
+        model.addAttribute("recommendName", recommendName);
+        model.addAttribute("popularLectureList", popularLectureList);
         model.addAttribute("teacherDTO", teacherDTO);
         model.addAttribute("hotBoardDTO", hotBoardDTO);
         return "index";

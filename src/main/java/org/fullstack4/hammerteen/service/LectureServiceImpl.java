@@ -29,6 +29,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     private final LectureDetailRepository lectureDetailRepository;
     private final LectureReplyRepository lectureReplyRepository;
     private final LectureGoodRepository lectureGoodRepository;
+    private final LectureRecommendRepository lectureRecommendRepository;
 
     //지현추가 : 통계용
     private final OrderDetailRepository orderDetailRepository;
@@ -567,5 +568,37 @@ public class LectureServiceImpl implements LectureServiceIf{
         return PageResponseDTO.<LectureDTO>withAll().pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
+
+
+    @Override
+    public List<LectureRecommendDTO> recommendNameList() {
+        List<LectureRecommendEntity> lectureEntityList = lectureRecommendRepository.findAll();
+        List<LectureRecommendDTO> dtoList = lectureEntityList.stream()
+                .map(board->modelMapper.map(board,LectureRecommendDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
+
+    //가장인기있는 강의(메인페이지)
+    @Override
+    public List<LectureDTO> popularLecutreList() {
+        List<Integer> lectureIdxList=  myLectureRepository.findTop6PopularLectures();
+        System.out.println("lectureList.get(i)" + lectureIdxList.get(0));
+        LectureDTO lectureDTO = null;
+        List<LectureDTO> lectureList = new ArrayList<>();
+
+        for(int i =0; i< lectureIdxList.size() ; i ++) {
+            Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureIdxList.get(i));
+            lectureDTO = modelMapper.map(lectureEntity,LectureDTO.class);
+            lectureList.add(lectureDTO);
+        }
+        return lectureList;
+
+    }
+
+    /*@Override
+    public List<LectureReplyDTO> lectureReplyList() {
+    *//*    List<LectureReplyEntity> replyentity = lectureReplyRepository.findbyID*//*
+    }*/
 
 }
