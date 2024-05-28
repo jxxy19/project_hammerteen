@@ -231,4 +231,14 @@ public class MemberServiceImpl implements MemberServiceIf{
         }
         return teacherDTO;
     }
+
+    @Override
+    public TeacherDTO teacherViewdetail(TeacherDTO teacherDTO) {
+        Optional<TeacherEntity> result = teacherRepository.findById(teacherDTO.getTeacherIdx());
+        TeacherEntity teacherEntity = result.orElse(null);
+        if (teacherEntity != null) {
+            teacherDTO = modelMapper.map(teacherEntity, TeacherDTO.class);
+        }
+        return teacherDTO;
+    }
 }

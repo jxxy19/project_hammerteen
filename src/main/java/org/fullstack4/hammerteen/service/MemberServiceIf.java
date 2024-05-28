@@ -46,4 +46,6 @@ public interface MemberServiceIf {
     int registTeacher(TeacherDTO teacherDTO,String userId);
 
     TeacherDTO teacherView(String userId);
+
+    TeacherDTO teacherViewdetail(TeacherDTO teacherDTO);
 }

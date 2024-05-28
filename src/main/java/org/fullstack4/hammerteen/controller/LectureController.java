@@ -73,6 +73,8 @@ public class LectureController {
     public void viewGet(Model model, LectureDTO lectureDTO,LPageRequestDTO lpageRequestDTO,HttpSession session) {
         lpageRequestDTO.setPage_size(5);
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
+        TeacherDTO teacherDTO = TeacherDTO.builder().teacherIdx(resultDTO.getTeacherIdx()).build();
+        model.addAttribute("teacherDTO", memberServiceIf.teacherViewdetail(teacherDTO));
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
         for(LectureDetailDTO lectureDetailDTO : lectureDetailDTOList){
