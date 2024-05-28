@@ -665,7 +665,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     @Override
     public List<LectureDTO> popularLecutreList() {
         List<Integer> lectureIdxList=  myLectureRepository.findTop6PopularLectures();
-        System.out.println("lectureList.get(i)" + lectureIdxList.get(0));
+
         LectureDTO lectureDTO = null;
         List<LectureDTO> lectureList = new ArrayList<>();
 
