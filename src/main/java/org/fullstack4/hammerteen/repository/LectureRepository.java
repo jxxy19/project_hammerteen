@@ -22,4 +22,5 @@ public interface LectureRepository extends JpaRepository<LectureEntity, Integer>
     LectureEntity findAllByLectureIdx(int lectureIdx);
 
     Page<LectureEntity> findAllByLectureRecommendTagContainsOrderByLectureIdxDesc(PageRequest pageable, String recommendTag);
+
 }

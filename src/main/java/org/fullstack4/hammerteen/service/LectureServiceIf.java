@@ -80,5 +80,7 @@ public interface LectureServiceIf {
 
     List<LectureReplyDTO> lectureReplyList();
 
+    List<LectureDetailDTO> playedList(List<LectureDetailDTO> lectureDetailDTOList);
+    LectureDetailDTO played(LectureDetailDTO lectureDetailDTO);
 
 }

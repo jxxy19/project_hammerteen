@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LecturePlayedRepository extends JpaRepository<LecturePlayedEntity, Integer> {
-    Optional<Integer> countAllByPercentageGreaterThanEqualAndUserId(int percentage, String userId);
+    Optional<Integer> countAllByPercentageGreaterThanEqualAndUserIdAndLectureIdxEquals(int percentage, String userId,int lectureIdx);
     Optional<LecturePlayedEntity> findAllByPercentageLessThanEqualAndUserIdAndLectureIdx(int percentage,String userId,int lectureIdx);
+
+    List<LecturePlayedEntity> findAllByLectureIdx(int lectureIdx);
+
+    LecturePlayedEntity findByLectureDetailIdx(int lectureDetailIdx);
 }

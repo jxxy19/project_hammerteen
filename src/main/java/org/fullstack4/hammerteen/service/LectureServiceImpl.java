@@ -349,12 +349,12 @@ public class LectureServiceImpl implements LectureServiceIf{
         int detailcount = 0;
         int count = 0;
         int percentage=0;
-        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserId(100,userId);
+        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserIdAndLectureIdxEquals(99,userId,lectureIdx);
         count =result.orElse(0);
         Optional<Integer> result2 = lectureDetailRepository.countAllByLectureIdx(lectureIdx);
         detailcount = result2.orElse(0);
         if(count>0 && detailcount>0){
-            percentage= (count/detailcount)*100;
+            percentage= (count*100/detailcount);
         }
         return percentage;
     }
@@ -363,16 +363,21 @@ public class LectureServiceImpl implements LectureServiceIf{
     public int registPlayed(LecturePlayedDTO lecturePlayedDTO){
         int count = 0;
         int detailcount = 0;
-        LecturePlayedEntity lecturePlayedEntity =  modelMapper.map(lecturePlayedDTO,LecturePlayedEntity.class);
+        LecturePlayedEntity lecturePlayedEntity = lecturePlayedRepository.findByLectureDetailIdx(lecturePlayedDTO.getLectureDetailIdx());
+        lecturePlayedEntity.modifyPercentage(100);
         lecturePlayedRepository.save(lecturePlayedEntity);
-        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserId(100,lecturePlayedDTO.getUserId());
+        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserIdAndLectureIdxEquals(100,lecturePlayedDTO.getUserId(),lecturePlayedDTO.getLectureIdx());
         count =result.orElse(0);
         List<LectureDetailEntity> list = lectureDetailRepository.findAllByLectureIdx(lecturePlayedDTO.getLectureIdx());
         detailcount = list.size();
         if(count>0&&detailcount>0){
             if(count<detailcount){
-                lecturePlayedEntity.registNext(list.get(count).getLectureDetailIdx());
-                lecturePlayedRepository.save(lecturePlayedEntity);
+                log.info("list " + list);
+                log.info("list.get(count).getLectureDetailIdx() " + list.get(count).getLectureDetailIdx());
+                LecturePlayedEntity lecturePlayedEntity1 = modelMapper.map(lecturePlayedDTO,LecturePlayedEntity.class);
+                lecturePlayedEntity1.registNext(list.get(count).getLectureDetailIdx());
+                log.info("lecturePlayedEntity1 " + lecturePlayedEntity1);
+                lecturePlayedRepository.save(lecturePlayedEntity1);
             }
         }
         return count;
@@ -388,6 +393,30 @@ public class LectureServiceImpl implements LectureServiceIf{
         }
 
         return lectureDetailIdx;
+    }
+    @Override
+    public List<LectureDetailDTO> playedList(List<LectureDetailDTO> lectureDetailDTOList){
+        List<LectureDetailDTO> resultDTO = lectureDetailDTOList;
+        List<LecturePlayedEntity> lecturePlayedEntityList = lecturePlayedRepository.findAllByLectureIdx(resultDTO.get(0).getLectureIdx());
+        for(LecturePlayedEntity lecturePlayedEntity : lecturePlayedEntityList){
+            for(LectureDetailDTO lectureDetailDTO : resultDTO){
+                if(lectureDetailDTO.getLectureDetailIdx() == lecturePlayedEntity.getLectureDetailIdx()){
+                    lectureDetailDTO.setPlayedPercentage(String.valueOf(lecturePlayedEntity.getPercentage()));
+                }
+            }
+        }
+        return resultDTO;
+    }
+    @Override
+    public LectureDetailDTO played(LectureDetailDTO lectureDetailDTO){
+        LectureDetailDTO resultDTO = lectureDetailDTO;
+        List<LecturePlayedEntity> lecturePlayedEntityList = lecturePlayedRepository.findAllByLectureIdx(resultDTO.getLectureIdx());
+        for(LecturePlayedEntity lecturePlayedEntity : lecturePlayedEntityList){
+                if(lectureDetailDTO.getLectureDetailIdx() == lecturePlayedEntity.getLectureDetailIdx()){
+                    lectureDetailDTO.setPlayedPercentage(String.valueOf(lecturePlayedEntity.getPercentage()));
+                }
+        }
+        return resultDTO;
     }
 
     @Override
