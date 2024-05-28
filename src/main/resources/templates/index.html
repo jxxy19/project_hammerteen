@@ -38,6 +38,7 @@
                 <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
                     <th:block th:if="${recommendLectureDTO != null}">
                     <div class="row justify-content-between gap-lg-0 gap-3" >
+                        <th:block th:if="${recommendLectureDTO.dtoList != null && recommendLectureDTO.dtoList.size() > 0}">
                         <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index < 3}">
                             <div class="card border shadow-none overflow-hidden">
                                 <div class="card-body row p-0 ">
@@ -55,11 +56,13 @@
                                 </div>
                             </div>
                         </div>
+                        </th:block>
                     </div>
                     </th:block>
 
                     <th:block th:if="${recommendLectureDTO != null}">
                         <div class="row justify-content-between gap-lg-0 gap-3" >
+                            <th:block th:if="${recommendLectureDTO.dtoList.size() > 0}">
                             <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index >=3 && iterStat.index<6}">
                                 <div class="card border shadow-none overflow-hidden">
                                     <div class="card-body row p-0 ">
@@ -79,17 +82,15 @@
                                     </div>
                                 </div>
                             </div>
+                            </th:block>
                         </div>
-
                     </th:block>
                     <!-- 추천 콘텐츠가 없을 경우 -->
-                    <th:block th:unless="${recommendLectureDTO != null}">
+                    <th:block th:unless="${recommendLectureDTO != null && recommendLectureDTO.dtoList != null}">
                         <div class="text-center" >
                             추천 콘텐츠가 없습니다.
                         </div>
                     </th:block>
-
-
                     </div>
                 </div>
             </div>
@@ -110,6 +111,9 @@
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper mb-3">
                                 <th:block th:if="${teacherDTO != null && teacherDTO.dtoList.size() > 0}">
+
+                                    <th:block th:if="${teacherDTO.dtoList != null && teacherDTO.dtoList.size() > 0}">
+
                                 <div class="col-md-4 col-sm-6 mb-4 swiper-slide" th:each="dto, iterStat : ${teacherDTO.dtoList}">
                                     <div class="card">
                                         <div class="card-body ">
@@ -126,6 +130,7 @@
                                     </div>
                                 </div>
                                 </th:block>
+                                </th:block>
                                 <th:block th:unless="${teacherDTO != null && teacherDTO.dtoList.size() > 0}">
                                     <div class="card-body" style="text-align: center">
                                         <div class="d-flex justify-content-center overflow-hidden">
@@ -134,6 +139,7 @@
 
                                     </div>
                                 </th:block>
+
                             </div>
                             <div class="swiper-pagination"></div>
                         </div>
@@ -155,8 +161,9 @@
 
                             <div class="swiper-wrapper mb-5">
 
-                                <th:block th:if="${popularLectureList !=null}">
-                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide" th:each="popularList : ${popularLectureList}">
+                                <th:block th:if="${popularLectureList.get(0) !=null } " >
+
+                                <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide" th:each="dto : ${popularLectureList}">
                                     <div class="card border shadow-none overflow-hidden">
                                         <div class="card-body row p-0 ">
                                             <div class="col-5 d-flex justify-content-center overflow-hidden">
@@ -164,9 +171,9 @@
                                             </div>
                                             <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                                 <div class="d-flex flex-column gap-2">
-                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${popularList.title}">이 세상 밈의 절대고수.</h5>
-                                                    <small><span th:text="${popularList.teacherName}">전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start" th:text="${popularList.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                    <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${dto.title}">이 세상 밈의 절대고수.</h5>
+                                                    <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
+                                                    <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
                                                 </div>
                                                 <a class="btn btn-sm btn-label-primary mt-2" href="/lecture/list">바로가기</a>
                                             </div>
@@ -176,6 +183,7 @@
 
 
                                 </th:block>
+
                                 </div>
 
                             <div class="swiper-pagination"> </div>
@@ -236,7 +244,7 @@
                                         <span class="capsule-icon p-2">✏️</span>
                                         <h5 class="mb-0 ms-1 fw-bold">강의 후기</h5>
                                     </div>
-                                    <th:block th:if="${lectureReplyList != null}">
+                                    <th:block th:if="${lectureReplyList != null && lectureReplyList.size() > 0}">
                                     <ul class="list-unstyled my-4" th:each="replyList : ${lectureReplyList}">
                                         <li class="mb-2">
 

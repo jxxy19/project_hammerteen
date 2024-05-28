@@ -91,8 +91,12 @@
                                                          th:href="|/board/view?category1=${category1}&bbsIdx=${dto.bbsIdx}|">
                                                         <!--                            th:data-idx="${dto.bbsIdx}"-->
                                                         <div class="col-lg-2 col-md-3 col-12">
-                                                            <p class="p-0 m-0"><span
-                                                                    class="badge rounded-pill bg-primary">[[${pageResponseDTO.total_count -(pageResponseDTO.page*pageResponseDTO.page_size)- num.index}]]</span>
+                                                            <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">
+                                                                <th:block th:if ="${pageResponseDTO.total_count < 10}">
+                                                                    [[${pageResponseDTO.total_count - num.index}]]
+                                                                </th:block>
+                                                                <th:block th:if ="${pageResponseDTO.total_count >= 10}">[[${pageResponseDTO.total_count -(pageResponseDTO.page*pageResponseDTO.page_size)- num.index}]]</th:block>
+                                                                </span>
                                                             </p>
                                                         </div>
                                                         <div class="col-lg-4 col-md-5 col-12">

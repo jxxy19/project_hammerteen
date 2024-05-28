@@ -19,36 +19,22 @@
                   <div class="card mb-4">
                     <h5 class="card-header">나의 계정 정보</h5>
                     <!-- Account -->
-                    <form id="frm" name="frm" action="/mypage/mypage" method="post" enctype="multipart/form-data">
+                    <form id="frmMypage" name="frm" action="/mypage/mypage" method="post" enctype="multipart/form-data" onsubmit="checkForm(this)">
                       <input type="hidden" id="temFileName" name="temFileName" th:value="${session.memberDTO.fileName != null ? session.memberDTO.fileName : ''}" />
                       <input type="hidden" name="userState" id="userState" value="Y">
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                                th:src="${session.memberDTO.fileName != null ? '/upload/' + session.memberDTO.fileName : '/assets/img/image/images2.jpeg'}"
-                                alt="user-avatar"
-                                class="d-block rounded"
-                                height="100"
-                                width="100"
-                                id="uploadedAvatar" />
+                        <img th:src="${session.memberDTO.fileName != null ? '/upload/' + session.memberDTO.fileName : '/assets/img/image/images2.jpeg'}" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar" />
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">사진 올리기</span>
                             <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input
-                              type="file"
-                              id="upload"
-                              name="file"
-                              class="account-file-input"
-                              hidden
-                              accept="image/png, image/jpeg"
-                              multiple/>
+                            <input type="file" id="upload" name="file" class="account-file-input" hidden accept="image/png, image/jpeg" multiple/>
                           </label>
                           <button type="button" id="reset_button" class="btn btn-outline-secondary account-image-reset mb-4">
                             <i class="bx bx-reset d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">초기화</span>
                           </button>
-
                           <p class="text-muted mb-0" >800K사이즈의 JPG, GIF 또는 PNG만 업로드 가능합니다.</p>
                         </div>
                       </div>
@@ -58,41 +44,42 @@
 
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="memberId" class="form-label">ID</label>
-                            <input class="form-control" type="text" name="userId" id="memberId" th:value="${session.memberDTO.userId}" readonly/>
+                            <label for="userId" class="form-label">ID</label>
+                            <input data-name="아이디" class="form-control" type="text" name="userId" id="userId" th:value="${session.memberDTO.userId}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <label for="name" class="form-label">이름</label>
-                            <input class="form-control" type="text" id="name" name="name" th:value="${session.memberDTO.name}" readonly/>
+                            <input data-name="이름" class="form-control" type="text" id="name" name="name" th:value="${session.memberDTO.name}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6 form-password-toggle">
                             <label class="form-label" for="pwd">비밀번호</label>
                             <div class="input-group input-group-merge">
-                              <input type="password" id="pwd" class="form-control" name="pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <input data-name="비밀번호" type="password" id="pwd" class="form-control" name="pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                               <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6 form-password-toggle">
                             <label class="form-label" for="confirm_pwd">비밀번호 재입력</label>
                             <div class="input-group input-group-merge">
-                              <input type="password" id="confirm_pwd" class="form-control" name="confirm_pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                              <input data-name="비밀번호 재입력" type="password" id="confirm_pwd" class="form-control" name="confirm_pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
                               <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
 
                             </div>
 
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="birthday" class="form-label">생일</label>
-                            <input type="date" class="form-control"  id="birthday"  name="birthday" th:value="${session.memberDTO.birthday}" readonly/>
+                            <label for="birthday" class="form-label">생년월일</label>
+                            <input data-name="생년월일" type="date" class="form-control"  id="birthday"  name="birthday" th:value="${session.memberDTO.birthday}" readonly/>
                           </div>
                           <div class="mb-3 col-md-6">
                             <div class="row">
                               <div class="col-lg-8 col-sm-9 pe-lg-1">
                                 <label for="email" class="form-label">이메일</label>
-                                <input type="text" class="form-control" id="email" name ="email" th:value="${session.memberDTO.email}" placeholder="abc@email.com" />
+                                <input data-name="이메일" type="text" class="form-control" id="email" name ="email" th:value="${session.memberDTO.email}" placeholder="abc@email.com" readonly/>
+                                <input type="hidden" id="authEmail" name="authEmail" value="true">
                               </div>
                               <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
-                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">중복체크</button>
+                                <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">다시입력</button>
                               </div>
                             </div>
                           </div>
@@ -100,22 +87,22 @@
                             <label for="phoneNumber" class="form-label">전화번호</label>
                             <div class="input-group">
                               <!-- Phone Number Prefix -->
-                              <input class="form-control" type="text" id="phoneNumber" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 0, 3)}" placeholder="010" style="width: 80px;" maxlength="3"/>
+                              <input data-name="전화번호" class="form-control" type="text" id="phoneNumber" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 0, 3)}" placeholder="010" style="width: 80px;" maxlength="3"/>
                               <!-- Separator -->
                               <span class="input-group-text">-</span>
                               <!-- Phone Number Middle -->
-                              <input class="form-control" type="text" id="phoneNumber2" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 3, 7)}" placeholder="1234" style="width: 100px;" maxlength="4" />
+                              <input data-name="전화번호" class="form-control" type="text" id="phoneNumber2" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 3, #strings.length(session.memberDTO.phoneNumber)-4)}" placeholder="1234" style="width: 100px;" maxlength="4" />
                               <!-- Separator -->
                               <span class="input-group-text">-</span>
                               <!-- Phone Number Suffix -->
-                              <input class="form-control" type="text" id="phoneNumber3" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 7, 11)}" placeholder="5678" style="width: 100px;" maxlength="4"/>
+                              <input data-name="전화번호" class="form-control" type="text" id="phoneNumber3" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, #strings.length(session.memberDTO.phoneNumber)-4, #strings.length(session.memberDTO.phoneNumber))}" placeholder="5678" style="width: 100px;" maxlength="4"/>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
                             <div class="row">
                               <div class="col-lg-8 col-sm-8 pe-lg-1 px-sm-2">
                                 <label for="zipcode" class="form-label">우편번호</label>
-                                <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly th:value="${session.memberDTO.zipCode}"/>
+                                <input data-name="우편번호" type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly th:value="${session.memberDTO.zipCode}"/>
                               </div>
                               <div class="col-lg-4 col-sm-4 align-content-end ps-lg-1">
                                 <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
@@ -126,13 +113,13 @@
                         <div class="row justify-content-end">
                           <div class="mb-3 col-md-6 ">
                             <label for="addr1" class="form-label">주소</label>
-                            <input class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" th:value="${session.memberDTO.addr1}" readonly/>
+                            <input data-name="주소" class="form-control bg-white" type="text" id="addr1" name="addr1" value="" placeholder="주소" th:value="${session.memberDTO.addr1}" readonly/>
                             </div>
                         </div>
                         <div class="row justify-content-end">
                           <div class="mb-3 col-md-6 ">
-                            <label for="addr2" class="form-label">상세 주소</label>
-                            <input class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소" th:value="${session.memberDTO.addr2}"/>
+                            <label for="addr2" class="form-label">상세주소</label>
+                            <input data-name="상세주소" class="form-control" type="text" id="addr2" name="addr2" value="" placeholder="상세주소" th:value="${session.memberDTO.addr2}"/>
                           </div>
                         </div>
                         <div class="mt-2">
@@ -144,49 +131,7 @@
                     </form>
                   </div>
 
-                  <div class="row">
-                    <div class="col-6 col-12 mb-md-0 mb-4">
-                      <div class="card">
-                        <h5 class="card-header">연결된 계정</h5>
-                        <div class="card-body">
-                          <p>사이트와 연결된 계정을 확인해보세요 !</p>
-                          <!-- Connections -->
-                          <div class="d-flex mb-3">
-                            <div class="flex-shrink-0">
-                              <img src="/assets/img/icons/brands/google.png" alt="google" class="me-3" height="30" />
-                            </div>
-                            <div class="flex-grow-1 row align-items-center">
-                              <div class="col-9 mb-sm-0 mb-2">
-                                <h6 class="mb-0">Google</h6>
-                                <!-- <small class="text-muted">google account</small> -->
-                              </div>
-                              <div class="col-3 text-end">
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input float-end" type="checkbox" role="switch" checked/>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="d-flex mb-3">
-                            <div class="flex-shrink-0">
-                              <img src="/assets/img/icons/brands/naver.png" alt="github" class="me-3" height="30" />
-                            </div>
-                            <div class="flex-grow-1 row align-items-center">
-                              <div class="col-9 mb-sm-0 mb-2">
-                                <h6 class="mb-0">Naver</h6>
-                              </div>
-                              <div class="col-3 text-end">
-                                <div class="form-check form-switch">
-                                  <input class="form-check-input float-end" type="checkbox" role="switch" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- /Connections -->
-                        </div>
-                      </div>
-                    </div>
-                    </div>
+
                   <div class="card">
                     <h5 class="card-header">회원 탈퇴</h5>
                     <div class="card-body">
@@ -199,9 +144,7 @@
                       <form id="formAccountDeactivation" onsubmit="return false">
                         <div class="form-check mb-3">
                           <input class="form-check-input" type="checkbox" name="accountActivation" id="accountActivation"/>
-                          <label class="form-check-label" for="accountActivation"
-                            >회원 탈퇴에 동의합니다.</label
-                          >
+                          <label class="form-check-label" for="accountActivation">회원 탈퇴에 동의합니다.</label>
                         </div>
                         <button type="submit" id="delete_button" class="btn btn-danger deactivate-account">회원 탈퇴하기</button>
                       </form>
@@ -221,16 +164,20 @@
       </div>
       </div>
     </section>
+      <div id="divForToast"></div>
     </th:block>
     <!-- build:js assets/vendor/js/core.js -->
     <th:block layout:fragment="script">
 <!--    <script src="/assets/vendor/libs/popper/popper.js"></script>-->
 <!--    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>-->
 <!--    <script src="/assets/vendor/js/menu.js"></script>-->
+    <script src="/assets/vendor/js/bootstrap.js"></script>
     <script src="/assets/js/main.js"></script>
     <!-- Page JS -->
     <script src="/assets/js/pages-account-settings-account.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+    <script src="/assets/js/validation.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script>
@@ -242,29 +189,50 @@
       zipCode(zipcode, addr1);
       });
 
-
-      const submit_button =document.querySelector("#submit_button");
-      submit_button.addEventListener("click",function (e){
+      //이메일 중복검사
+      let emailCheckButton = document.querySelector("#emailCheck");
+      emailCheckButton.addEventListener("click", function(e) {
         e.preventDefault();
-        const pwd= document.querySelector("#pwd");
-        const confirm_pwd= document.querySelector("#confirm_pwd");
+        let emailInput = document.querySelector("#email");
+        let email = emailInput.value;
+        if (emailCheckButton.textContent === "중복체크") {
+          if(nullCheck($(emailInput))) {
+            // AJAX 통신
+            $.ajax({
+              url: '/member/emailduplecheck',
+              type: 'GET',
+              contentType: 'application/x-www-form-urlencoded',
+              dataType: 'json',
+              data: {email: email},
 
-
-        //비밀번호 일치
-        if(!passwordMatch(confirm_pwd,pwd)){
-          alert("비밀번호가 일치하지 않습니다.");
-          return false;
+              success: function (response) {
+                if (response.success) {
+                  const confirm_msg = "이 이메일은 사용 가능합니다.\n사용하시겠습니까?";
+                  if (confirm(confirm_msg)) {
+                    emailInput.value = email;
+                    emailInput.readOnly = true;
+                    $('#authEmail').val("true");
+                    emailCheckButton.textContent = "다시입력";
+                  }
+                } else {
+                  alert(response.message);
+                }
+              },
+              error: function () {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
+              }
+            });
+          } else {
+            showToast("공란은 입력할 수 없습니다.");
+          }
+        } else if (emailCheckButton.textContent === "다시입력") {
+          // 다시입력 로직
+          emailInput.readOnly = false;
+          emailInput.value = '';
+          $('#authEmail').val("false");
+          emailCheckButton.textContent = "중복체크";
         }
-
-        const confirm_msg ="정말로 수정하시겠습니까?";
-        if(confirm(confirm_msg)){
-          alert("정보가 수정되었습니다.");
-          document.frm.submit();
-        }
-
-
       });
-
 
       //파일업로드
       document.getElementById('upload').addEventListener('change', function(event) {

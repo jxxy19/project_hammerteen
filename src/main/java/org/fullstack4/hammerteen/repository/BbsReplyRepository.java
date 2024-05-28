@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface BbsReplyRepository extends JpaRepository<BbsReplyEntity, Integer> {
     List<BbsReplyEntity> findAllByBbsIdxOrderByReplyIdxDesc(int bbsIdx);
-    @Query("select r from BbsReplyEntity r where r.bbsIdx = :bbsIdx")
+    @Query("select r from BbsReplyEntity r where r.bbsIdx = :bbsIdx order by r.replyIdx desc")
     List<BbsReplyEntity> listOfReply(int bbsIdx);
 
 }
