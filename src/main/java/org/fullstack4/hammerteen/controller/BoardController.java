@@ -3,6 +3,7 @@ package org.fullstack4.hammerteen.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
@@ -13,12 +14,14 @@ import org.fullstack4.hammerteen.util.CommonUtil;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UrlPathHelper;
 
 import java.io.IOException;
@@ -125,16 +128,12 @@ public class BoardController {
 
     }
     @PostMapping("/regist")
-    public String registPost(BbsDTO bbsDTO, MultipartHttpServletRequest files, HttpServletRequest req){
+    public String registPost(@Valid BbsDTO bbsDTO, BindingResult bindingResult, MultipartHttpServletRequest files, HttpServletRequest req,
+                             RedirectAttributes redirectAttributes) {
         HttpSession session = req.getSession();
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         bbsDTO.setUserId(memberDTO.getUserId());
-        int resultidx = bbsServiceIf.regist(bbsDTO);
 
-        if(files!=null) {
-            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(resultidx).userId(bbsDTO.getUserId()).build();
-            bbsServiceIf.registFile(bbsFileDTO, files);
-        }
         String categoryEng = "";
         if(bbsDTO.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
@@ -154,7 +153,23 @@ public class BoardController {
         else if(bbsDTO.getCategory1().equals("QnA게시판")) {
             categoryEng = "qna";
         }
-        return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+resultidx;
+        if(bindingResult.hasErrors()) {
+            log.info(bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors()); //휘발성속성
+            redirectAttributes.addFlashAttribute("dto", bbsDTO);
+            log.info("오류 여기");
+            return "redirect:/board/regist?category1="+categoryEng;
+        }
+        int resultidx = bbsServiceIf.regist(bbsDTO);
+        if(files!=null) {
+            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(resultidx).userId(bbsDTO.getUserId()).build();
+            bbsServiceIf.registFile(bbsFileDTO, files);
+        }
+        if( resultidx > 0 ) {
+            return "redirect:/board/list?category1="+categoryEng;
+        } else {
+            return "redirect:/board/list?category1="+categoryEng;
+        }
     }
     @GetMapping("/view")
     public String viewGet(@RequestParam(name="bbsIdx") int bbsIdx,
@@ -224,17 +239,13 @@ public class BoardController {
         if (url.contains("data")) {
             model.addAttribute("pageType", CommonUtil.setPageType(menuD, "글 수정"));
         }
+
         return null;
     }
     @PostMapping("/modify")
-    public String modifyPost(BbsDTO bbsDTO, HttpServletRequest req,MultipartHttpServletRequest files){
+    public String modifyPost(@Valid BbsDTO bbsDTO, BindingResult bindingResult, HttpServletRequest req,MultipartHttpServletRequest files,
+                             RedirectAttributes redirectAttributes){
 
-        if(files!=null) {
-            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(bbsDTO.getBbsIdx()).userId(bbsDTO.getUserId()).build();
-            bbsServiceIf.registFile(bbsFileDTO, files);
-        }
-
-        bbsServiceIf.modify(bbsDTO);
         String categoryEng = "";
         if(bbsDTO.getCategory1().equals("자유게시판")) {
             categoryEng = "board";
@@ -253,6 +264,18 @@ public class BoardController {
         }
         else if(bbsDTO.getCategory1().equals("QnA게시판")) {
             categoryEng = "qna";
+        }
+        if(bindingResult.hasErrors()) {
+            log.info(bindingResult.getAllErrors());
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors()); //휘발성속성
+            redirectAttributes.addFlashAttribute("dto", bbsDTO);
+            log.info("오류 여기");
+            return "redirect:/board/modify?category1="+categoryEng+"&bbsIdx="+ bbsDTO.getBbsIdx();
+        }
+        bbsServiceIf.modify(bbsDTO);
+        if(files!=null) {
+            BbsFileDTO bbsFileDTO = BbsFileDTO.builder().bbsIdx(bbsDTO.getBbsIdx()).userId(bbsDTO.getUserId()).build();
+            bbsServiceIf.registFile(bbsFileDTO, files);
         }
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+ bbsDTO.getBbsIdx();
     }

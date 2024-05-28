@@ -70,6 +70,10 @@ public class LoginController {
             if (req.getServletPath().equals("/login")) {
                 return "redirect:/";
             }
+
+            if( acc_url.contains("/login/login")) {
+                return "redirect:/";
+            }
             return "redirect:" + acc_url;
         }
 
