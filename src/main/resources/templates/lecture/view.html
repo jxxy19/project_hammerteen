@@ -41,7 +41,7 @@
                                                 <div class="d-flex justify-content-between align-items-center flex-wrap mb-2 gap-1">
                                                     <div class="me-1">
                                                         <h5 class="mb-1 text-primary fw-bold">[[${lectureDTO.title}]]</h5>
-                                                        <p class="mb-1"><span> [[${lectureDTO.teacherName}]] </span> 선생님</p>
+                                                        <p class="mb-1"><span> [[${teacherDTO.name}]] </span> 선생님</p>
                                                     </div>
                                                     <div class="d-flex align-items-center">
                                                         <span class="badge bg-label-primary">[[${lectureDTO.categoryName}]]</span>
@@ -65,11 +65,11 @@
                                                             <div class="avatar-wrapper">
                                                                 <div class="avatar avatar-sm me-2"><img
                                                                         alt="Avatar" class="rounded-circle"
-                                                                        src="/assets/img/default.png"></div>
+                                                                        th:src="|/src/upload/${teacherDTO.profile}|"></div>
                                                             </div>
                                                             <div class="d-flex flex-column">
-                                                                <span class="fw-medium"><span>[[${lectureDTO.teacherName}]]</span> 선생님</span>
-                                                                <small class="text-muted">풀스택 4기</small>
+                                                                <span class="fw-medium"><span>[[${teacherDTO.name}]]</span> 선생님</span>
+                                                                <small class="text-muted">[[${teacherDTO.writing}]]</small>
                                                             </div>
                                                         </div>
                                                     </div>
