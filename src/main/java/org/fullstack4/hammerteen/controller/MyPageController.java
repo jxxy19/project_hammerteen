@@ -50,6 +50,15 @@ public class MyPageController {
         //핸드폰번호 합치기
         String[] phoneStr = memberDTO.getPhoneNumber().split(",");
         memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
+        HttpSession session = request.getSession();
+        MemberDTO dto = (MemberDTO)session.getAttribute("memberDTO");
+
+        //비밀번호 입력 안할시
+        if(memberDTO.getPwd().isEmpty()){
+            memberDTO.setPwd(dto.getPwd());
+
+        }
+
 
         List<String> filenames = null;
         String realPath ="D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
