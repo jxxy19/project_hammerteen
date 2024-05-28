@@ -63,4 +63,6 @@ public interface LectureServiceIf {
 //    String getMemberId(int orderIdx);
 //    LectureScoreDTO getLectureScoreDTO(int lectureIdx, String userId);
     PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO);
+    //추천이름
+    List<LectureRecommendDTO> recommendNameList();
 }

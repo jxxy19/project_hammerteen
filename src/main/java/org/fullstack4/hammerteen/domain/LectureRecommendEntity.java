@@ -20,6 +20,6 @@ public class LectureRecommendEntity {
     @Column(length = 10, nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int lectureIdx;
+    /*@Column(nullable = false)
+    private int lectureIdx;*/
 }

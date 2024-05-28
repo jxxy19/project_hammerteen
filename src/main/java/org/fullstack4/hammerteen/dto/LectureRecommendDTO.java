@@ -20,6 +20,6 @@ public class LectureRecommendDTO {
     @NotEmpty
     private String name;
 
-    @NotNull
-    private int lectureIdx;
+ /*   @NotNull
+    private int lectureIdx;*/
 }
