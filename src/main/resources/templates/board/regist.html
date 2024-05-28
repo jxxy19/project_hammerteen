@@ -27,14 +27,25 @@
                                     <div class="my-items bg-white rounded shadow-sm p-5">
                                         <div class="mb-3">
                                             <label class="form-label" for="category1">카테고리</label>
-                                            <select class="form-select" id="category1" name="category1">
-                                                <option selected value="">카테고리</option>
-                                                <option value="교육정보게시판" th:selected="${param.category1.toString() =='eduInfo'}">교육정보</option>
-                                                <option value="자료게시판" th:selected="${param.category1.toString() =='data'}">자료게시판</option>
-                                                <option value="자유게시판" th:selected="${param.category1.toString() =='board'}">자유게시판</option>
-                                                <option value="공지게시판" th:selected="${param.category1.toString() =='notice'}">공지게시판</option>
-                                                <option value="QnA" th:selected="${param.category1.toString() =='qna'}">QnA게시판</option>
-                                            </select>
+                                            <th:block th:if="${session.memberDTO.getRole().toString() == 'teacher'|| session.memberDTO.getRole().toString() == 'admin'}">
+                                                <select class="form-select" id="category0" name="category1">
+                                                    <option selected value="">카테고리</option>
+                                                    <option value="교육정보게시판" th:selected="${param.category1.toString() =='eduInfo'}">교육정보</option>
+                                                    <option value="자료게시판" th:selected="${param.category1.toString() =='data'}">자료게시판</option>
+                                                    <option value="자유게시판" th:selected="${param.category1.toString() =='board'}">자유게시판</option>
+                                                    <option value="공지게시판" th:selected="${param.category1.toString() =='notice'}">공지게시판</option>
+                                                    <option value="QnA게시판" th:selected="${param.category1.toString() =='qna'}">QnA게시판</option>
+                                                </select>
+                                            </th:block>
+                                            <th:block th:if="${session.memberDTO.getRole().toString() == 'user'}">
+                                                <select class="form-select" id="category1" name="category1">
+                                                    <option selected value="">카테고리</option>
+                                                    <option value="교육정보게시판" th:selected="${param.category1.toString() =='eduInfo'}">교육정보</option>
+                                                    <option value="자료게시판" th:selected="${param.category1.toString() =='data'}">자료게시판</option>
+                                                    <option value="자유게시판" th:selected="${param.category1.toString() =='board'}">자유게시판</option>
+                                                    <option value="QnA게시판" th:selected="${param.category1.toString() =='qna'}">QnA게시판</option>
+                                                </select>
+                                            </th:block>
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="category2">강의명</label>

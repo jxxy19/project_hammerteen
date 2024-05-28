@@ -1,9 +1,12 @@
 package org.fullstack4.hammerteen.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
@@ -30,6 +33,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyStudyController {
     private final ScheduleServiceIf scheduleServiceIf;
+    private final BbsServiceIf bbsServiceIf;
     private final LectureServiceIf lectureServiceIf;
     private final MemberServiceIf memberServiceIf;
     private final ObjectMapper objectMapper;
@@ -46,8 +50,24 @@ public class MyStudyController {
 
     }
     @GetMapping("/myLectureView")
-    public void myLectureViewGet(Model model) {
+    public void myLectureViewGet(Model model,
+                                 @RequestParam(name="lectureIdx") int lectureIdx,
+                                 BbsDTO bbsDTO, LectureDTO lectureDTO, HttpServletRequest req
+                                 ) {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
+        PageRequestDTO qnaRequestDTO = new PageRequestDTO();
+        qnaRequestDTO.setCategory1("QnA게시판");
+        PageRequestDTO noticeRequestDTO = new PageRequestDTO();
+        noticeRequestDTO.setCategory1("공지사항게시판");
+        PageRequestDTO dataRequestDTO = new PageRequestDTO();
+        dataRequestDTO.setCategory1("자료게시판");
+        PageResponseDTO<BbsDTO> qnaDTO = bbsServiceIf.list(qnaRequestDTO);
+        PageResponseDTO<BbsDTO> noticeDTO = bbsServiceIf.list(noticeRequestDTO);
+        PageResponseDTO<BbsDTO> dataDTO = bbsServiceIf.list(dataRequestDTO);
+        model.addAttribute("qnaDTO" , qnaDTO);
+        model.addAttribute("noticeDTO" , noticeDTO);
+        model.addAttribute("dataDTO" , dataDTO);
+
     }
     @GetMapping("/myLecturePlay")
     public void myLecturePlayGet(Model model) {
@@ -103,7 +123,7 @@ public class MyStudyController {
             return "redirect:/";
         }
     }
-    
+
     @PostMapping("/myReportCardList")
     public String myReportCardListPOST(@RequestParam(name="lectureIdx", defaultValue = "0")String lectureIdx,
                                        @RequestParam(name = "userId", defaultValue = "")String userId,

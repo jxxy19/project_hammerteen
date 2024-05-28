@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.UrlPathHelper;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Objects;
 
 @Log4j2
 @Controller
@@ -95,8 +98,12 @@ public class BoardController {
     }
     @GetMapping("/regist")
     public void registGet(Model model, HttpServletRequest req) {
+        LectureDTO lectureDTO = new LectureDTO();
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
+        List<LectureDTO> lecList = bbsServiceIf.lectureList(lectureDTO);
+        model.addAttribute("lecList",lecList);
+        log.info(lecList);
         if(url.contains("board")) {
             model.addAttribute("pageType", CommonUtil.setPageType(menuB, "글 작성"));
         }
@@ -150,15 +157,21 @@ public class BoardController {
         return "redirect:/board/view?category1="+categoryEng+"&bbsIdx="+resultidx;
     }
     @GetMapping("/view")
-    public void viewGet(@RequestParam(name="bbsIdx") int bbsIdx,
-                        BbsDTO bbsDTO, Model model, HttpServletRequest req,BbsReplyDTO bbsReplyDTO) {
+    public String viewGet(@RequestParam(name="bbsIdx") int bbsIdx,
+                        BbsDTO bbsDTO, Model model, HttpServletRequest req, BbsReplyDTO bbsReplyDTO) {
+        HttpSession session = req.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        String userId = memberDTO.getUserId();
+        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsIdx);
+        log.info(userId.equals(resultbbsDTO.getUserId()));
+        if(!(userId.equals(resultbbsDTO.getUserId())) && resultbbsDTO.getCategory1().equals("QnA게시판")) {
+            return "redirect:/board/list?category1=qna";
+        }
+        else {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
         String url = urlPathHelper.getOriginatingQueryString(req);
-        bbsServiceIf.updateReadCnt(bbsDTO.getBbsIdx());
         List<BbsFileDTO> bbsFileDTOList = bbsServiceIf.listFile(bbsDTO.getBbsIdx());
-        bbsDTO.setReadCnt(bbsDTO.getReadCnt());
         bbsServiceIf.updateReadCnt(bbsIdx);
-        BbsDTO resultbbsDTO = bbsServiceIf.view(bbsIdx);
         List<BbsReplyDTO> replyDTO = bbsReplyServiceIf.replyList(bbsReplyDTO);
         model.addAttribute("replyDTO", replyDTO);
         model.addAttribute("bbsDTO",resultbbsDTO);
@@ -183,6 +196,8 @@ public class BoardController {
             model.addAttribute("category1", "data");
             model.addAttribute("pageType", CommonUtil.setPageType(menuD, "글 상세"));
         }
+        return null;
+    }
     }
     @GetMapping("/modify")
     public String modifyGet(BbsDTO bbsDTO, PageRequestDTO pageRequestDTO,

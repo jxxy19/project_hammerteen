@@ -1,10 +1,7 @@
 package org.fullstack4.hammerteen.service;
 
 
-import org.fullstack4.hammerteen.dto.BbsDTO;
-import org.fullstack4.hammerteen.dto.BbsFileDTO;
-import org.fullstack4.hammerteen.dto.PageRequestDTO;
-import org.fullstack4.hammerteen.dto.PageResponseDTO;
+import org.fullstack4.hammerteen.dto.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
@@ -25,5 +22,10 @@ public interface BbsServiceIf {
 
     void deleteFile(BbsFileDTO bbsFileDTO);
     PageResponseDTO<BbsDTO> hotboardList(PageRequestDTO pageRequestDTO);
+//    강의 제목리스트
+    List<LectureDTO> lectureList(LectureDTO lectureDTO);
+//    강의 별 리스트
+//    공지사항
+    PageResponseDTO<BbsDTO> lectureNotice(PageRequestDTO pageRequestDTO, String lectureTitle);
 
 }
