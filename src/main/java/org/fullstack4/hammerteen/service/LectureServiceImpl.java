@@ -579,4 +579,26 @@ public class LectureServiceImpl implements LectureServiceIf{
         return dtoList;
     }
 
+    //가장인기있는 강의(메인페이지)
+    @Override
+    public List<LectureDTO> popularLecutreList() {
+        List<Integer> lectureIdxList=  myLectureRepository.findTop6PopularLectures();
+        System.out.println("lectureList.get(i)" + lectureIdxList.get(0));
+        LectureDTO lectureDTO = null;
+        List<LectureDTO> lectureList = new ArrayList<>();
+
+        for(int i =0; i< lectureIdxList.size() ; i ++) {
+            Optional<LectureEntity> lectureEntity = lectureRepository.findById(lectureIdxList.get(i));
+            lectureDTO = modelMapper.map(lectureEntity,LectureDTO.class);
+            lectureList.add(lectureDTO);
+        }
+        return lectureList;
+
+    }
+
+    /*@Override
+    public List<LectureReplyDTO> lectureReplyList() {
+    *//*    List<LectureReplyEntity> replyentity = lectureReplyRepository.findbyID*//*
+    }*/
+
 }
