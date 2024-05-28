@@ -44,7 +44,8 @@ public class MainController {
         recommendName = lectureServiceIf.recommendNameList();
 
         //가장인기있는강의
-        List<LectureDTO> popularLectureList = lectureServiceIf.popularLecutreList();
+        List<LectureDTO> popularLectureList =new ArrayList<>();
+        popularLectureList = lectureServiceIf.popularLecutreList();
         PageResponseDTO<LectureDTO> recommendLectureDTO = null;
 
         //강의후기(메인페이지)
@@ -57,6 +58,10 @@ public class MainController {
         }
 
             recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
+
+
+        log.info("======================================================================== recommendLectureDTO : {}", recommendLectureDTO);
+        log.info("======================================================================== popularLectureList : {}", popularLectureList);
 
 
 

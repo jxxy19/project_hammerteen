@@ -40,7 +40,7 @@ public class MemberEntity extends BaseEntity {
     private String zipCode;
     @Column(length =10 ,nullable=false) //회원상태
     private String userState;
-    @LastModifiedDate
+
     @Column(name="leave_date" ,nullable = true) //탈퇴일자
     private LocalDateTime leaveDate;
     @Column(length = 10,nullable = true)

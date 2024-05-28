@@ -104,11 +104,11 @@
                               <!-- Separator -->
                               <span class="input-group-text">-</span>
                               <!-- Phone Number Middle -->
-                              <input class="form-control" type="text" id="phoneNumber2" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 3, 7)}" placeholder="1234" style="width: 100px;" maxlength="4" />
+                              <input class="form-control" type="text" id="phoneNumber2" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 3, #strings.length(session.memberDTO.phoneNumber)-4)}" placeholder="1234" style="width: 100px;" maxlength="4" />
                               <!-- Separator -->
                               <span class="input-group-text">-</span>
                               <!-- Phone Number Suffix -->
-                              <input class="form-control" type="text" id="phoneNumber3" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, 7, 11)}" placeholder="5678" style="width: 100px;" maxlength="4"/>
+                              <input class="form-control" type="text" id="phoneNumber3" name="phoneNumber" th:value="${#strings.substring(session.memberDTO.phoneNumber, #strings.length(session.memberDTO.phoneNumber)-4, #strings.length(session.memberDTO.phoneNumber))}" placeholder="5678" style="width: 100px;" maxlength="4"/>
                             </div>
                           </div>
                           <div class="mb-3 col-md-6">
