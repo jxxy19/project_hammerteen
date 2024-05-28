@@ -65,4 +65,8 @@ public interface LectureServiceIf {
     PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO);
     //추천이름
     List<LectureRecommendDTO> recommendNameList();
+
+    List<LectureDTO> popularLecutreList();
+
+    /*List<LectureReplyDTO> lectureReplyList();*/
 }
