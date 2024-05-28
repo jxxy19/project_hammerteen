@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.service.ScheduleServiceIf;
@@ -35,6 +36,7 @@ public class MyStudyController {
     private final LectureServiceIf lectureServiceIf;
     private final MemberServiceIf memberServiceIf;
     private final ObjectMapper objectMapper;
+    private final BbsServiceIf bbsServiceIf;
 
     private String menu1 = "나의 학습방";
     @GetMapping("/myLectureList")
