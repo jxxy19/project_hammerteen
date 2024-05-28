@@ -2,6 +2,7 @@ package org.fullstack4.hammerteen.repository;
 
 
 import org.fullstack4.hammerteen.domain.BbsEntity;
+import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

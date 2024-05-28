@@ -14,11 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class MemberDTO {
-    @NotNull
     private int memberIdx;
     @NotEmpty
     private String userId;
-
     private String pwd;
     @NotEmpty
     private String name;
@@ -30,7 +28,6 @@ public class MemberDTO {
     private String birthday;
     @NotEmpty
     private String addr1;
-    @NotEmpty
     private String addr2;
     @NotEmpty
     private String zipCode;

@@ -62,14 +62,14 @@
                                         <!-- Start List Title -->
                                         <div class="item-list-title rounded-top p-3 bg-primary">
                                             <div class="row align-items-center">
+                                                <div class="col-lg-2 col-md-3 col-12">
+                                                    <p class="p-0 m-0 text-white">번호</p>
+                                                </div>
                                                 <div class="col-lg-4 col-md-5 col-12 d-flex align-items-center">
                                                     <p class="p-0 m-0 text-white">제목</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-3 col-12">
                                                     <p class="p-0 m-0 text-white">작성자</p>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-12">
-                                                    <p class="p-0 m-0 text-white">댓글</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-12">
                                                     <p class="p-0 m-0 text-white">조회수</p>
@@ -84,22 +84,22 @@
                                         <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
                                             <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
                                                 <div class="cursor-pointer border-bottom"
-                                                     th:each="dto:${pageResponseDTO.dtoList}">
+                                                     th:each="dto, num:${pageResponseDTO.dtoList}">
                                                     <div class="row align-items-center p-3"
                                                          onclick="goToLink(this.attributes.href.nodeValue)"
                                                          th:data-idx="${dto.bbsIdx}"
                                                          th:href="|/board/view?category1=${category1}&bbsIdx=${dto.bbsIdx}|">
                                                         <!--                            th:data-idx="${dto.bbsIdx}"-->
+                                                        <div class="col-lg-2 col-md-3 col-12">
+                                                            <p class="p-0 m-0"><span
+                                                                    class="badge rounded-pill bg-primary">[[${pageResponseDTO.total_count -(pageResponseDTO.page*pageResponseDTO.page_size)- num.index}]]</span>
+                                                            </p>
+                                                        </div>
                                                         <div class="col-lg-4 col-md-5 col-12">
                                                             <p class="title p-0 m-0">[[${dto.title}]]</p>
                                                         </div>
                                                         <div class="col-lg-2 col-md-3 col-12">
                                                             <p class="p-0 m-0">[[${dto.userId}]]</p>
-                                                        </div>
-                                                        <div class="col-lg-2 col-md-3 col-12">
-                                                            <p class="p-0 m-0"><span
-                                                                    class="badge rounded-pill bg-primary">10</span>
-                                                            </p>
                                                         </div>
                                                         <div class="col-lg-2 col-md-2 col-12">
                                                             <p class="p-0 m-0"><span

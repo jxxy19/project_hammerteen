@@ -6,9 +6,11 @@ import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.domain.BbsEntity;
 import org.fullstack4.hammerteen.domain.BbsFileEntity;
 import org.fullstack4.hammerteen.domain.LectureEntity;
+import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.BbsFileRepository;
 import org.fullstack4.hammerteen.repository.BbsRepository;
+import org.fullstack4.hammerteen.repository.LectureReplyRepository;
 import org.fullstack4.hammerteen.repository.LectureRepository;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
 import org.modelmapper.ModelMapper;
@@ -33,6 +35,7 @@ public class BbsServiceImpl implements BbsServiceIf{
     private final CommonFileUtil commonFileUtil;
     private final BbsFileRepository bbsFileRepository;
     private final LectureRepository lectureRepository;
+    private final LectureReplyRepository lectureReplyRepository;
 //    게시글 등록
     @Override
     public int regist(BbsDTO bbsDTO) {
@@ -163,6 +166,20 @@ public class BbsServiceImpl implements BbsServiceIf{
                 .map(lecture->modelMapper.map(lecture, LectureDTO.class))
                 .collect(Collectors.toList());
         return lecTitleList;
+    }
+
+    @Override
+    public PageResponseDTO<LectureReplyDTO> lectureReplyList(PageRequestDTO pageRequestDTO, String userId) {
+        PageRequest pageable = pageRequestDTO.getPageable();
+        Page<LectureReplyEntity> result = null;
+        result = lectureReplyRepository.findAllByUserIdOrderByLectureReplyIdxDesc(pageable, userId);
+
+        log.info("result : " + result);
+        List<LectureReplyDTO> dtoList = result.stream()
+                .map(reply->modelMapper.map(reply,LectureReplyDTO.class))
+                .collect(Collectors.toList());
+        return PageResponseDTO.<LectureReplyDTO>withAll().pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
 
     @Override

@@ -24,6 +24,7 @@ public interface BbsServiceIf {
     PageResponseDTO<BbsDTO> hotboardList(PageRequestDTO pageRequestDTO);
 //    강의 제목리스트
     List<LectureDTO> lectureList(LectureDTO lectureDTO);
+    PageResponseDTO<LectureReplyDTO> lectureReplyList(PageRequestDTO pageRequestDTO, String userId);
 //    강의 별 리스트
 //    공지사항
     PageResponseDTO<BbsDTO> lectureNotice(PageRequestDTO pageRequestDTO, String lectureTitle);

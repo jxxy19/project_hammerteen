@@ -65,7 +65,7 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("info", "alert(`가입이 완료되었습니다.`);");
             return "redirect:/login/login";
         } else {
-            return "/member/regist";
+            return "redirect:/member/regist";
         }
     }
 
