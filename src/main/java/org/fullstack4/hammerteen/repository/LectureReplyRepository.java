@@ -21,6 +21,8 @@ public interface LectureReplyRepository extends JpaRepository<LectureReplyEntity
 
     LectureReplyEntity findByUserIdAndLectureIdx(String userId, int lectureIdx);
 
+    Page<LectureReplyEntity> findAllByUserIdOrderByLectureReplyIdxDesc(Pageable pageable, String userId);
+
 
     Optional<Integer> countByLectureIdx(int lectureIdx);
     @Query(value = "select sum(n.rating) from LectureReplyEntity n where n.lectureIdx=:lectureIdx")

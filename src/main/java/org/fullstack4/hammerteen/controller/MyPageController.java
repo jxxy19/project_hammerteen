@@ -132,12 +132,13 @@ public class MyPageController {
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "notice");
         }
-        if (url.contains("review")) {
-            pageRequestDTO.setCategory1("후기게시판");
-            PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.myList(pageRequestDTO, userId);
-            model.addAttribute("pageResponseDTO" , pageResponseDTO);
-            model.addAttribute("category1", "review");
-        }
+//        if (url.contains("review")) {
+//            pageRequestDTO.setCategory1("후기게시판");
+//            PageResponseDTO<LectureReplyDTO> pageResponseDTO = bbsServiceIf.lectureReplyList(pageRequestDTO, userId);
+//            log.info(pageResponseDTO+"후기");
+//            model.addAttribute("pageResponseDTO" , pageResponseDTO);
+//            model.addAttribute("category1", "review");
+//        }
         if (url.contains("eduInfo")) {
             pageRequestDTO.setCategory1("교육정보게시판");
             PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.myList(pageRequestDTO, userId);
@@ -149,6 +150,24 @@ public class MyPageController {
             PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.myList(pageRequestDTO, userId);
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "data");
+        }
+
+    }
+    @GetMapping("/writeReplyList")
+    public void myReplyListGet(Model model, PageRequestDTO pageRequestDTO,
+                          HttpServletRequest req) {
+        HttpSession session = req.getSession();
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        String userId = memberDTO.getUserId();
+        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "작성글 확인"));
+        UrlPathHelper urlPathHelper = new UrlPathHelper();
+        String url = urlPathHelper.getOriginatingQueryString(req);
+        if (url.contains("review")) {
+            pageRequestDTO.setCategory1("후기게시판");
+            PageResponseDTO<LectureReplyDTO> pageResponseDTO = bbsServiceIf.lectureReplyList(pageRequestDTO, userId);
+            log.info(pageResponseDTO+"후기");
+            model.addAttribute("pageResponseDTO" , pageResponseDTO);
+            model.addAttribute("category1", "review");
         }
 
     }

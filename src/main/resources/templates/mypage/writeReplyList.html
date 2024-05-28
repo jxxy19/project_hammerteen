@@ -65,14 +65,14 @@
                       <!-- Start List Title -->
                       <div class="item-list-title rounded-top p-3 bg-primary">
                         <div class="row align-items-center">
+                          <div class="col-lg-2 col-md-2 col-12 d-flex align-items-center">
+                            <p class="p-0 m-0 text-white">강의 번호</p>
+                          </div>
+                          <div class="col-lg-5 col-md-5 col-12">
+                            <p class="p-0 m-0 text-white">댓글 내용</p>
+                          </div>
                           <div class="col-lg-2 col-md-2 col-12">
-                            <p class="p-0 m-0 text-white">번호</p>
-                          </div>
-                          <div class="col-lg-5 col-md-5 col-12 d-flex align-items-center">
-                            <p class="p-0 m-0 text-white">제목</p>
-                          </div>
-                          <div class="col-lg-2 col-md-3 col-12">
-                            <p class="p-0 m-0 text-white">댓글</p>
+                            <p class="p-0 m-0 text-white">평점</p>
                           </div>
                           <div class="col-lg-3 col-md-2 col-12 align-right">
                             <p class="p-0 m-0 text-white">등록일</p>
@@ -82,20 +82,18 @@
                       <!-- End List Title -->
                       <!-- Start Single List -->
                       <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
-                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto, num:${pageResponseDTO.dtoList}">
-                          <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.bbsIdx}"
-                               th:href="|/board/view?category1=${dto.category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
-                            <div class="col-lg-2 col-md-3 col-12">
-                                <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">[[${pageResponseDTO.total_count -(pageResponseDTO.page*pageResponseDTO.page_size)- num.index}]]</span>
-                                </p>
+                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto:${pageResponseDTO.dtoList}">
+                          <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.lectureReplyIdx}"
+                               th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
+                            <div class="col-lg-2 col-md-2 col-12">
+                              <p class="title p-0 m-0">[[${dto.lectureIdx}]]</p>
                             </div>
                             <div class="col-lg-5 col-md-5 col-12">
-                              <p class="title p-0 m-0">[[${dto.title}]]</p>
+                                <p class="p-0 m-0">&nbsp;[[${dto.reviewContent}]]</p>
                             </div>
-                            <div class="col-lg-2 col-md-2 col-12">
-                                <p class="p-0 m-0"><span
-                                        class="badge rounded-pill bg-label-primary"><i
-                                        class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span></p>
+                            <div class="col-lg-2 col-md-3 col-12">
+                                <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">[[${dto.rating}]]점</span>
+                                </p>
                             </div>
                             <div class="col-lg-3 col-md-2 col-12 align-right">
                               <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
@@ -121,16 +119,16 @@
                               <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
                                   <ul class="pagination">
                                       <li class="page-item prev" th:if="${pageResponseDTO.prev_page_flag}">
-                                          <a class="page-link" th:href="|/mypage/writeList?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                          <a class="page-link" th:href="|/mypage/writeReplyList?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
                                       </li>
                                       <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
                                           <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">
-                                              <a th:href="|/mypage/writeList?category=${category1}&page=${i}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                              <a th:href="|/mypage/writeReplyList?category=${category1}&page=${i}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
                                           </li>
 
                                       </th:block>
                                       <li class="page-item next" th:if="${pageResponseDTO.next_page_flag}">
-                                          <a class="page-link" th:href="|/mypage/writeList?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                          <a class="page-link" th:href="|/mypage/writeReplyList?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
                                       </li>
                                   </ul>
                               </nav>
