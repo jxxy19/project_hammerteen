@@ -37,7 +37,6 @@ public class MyStudyController {
     private final LectureServiceIf lectureServiceIf;
     private final MemberServiceIf memberServiceIf;
     private final ObjectMapper objectMapper;
-    private final BbsServiceIf bbsServiceIf;
 
     private String menu1 = "나의 학습방";
     @GetMapping("/myLectureList")
@@ -143,24 +142,6 @@ public class MyStudyController {
         model.addAttribute("lectureReplyDTO", lectureReplyDTO);
         model.addAttribute("lectureReplyDTOList", lectureReplyDTOList);
         model.addAttribute("lectureDetailDTOList", lectureDetailDTOList);
-
-        model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
-        PageRequestDTO qnaRequestDTO = new PageRequestDTO();
-        qnaRequestDTO.setCategory1("QnA게시판");
-        qnaRequestDTO.setPage_size(20);
-        PageRequestDTO noticeRequestDTO = new PageRequestDTO();
-        noticeRequestDTO.setCategory1("공지사항게시판");
-        noticeRequestDTO.setPage_size(20);
-        PageRequestDTO dataRequestDTO = new PageRequestDTO();
-        dataRequestDTO.setCategory1("자료게시판");
-        dataRequestDTO.setPage_size(20);
-        PageResponseDTO<BbsDTO> qnaDTO = bbsServiceIf.list(qnaRequestDTO);
-        PageResponseDTO<BbsDTO> noticeDTO = bbsServiceIf.list(noticeRequestDTO);
-        PageResponseDTO<BbsDTO> dataDTO = bbsServiceIf.list(dataRequestDTO);
-        System.out.println("dataDTO : " +dataDTO.getDtoList().size());
-        model.addAttribute("qnaDTO" , qnaDTO);
-        model.addAttribute("noticeDTO" , noticeDTO);
-        model.addAttribute("dataDTO" , dataDTO);
 
     }
     @GetMapping("/myLecturePlay")
