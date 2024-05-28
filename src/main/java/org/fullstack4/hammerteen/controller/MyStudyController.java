@@ -75,6 +75,7 @@ public class MyStudyController {
         lpageRequestDTO.setPage_size(5);
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
         TeacherDTO teacherDTO = TeacherDTO.builder().teacherIdx(resultDTO.getTeacherIdx()).build();
+        log.info("memberServiceIf.teacherViewdetail(teacherDTO) :" + memberServiceIf.teacherViewdetail(teacherDTO));
         model.addAttribute("teacherDTO", memberServiceIf.teacherViewdetail(teacherDTO));
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
@@ -149,8 +150,14 @@ public class MyStudyController {
     @GetMapping("/myLecturePlay")
     public void myLecturePlayGet(Model model, LectureDTO lectureDTO,LectureDetailDTO lectureDetailDTO2, HttpSession session) {
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
+        TeacherDTO teacherDTO = TeacherDTO.builder().teacherIdx(resultDTO.getTeacherIdx()).build();
+        model.addAttribute("teacherDTO", memberServiceIf.teacherViewdetail(teacherDTO));
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
+        lectureDetailDTOList = lectureServiceIf.playedList(lectureDetailDTOList);
         LectureDetailDTO resultDetailDTO = lectureServiceIf.view(lectureDetailDTO2);
+        resultDetailDTO = lectureServiceIf.played(resultDetailDTO);
+        log.info("lectureDetailDTOList" + lectureDetailDTOList);
+        log.info("resultDetailDTO" + resultDetailDTO);
         String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
         String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
         for(int i =0; i<categoryCodeListName.length; i++) {
@@ -196,7 +203,7 @@ public class MyStudyController {
 
         lectureServiceIf.registPlayed(lecturePlayedDTO);
 
-        return "redirect:/mystudy/myLecturePlay?lectureIdx="+lecturePlayedDTO.getLectureIdx()+"lectureDetailIdx="+lecturePlayedDTO.getLectureDetailIdx();
+        return "redirect:/mystudy/myLecturePlay?lectureIdx="+lecturePlayedDTO.getLectureIdx()+"&lectureDetailIdx="+lecturePlayedDTO.getLectureDetailIdx();
     }
 
     // 나의 성적표 관련

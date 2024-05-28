@@ -80,7 +80,7 @@
                                         </div>
                                         <div>
                                             <a th:href="|/mystudy/myLectureView?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-outline-primary">강의실로</a>
-                                            <a th:href="|/mystudy/registPlayed?lectureIdx=${lectureDTO.lectureIdx}&lectureDetailIdx=${lectureDetailDTO.lectureDetailIdx}|" class="btn btn-primary text-white">수강 완료</a>
+                                            <a th:if="${lectureDetailDTO.playedPercentage}!=100" th:href="|/mystudy/registPlayed?lectureIdx=${lectureDTO.lectureIdx}&lectureDetailIdx=${lectureDetailDTO.lectureDetailIdx}|" class="btn btn-primary text-white">수강 완료</a>
                                         </div>
                                     </div>
                                     <div class="stick-top" style="top:100px;">
@@ -102,9 +102,10 @@
                                                      id="chapter1" style="">
                                                     <div class="accordion-body py-3 border-top">
                                                         <div class="list-group" th:each="dto,status:${lectureDetailDTOList}">
-                                                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between">
+                                                            <a th:href="|/mystudy/myLecturePlay?lectureIdx=${dto.lectureIdx}&lectureDetailIdx=${dto.lectureDetailIdx}|" class="list-group-item list-group-item-action d-flex justify-content-between">
                                                                 <span>
-                                                                    <i class="lni lni-checkmark-circle active-star"></i>
+                                                                    <i th:if="${dto.playedPercentage}==100" class="lni lni-checkmark-circle active-star"></i>
+                                                                    <i th:if="${dto.playedPercentage}!=100" class="lni lni-checkmark-circle"></i>
                                                                     <span>[[${status.count}]]. [[${dto.detailTitle}]]</span>
                                                                 </span>
                                                                 <span>[[${dto.videoLength}]]</span>
@@ -133,7 +134,7 @@
                                                                 <div class="avatar-wrapper">
                                                                     <div class="avatar avatar-sm me-2"><img
                                                                             alt="Avatar" class="rounded-circle"
-                                                                            th:src="|/src/upload/${teacherDTO.profile}|"></div>
+                                                                            th:src="|/upload/${teacherDTO.profile}|"></div>
                                                                 </div>
                                                                 <div class="d-flex flex-column">
                                                                     <span class="fw-medium"><span>[[${teacherDTO.name}]]</span> 선생님</span>

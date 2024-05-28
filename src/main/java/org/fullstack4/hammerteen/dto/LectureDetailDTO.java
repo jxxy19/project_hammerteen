@@ -27,5 +27,6 @@ public class LectureDetailDTO {
     private LocalDateTime regDate;
     private LocalDateTime modifyDate;
 
+    private String playedPercentage;
 
 }

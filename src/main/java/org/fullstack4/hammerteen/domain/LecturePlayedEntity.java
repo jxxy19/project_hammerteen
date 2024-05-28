@@ -28,4 +28,7 @@ public class LecturePlayedEntity extends BaseEntity {
         this.lectureDetailIdx = lectureDetailIdx;
         this.percentage = 0;
     }
+    public void modifyPercentage(int percentage){
+        this.percentage = percentage;
+    }
 }
