@@ -75,7 +75,7 @@
                 </button>
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item mega-dropdown">
-                        <a href="/lecture/list" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('강의') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/lecture/list" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('강의') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover" onclick="goToThisFullLink('/lecture/list?')">
                             <span data-i18n="Pages">강의</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -155,7 +155,7 @@
                         <a class="nav-link fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('선생님') ? 'active':''}" href="/lecture/teacherList">선생님</a>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="#" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('커뮤니티') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="#" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('커뮤니티') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover" onclick="goToThisFullLink('/board/list?category1=eduInfo')">
                             <span data-i18n="Pages">커뮤니티</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -198,7 +198,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="/mystudy/myLectureList" th:if="${session.memberDTO != null && session.memberDTO.userId != null}" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/mystudy/myLectureList" th:if="${session.memberDTO != null && session.memberDTO.userId != null}" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('나의 학습방') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover" onclick="goToThisFullLink('/mystudy/myLectureList')">
                             <span data-i18n="Pages">나의 학습방</span>
                         </a>
                         <div class="dropdown-menu p-4">
@@ -229,7 +229,7 @@
                         </div>
                     </li>
                     <li class="nav-item mega-dropdown">
-                        <a href="/mypage/mypage" th:if="${session.memberDTO != null && session.memberDTO.userId != null}" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('마이페이지') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover">
+                        <a href="/mypage/mypage" th:if="${session.memberDTO != null && session.memberDTO.userId != null}" class="nav-link dropdown-toggle navbar-ex-14-mega-dropdown mega-dropdown fw-medium" th:classappend="${pageType != null and pageType.menu1.toString().equals('마이페이지') ? 'active':''}" aria-expanded="false" data-bs-toggle="mega-dropdown" data-trigger="hover" onclick="goToThisFullLink('/mypage/mypage')">
                             <span data-i18n="Pages">마이페이지</span>
                         </a>
                         <div class="dropdown-menu p-4">

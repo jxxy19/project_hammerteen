@@ -1,6 +1,13 @@
 // 링크 이동용 함수
 function goToThisLink(str, element) {
+    event.preventDefault();
+    event.stopPropagation();
     let url = str + element.dataset.idx;
+    location.href = url;
+}
+function goToThisFullLink(url) {
+    event.preventDefault();
+    event.stopPropagation();
     location.href = url;
 }
 

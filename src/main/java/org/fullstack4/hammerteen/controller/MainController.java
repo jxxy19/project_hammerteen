@@ -34,14 +34,23 @@ public class MainController {
     public String mainGET(Model model, PageRequestDTO pageRequestDTO){
         PageResponseDTO<TeacherDTO> teacherDTO = memberServiceIf.teacherMemberList(pageRequestDTO);
         PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
-        PageResponseDTO<LectureDTO> recommendLectureDTO = null;
-        if(pageRequestDTO.getLectureRecommendTag() !=null ) {
-            recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
+        List<LectureRecommendDTO> recommendName=null;
+       recommendName = lectureServiceIf.recommendNameList();
 
-            System.out.println("LectureDTO adad : " + recommendLectureDTO);
+
+        PageResponseDTO<LectureDTO> recommendLectureDTO = null;
+
+        if(pageRequestDTO.getLectureRecommendTag() == null) {
+            pageRequestDTO.setLectureRecommendTag("1");
         }
 
+            recommendLectureDTO  = lectureServiceIf.recommendList(pageRequestDTO);
+
+
+
+
         model.addAttribute("recommendLectureDTO", recommendLectureDTO);
+        model.addAttribute("recommendName", recommendName);
         model.addAttribute("teacherDTO", teacherDTO);
         model.addAttribute("hotBoardDTO", hotBoardDTO);
         return "index";

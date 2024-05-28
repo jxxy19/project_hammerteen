@@ -121,16 +121,16 @@
                               <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
                                   <ul class="pagination">
                                       <li class="page-item prev" th:if="${pageResponseDTO.prev_page_flag}">
-                                          <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                          <a class="page-link" th:href="|/mypage/writeList?category=${category1}&page=${pageResponseDTO.page_block_start -10}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-left"></i></a>
                                       </li>
                                       <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
                                           <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">
-                                              <a th:href="|/board/list?category=${category1}&page=${i}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                              <a th:href="|/mypage/writeList?category=${category1}&page=${i}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
                                           </li>
 
                                       </th:block>
                                       <li class="page-item next" th:if="${pageResponseDTO.next_page_flag}">
-                                          <a class="page-link" th:href="|/board/list?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                          <a class="page-link" th:href="|/mypage/writeList?category=${category1}&page=${pageResponseDTO.page_block_end +1}${pageResponseDTO.linkParams}|"><i class="tf-icon bx bx-chevron-right"></i></a>
                                       </li>
                                   </ul>
                               </nav>

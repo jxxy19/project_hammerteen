@@ -67,7 +67,8 @@
                                 <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-description" aria-controls="navs-top-description" aria-selected="true">강의소개</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-index" aria-controls="navs-top-index" aria-selected="false" tabindex="-1">강의목차</button>
+                                <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-index" aria-controls="navs-top-index" aria-selected="false" tabindex="-1"
+                                th:href='|/mystudy/view?category1=${category1}|'>강의목차</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-top-review" aria-controls="navs-top-review" aria-selected="false" tabindex="-1">강의후기</button>
@@ -164,54 +165,65 @@
                                     </div>
                                     <!-- End List Title -->
                                     <!-- Start Single List -->
-                                    <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
-                                        <div class="cursor-pointer  border-bottom">
-                                            <div class="row align-items-center p-3" onclick="goToThisLink('/board/view?bbsIdx=',this)">
-                                                <div class="col-lg-4 col-md-5 col-12">
-                                                    <p class="title p-0 m-0">제목입니다만?</p>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-12">
-                                                    <p class="p-0 m-0">이기영</p>
+                                    <th:block th:if="${noticeDTO.dtoList.size() > 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto:${noticeDTO.dtoList}">
+                                            <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.bbsIdx}"
+                                                 th:href="|/board/view?category1=${dto.category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
+                                                <div class="col-lg-5 col-md-5 col-12">
+                                                    <p class="title p-0 m-0">[[${dto.title}]]</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-3 col-12">
                                                     <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-12">
-                                                    <p class="p-0 m-0"><span class="badge rounded-pill bg-label-primary"><i class="lni lni-eye"></i>&nbsp;10</span></p>
+                                                    <p class="p-0 m-0"><span
+                                                            class="badge rounded-pill bg-label-primary"><i
+                                                            class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span></p>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-12 align-right">
-                                                    <p class="p-0 m-0">2024.02.23</p>
+                                                <div class="col-lg-3 col-md-2 col-12 align-right">
+                                                    <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
+                                    <th:block th:if="${noticeDTO.dtoList.size() == 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                            <div class="cursor-pointer border-bottom">
+                                                <div class="row align-items-center p-3">
+                                                    <div class="col-lg-4 col-md-5 col-12">
+                                                        <p class="title p-0 m-0">작성된 글이 없습니다</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
                             </div>
                                 <!-- Pagination -->
-                                <div>
-                                    <nav aria-label="Page navigation"
-                                         class="d-flex align-items-center justify-content-center">
-                                        <ul class="pagination">
-                                            <li class="page-item prev">
-                                                <a class="page-link" href="#"><i
-                                                        class="tf-icon bx bx-chevron-left"></i></a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item next">
-                                                <a class="page-link"
-                                                   href="javascript:void(0);"><i
-                                                        class="tf-icon bx bx-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </nav>
+                                <div class="d-flex align-items-center justify-content-center shadow-sm m-5">
+                                        <button class="btn btn-primary col-12">+</button>
+<!--                                    <nav aria-label="Page navigation"-->
+<!--                                        <ul class="pagination">-->
+<!--                                            <li class="page-item prev">-->
+<!--                                                <a class="page-link" href="#"><i-->
+<!--                                                        class="tf-icon bx bx-chevron-left"></i></a>-->
+<!--                                            </li>-->
+<!--                                            <li class="page-item active">-->
+<!--                                                <a class="page-link" href="#">1</a>-->
+<!--                                            </li>-->
+<!--                                            <li class="page-item">-->
+<!--                                                <a class="page-link" href="#">2</a>-->
+<!--                                            </li>-->
+<!--                                            <li class="page-item">-->
+<!--                                                <a class="page-link" href="#">3</a>-->
+<!--                                            </li>-->
+<!--                                            <li class="page-item next">-->
+<!--                                                <a class="page-link"-->
+<!--                                                   href="javascript:void(0);"><i-->
+<!--                                                        class="tf-icon bx bx-chevron-right"></i></a>-->
+<!--                                            </li>-->
+<!--                                        </ul>-->
+<!--                                    </nav>-->
                                 </div>
                             </div>
                             <!--/ End Pagination -->
@@ -239,28 +251,39 @@
                                     </div>
                                     <!-- End List Title -->
                                     <!-- Start Single List -->
-                                    <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
-                                        <div class="cursor-pointer  border-bottom">
-                                            <div class="row align-items-center p-3" onclick="goToThisLink('/board/view?bbsIdx=',this)">
-                                                <div class="col-lg-4 col-md-5 col-12">
-                                                    <p class="title p-0 m-0">제목입니다만?</p>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-12">
-                                                    <p class="p-0 m-0">이기영</p>
+                                    <th:block th:if="${qnaDTO.dtoList.size() > 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto:${qnaDTO.dtoList}">
+                                            <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.bbsIdx}"
+                                                 th:href="|/board/view?category1=${dto.category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
+                                                <div class="col-lg-5 col-md-5 col-12">
+                                                    <p class="title p-0 m-0">[[${dto.title}]]</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-3 col-12">
                                                     <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-12">
-                                                    <p class="p-0 m-0"><span class="badge rounded-pill bg-label-primary"><i class="lni lni-eye"></i>&nbsp;10</span></p>
+                                                    <p class="p-0 m-0"><span
+                                                            class="badge rounded-pill bg-label-primary"><i
+                                                            class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span></p>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-12 align-right">
-                                                    <p class="p-0 m-0">2024.02.23</p>
+                                                <div class="col-lg-3 col-md-2 col-12 align-right">
+                                                    <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
+                                    <th:block th:if="${qnaDTO.dtoList.size() == 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                            <div class="cursor-pointer border-bottom">
+                                                <div class="row align-items-center p-3">
+                                                    <div class="col-lg-4 col-md-5 col-12">
+                                                        <p class="title p-0 m-0">작성된 글이 없습니다</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
                                 </div>
                                 <!-- Pagination -->
                                 <div>
@@ -313,28 +336,39 @@
                                     </div>
                                     <!-- End List Title -->
                                     <!-- Start Single List -->
-                                    <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
-                                        <div class="cursor-pointer  border-bottom">
-                                            <div class="row align-items-center p-3" onclick="goToThisLink('/board/view?bbsIdx=',this)">
-                                                <div class="col-lg-4 col-md-5 col-12">
-                                                    <p class="title p-0 m-0">제목입니다만?</p>
-                                                </div>
-                                                <div class="col-lg-2 col-md-3 col-12">
-                                                    <p class="p-0 m-0">이기영</p>
+                                    <th:block th:if="${dataDTO.dtoList.size() > 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title"  th:each="dto:${dataDTO.dtoList}">
+                                            <div class="cursor-pointer row align-items-center p-3" th:data-idx="${dto.bbsIdx}"
+                                                 th:href="|/board/view?category1=${dto.category1}&bbsIdx=${dto.bbsIdx}|" onclick="goToLink(this.attributes.href.nodeValue)">
+                                                <div class="col-lg-5 col-md-5 col-12">
+                                                    <p class="title p-0 m-0">[[${dto.title}]]</p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-3 col-12">
                                                     <p class="p-0 m-0"><span class="badge rounded-pill bg-primary">10</span>
                                                     </p>
                                                 </div>
                                                 <div class="col-lg-2 col-md-2 col-12">
-                                                    <p class="p-0 m-0"><span class="badge rounded-pill bg-label-primary"><i class="lni lni-eye"></i>&nbsp;10</span></p>
+                                                    <p class="p-0 m-0"><span
+                                                            class="badge rounded-pill bg-label-primary"><i
+                                                            class="lni lni-eye"></i>&nbsp;[[${dto.readCnt}]]</span></p>
                                                 </div>
-                                                <div class="col-lg-2 col-md-2 col-12 align-right">
-                                                    <p class="p-0 m-0">2024.02.23</p>
+                                                <div class="col-lg-3 col-md-2 col-12 align-right">
+                                                    <p class="p-0 m-0">[[${#strings.substring(dto.regDate,0,10)}]]</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </th:block>
+                                    <th:block th:if="${dataDTO.dtoList.size() == 0}">
+                                        <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
+                                            <div class="cursor-pointer border-bottom">
+                                                <div class="row align-items-center p-3">
+                                                    <div class="col-lg-4 col-md-5 col-12">
+                                                        <p class="title p-0 m-0">작성된 글이 없습니다</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
                                 </div>
                                 <!-- Pagination -->
                                 <div>
@@ -386,6 +420,28 @@
     <script src="/assets/js/pages-account-settings-account.js"></script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+        <script>
+            function plusList() {
+                    let id = $('#member_id').val();
+                    $.ajax({
+                        url: '/member/idCheck',
+                        type: 'post',
+                        data: {member_id: id},
+                        success: function (cnt) {
+                            if (cnt == 0) {
+                                $('.idCk1').css("display", "none");
+                                $('.idCk2').css("display", "block");
+                            } else {
+                                $('.idCk2').css("display", "none");
+                                $('.idCk1').css("display", "block");
+                            }
+                        },
+                        error: function () {
+                            alert("에러입니다");
+                        }
+                    });
+            }
+        </script>
     </th:block>
 </body>
 </html>

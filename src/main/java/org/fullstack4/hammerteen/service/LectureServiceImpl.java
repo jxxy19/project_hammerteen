@@ -29,6 +29,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     private final LectureDetailRepository lectureDetailRepository;
     private final LectureReplyRepository lectureReplyRepository;
     private final LectureGoodRepository lectureGoodRepository;
+    private final LectureRecommendRepository lectureRecommendRepository;
 
     //지현추가 : 통계용
     private final OrderDetailRepository orderDetailRepository;
@@ -566,6 +567,16 @@ public class LectureServiceImpl implements LectureServiceIf{
 
         return PageResponseDTO.<LectureDTO>withAll().pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
+    }
+
+
+    @Override
+    public List<LectureRecommendDTO> recommendNameList() {
+        List<LectureRecommendEntity> lectureEntityList = lectureRecommendRepository.findAll();
+        List<LectureRecommendDTO> dtoList = lectureEntityList.stream()
+                .map(board->modelMapper.map(board,LectureRecommendDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
     }
 
 }
