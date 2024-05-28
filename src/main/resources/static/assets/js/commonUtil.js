@@ -92,6 +92,16 @@ function nameRegCheck(element) {
     }
 }
 
+// 전부 숫자여부 체크
+function numberRegCheck(element) {
+    let reg = /^[0-9]*$/;
+    if (!reg.test($(element).val())){
+        return false;
+    } else {
+        return true;
+    }
+}
+
 // 비밀번호 일치 여부 체크
 function passwordMatch(element, target) {
     if($(element).val() != $(target).val()) {

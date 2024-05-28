@@ -42,8 +42,15 @@
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="/assets/vendor/css/pages/page-auth.css" />
+    <!--  헤머틴 커스터마이징 CSS  -->
+    <link rel="stylesheet" href="/assets/css/mycss.css">
     <!-- Helpers -->
     <script src="/assets/vendor/js/helpers.js"></script>
+
+    <!--  제이쿼리  -->
+    <script src="/assets/jquery/jquery-3.7.1.js"></script>
+    <script src="/assets/jquery/jquery-ui.js"></script>
+    <link href="/assets/jquery/jquery-ui.css" rel="stylesheet">
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
@@ -72,18 +79,19 @@
               <p class="mb-4">해머틴과 재미있게 공부해봐요!</p>
 
 
-              <form id="frm" name="frm" class="mb-3" action="/member/regist" method="POST">
+              <form id="frmJoin" name="frm" class="mb-3" action="/member/regist" method="POST" onsubmit="checkForm(this)">
                 <input type="hidden" name="userState" id="userState" value="Y">
                 <div class="row">
                   <div class="col-lg-6 col-12">
                     <div class="mb-3">
                       <label for="name" class="form-label">이름</label>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="이름을 입력하세요" autofocus/>
+                      <input type="text" data-name="이름" class="form-control" id="name" name="name" placeholder="이름을 입력하세요" autofocus onkeyup="replaceName(this)"/>
                     </div>
                     <div class="mb-3 row">
                       <div class="col-lg-8 col-sm-9 pe-lg-1" >
                         <label for="userId" class="form-label">아이디</label>
-                        <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력하세요" />
+                        <input type="text" data-name="아이디" class="form-control" id="userId" name="userId" placeholder="아이디를 입력하세요" onkeyup="replaceBlank(this)" />
+                        <input type="hidden" id="authId" name="authId" value="false">
                       </div>
                       <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1" >
                         <button type="button" class="form-control btn btn-outline-primary" id="idCheck" name="idCheck">중복체크</button>
@@ -92,14 +100,14 @@
                     <div class="mb-3 form-password-toggle">
                       <label class="form-label" for="pwd">비밀번호</label>
                       <div class="input-group input-group-merge">
-                        <input type="password" id="pwd" class="form-control" name="pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                        <input type="password" data-name="비밀번호" id="pwd" class="form-control" name="pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" onkeyup="replaceBlank(this)"/>
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                       </div>
                     </div>
                     <div class="mb-3 form-password-toggle">
                       <label class="form-label" for="confirm_pwd">비밀번호 재입력</label>
                       <div class="input-group input-group-merge">
-                        <input type="password" id="confirm_pwd" class="form-control" name="confirm_pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password"/>
+                        <input type="password" data-name="비밀번호 재입력" id="confirm_pwd" class="form-control" name="confirm_pwd" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" onkeyup="replaceBlank(this)"/>
                         <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                       </div>
                     </div>
@@ -108,15 +116,15 @@
                       <label class="form-label" for="phoneNumber">전화번호</label>
                       <div class="input-group input-group-merge">
                         <!-- 전화번호 앞자리 -->
-                        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="010" aria-label="전화번호 앞자리"  maxlength="3" style="width: 100px;"/>
+                        <input type="text" data-name="전화번호" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="010" aria-label="전화번호 앞자리"  maxlength="3" style="width: 100px;" onkeyup="replacePhone(this)"/>
                         <!-- 구분자 -->
                         <span class="input-group-text">-</span>
                         <!-- 전화번호 중간자리 -->
-                        <input type="text" class="form-control" name="phoneNumber" placeholder="1234" aria-label="전화번호 중간자리" maxlength="4" style="width: 120px;"/>
+                        <input type="text" data-name="전화번호" class="form-control" name="phoneNumber" placeholder="1234" aria-label="전화번호 중간자리" maxlength="4" style="width: 120px;" onkeyup="replacePhone(this)"/>
                         <!-- 구분자 -->
                         <span class="input-group-text">-</span>
                         <!-- 전화번호 끝자리 -->
-                        <input type="text" class="form-control" name="phoneNumber" placeholder="5678" aria-label="전화번호 끝자리" maxlength="4" style="width: 120px;"/>
+                        <input type="text" data-name="전화번호" class="form-control" name="phoneNumber" placeholder="5678" aria-label="전화번호 끝자리" maxlength="4" style="width: 120px;" onkeyup="replacePhone(this)"/>
                       </div>
                     </div>
 
@@ -124,12 +132,13 @@
                   <div class="col-lg-6 col-12">
                     <div class="mb-3">
                       <label for="birthday" class="form-label">생년월일</label>
-                      <input type="date" class="form-control" id="birthday" name="birthday" placeholder="이메일 주소를 입력하세요" />
+                      <input type="date" data-name="생년월일" class="form-control" id="birthday" name="birthday" placeholder="이메일 주소를 입력하세요" />
                     </div>
                     <div class="mb-3 row">
                       <div class="col-lg-8 col-sm-9 pe-lg-1">
                         <label for="email" class="form-label">이메일</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="abc@email.com" />
+                        <input type="text" data-name="이메일" class="form-control" id="email" name="email" placeholder="abc@email.com" />
+                        <input type="hidden" id="authEmail" name="authEmail" value="false">
                       </div>
                       <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
                         <button type="button" class="form-control btn btn-outline-primary" id="emailCheck" name="emailCheck">중복체크</button>
@@ -138,7 +147,7 @@
                     <div class="mb-3 row">
                       <div class="col-lg-8 col-sm-9 pe-lg-1">
                       <label for="zipCode" class="form-label">우편번호</label>
-                      <input type="text" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly/>
+                      <input type="text" data-name="우편번호" class="form-control bg-white" id="zipCode" name="zipCode" placeholder="우편번호" readonly/>
                       </div>
                       <div class="col-lg-4 col-sm-3 align-content-end ps-lg-1">
                         <button type="button" class="form-control btn btn-outline-primary" id="zipCodeBtn" name="zipCodeBtn">우편번호</button>
@@ -147,11 +156,11 @@
 
                     <div class="mb-3">
                       <label for="addr1" class="form-label">주소</label>
-                      <input type="text" class="form-control bg-white" id="addr1" name="addr1" placeholder="주소" readonly/>
+                      <input type="text" data-name="주소" class="form-control bg-white" id="addr1" name="addr1" placeholder="주소" readonly/>
                     </div>
                     <div class="mb-3">
                       <label for="addr2" class="form-label">상세주소</label>
-                      <input type="text" class="form-control" id="addr2" name="addr2" placeholder="상세주소" />
+                      <input type="text" data-name="상세주소" class="form-control" id="addr2" name="addr2" placeholder="상세주소" />
                     </div>
                   </div>
                 </div>
@@ -171,7 +180,7 @@
                               [필수] 이용약관&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms form-check-input" type="checkbox" id="terms1" name="terms" value="Y" onclick="event.stopPropagation();" >
+                              <input data-name="[필수] 이용약관" class="terms form-check-input" type="checkbox" id="terms1" name="terms" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms1" onclick="event.stopPropagation();" >동의함</label>
                             </div>
                           </div>
@@ -376,7 +385,7 @@
                               [필수] 개인정보 수집 및 이용 동의&nbsp;&nbsp;
                             </p>
                             <div class="form-check m-0">
-                              <input class="terms form-check-input" type="checkbox" id="terms2" name="terms" value="Y" onclick="event.stopPropagation();" >
+                              <input data-name="[필수] 개인정보 수집 및 이용 동의" class="terms form-check-input" type="checkbox" id="terms2" name="terms" value="Y" onclick="event.stopPropagation();" >
                               <label class="m-0" for="terms2" onclick="event.stopPropagation();">동의함</label>
                             </div>
                           </div>
@@ -532,6 +541,7 @@
         </div>
       </div>
     </div>
+    <div id="divForToast"></div>
     <!-- / Content -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -555,6 +565,7 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" th:src="@{/commonUtil.js}"></script>
 
+    <script type="text/javascript" src="/assets/js/validation.js"></script>
     <script>
       let zipcode = document.getElementById("zipCode");
       let zipcodeBtn = document.getElementById("zipCodeBtn");
@@ -564,7 +575,7 @@
         zipCode(zipcode, addr1);
       });
       // 이용약관 전체동의
-      const agreeAll = document.getElementById('agreeAll');
+      let agreeAll = document.getElementById('agreeAll');
       agreeAll.addEventListener('change', ()=>{
         let checkYN = agreeAll.checked;
         let terms = document.querySelectorAll('.terms');
@@ -578,177 +589,98 @@
           }
         }
       })
-
-
       //아이디 중복검사
-      const idCheckButton = document.querySelector("#idCheck");
-
+      let idCheckButton = document.querySelector("#idCheck");
       idCheckButton.addEventListener("click", function(e) {
-
         e.preventDefault();
-
         const userIdInput = document.querySelector("#userId");
         const userId = userIdInput.value;
 
         if (idCheckButton.textContent === "중복체크") {
-          // AJAX 통신
-          $.ajax({
-            url: '/member/duplecheck',
-            type: 'GET',
-            contentType: 'application/x-www-form-urlencoded',
-            dataType: 'json',
-            data: { userId: userId },
-
-            success: function(response) {
-              if (response.success) {
-                const confirm_msg = "이 아이디는 사용 가능합니다.\n 사용하시겠습니까?";
-                if (confirm(confirm_msg)) {
-                  userIdInput.value = userId;
-                  userIdInput.readOnly = true;
-                  idCheckButton.textContent = "다시입력";
+          if(nullCheck($(userIdInput))) {
+            // AJAX 통신
+            $.ajax({
+              url: '/member/duplecheck',
+              type: 'GET',
+              contentType: 'application/x-www-form-urlencoded',
+              dataType: 'json',
+              data: { userId: userId },
+              success: function(response) {
+                if (response.success) {
+                  const confirm_msg = "이 아이디는 사용 가능합니다.\n 사용하시겠습니까?";
+                  if (confirm(confirm_msg)) {
+                    userIdInput.value = userId;
+                    userIdInput.readOnly = true;
+                    $(userIdInput).addClass("bg-light");
+                    $('#authId').val("true");
+                    idCheckButton.textContent = "다시입력";
+                  }
+                } else {
+                  alert(response.message);
                 }
-              } else {
-                alert(response.message);
+              },
+              error: function() {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
               }
-            },
-            error: function() {
-              alert("서버와의 통신 중 오류가 발생했습니다.");
-            }
-          });
+            });
+          } else {
+            showToast("공란은 입력할 수 없습니다.");
+          }
         } else if (idCheckButton.textContent === "다시입력") {
           // 다시입력 로직
           userIdInput.readOnly = false;
           userIdInput.value = '';
+          $(userIdInput).addClass("bg-white");
+          $('#authId').val("false");
           idCheckButton.textContent = "중복체크";
         }
       });
-
       //이메일 중복검사
-      const emailCheckButton = document.querySelector("#emailCheck");
-
+      let emailCheckButton = document.querySelector("#emailCheck");
       emailCheckButton.addEventListener("click", function(e) {
-
         e.preventDefault();
-
-        const emailInput = document.querySelector("#email");
-        const email = emailInput.value;
-
+        let emailInput = document.querySelector("#email");
+        let email = emailInput.value;
         if (emailCheckButton.textContent === "중복체크") {
-          // AJAX 통신
-          $.ajax({
-            url: '/member/emailduplecheck',
-            type: 'GET',
-            contentType: 'application/x-www-form-urlencoded',
-            dataType: 'json',
-            data: { email: email },
+          if(nullCheck($(emailInput))) {
+            // AJAX 통신
+            $.ajax({
+              url: '/member/emailduplecheck',
+              type: 'GET',
+              contentType: 'application/x-www-form-urlencoded',
+              dataType: 'json',
+              data: {email: email},
 
-            success: function(response) {
-              if (response.success) {
-                const confirm_msg = "이 이메일은 사용 가능합니다.\n 사용하시겠습니까?";
-                if (confirm(confirm_msg)) {
-                  emailInput.value = email;
-                  emailInput.readOnly = true;
-                  emailCheckButton.textContent = "다시입력";
+              success: function (response) {
+                if (response.success) {
+                  const confirm_msg = "이 이메일은 사용 가능합니다.\n 사용하시겠습니까?";
+                  if (confirm(confirm_msg)) {
+                    emailInput.value = email;
+                    emailInput.readOnly = true;
+                    $(emailInput).addClass("bg-light");
+                    $('#authEmail').val("true");
+                    emailCheckButton.textContent = "다시입력";
+                  }
+                } else {
+                  alert(response.message);
                 }
-              } else {
-                alert(response.message);
+              },
+              error: function () {
+                alert("서버와의 통신 중 오류가 발생했습니다.");
               }
-            },
-            error: function() {
-              alert("서버와의 통신 중 오류가 발생했습니다.");
-            }
-          });
+            });
+          } else {
+            showToast("공란은 입력할 수 없습니다.");
+          }
         } else if (emailCheckButton.textContent === "다시입력") {
           // 다시입력 로직
           emailInput.readOnly = false;
           emailInput.value = '';
+          $(emailInput).addClass("bg-white");
+          $('#authEmail').val("false");
           emailCheckButton.textContent = "중복체크";
         }
       });
-
-
-      const submit_button = document.querySelector("#submit_button");
-      submit_button.addEventListener("click",function (e){
-        e.preventDefault();
-
-        const name= document.querySelector("#name");
-        const userId= document.querySelector("#userId");
-        const pwd= document.querySelector("#pwd");
-        const confirm_pwd= document.querySelector("#confirm_pwd");
-        const birthday= document.querySelector("#birthday");
-        const email_div = document.querySelector("#email");
-
-        const phone_number= document.querySelector("#phoneNumber");
-        const sample4_postcode= document.querySelector("#zipCode");
-        const sample4_roadAddress= document.querySelector("#addr1");
-
-        //약관동의
-        const termsCheckboxes = document.querySelectorAll('input[name="terms"]');
-        let allChecked = true; // 모든 항목이 체크되었는지를 추적하는 변수
-
-        //공백 체크
-        if((!nullCheck(name)) ||(!nullCheck(userId)) || (!nullCheck(pwd)) ||(!nullCheck(confirm_pwd))  ||(!nullCheck(birthday)) || (!nullCheck(phone_number)) || (!nullCheck(sample4_postcode)) || !(!nullCheck(sample4_roadAddress)) ||(!nullCheck(email_div))){
-          alert("필수 사항을 입력해주세요.");
-          return false;
-        }
-
-        //중복 체크
-        if(!(userId.readOnly)){
-          alert("아이디 중복체크를 확인해주세요.");
-          return false;
-        }
-
-        //비밀번호 일치
-        if(!passwordMatch(confirm_pwd,pwd)){
-          alert("비밀번호가 일치하지 않습니다.");
-          return false;
-        }
-
-
-        // 체크박스가 모두 체크되었는지 확인
-        for (let checkbox of termsCheckboxes) {
-          if (!checkbox.checked) {
-            allChecked = false;
-            break;
-          }
-        }
-
-        // 모든 체크박스가 체크되어 있지 않다면, submit을 방지하고 경고창 표시
-        if (!allChecked) {
-
-          alert('모든 필수 약관에 동의해주세요.');
-          return false;
-        }
-
-
-
-
-        const confirm_msg = "가입하시겠습니까?";
-        if(confirm(confirm_msg)){
-          alert("가입되었습니다.");
-          document.frm.submit();
-        }
-
-
-      });
-
-      //비밀번호 확인가이드
-      let confirm_pwd = document.querySelector("#confirm_pwd");
-      confirm_pwd.addEventListener("keyup",function (e){
-        let pwd = document.querySelector("#pwd");
-        let mismatchMsg = document.getElementById("pwd_mismatch_msg");
-        e.preventDefault();
-        if(!passwordMatch (confirm_pwd,pwd) ){
-          mismatchMsg.style.display="block";
-        }
-        if(passwordMatch (confirm_pwd,pwd) ){
-
-          mismatchMsg.style.display="none";
-
-        }
-
-      });
-
     </script>
 
   </body>
