@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.fullstack4.hammerteen.dto.*;
+import org.fullstack4.hammerteen.service.BbsServiceIf;
 import org.fullstack4.hammerteen.service.LectureServiceIf;
 import org.fullstack4.hammerteen.service.MemberServiceIf;
 import org.fullstack4.hammerteen.service.ScheduleServiceIf;
@@ -32,6 +33,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyStudyController {
     private final ScheduleServiceIf scheduleServiceIf;
+    private final BbsServiceIf bbsServiceIf;
     private final LectureServiceIf lectureServiceIf;
     private final MemberServiceIf memberServiceIf;
     private final ObjectMapper objectMapper;
@@ -52,12 +54,24 @@ public class MyStudyController {
                 }
             }
         }
+        for(LectureDTO lectureDTO : lectureDTOList){
+            int percentage = lectureServiceIf.lecturePercentage(lectureDTO.getLectureIdx(),memberDTO.getUserId());
+            StringBuilder sb = new StringBuilder();
+            sb.append(percentage+"/100");
+            lectureDTO.setPercentage(percentage+"%");
+            lectureDTO.setPercentageString(sb.toString());
+        }
         model.addAttribute("lectureDTOList",lectureDTOList);
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
 
     }
     @GetMapping("/myLectureView")
     public void myLectureViewGet(Model model,LectureDTO lectureDTO, HttpSession session,LPageRequestDTO lpageRequestDTO) {
+        String userId=null;
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO!=null){
+            userId= memberDTO.getUserId();
+        }
         lpageRequestDTO.setPage_size(5);
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
@@ -83,6 +97,12 @@ public class MyStudyController {
                 lectureDetailDTO.setVideoLength(sb.toString());
             }
         }
+        int percentage = lectureServiceIf.lecturePercentage(lectureDTO.getLectureIdx(),memberDTO.getUserId());
+        log.info("test percentage"+percentage);
+        StringBuilder sb = new StringBuilder();
+        sb.append(percentage+"/100");
+        resultDTO.setPercentage(percentage+"%");
+        resultDTO.setPercentageString(sb.toString());
         int sumRating= lectureServiceIf.sumRating(lectureDTO.getLectureIdx());
         int countRating= lectureServiceIf.countRating(lectureDTO.getLectureIdx());
         int avgRating = 0;
@@ -92,11 +112,7 @@ public class MyStudyController {
         model.addAttribute("avgRating", avgRating);
         if(countRating==0){model.addAttribute("countRating", "0");}
         else{model.addAttribute("countRating", countRating);}
-        String userId=null;
-        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
-        if(memberDTO!=null){
-            userId= memberDTO.getUserId();
-        }
+
         String videoName = "";
         LectureReplyDTO lectureReplyDTO = lectureServiceIf.viewReply(LectureReplyDTO.builder().userId(userId).lectureIdx(lectureDTO.getLectureIdx()).build());
         if(resultDTO.getThumbnailVideoFile()!=null) {
@@ -106,6 +122,21 @@ public class MyStudyController {
         // 지현추가 : 기존 구매여부 확인용
         int checkOrder = lectureServiceIf.checkOrder(userId, lectureDTO.getLectureIdx());
 
+        PageRequestDTO qnaRequestDTO = new PageRequestDTO();
+        qnaRequestDTO.setCategory1("QnA게시판");
+        PageRequestDTO noticeRequestDTO = new PageRequestDTO();
+        noticeRequestDTO.setCategory1("공지사항게시판");
+        PageRequestDTO dataRequestDTO = new PageRequestDTO();
+        dataRequestDTO.setCategory1("자료게시판");
+        PageResponseDTO<BbsDTO> qnaDTO = bbsServiceIf.list(qnaRequestDTO);
+        PageResponseDTO<BbsDTO> noticeDTO = bbsServiceIf.list(noticeRequestDTO);
+        PageResponseDTO<BbsDTO> dataDTO = bbsServiceIf.list(dataRequestDTO);
+        model.addAttribute("qnaDTO" , qnaDTO);
+        model.addAttribute("noticeDTO" , noticeDTO);
+        model.addAttribute("dataDTO" , dataDTO);
+        LecturePlayedDTO lecturePlayedDTO = LecturePlayedDTO.builder().lectureIdx(lectureDTO.getLectureIdx()).userId(memberDTO.getUserId()).build();
+        int playIdx = lectureServiceIf.playIdx(lecturePlayedDTO);
+        model.addAttribute("lectureDetailIdx", playIdx);
         model.addAttribute("checkOrder", checkOrder);
         model.addAttribute("lectureDTO", resultDTO);
         model.addAttribute("lectureReplyDTO", lectureReplyDTO);
@@ -115,8 +146,56 @@ public class MyStudyController {
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
     }
     @GetMapping("/myLecturePlay")
-    public void myLecturePlayGet(Model model) {
+    public void myLecturePlayGet(Model model, LectureDTO lectureDTO,LectureDetailDTO lectureDetailDTO2, HttpSession session) {
+        LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
+        List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
+        LectureDetailDTO resultDetailDTO = lectureServiceIf.view(lectureDetailDTO2);
+        String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
+        String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
+        for(int i =0; i<categoryCodeListName.length; i++) {
+            if (resultDTO.getCategoryIdx().equals(categoryCodeList[i])){
+                resultDTO.setCategoryName(categoryCodeListName[i]);
+            }
+        }
+        for(LectureDetailDTO lectureDetailDTO : lectureDetailDTOList){
+            int time = Integer.parseInt(lectureDetailDTO.getVideoLength());
+            StringBuilder sb = new StringBuilder();
+            if(time <60){
+                lectureDetailDTO.setVideoLength(time+"초");
+            }
+            else if(time>60){
+                int hour = time/60;
+                int second = time%60;
+                sb.append(hour+"분 "+ second+"초");
+                lectureDetailDTO.setVideoLength(sb.toString());
+            }
+        }
+        String userId=null;
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        if(memberDTO!=null){
+            userId= memberDTO.getUserId();
+        }
+
+        model.addAttribute("lectureDetailDTO", resultDetailDTO);
+        model.addAttribute("lectureDTO", resultDTO);
+        model.addAttribute("lectureDetailDTOList", lectureDetailDTOList);
+
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
+
+    }
+
+    @GetMapping("/registPlayed")
+    public String myRegistPlayed(Model model, LecturePlayedDTO lecturePlayedDTO, HttpSession session) {
+        if(session.getAttribute("memberDTO")==null){
+            return "redirect:/";
+        }
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        lecturePlayedDTO.setUserId(memberDTO.getUserId());
+        lecturePlayedDTO.setPercentage(100);
+
+        lectureServiceIf.registPlayed(lecturePlayedDTO);
+
+        return "redirect:/mystudy/myLecturePlay?lectureIdx="+lecturePlayedDTO.getLectureIdx()+"lectureDetailIdx="+lecturePlayedDTO.getLectureDetailIdx();
     }
 
     // 나의 성적표 관련

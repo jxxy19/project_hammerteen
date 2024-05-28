@@ -50,13 +50,13 @@
                                 </div>
                                 <div class="d-flex flex-column gap-1">
                                     <!-- 해당 강의 시청 이력 없을 때 -->
-                                    <a th:href="|/mystudy/myLecturePlay?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-primary text-white col-lg-3">학습 시작하기</a>
+                                    <a th:href="|/mystudy/myLecturePlay?lectureIdx=${lectureDTO.lectureIdx}&lectureDetailIdx=${lectureDetailIdx}|" class="btn btn-primary text-white col-lg-3">학습 시작하기</a>
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center gap-3 w-75">
                                     <div class="progress w-100" style="height: 8px;">
-                                        <div class="progress-bar" style="width: 89%" aria-valuenow="89%" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar" th:style="|width: ${lectureDTO.percentage}|" th:aria-valuenow="${lectureDTO.percentage}" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                    <small class="text-muted">89/100</small>
+                                    <small class="text-muted">[[${lectureDTO.percentageString}]]</small>
                                 </div>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-top-review" role="tabpanel">
-                                <div class="d-flex flex-column align-items-center" th:each="dto,status:${lectureReplyDTOList.dtoList}">
+                                <div class="d-flex flex-column align-items-center" th:if="${lectureReplyDTOList.dtoList}!=null" th:each="dto,status:${lectureReplyDTOList.dtoList}">
                                     <p class="d-flex flex-column gap-1 w-100 py-3 m-0">
                                       <span>
                                             <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=dto.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>

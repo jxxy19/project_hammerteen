@@ -7,10 +7,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LectureDetailRepository extends JpaRepository<LectureDetailEntity, Integer> {
     void deleteAllByLectureIdx(int lectureIdx);
 
     List<LectureDetailEntity> findAllByLectureIdx(int LectureIdx);
+
+    Optional<Integer> countAllByLectureIdx(int lectureIdx);
 
 }

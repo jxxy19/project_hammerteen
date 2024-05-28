@@ -30,6 +30,7 @@ public class LectureServiceImpl implements LectureServiceIf{
     private final LectureReplyRepository lectureReplyRepository;
     private final LectureGoodRepository lectureGoodRepository;
     private final LectureRecommendRepository lectureRecommendRepository;
+    private final LecturePlayedRepository lecturePlayedRepository;
 
     //지현추가 : 통계용
     private final OrderDetailRepository orderDetailRepository;
@@ -77,6 +78,8 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<LectureDetailEntity> result = lectureDetailRepository.findById(lectureDetailDTO.getLectureDetailIdx());
         LectureDetailEntity lectureDetailEntity = result.orElse(null);
         LectureDetailDTO resultDTO = modelMapper.map(lectureDetailEntity, LectureDetailDTO.class);
+        resultDTO.setVideoDirectory(resultDTO.getVideoDirectory()!=null?resultDTO.getVideoDirectory().replace("D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload","/upload"):"/assets/video");
+        resultDTO.setVideoFile(resultDTO.getVideoFile()==null?"default.mp4":resultDTO.getVideoFile());
 
         return resultDTO;
     }
@@ -340,6 +343,51 @@ public class LectureServiceImpl implements LectureServiceIf{
         Optional<Integer> result = lectureReplyRepository.sumRating(lectureIdx);
         sum =result.orElse(0);
         return sum;
+    }
+    @Override
+    public int lecturePercentage(int lectureIdx, String userId){
+        int detailcount = 0;
+        int count = 0;
+        int percentage=0;
+        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserId(100,userId);
+        count =result.orElse(0);
+        Optional<Integer> result2 = lectureDetailRepository.countAllByLectureIdx(lectureIdx);
+        detailcount = result2.orElse(0);
+        if(count>0 && detailcount>0){
+            percentage= (count/detailcount)*100;
+        }
+        return percentage;
+    }
+
+    @Override
+    public int registPlayed(LecturePlayedDTO lecturePlayedDTO){
+        int count = 0;
+        int detailcount = 0;
+        LecturePlayedEntity lecturePlayedEntity =  modelMapper.map(lecturePlayedDTO,LecturePlayedEntity.class);
+        lecturePlayedRepository.save(lecturePlayedEntity);
+        Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserId(100,lecturePlayedDTO.getUserId());
+        count =result.orElse(0);
+        List<LectureDetailEntity> list = lectureDetailRepository.findAllByLectureIdx(lecturePlayedDTO.getLectureIdx());
+        detailcount = list.size();
+        if(count>0&&detailcount>0){
+            if(count<detailcount){
+                lecturePlayedEntity.registNext(list.get(count).getLectureDetailIdx());
+                lecturePlayedRepository.save(lecturePlayedEntity);
+            }
+        }
+        return count;
+    }
+    @Override
+    public int playIdx(LecturePlayedDTO lecturePlayedDTO){
+        List<LectureDetailEntity> list = lectureDetailRepository.findAllByLectureIdx(lecturePlayedDTO.getLectureIdx());
+        int lectureDetailIdx = list.get(0).getLectureDetailIdx();
+        Optional<LecturePlayedEntity> result = lecturePlayedRepository.findAllByPercentageLessThanEqualAndUserIdAndLectureIdx(99,lecturePlayedDTO.getUserId(),lecturePlayedDTO.getLectureIdx());
+        LecturePlayedEntity lecturePlayedEntity =result.orElse(null);
+        if(lecturePlayedEntity!=null) {
+            lectureDetailIdx = lecturePlayedEntity.getLectureDetailIdx();
+        }
+
+        return lectureDetailIdx;
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface LectureServiceIf {
     LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO);
@@ -72,5 +73,7 @@ public interface LectureServiceIf {
     List<LectureDTO> popularLecutreList();
     List<LectureDTO> userLectureList(List<MyLectureDTO> myLectureDTOList);
     /*List<LectureReplyDTO> lectureReplyList();*/
-
+    int lecturePercentage(int lectureIdx, String userId);
+    int registPlayed(LecturePlayedDTO lecturePlayedDTO);
+    int playIdx(LecturePlayedDTO lecturePlayedDTO);
 }
