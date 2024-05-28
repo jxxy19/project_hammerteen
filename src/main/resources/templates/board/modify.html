@@ -13,7 +13,7 @@
             <form id="regiFrm" name="regiFrm" action="/board/modify" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="category1" th:value="${bbsDTO.getCategory1()}">
                 <input type="hidden" name="bbsIdx" th:value="${bbsDTO.getBbsIdx()}">
-                <input type="hidden" name="userId" th:value="test">
+                <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
                 <div class="layout-wrapper layout-content-navbar">
                     <div class="layout-container">
                         <!-- Layout container -->
@@ -27,14 +27,25 @@
                                         <div class="my-items bg-white rounded shadow-sm p-5">
                                             <div class="mb-3">
                                                 <label class="form-label" for="category">카테고리</label>
-                                                <select class="form-select" id="category">
-                                                    <option value="">카테고리</option>
-                                                    <option value="교육정보게시판" th:selected="${bbsDTO.category1 =='교육정보게시판'}">교육정보</option>
-                                                    <option value="자료게시판" th:selected="${bbsDTO.category1 =='자료게시판'}">자료게시판</option>
-                                                    <option value="자유게시판" th:selected="${bbsDTO.category1 =='자유게시판'}">자유게시판</option>
-                                                    <option value="공지게시판" th:selected="${bbsDTO.category1 =='공지게시판'}">공지게시판</option>
-                                                    <option value="QnA" th:selected="${bbsDTO.category1 =='QnA'}">QnA게시판</option>
-                                                </select>
+                                                <th:block th:if="${session.memberDTO.getRole().toString() == 'teacher'|| session.memberDTO.getRole().toString() == 'admin'}">
+                                                    <select class="form-select" id="category0" name="category1">
+                                                        <option selected value="">카테고리</option>
+                                                        <option value="교육정보게시판" th:selected="${bbsDTO.category1.toString() =='교육정보게시판'}">교육정보</option>
+                                                        <option value="자료게시판" th:selected="${bbsDTO.category1.toString() =='자료게시판'}">자료게시판</option>
+                                                        <option value="자유게시판" th:selected="${bbsDTO.category1.toString() =='자유게시판'}">자유게시판</option>
+                                                        <option value="공지게시판" th:selected="${bbsDTO.category1.toString() =='공지게시판'}">공지게시판</option>
+                                                        <option value="QnA게시판" th:selected="${bbsDTO.category1.toString() =='QnA'}">QnA게시판</option>
+                                                    </select>
+                                                </th:block>
+                                                <th:block th:if="${session.memberDTO.getRole().toString() == 'user'}">
+                                                    <select class="form-select" id="category1" name="category1">
+                                                        <option selected value="">카테고리</option>
+                                                        <option value="교육정보게시판" th:selected="${bbsDTO.category1.toString() =='교육정보게시판'}">교육정보</option>
+                                                        <option value="자료게시판" th:selected="${bbsDTO.category1.toString() =='자료게시판'}">자료게시판</option>
+                                                        <option value="자유게시판" th:selected="${bbsDTO.category1.toString() =='자유게시판'}">자유게시판</option>
+                                                        <option value="QnA게시판" th:selected="${bbsDTO.category1.toString() =='QnA'}">QnA게시판</option>
+                                                    </select>
+                                                </th:block>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label" for="title">제목</label>

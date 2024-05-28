@@ -21,7 +21,7 @@
                                     <div class="col-sm-12 col-md-12 d-lg-flex mb-3 justify-content-between">
                                         <div class="d-lg-flex w-100 justify-content-start">
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1">
-                                                <a class="col-sm-12 btn btn-outline-primary" href="/lecture/view?lectureIdx=1">취소</a>
+                                                <a class="col-sm-12 btn btn-outline-primary" th:href="'/lecture/'+ ${param.lectureIdx != null} ? 'view?lectureIdx=' + ${param.lectureIdx != null} : 'list'">취소</a>
                                             </div>
                                         </div>
                                     </div>

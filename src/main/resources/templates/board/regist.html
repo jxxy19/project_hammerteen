@@ -26,6 +26,7 @@
                                 <div class="card mb-4">
                                     <div class="my-items bg-white rounded shadow-sm p-5">
                                         <div class="mb-3">
+                                            <input type="hidden" name="userId" th:value="${session.memberDTO.getUserId()}">
                                             <label class="form-label" for="category1">카테고리</label>
                                             <th:block th:if="${session.memberDTO.getRole().toString() == 'teacher'|| session.memberDTO.getRole().toString() == 'admin'}">
                                                 <select class="form-select" id="category0" name="category1">
@@ -47,13 +48,13 @@
                                                 </select>
                                             </th:block>
                                         </div>
-                                        <div class="mb-3">
-                                            <label class="form-label" for="category2">강의명</label>
-                                            <select class="form-select" id="category2" name="category2">
-                                                <option value="" selected>선택 안함</option>
-                                                <option value="강의">강의</option>
-                                            </select>
-                                        </div>
+<!--                                        <div class="mb-3">-->
+<!--                                            <label class="form-label" for="category2">강의명</label>-->
+<!--                                            <select class="form-select" id="category2" name="category2">-->
+<!--                                                <option selected>선택 안함</option>-->
+<!--                                                <option value="강의">강의</option>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
                                         <div class="mb-3">
                                             <label class="form-label" for="title">제목</label>
                                             <input class="form-control" id="title" name="title" value="" type="text"/>
