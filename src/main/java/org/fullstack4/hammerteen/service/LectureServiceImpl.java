@@ -644,9 +644,13 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     }
 
-    /*@Override
+    @Override
     public List<LectureReplyDTO> lectureReplyList() {
-    *//*    List<LectureReplyEntity> replyentity = lectureReplyRepository.findbyID*//*
-    }*/
+        List<LectureReplyEntity> replyentity = lectureReplyRepository.findTop6ByRegDateDesc();
+        List<LectureReplyDTO> dtoList = replyentity.stream()
+                .map(board->modelMapper.map(board,LectureReplyDTO.class))
+                .collect(Collectors.toList());
+        return dtoList;
+    }
 
 }
