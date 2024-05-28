@@ -36,8 +36,14 @@ public class MyStudyController {
 
     private String menu1 = "나의 학습방";
     @GetMapping("/myLectureList")
-    public void myLectureListGet(Model model) {
+    public void myLectureListGet(Model model, HttpSession session) {
+        MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
+        List<MyLectureDTO> lectureDTOList = lectureServiceIf.myLectureList(memberDTO.getUserId());
+
+
+
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, "나의 강의실"));
+
     }
     @GetMapping("/myLectureView")
     public void myLectureViewGet(Model model) {

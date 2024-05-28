@@ -86,9 +86,13 @@ public class LectureServiceImpl implements LectureServiceIf{
     public LPageResponseDTO<LectureDTO> list(LPageRequestDTO lpageRequestDTO) {
         PageRequest pageable = lpageRequestDTO.getPageable("lectureIdx");
         Page<LectureEntity> result = null;
-        String categoryIdx = lpageRequestDTO.getCategoryIdx();
+        String categoryIdx = lpageRequestDTO.getCategory();
         String search_word = lpageRequestDTO.getSearch_word();
-        if(lpageRequestDTO.getSearch_word()!=null && !lpageRequestDTO.getSearch_word().isEmpty()) {
+        if(categoryIdx !=null){
+            result = lectureRepository.findAllByCategoryIdxStartingWithOrderByLectureIdxDesc(
+                    pageable, categoryIdx);
+        }
+        else if((lpageRequestDTO.getSearch_word()!=null && !lpageRequestDTO.getSearch_word().isEmpty())) {
             result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
                     pageable, categoryIdx, search_word, search_word);
         }
@@ -528,4 +532,5 @@ public class LectureServiceImpl implements LectureServiceIf{
         return PageResponseDTO.<LectureDTO>withAll().pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList).total_count((int) result.getTotalElements()).build();
     }
+
 }

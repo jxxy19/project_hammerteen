@@ -9,4 +9,6 @@ public interface MyLectureRepository extends JpaRepository<MyLectureEntity, Inte
     List<MyLectureEntity> findAllByLectureIdxAndStatus(int lectureIdx, String status);
     List<MyLectureEntity> findAllByUserIdAndStatus(String userId, String status);
     MyLectureEntity findAllByUserIdAndLectureIdxAndStatus(String userId, int lectureIdx, String status);
+
+
 }
