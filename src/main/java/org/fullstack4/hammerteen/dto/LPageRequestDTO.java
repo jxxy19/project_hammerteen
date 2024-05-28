@@ -39,7 +39,7 @@ public class LPageRequestDTO {
     private String title;
     private String teacherName;
     private String search_word;
-    private String categoryIdx;
+    private String category;
     private String linkParams;
     private String orderby;
 
@@ -74,8 +74,8 @@ public class LPageRequestDTO {
             {
                 sb.append("&orderby=" + getOrderby());
             }
-            if(categoryIdx !=null){
-                sb.append("&categoryIdx="+this.categoryIdx);
+            if(category !=null){
+                sb.append("&category="+this.category);
             }
             linkParams = sb.toString();
         }

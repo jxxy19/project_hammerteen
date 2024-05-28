@@ -25,7 +25,7 @@ public class LPageResponseDTO<E> {
     private String title;
     private String teacherName;
     private String search_word;
-    private String categoryIdx;
+    private String category;
     private String linkParams;
     private String orderby;
 
@@ -56,7 +56,7 @@ public class LPageResponseDTO<E> {
         this.orderby = lpageRequestDTO.getOrderby();
         this.title = lpageRequestDTO.getTitle();
         this.teacherName = lpageRequestDTO.getTeacherName();
-        this.categoryIdx = lpageRequestDTO.getCategoryIdx();
+        this.category = lpageRequestDTO.getCategory();
         this.startDate = lpageRequestDTO.getStartDate();
         this.endDate = lpageRequestDTO.getEndDate();
         this.search_word = lpageRequestDTO.getSearch_word();
