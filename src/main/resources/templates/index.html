@@ -111,7 +111,9 @@
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper mb-3">
                                 <th:block th:if="${teacherDTO != null && teacherDTO.dtoList.size() > 0}">
-                                    <th:block th:if="${teacherDTO.dtoList != null && recommendLectureDTO.dtoList.size() > 0}">
+
+                                    <th:block th:if="${teacherDTO.dtoList != null && teacherDTO.dtoList.size() > 0}">
+
                                 <div class="col-md-4 col-sm-6 mb-4 swiper-slide" th:each="dto, iterStat : ${teacherDTO.dtoList}">
                                     <div class="card">
                                         <div class="card-body ">
@@ -181,7 +183,7 @@
 
 
                                 </th:block>
-                                
+
                                 </div>
 
                             <div class="swiper-pagination"> </div>
