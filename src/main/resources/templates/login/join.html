@@ -132,7 +132,7 @@
                   <div class="col-lg-6 col-12">
                     <div class="mb-3">
                       <label for="birthday" class="form-label">생년월일</label>
-                      <input type="date" data-name="생년월일" class="form-control" id="birthday" name="birthday" placeholder="이메일 주소를 입력하세요" />
+                      <input type="date" data-name="생년월일" class="form-control" id="birthday" name="birthday" />
                     </div>
                     <div class="mb-3 row">
                       <div class="col-lg-8 col-sm-9 pe-lg-1">
@@ -545,7 +545,6 @@
     <!-- / Content -->
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="/assets/vendor/libs/popper/popper.js"></script>
     <script src="/assets/vendor/js/bootstrap.js"></script>
     <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -607,7 +606,7 @@
               data: { userId: userId },
               success: function(response) {
                 if (response.success) {
-                  const confirm_msg = "이 아이디는 사용 가능합니다.\n 사용하시겠습니까?";
+                  const confirm_msg = "이 아이디는 사용 가능합니다.\n사용하시겠습니까?";
                   if (confirm(confirm_msg)) {
                     userIdInput.value = userId;
                     userIdInput.readOnly = true;
@@ -653,7 +652,7 @@
 
               success: function (response) {
                 if (response.success) {
-                  const confirm_msg = "이 이메일은 사용 가능합니다.\n 사용하시겠습니까?";
+                  const confirm_msg = "이 이메일은 사용 가능합니다.\n사용하시겠습니까?";
                   if (confirm(confirm_msg)) {
                     emailInput.value = email;
                     emailInput.readOnly = true;
