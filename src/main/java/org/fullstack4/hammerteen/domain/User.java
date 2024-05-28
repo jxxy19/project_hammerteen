@@ -57,7 +57,7 @@ public class User extends BaseEntity {
     private String directory="";
     @Column
     @Builder.Default
-    private String fileName="26e87dcaprofile.png";
+    private String fileName="";
 
 
     @Enumerated(EnumType.STRING)
