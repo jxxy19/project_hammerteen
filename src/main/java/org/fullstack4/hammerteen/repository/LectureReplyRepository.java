@@ -7,12 +7,19 @@ import org.fullstack4.hammerteen.domain.LectureReplyEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.Optional;
 
 public interface LectureReplyRepository extends JpaRepository<LectureReplyEntity, Integer> {
 
     Page<LectureReplyEntity> findAllByLectureIdxOrderByLectureReplyIdxDesc(Pageable pageable, int lectureIdx);
 
     LectureReplyEntity findByUserIdAndLectureIdx(String userId, int lectureIdx);
+
+    Optional<Integer> countByLectureIdx(int lectureIdx);
+    @Query(value = "select sum(n.rating) from LectureReplyEntity n where n.lectureIdx=:lectureIdx")
+    Optional<Integer> sumRating(int lectureIdx);
 
 
 }

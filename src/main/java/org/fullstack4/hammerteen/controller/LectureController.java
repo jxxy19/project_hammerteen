@@ -71,9 +71,33 @@ public class LectureController {
     }
     @GetMapping("/view")
     public void viewGet(Model model, LectureDTO lectureDTO,LPageRequestDTO lpageRequestDTO,HttpSession session) {
+        lpageRequestDTO.setPage_size(5);
         LectureDTO resultDTO = lectureServiceIf.view(lectureDTO);
         LPageResponseDTO<LectureReplyDTO> lectureReplyDTOList = lectureServiceIf.listLectureReply(lpageRequestDTO, lectureDTO.getLectureIdx());
         List<LectureDetailDTO> lectureDetailDTOList = lectureServiceIf.listLectureDetail(lectureDTO.getLectureIdx());
+        for(LectureDetailDTO lectureDetailDTO : lectureDetailDTOList){
+            int time = Integer.parseInt(lectureDetailDTO.getVideoLength());
+            StringBuilder sb = new StringBuilder();
+            if(time <60){
+                lectureDetailDTO.setVideoLength(time+"초");
+            }
+            else if(time>60){
+                int hour = time/60;
+                int second = time%60;
+                sb.append(hour+"분 "+ second+"초");
+                lectureDetailDTO.setVideoLength(sb.toString());
+            }
+        }
+        int sumRating= lectureServiceIf.sumRating(lectureDTO.getLectureIdx());
+        int countRating= lectureServiceIf.countRating(lectureDTO.getLectureIdx());
+        int avgRating = 0;
+        if(sumRating>0 && countRating>0) {
+            avgRating = sumRating / countRating;
+        }
+        model.addAttribute("avgRating", avgRating);
+        if(countRating==0){model.addAttribute("countRating", "0");}
+        else{model.addAttribute("countRating", countRating);}
+
         model.addAttribute("pageType", CommonUtil.setPageType(this.menu1, this.menu1));
         String categoryCodeList[] = {"100000","200000","300000","400000","500000","600000","700000","800000","900000"};
         String categoryCodeListName[] = {"국어","수학","영어","한국사","사회","과학","직업","제2외국어","일반/진로/교양"};
@@ -88,7 +112,7 @@ public class LectureController {
             userId= memberDTO.getUserId();
         }
         String videoName = "";
-        LectureReplyDTO lectureReplyDTO = lectureServiceIf.viewReply(LectureReplyDTO.builder().userId("test").lectureIdx(lectureDTO.getLectureIdx()).build());
+        LectureReplyDTO lectureReplyDTO = lectureServiceIf.viewReply(LectureReplyDTO.builder().userId(userId).lectureIdx(lectureDTO.getLectureIdx()).build());
         if(resultDTO.getThumbnailVideoFile()!=null) {
             videoName = URLEncoder.encode(resultDTO.getThumbnailVideoFile(), StandardCharsets.UTF_8);
         }

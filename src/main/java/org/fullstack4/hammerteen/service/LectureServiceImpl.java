@@ -7,19 +7,17 @@ import org.fullstack4.hammerteen.domain.*;
 import org.fullstack4.hammerteen.dto.*;
 import org.fullstack4.hammerteen.repository.*;
 import org.fullstack4.hammerteen.util.CommonFileUtil;
-import org.fullstack4.hammerteen.util.CommonUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Log4j2
 @RequiredArgsConstructor
@@ -328,6 +326,22 @@ public class LectureServiceImpl implements LectureServiceIf{
     }
 
     @Override
+    public int countRating(int lectureIdx){
+        int count = 0;
+        Optional<Integer> result =lectureReplyRepository.countByLectureIdx(lectureIdx);
+        count=result.orElse(0);
+        return count;
+    }
+
+    @Override
+    public int sumRating(int lectureIdx){
+        int sum = 0;
+        Optional<Integer> result = lectureReplyRepository.sumRating(lectureIdx);
+        sum =result.orElse(0);
+        return sum;
+    }
+
+    @Override
     public LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO, int lectureIdx) {
         PageRequest pageable = lpageRequestDTO.getPageable();
         Page<LectureReplyEntity> result = null;
@@ -428,6 +442,27 @@ public class LectureServiceImpl implements LectureServiceIf{
                     .toList();
         }
         return  myLectureDTOList;
+    }
+
+    @Override
+    public List<LectureDTO> userLectureList(List<MyLectureDTO> myLectureDTOList) {
+        List<Integer> idxList = new ArrayList<>();
+        for(MyLectureDTO myLectureDTO : myLectureDTOList){
+            idxList.add(myLectureDTO.getLectureIdx());
+        }
+        Iterable<Integer> idxIterable = idxList;
+        log.info("idxIterable" + idxIterable);
+        List<LectureEntity> lectureEntityList = lectureRepository.findAllById(idxIterable);
+
+        List<LectureDTO> lectureDTOList = null;
+        if(lectureEntityList != null) {
+            lectureDTOList = lectureEntityList.stream()
+                    .map(vo-> modelMapper.map(vo, LectureDTO.class))
+                    .toList();
+        }
+        lectureDTOList.stream().forEach(e -> e.setThumbnailImgDirectory(e.getThumbnailImgDirectory()!=null?e.getThumbnailImgDirectory().replace("D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload","/upload"):"/assets/img"));
+        lectureDTOList.stream().forEach(e -> e.setThumbnailImgFile(e.getThumbnailImgFile()==null?"default.png":e.getThumbnailImgFile()));
+        return lectureDTOList;
     }
 
     @Override

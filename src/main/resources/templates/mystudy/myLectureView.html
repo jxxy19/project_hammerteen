@@ -28,33 +28,29 @@
                     <div class="border shadow-sm rounded">
                         <div class="row p-0 py-3 px-2">
                             <div class="col-4">
-                                <img class="w-100" src="/assets/img/default.png">
+                                <img class="w-100" th:src="|${lectureDTO.thumbnailImgDirectory}/${lectureDTO.thumbnailImgFile}|">
                             </div>
                             <div class="col-8 d-flex flex-column gap-3 justify-content-around">
                                 <div class="d-flex flex-column gap-3">
                                     <div>
-                                        <span class="badge bg-label-primary">과목</span>
+                                        <span class="badge bg-label-primary">[[${lectureDTO.categoryName}]]</span>
                                     </div>
                                     <div>
-                                        <h5 class="mb-1 text-primary fw-bold">강의 제목입니다.</h5>
-                                        <p class="mb-1"><span class="fw-medium">전주연</span>선생님</p>
+                                        <h5 class="mb-1 text-primary fw-bold">[[${lectureDTO.title}]]</h5>
+                                        <p class="mb-1"><span class="fw-medium">[[${lectureDTO.teacherName}]] </span>선생님</p>
                                     </div>
                                 </div>
                                 <div>
                                     <span>
-                                        <i class="lni lni-star-filled text-primary"></i>
-                                        <i class="lni lni-star-filled"></i>
-                                        <i class="lni lni-star-filled"></i>
-                                        <i class="lni lni-star-filled"></i>
-                                        <i class="lni lni-star-filled"></i>
-                                        <i class="fw-normal">( 총 100건 )</i>
+                                        <ul class="list star-list mb-1" >
+                                            <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=avgRating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
+                                        </ul>
+                                        <i class="fw-normal">( 총 [[${countRating}]]건 )</i>
                                     </span>
                                 </div>
                                 <div class="d-flex flex-column gap-1">
                                     <!-- 해당 강의 시청 이력 없을 때 -->
-                                    <a href="/mystudy/myLecturePlay?lectureIdx=1" class="btn btn-primary text-white col-lg-3">학습 시작하기</a>
-                                    <!-- 해당 강의 시청 이력 있을 때 -->
-                                    <a href="/mystudy/myLecturePlay?lectureIdx=1" class="btn btn-primary text-white col-lg-3">이어서 학습하기</a>
+                                    <a th:href="|/mystudy/myLecturePlay?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-primary text-white col-lg-3">학습 시작하기</a>
                                 </div>
                                 <div class="d-flex justify-content-center align-items-center gap-3 w-75">
                                     <div class="progress w-100" style="height: 8px;">
@@ -90,13 +86,7 @@
                             <div class="tab-pane fade active show" id="navs-top-description" role="tabpanel">
                                 <div class="card-body">
                                     <h5 class="fw-bold">강의소개</h5>
-                                    <p class="mb-4">
-                                        강의소개를 한번 해볼까 합니다!<br>
-                                    </p>
-                                    <p class="mb-4">
-                                        여러분 인건 정말 좋은 강좌에요 한번 들어보쇼
-                                    </p>
-                                    <p> "최고 입니다. 여러분 이 시대 꼭 들어야하는 강의!" — 장지현
+                                    <p class="mb-4" th:utext="${lectureDTO.content}">
                                     </p>
                                     <hr class="my-4">
                                     <h5 class="fw-bold">강사정보</h5>
@@ -105,182 +95,50 @@
                                             <div class="avatar avatar-sm me-2"><img alt="Avatar" class="rounded-circle" src="/assets/img/default.png"></div>
                                         </div>
                                         <div class="d-flex flex-column">
-                                            <span class="fw-medium"><span>전주연</span> 선생님</span>
+                                            <span class="fw-medium"><span>[[${lectureDTO.teacherName}]]</span> 선생님</span>
                                             <small class="text-muted">풀스택 4기</small>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-top-index" role="tabpanel">
-                                <div class="list-group">
-                                    <a href="/mystudy/myLecturePlay?lecture=1" class="list-group-item list-group-item-action d-flex justify-content-between">
+                                <div class="list-group" th:each="dto,status:${lectureDetailDTOList}">
+                                    <a th:href="|mystudy/myLecturePlay?lectureIdx=${lectureDTO.lectureIdx}|" class="list-group-item list-group-item-action d-flex justify-content-between">
                                         <span>
                                             <i class="lni lni-checkmark-circle active-star"></i>
-                                            <span>1. 강의 오리엔테이션</span>
+                                            <span>[[${status.count}]]. [[${dto.detailTitle}]]</span>
                                         </span>
-                                        <span>23:00</span>
-                                    </a>
-                                    <a href="/mystudy/myLecturePlay?lecture=1" class="list-group-item list-group-item-action d-flex justify-content-between">
-                                        <span>
-                                            <i class="lni lni-checkmark-circle"></i>
-                                            <span>2. IP주소의 이해</span>
-                                        </span>
-                                        <span>62:00</span>
-                                    </a>
-                                    <a href="/mystudy/myLecturePlay?lecture=1" class="list-group-item list-group-item-action d-flex justify-content-between">
-                                        <span>
-                                            <i class="lni lni-checkmark-circle"></i>
-                                            <span>3. 같은 네트워크에서의 통신</span>
-                                        </span>
-                                        <span>44:00</span>
-                                    </a>
-                                    <a href="/mystudy/myLecturePlay?lecture=1" class="list-group-item list-group-item-action d-flex justify-content-between">
-                                        <span>
-                                            <i class="lni lni-checkmark-circle"></i>
-                                            <span>4. 스위치를 이요한 통신기술</span>
-                                        </span>
-                                        <span>12:00</span>
+                                        <span>[[${dto.videoLength}]]</span>
                                     </a>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="navs-top-review" role="tabpanel">
-                                <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex flex-column align-items-center" th:each="dto,status:${lectureReplyDTOList.dtoList}">
                                     <p class="d-flex flex-column gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
+                                      <span>
+                                            <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=dto.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
+                                        </span>
+                                        <span class="h6 m-0">[[${dto.userId}]]</span>
+                                        <span class="text-muted d-block ps-2 border rounded py-3">[[${dto.reviewContent}]]</span>
                                     </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <p class="d-flex flex-column border-top gap-1 w-100 py-3 m-0">
-                                                                              <span>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                                <i class="lni lni-star-filled"></i>
-                                                                              </span>
-                                        <span class="h6 m-0">로버트 다우니 주니어</span>
-                                        <span class="text-muted d-block ps-2 border rounded py-3">제 인생 이렇게 도움이 되는 강의는 처음입니다.</span>
-                                    </p>
-                                    <!-- Pagination -->
-                                    <nav aria-label="Page navigation"
-                                         class="d-flex align-items-center justify-content-center">
-                                        <ul class="pagination">
-                                            <li class="page-item prev">
-                                                <a class="page-link" href="#"><i
-                                                        class="tf-icon bx bx-chevron-left"></i></a>
-                                            </li>
-                                            <li class="page-item active">
-                                                <a class="page-link" href="#">1</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">2</a>
-                                            </li>
-                                            <li class="page-item">
-                                                <a class="page-link" href="#">3</a>
-                                            </li>
-                                            <li class="page-item next">
-                                                <a class="page-link"
-                                                   href="javascript:void(0);"><i
-                                                        class="tf-icon bx bx-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                    <!--/ End Pagination -->
+
                                 </div>
+                                <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
+                                    <ul class="pagination">
+                                        <li class="page-item prev" th:if="${lectureReplyDTOList.prev_page_flag}">
+                                            <a th:href="|/mystudy@{/myLectureView(page=${lectureReplyDTOList.page_block_start -10},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="#"><i class="tf-icon bx bx-chevron-left"></i></a>
+                                        </li>
+                                        <th:block th:each="i:${#numbers.sequence(lectureReplyDTOList.page_block_start,lectureReplyDTOList.page_block_end)}">
+                                            <li th:class="${lectureReplyDTOList.getPage() == i} ? 'page-item active' : 'page-item'">
+                                                <a th:href="|/mystudy@{/myLectureView(page=${i},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                            </li>
+                                        </th:block>
+                                        <li class="page-item next" th:if="${lectureReplyDTOList.next_page_flag}">
+                                            <a th:href="|/mystudy@{/myLectureView(page=${lectureReplyDTOList.page_block_end +1},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                        </li>
+                                    </ul>
+                                </nav>
+
                             </div>
                             <div class="tab-pane fade" id="navs-top-notice" role="tabpanel">
                                 <div class="my-items bg-white rounded shadow-sm m-5">

@@ -36,6 +36,8 @@ public interface LectureServiceIf {
     LPageResponseDTO<LectureReplyDTO> listLectureReply(LPageRequestDTO lpageRequestDTO,int lectureIdx);
     int countCategory(String categoryIdx);
     LectureReplyDTO viewReply(LectureReplyDTO lectureReplyDTO);
+    int sumRating(int lectureIdx);
+    int countRating(int lectureIdx);
 
     // 지현추가 : 기존 구매여부 확인용
     int checkOrder(String userId, int lectureIdx);
@@ -63,4 +65,7 @@ public interface LectureServiceIf {
 //    String getMemberId(int orderIdx);
 //    LectureScoreDTO getLectureScoreDTO(int lectureIdx, String userId);
     PageResponseDTO<LectureDTO> recommendList(PageRequestDTO pageRequestDTO);
+
+
+    List<LectureDTO> userLectureList(List<MyLectureDTO> myLectureDTOList);
 }
