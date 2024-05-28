@@ -102,7 +102,8 @@
                                       <!-- Start Single Item -->
                                       <div class="single-item-grid">
                                         <div>
-                                          <a href="/lecture/list?teacherId=test">
+
+                                          <a th:href="@{'/lecture/list?search_word=' +${dto.name}}">
                                             <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.profile}"
                                                  height="200"
                                                  width="200">

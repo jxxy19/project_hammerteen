@@ -72,8 +72,13 @@ public interface LectureServiceIf {
 
     List<LectureDTO> popularLecutreList();
     List<LectureDTO> userLectureList(List<MyLectureDTO> myLectureDTOList);
+
     /*List<LectureReplyDTO> lectureReplyList();*/
     int lecturePercentage(int lectureIdx, String userId);
     int registPlayed(LecturePlayedDTO lecturePlayedDTO);
     int playIdx(LecturePlayedDTO lecturePlayedDTO);
+
+    List<LectureReplyDTO> lectureReplyList();
+
+
 }
