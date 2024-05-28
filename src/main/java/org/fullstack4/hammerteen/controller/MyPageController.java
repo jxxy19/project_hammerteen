@@ -47,8 +47,6 @@ public class MyPageController {
 
     @PostMapping("/mypage")
     public String mypagePost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
-
-
         //핸드폰번호 합치기
         String[] phoneStr = memberDTO.getPhoneNumber().split(",");
         memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
@@ -79,12 +77,8 @@ public class MyPageController {
             redirectAttributes.addFlashAttribute("info", "alert(`회원 정보 수정 실패 올바른 값을 입력해 주세요.`);");
             return "redirect:/mypage/mypage";
         }
-
         MemberDTO modifyDTO = memberServiceIf.modify(memberDTO);
-
-
         request.getSession().setAttribute("memberDTO", modifyDTO);
-
         return "redirect:/mypage/mypage";
     }
 
