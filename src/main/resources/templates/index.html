@@ -161,9 +161,10 @@
 
                             <div class="swiper-wrapper mb-5">
 
-                                <th:block th:if="${popularLectureList.get(0) !=null } " >
+                                <th:block th:if="${popularLectureList != null and !popularLectureList.isEmpty()}">
 
                                 <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide" th:each="dto : ${popularLectureList}">
+                                    <th:block if=${dto !=null}></th>
                                     <div class="card border shadow-none overflow-hidden">
                                         <div class="card-body row p-0 ">
                                             <div class="col-5 d-flex justify-content-center overflow-hidden">
