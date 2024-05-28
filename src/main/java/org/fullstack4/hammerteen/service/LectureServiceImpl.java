@@ -364,19 +364,23 @@ public class LectureServiceImpl implements LectureServiceIf{
         int count = 0;
         int detailcount = 0;
         LecturePlayedEntity lecturePlayedEntity = lecturePlayedRepository.findByLectureDetailIdx(lecturePlayedDTO.getLectureDetailIdx());
-        lecturePlayedEntity.modifyPercentage(100);
-        lecturePlayedRepository.save(lecturePlayedEntity);
+        if(lecturePlayedEntity!=null) {
+            lecturePlayedEntity.modifyPercentage(100);
+            lecturePlayedRepository.save(lecturePlayedEntity);
+        }
+        else{
+            lecturePlayedDTO.setPercentage(100);
+            lecturePlayedEntity = modelMapper.map(lecturePlayedDTO,LecturePlayedEntity.class);
+            lecturePlayedRepository.save(lecturePlayedEntity);
+        }
         Optional<Integer> result = lecturePlayedRepository.countAllByPercentageGreaterThanEqualAndUserIdAndLectureIdxEquals(100,lecturePlayedDTO.getUserId(),lecturePlayedDTO.getLectureIdx());
         count =result.orElse(0);
         List<LectureDetailEntity> list = lectureDetailRepository.findAllByLectureIdx(lecturePlayedDTO.getLectureIdx());
         detailcount = list.size();
         if(count>0&&detailcount>0){
             if(count<detailcount){
-                log.info("list " + list);
-                log.info("list.get(count).getLectureDetailIdx() " + list.get(count).getLectureDetailIdx());
                 LecturePlayedEntity lecturePlayedEntity1 = modelMapper.map(lecturePlayedDTO,LecturePlayedEntity.class);
                 lecturePlayedEntity1.registNext(list.get(count).getLectureDetailIdx());
-                log.info("lecturePlayedEntity1 " + lecturePlayedEntity1);
                 lecturePlayedRepository.save(lecturePlayedEntity1);
             }
         }
@@ -531,6 +535,7 @@ public class LectureServiceImpl implements LectureServiceIf{
         Iterable<Integer> idxIterable = idxList;
         log.info("idxIterable" + idxIterable);
         List<LectureEntity> lectureEntityList = lectureRepository.findAllById(idxIterable);
+        Collections.reverse(lectureEntityList);
 
         List<LectureDTO> lectureDTOList = null;
         if(lectureEntityList != null) {
