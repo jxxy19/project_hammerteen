@@ -40,15 +40,17 @@ public class MainController {
         PageResponseDTO<BbsDTO> hotBoardDTO = bbsServiceIf.hotboardList(pageRequestDTO);
 
         //추천태그이름
-        List<LectureRecommendDTO> recommendName=null;
+        List<LectureRecommendDTO> recommendName= new ArrayList<>();
         recommendName = lectureServiceIf.recommendNameList();
 
         //가장인기있는강의
         List<LectureDTO> popularLectureList = lectureServiceIf.popularLecutreList();
         PageResponseDTO<LectureDTO> recommendLectureDTO = null;
 
-        /*//강의후기(메인페이지)
-        List<LectureReplyDTO> lectureReplyList = lectureServiceIf.lectureReplyList();*/
+        //강의후기(메인페이지)
+        List<LectureReplyDTO> lectureReplyList= new ArrayList<>();
+        lectureReplyList = lectureServiceIf.lectureReplyList();
+
 
         if(pageRequestDTO.getLectureRecommendTag() == null) {
             pageRequestDTO.setLectureRecommendTag("1");
@@ -60,6 +62,7 @@ public class MainController {
 
 
         model.addAttribute("recommendLectureDTO", recommendLectureDTO);
+        model.addAttribute("lectureReplyList", lectureReplyList);
         model.addAttribute("recommendName", recommendName);
         model.addAttribute("popularLectureList", popularLectureList);
         model.addAttribute("teacherDTO", teacherDTO);

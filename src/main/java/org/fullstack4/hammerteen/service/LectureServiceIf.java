@@ -71,6 +71,6 @@ public interface LectureServiceIf {
 
     List<LectureDTO> popularLecutreList();
     List<LectureDTO> userLectureList(List<MyLectureDTO> myLectureDTOList);
-    /*List<LectureReplyDTO> lectureReplyList();*/
+    List<LectureReplyDTO> lectureReplyList();
 
 }

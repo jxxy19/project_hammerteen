@@ -28,9 +28,9 @@ public interface LectureReplyRepository extends JpaRepository<LectureReplyEntity
 
 
     //메인페이지 강의후기
-   /* @Query(value = "SELECT * FROM hamt_lecture_reply ORDER BY regdate DESC LIMIT 6", nativeQuery = true)
+   @Query(value = "SELECT * FROM hamt_lecture_reply ORDER BY reg_date DESC LIMIT 6", nativeQuery = true)
     List<LectureReplyEntity> findTop6ByRegDateDesc();
-*/
+
 
 
 }

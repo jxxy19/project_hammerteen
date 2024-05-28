@@ -159,7 +159,9 @@ public class MemberServiceImpl implements MemberServiceIf{
 
     @Override
     public PageResponseDTO<TeacherDTO> teacherMemberList(PageRequestDTO pageRequestDTO) {
+        pageRequestDTO.setPage_size(9);
         PageRequest pageable = pageRequestDTO.getPageable();
+
         Page<TeacherEntity> result = null;
         String search_word = pageRequestDTO.getSearch_word();
 
