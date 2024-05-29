@@ -148,7 +148,7 @@ public class LectureController {
             return "redirect:/";
         }
         lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
-        lectureDTO.setTeacherName(memberDTO.getUserId());
+        lectureDTO.setTeacherName(memberDTO.getName());
         if(files!=null) {
             lectureDTO = lectureServiceIf.registThumbnailImg(lectureDTO,files);
             lectureDTO = lectureServiceIf.registThumbnailVideo(lectureDTO,files);
@@ -198,7 +198,7 @@ public class LectureController {
             return "redirect:/";
         }
         lectureDTO.setTeacherIdx(memberDTO.getMemberIdx());
-        lectureDTO.setTeacherName(memberDTO.getUserId());
+        lectureDTO.setTeacherName(memberDTO.getName());
         log.info(lectureDTO+ "lectureDTO");
         if(files!=null) {
             lectureServiceIf.modifyThumbnailImg(lectureDTO,files);
