@@ -4,6 +4,7 @@ function initCalendarOffCanvas() {
     $('#calendarOffcanvasBackdrop #endDate').val("");
     $('#calendarOffcanvasBackdrop #title').val("");
     $('#calendarOffcanvasBackdrop #description').text("");
+    $('#calendarOffcanvasBackdrop #description').val("");
     $('#btnDelete').addClass('d-none');
     $('#calendarOffcanvasBackdrop #btnSave').removeAttr("onclick");
     $('#calendarOffcanvasBackdrop #btnSave').removeAttr("data-idx");
