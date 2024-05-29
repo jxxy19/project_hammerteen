@@ -45,8 +45,11 @@ public class OAuthAttributes {
         return User.builder()
                 .name(name)
                 .email(email)
+                .userId(email.substring(0,email.indexOf("@")))
                 .picture(picture)
                 .role(Role.user) // 가입할 때 기본 권한
                 .build();
     }
+
+
 }

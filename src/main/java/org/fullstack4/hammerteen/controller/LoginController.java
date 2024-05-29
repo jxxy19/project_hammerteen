@@ -27,6 +27,9 @@ public class LoginController {
     @GetMapping("/login")
     public void loginGet (HttpServletRequest req, Model model) {
         model.addAttribute("menu", "로그인");
+
+        String save_id = CookieUtil.getCookieValue(req,"save_id");
+        model.addAttribute("saveId", save_id);
         String acc_url = req.getHeader("referer");
         model.addAttribute("acc_url", acc_url);
     }
@@ -116,11 +119,11 @@ public class LoginController {
         }
 
         //저장 아이디 쿠키 값 삭제
-        String save_id_value= CookieUtil.getCookieValue(req,"save_id");
-        if(save_id_value != null) {
-            CookieUtil.deleteCookie(resp, save_id_value);
-        }
 
+        String save_id_value = CookieUtil.getCookieValue(req,"save_id");
+        if(save_id_value !=null){
+            CookieUtil.deleteCookie(resp,save_id_value);
+        }
 
 
 

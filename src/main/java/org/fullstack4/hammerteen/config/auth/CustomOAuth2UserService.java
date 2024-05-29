@@ -1,12 +1,16 @@
 package org.fullstack4.hammerteen.config.auth;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.fullstack4.hammerteen.config.auth.dto.OAuthAttributes;
 import org.fullstack4.hammerteen.config.auth.dto.SessionUser;
+import org.fullstack4.hammerteen.domain.MemberEntity;
 import org.fullstack4.hammerteen.domain.User;
 import org.fullstack4.hammerteen.dto.MemberDTO;
+import org.fullstack4.hammerteen.repository.MemberRepository;
 import org.fullstack4.hammerteen.repository.UserRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -23,6 +27,8 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
     private final UserRepository userRepository;
     private final HttpSession httpSession;
+    private final MemberRepository memberRepository;
+    private final ModelMapper modelMapper;
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
@@ -41,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         User user = saveOrUpdate(attributes);
         // User 클래스를 사용하지 않고 SessionUser클래스를 사용하는 이유는 오류 방지.
-        httpSession.setAttribute("memberDTO", new SessionUser(user)); // SessionUser : 세션에 사용자 정보를 저장하기 위한 Dto 클래스
+        httpSession.setAttribute("user", new SessionUser(user)); // SessionUser : 세션에 사용자 정보를 저장하기 위한 Dto 클래스
 
         //세션합치기
 
@@ -58,6 +64,28 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 
+        SessionUser session =  new SessionUser(user);
+        MemberDTO memberDTO = new MemberDTO();
+        memberDTO.setBirthday(session.getBirthday());
+        memberDTO.setUserId(session.getUserId());
+        memberDTO.setEmail(session.getEmail());
+        memberDTO.setAddr1(session.getAddr1());
+        memberDTO.setAddr2(session.getAddr2());
+        memberDTO.setPhoneNumber(session.getPhoneNumber());
+        memberDTO.setPwd("12345678!");
+        memberDTO.setRole("user");
+        memberDTO.setUserState("Y");
+        memberDTO.setName(session.getName());
+        memberDTO.setZipCode(session.getZipCode());
+
+        MemberEntity memberEntity = modelMapper.map(memberDTO,MemberEntity.class);
+
+        memberRepository.save(memberEntity);
+        httpSession.setAttribute("memberDTO",memberDTO);
+
+
         return userRepository.save(user);
     }
+
+
 }
