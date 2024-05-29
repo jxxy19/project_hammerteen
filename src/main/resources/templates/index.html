@@ -38,13 +38,13 @@
                 </th:block>
                 <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
                     <th:block th:if="${recommendLectureDTO != null}">
-                        <div class="row justify-content-between gap-lg-0 gap-3" >
+                        <div class="row justify-content-center gap-lg-0 gap-3" >
                         <th:block th:if="${recommendLectureDTO.dtoList != null && recommendLectureDTO.dtoList.size() > 0}">
                         <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index < 3}">
                             <div class="card border shadow-none overflow-hidden">
                                 <div class="card-body row p-0 ">
                                     <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
+                                        <img th:src="${dto.thumbnailImgFile} != null ? '/upload/'+${dto.thumbnailImgFile} : '/assets/img/default.png'">
                                     </div>
                                     <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                         <div class="d-flex flex-column gap-2">
