@@ -24,15 +24,9 @@
                       <h3>키워드</h3>
                       <form action="/lecture/teacherList">
                         <div class="navbar-nav justify-content-center align-items-center flex-row">
-
                           <div class="input-group input-group-merge">
-
-
-
                             <input type="hidden" name="search_type" value="n" />
-
                             <input aria-describedby="basic-icon-default-fullname2" class="form-control" id="basic-icon-default-fullname" name="search_word" placeholder="이름으로 검색" type="text">
-
                           </div>
                           <button class="btn rounded-pill btn-outline-primary" type="submit">
                             <i class="bx bx-search-alt-2 display-6 align-middle"></i>
@@ -102,7 +96,6 @@
                                       <!-- Start Single Item -->
                                       <div class="single-item-grid">
                                         <div>
-
                                           <a th:href="@{'/lecture/list?search_word=' +${dto.name}}">
                                             <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.profile}"
                                                  height="200"
@@ -131,7 +124,13 @@
                                       <!-- End Single Item -->
                                   </div>
                                   </th:block>
+                                <th:block th:unless="${pageResponseDTO.dtoList.size() > 0}">
+                                  <div class="col-12">
+                                    <div class="card border text-center w-100 py-5">아직 등록된 선생님이 없습니다.😢</div>
+                                  </div>
+                                </th:block>
                               </div>
+                              <th:block th:if="${pageResponseDTO.dtoList.size() > 0}">
                               <div class="row">
                                 <div class="col-12">
                                   <!-- Pagination -->
@@ -165,6 +164,7 @@
                                   <!--/ End Pagination -->
                                 </div>
                               </div>
+                              </th:block>
                             </div>
                           </div>
                         </div>

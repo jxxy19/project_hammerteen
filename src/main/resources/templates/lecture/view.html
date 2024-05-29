@@ -65,7 +65,7 @@
                                                             <div class="avatar-wrapper">
                                                                 <div class="avatar avatar-sm me-2"><img
                                                                         alt="Avatar" class="rounded-circle"
-                                                                        th:src="|/upload/${teacherDTO.profile}|"></div>
+                                                                        th:src="${teacherDTO.profile} != null ? '/upload/'+${teacherDTO.profile} : '/assets/img/default.png'"></div>
                                                             </div>
                                                             <div class="d-flex flex-column">
                                                                 <span class="fw-medium"><span>[[${teacherDTO.name}]]</span> 선생님</span>
