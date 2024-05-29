@@ -222,13 +222,15 @@ public class MyStudyController {
             int userIdx = memberDTO.getMemberIdx();
             if(memberRole.equals("user")) {
                 List<MyLectureDTO> myLectureDTOList = lectureServiceIf.myLectureList(userId);
+                log.info("myLectureDTOList : {}", myLectureDTOList);
                 myLectureDTOList.forEach(dto->{
-                    dto.setLectureDTO(lectureServiceIf.selectLectureDTOByIdx(CommonUtil.parseInt(lectureIdx)));
+                    dto.setLectureDTO(lectureServiceIf.selectLectureDTOByIdx(dto.getLectureIdx()));
                     dto.setMemberDTO(memberServiceIf.view(userId));
-                    dto.setLectureScoreDTO(lectureServiceIf.myScore(userId, CommonUtil.parseInt(lectureIdx)));
+                    dto.setLectureScoreDTO(lectureServiceIf.myScore(userId,dto.getLectureIdx()));
                     dto.setDateToString();
                 });
-                model.addAttribute("scoreList", myLectureDTOList);
+                log.info("myLectureDTOList : {}", myLectureDTOList);
+                model.addAttribute("myLectureDTOList", myLectureDTOList);
             } else {
                 if(memberRole.equals("teacher")) {
                     List<LectureDTO> lectureDTOList = lectureServiceIf.lectureListForTeacher(userIdx);

@@ -44,7 +44,7 @@
                                             <td th:text="${dto.lectureDTO.title}">강의명입니다만?</td>
                                             <td th:text="${dto.lectureDTO.teacherName}"><span>전주연</span>선생님</td>
                                             <td th:text="${dto.regDateToString}">2024-05-24</td>
-                                            <td><span class="badge bg-label-primary me-1" th:text="${dto.lectureScoreDTO != null ? dto.lectureScoreDTO.score : '-' }">100</span>점</td>
+                                            <td><span class="badge bg-label-primary me-1" th:text="${dto.lectureScoreDTO != null ? dto.lectureScoreDTO.lectureScore : '-' }">100</span>점</td>
                                         </tr>
                                     </th:block>
                                     <th:block th:unless="${myLectureDTOList != null && myLectureDTOList.size() > 0}">

@@ -607,11 +607,13 @@ public class LectureServiceImpl implements LectureServiceIf{
 
     @Override
     public LectureDTO selectLectureDTOByIdx(int lectureIdx) {
+        log.info("lectureIdx : {}", lectureIdx);
         LectureEntity lectureEntity = lectureRepository.findAllByLectureIdx(lectureIdx);
         LectureDTO lectureDTO = null;
         if(lectureEntity != null) {
             lectureDTO = modelMapper.map(lectureEntity, LectureDTO.class);
         }
+        log.info("lectureDTO : {}", lectureDTO);
         return lectureDTO;
     }
 //

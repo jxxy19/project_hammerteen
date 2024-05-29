@@ -99,6 +99,7 @@ function viewPlan(idx) {
                 $('#calendarOffcanvasBackdrop #endDate').val(resultObj["endDateTimeToString"]);
                 $('#calendarOffcanvasBackdrop #title').val(resultObj["title"]);
                 $('#calendarOffcanvasBackdrop #description').text(resultObj["description"]);
+                $('#calendarOffcanvasBackdrop #description').val(resultObj["description"]);
                 $('#calendarOffcanvasBackdrop #btnSave').attr("data-idx",resultObj["scheduleIdx"] )
                 $('#calendarOffcanvasBackdrop #btnDelete').attr("data-idx",resultObj["scheduleIdx"] )
             } else {
