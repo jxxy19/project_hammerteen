@@ -51,7 +51,7 @@
                                             <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
                                             <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
                                         </div>
-                                        <a class="btn btn-sm btn-label-primary mt-2" href="#">바로가기</a>
+                                        <a class="btn btn-sm btn-label-primary mt-2" th:href="@{'/lecture/view?lectureIdx=' + ${dto.getLectureIdx}}">바로가기</a>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,8 @@
                                                      width="100"  >
                                             </div>
                                             <div class="d-flex flex-column gap-2 py-3">
-                                                <h4 class="p-0 m-0"><span class="text-primary fw-bold border-primary border-bottom"  th:text="${dto.name}" >전주연</span>선생님</h4>
+
+                                                <a th:href="@{'/lecture/teacherList?search_type=n&search_word=' +${dto.name}}"> <h4 class="p-0 m-0"><span class="text-primary fw-bold border-primary border-bottom"  th:text="${dto.name}" >전주연</span>선생님</h4></a>
                                                 <small th:text="${dto.categoryName}" >과목</small>
                                                 <small th:text="${dto.writing}" >난 전주연 모두 나를 따르라!!</small>
                                             </div>
@@ -168,15 +169,19 @@
                                     <div class="card border shadow-none overflow-hidden">
                                         <div class="card-body row p-0 ">
                                             <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img src="/assets/img/image/images.jpeg">
+                                                <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.thumbnailImgFile}"
+                                                     height="200"
+                                                     width="200">
                                             </div>
                                             <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                                 <div class="d-flex flex-column gap-2">
                                                     <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${dto.title}">이 세상 밈의 절대고수.</h5>
                                                     <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
-                                                    <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+                                                    <p class="p-0 m-0 text-start" >  </p>
                                                 </div>
-                                                <a class="btn btn-sm btn-label-primary mt-2" href="/lecture/list">바로가기</a>
+
+
+                                                <a class="btn btn-sm btn-label-primary mt-2" th:href="@{'/lecture/view?lectureIdx=' + ${dto.getLectureIdx}}">바로가기</a>
                                             </div>
                                         </div>
                                     </div>

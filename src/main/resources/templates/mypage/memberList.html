@@ -87,22 +87,33 @@
                             </div>
                             <div class="mt-3">
                                 <!-- Pagination -->
-                                <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
-                                  <ul class="pagination-list">
-                                        <li th:if="${pageResponseDTO.prev_page_flag}">
-                                            <a th:href="|/${category1}@{/list(page=${pageResponseDTO.page_block_start -10})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-left"></i></a>
+                                <div class="pagination justify-content-center">
+                                    <ul class="pagination justify-content-center">
+                                        <!-- Previous Button -->
+                                        <li class="page-item" th:classappend="${!pageResponseDTO.prev_page_flag} ? ' disabled'">
+                                            <a class="page-link"
+                                               th:data-num="${pageResponseDTO.prev_page_flag ? pageResponseDTO.page_block_start - 1 : 1}"
+                                               th:href="${pageResponseDTO.prev_page_flag ? '/mypage/memberList?page_size=10&page=' + (pageResponseDTO.page_block_start - 10) : '#'}">
+                                                <i class="lni lni-chevron-left"></i>
+                                            </a>
                                         </li>
-                                        <th:block th:each="i:${#numbers.sequence(pageResponseDTO.page_block_start,pageResponseDTO.page_block_end)}">
-                                            <li th:class="${pageResponseDTO.getPage() == i} ? 'page-item active' : 'page-item'">
-                                                <a th:href="|/${category1}@{/list(page=${i})}${pageResponseDTO.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                        <!-- Page Numbers -->
+                                        <th:block th:each="i : ${#numbers.sequence(pageResponseDTO.page_block_start, pageResponseDTO.page_block_end)}">
+                                            <li class="page-item" th:classappend="${pageResponseDTO.getPage() == i} ? ' active'">
+                                                <a class="page-link" th:data-num="${i}"
+                                                   th:href="${pageResponseDTO.getPage() == i ? '#' : '/mypage/memberList?page_size=10&page=' + i}">[[${i}]]</a>
                                             </li>
-
                                         </th:block>
-                                        <li th:if="${pageResponseDTO.next_page_flag}">
-                                            <a th:href="|/${category1}@{/list(page=${pageResponseDTO.page_block_end +1})}${pageResponseDTO.linkParams}|"><i class="lni lni-chevron-right"></i></a>
+                                        <!-- Next Button -->
+                                        <li class="page-item" th:classappend="${!pageResponseDTO.next_page_flag} ? ' disabled'">
+                                            <a class="page-link"
+                                               th:data-num="${pageResponseDTO.next_page_flag ? pageResponseDTO.page_block_end + 1 : pageResponseDTO.page_block_end}"
+                                               th:href="${pageResponseDTO.next_page_flag ? '/mypage/memberList?page_size=10&page=' + (pageResponseDTO.page_block_end + 1) : '#'}">
+                                                <i class="lni lni-chevron-right"></i>
+                                            </a>
                                         </li>
                                     </ul>
-                                </nav>
+                                </div>
                              <!--   /* End Pagination */-->
                             </div>
                         </div>

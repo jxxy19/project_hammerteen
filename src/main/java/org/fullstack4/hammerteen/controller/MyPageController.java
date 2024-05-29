@@ -47,11 +47,18 @@ public class MyPageController {
 
     @PostMapping("/mypage")
     public String mypagePost(@Valid MemberDTO memberDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request, MultipartHttpServletRequest file) {
-
-
         //핸드폰번호 합치기
         String[] phoneStr = memberDTO.getPhoneNumber().split(",");
         memberDTO.setPhoneNumber(phoneStr[0]+phoneStr[1]+phoneStr[2]);
+        HttpSession session = request.getSession();
+        MemberDTO dto = (MemberDTO)session.getAttribute("memberDTO");
+
+        //비밀번호 입력 안할시
+        if(memberDTO.getPwd().isEmpty()){
+            memberDTO.setPwd(dto.getPwd());
+
+        }
+
 
         List<String> filenames = null;
         String realPath ="D:\\java4\\hammerteen\\src\\main\\resources\\static\\upload";
@@ -79,12 +86,8 @@ public class MyPageController {
             redirectAttributes.addFlashAttribute("info", "alert(`회원 정보 수정 실패 올바른 값을 입력해 주세요.`);");
             return "redirect:/mypage/mypage";
         }
-
         MemberDTO modifyDTO = memberServiceIf.modify(memberDTO);
-
-
         request.getSession().setAttribute("memberDTO", modifyDTO);
-
         return "redirect:/mypage/mypage";
     }
 
