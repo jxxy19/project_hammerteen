@@ -329,7 +329,7 @@
 <th:block layout:fragment="content">
 </th:block>
 <!-- / Sections:End -->
-
+<div id="divForToast"></div>
 
 <!-- Footer: Start -->
 <footer class="landing-footer bg-body footer-text">
@@ -347,10 +347,10 @@
                 <div class="col-lg-9 col-md-12 col-sm-12">
                     <h5 class="text-muted">This Project Made By</h5>
                     <ul class="p-0 m-0 d-flex justify-content-between list-unstyled">
-                        <li>👑 Juyeon Jeon <img class="w-15px" src="/assets/img/icon/github.svg"></li>
-                        <li>JaeSeon Lee <img class="w-15px" src="/assets/img/icon/github.svg"></li>
-                        <li>JongYun Chae <img class="w-15px" src="/assets/img/icon/github.svg"></li>
-                        <li>Jeehyun Jang <img class="w-15px" src="/assets/img/icon/github.svg"></li>
+                        <li><a href="https://github.com/jxxy19" target="_blank">👑 Juyeon Jeon <img class="w-15px" src="/assets/img/icon/github.svg"></a></li>
+                        <li><a href="https://github.com/seon6565" target="_blank">JaeSeon Lee <img class="w-15px" src="/assets/img/icon/github.svg"></a></li>
+                        <li><a href="https://github.com/chaejongyun77" target="_blank">JongYun Chae <img class="w-15px" src="/assets/img/icon/github.svg"></a></li>
+                        <li><a href="https://github.com/Geeehyun" target="_blank">Jeehyun Jang <img class="w-15px" src="/assets/img/icon/github.svg"></a></li>
                     </ul>
                 </div>
             </div>
@@ -383,8 +383,10 @@
 
 <!-- Core JS -->
 <script th:inline="javascript">
-    if([[${info != null}]]) {
-        alert([[${info}]]);
+    window.onload = () => {
+        if([[${info != null}]]) {
+            showToast([[${info}]]);
+        }
     }
 </script>
 <script src="/assets/vendor/js/bootstrap.js"></script>
@@ -394,6 +396,7 @@
 <!--<script src="/assets/js/ui-toasts.js"></script>-->
 <!-- 헤머틴 커스터마이징 JS -->
 <script src="/assets/js/commonUtil.js"></script>
+<script src="/assets/js/validation.js"></script>
 <script src="/assets/summernote/summernote-lite.min.js"></script>
 
 <th:block layout:fragment="script">

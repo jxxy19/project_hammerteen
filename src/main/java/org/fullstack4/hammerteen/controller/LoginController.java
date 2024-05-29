@@ -25,13 +25,14 @@ public class LoginController {
     private final LoginServiceIf loginServiceIf;
 
     @GetMapping("/login")
-    public void loginGet (HttpServletRequest req, Model model) {
+    public void loginGet (HttpServletRequest req, Model model, @RequestParam(name = "message", defaultValue = "")String message) {
         model.addAttribute("menu", "로그인");
 
         String save_id = CookieUtil.getCookieValue(req,"save_id");
         model.addAttribute("saveId", save_id);
         String acc_url = req.getHeader("referer");
         model.addAttribute("acc_url", acc_url);
+        if(!message.isEmpty())model.addAttribute("info", "로그인이 필요합니다.");
     }
     @PostMapping("/login")
     public String loginPost(LoginDTO loginDTO,

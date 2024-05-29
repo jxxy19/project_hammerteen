@@ -26,7 +26,7 @@ public class LoginCheckInterceptor implements HandlerInterceptor {
             sessionId = (sessionMemberDTO != null) ? sessionMemberDTO.getUserId() : "";
         }
         if (sessionId.equals("")) {
-            response.sendRedirect("/login/login");
+            response.sendRedirect("/login/login?message=interceptor");
             return false;
         }
         return HandlerInterceptor.super.preHandle(request, response, handler);

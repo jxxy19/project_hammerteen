@@ -168,5 +168,12 @@
   <!-- 유효성 검사용 -->
   <script src="/assets/js/commonUtil.js"></script>
   <script src="/assets/js/validation.js"></script>
+  <script th:inline="javascript">
+    window.onload = () => {
+      if([[${info != null}]]) {
+        showToast([[${info}]]);
+      }
+    }
+  </script>
   </body>
 </html>

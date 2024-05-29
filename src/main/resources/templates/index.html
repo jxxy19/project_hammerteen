@@ -13,10 +13,10 @@
         <img class="banner-bg-img" src="/assets/img/pages/header.jpg" alt="Help center header">
         <h3 class="text-center fw-bold"> 오늘은 어떤 강의를 들어볼까? </h3>
         <div class="container centered-form">
-        <form th:action="@{/lecture/list}" method="get" >
-            <div class="input-group mb-3 " style="justify-content: center" >
+        <form class="py-5" th:action="@{/lecture/list}" method="get" >
+            <div class="input-wrapper my-3 input-group input-group-lg input-group-merge position-relative mx-auto" style="justify-content: center" >
+                <span class="input-group-text" id="basic-addon1"><i class="bx bx-search bx-sm"></i></span>
                 <input type="text" name="search_word" class="form-control" placeholder="찾고싶은 강의를 입력 후 엔터를 눌러주세요" aria-label="Search" aria-describedby="basic-addon1"  style="text-align: center" />
-
             </div>
         </form>
         </div>
@@ -28,16 +28,17 @@
         <div class="container">
             <h3 class="text-center mb-4">추천 콘텐츠 ⭐</h3>
             <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <ul class="nav justify-content-center flex-row flex-wrap" >
-                            <li class="m-1" th:each="dto, iterStat : ${recommendName}"><p>  <a th:href="@{'/?lectureRecommendTag=' + ${iterStat.index + 1}}"> <span class="capsule" th:text="${dto.name}"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
-
-                        <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
-                    </ul>
-                </div>
+                <th:block th:if="${recommendLectureDTO != null}">
+                        <div class="col-lg-10 mx-auto">
+                            <ul class="nav justify-content-center flex-row flex-wrap" >
+                                    <li class="m-1" th:each="dto, iterStat : ${recommendName}"><p>  <a th:href="@{'/?lectureRecommendTag=' + ${iterStat.index + 1}}"> <span class="capsule" th:text="${dto.name}"><span class="capsule-icon">🔥</span> 내 꿈은 기출 정복★</span></a></p></li>
+                                <!-- <li data-tab="tab_7" class="m-1"><p class="display-6" style="margin: 0;"><a href="#"><span class="badge rounded-pill bg-label-primary align-middle"><span class="badge badge-center rounded-pill bg-label-light">😧</span> 누구나 강의를 다 신청할 수 있다고?</span></a></p></li> -->
+                            </ul>
+                        </div>
+                </th:block>
                 <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
                     <th:block th:if="${recommendLectureDTO != null}">
-                    <div class="row justify-content-between gap-lg-0 gap-3" >
+                        <div class="row justify-content-between gap-lg-0 gap-3" >
                         <th:block th:if="${recommendLectureDTO.dtoList != null && recommendLectureDTO.dtoList.size() > 0}">
                         <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index < 3}">
                             <div class="card border shadow-none overflow-hidden">
@@ -49,7 +50,7 @@
                                         <div class="d-flex flex-column gap-2">
                                             <h5 class="p-0 m-0 text-start fw-bold text-primary" th:text="${dto.title}">이 세상 밈의 절대고수.</h5>
                                             <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
-                                            <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>
+<!--                                            <p class="p-0 m-0 text-start" th:text="${dto.content}"> 당신...밈을 알고 싶다고요? 저를 따라오시죠 </p>-->
                                         </div>
                                         <a class="btn btn-sm btn-label-primary mt-2" th:href="@{'/lecture/view?lectureIdx=' + ${dto.getLectureIdx}}">바로가기</a>
                                     </div>
@@ -59,7 +60,6 @@
                         </th:block>
                     </div>
                     </th:block>
-
                     <th:block th:if="${recommendLectureDTO != null}">
                         <div class="row justify-content-between gap-lg-0 gap-3" >
                             <th:block th:if="${recommendLectureDTO.dtoList.size() > 0}">
@@ -67,7 +67,7 @@
                                 <div class="card border shadow-none overflow-hidden">
                                     <div class="card-body row p-0 ">
                                         <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                            <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.profile}"
+                                            <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${dto.thumbnailImgFile} != null ? '/upload/'+${dto.thumbnailImgFile} : '/assets/img/default.png'"
                                                  height="200"
                                                  width="200">
                                         </div>
@@ -86,9 +86,12 @@
                         </div>
                     </th:block>
                     <!-- 추천 콘텐츠가 없을 경우 -->
-                    <th:block th:unless="${recommendLectureDTO != null && recommendLectureDTO.dtoList != null}">
-                        <div class="text-center" >
-                            추천 콘텐츠가 없습니다.
+                    <th:block th:if="${recommendLectureDTO != null && recommendLectureDTO.dtoList.size() == 0}">
+                        <div class="text-center card py-5 border" >
+                            <div class="mb-3">아직 추천 콘텐츠가 없습니다.<br>헤머틴을 위해 더 좋은 추천 컨테츠를 가져오도록 할께요!🔥🔥🔥</div>
+                            <div>
+                            <a href="/lecture/list" class="btn btn-primary">전체 강의 보러가기</a>
+                            </div>
                         </div>
                     </th:block>
                     </div>
@@ -111,14 +114,12 @@
                         <div class="swiper mySwiper">
                             <div class="swiper-wrapper mb-3">
                                 <th:block th:if="${teacherDTO != null && teacherDTO.dtoList.size() > 0}">
-
                                     <th:block th:if="${teacherDTO.dtoList != null && teacherDTO.dtoList.size() > 0}">
-
-                                <div class="col-md-4 col-sm-6 mb-4 swiper-slide" th:each="dto, iterStat : ${teacherDTO.dtoList}">
+                                        <div class="col-md-4 col-sm-6 mb-4 swiper-slide" th:each="dto, iterStat : ${teacherDTO.dtoList}">
                                     <div class="card">
                                         <div class="card-body ">
                                             <div>
-                                                <img class="w-100 rounded" src="/assets/img/default.png" th:src="${'/upload/' + dto.profile}" height="200"
+                                                <img class="w-100 rounded" src="/assets/img/default.png" th:src="${dto.profile} != null ? '/upload/'+${dto.profile} : '/assets/img/default.png'" height="200"
                                                      width="100"  >
                                             </div>
                                             <div class="d-flex flex-column gap-2 py-3">
@@ -130,17 +131,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                </th:block>
+                                    </th:block>
                                 </th:block>
                                 <th:block th:unless="${teacherDTO != null && teacherDTO.dtoList.size() > 0}">
                                     <div class="card-body" style="text-align: center">
                                         <div class="d-flex justify-content-center overflow-hidden">
                                             <img src="/assets/img/default.png" height="150" width="200">
                                         </div>
-
                                     </div>
                                 </th:block>
-
                             </div>
                             <div class="swiper-pagination"></div>
                         </div>
@@ -165,11 +164,11 @@
                                 <th:block th:if="${popularLectureList != null and !popularLectureList.isEmpty()}">
 
                                 <div class="col-lg-4 col-12 mb-md-0 mb-4 swiper-slide" th:each="dto : ${popularLectureList}">
-                                    <th:block if=${dto !=null}></th>
+                                    <th:block th:if="${dto != null}">
                                     <div class="card border shadow-none overflow-hidden">
                                         <div class="card-body row p-0 ">
                                             <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                                <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${'/upload/' + dto.thumbnailImgFile}"
+                                                <img class="w-100 rounded" src="/assets/img/image/images.jpeg"  th:src="${dto.thumbnailImgFile} != null ? '/upload/'+${dto.thumbnailImgFile} : '/assets/img/default.png'"
                                                      height="200"
                                                      width="200">
                                             </div>
@@ -179,12 +178,11 @@
                                                     <small><span th:text="${dto.teacherName}">전주연</span> 선생님</small>
                                                     <p class="p-0 m-0 text-start" >  </p>
                                                 </div>
-
-
                                                 <a class="btn btn-sm btn-label-primary mt-2" th:href="@{'/lecture/view?lectureIdx=' + ${dto.getLectureIdx}}">바로가기</a>
                                             </div>
                                         </div>
                                     </div>
+                                    </th:block>
                                 </div>
 
 
@@ -219,8 +217,8 @@
                                         <span class="capsule-icon p-2">🔥</span>
                                         <h5 class="mb-0 ms-1 fw-bold">지금 인기글</h5>
                                     </div>
-                                    <ul class="list-unstyled my-4">
-                                        <th:block th:if="${ hotBoardDTO!= null && hotBoardDTO.dtoList.size() > 0}">
+                                    <th:block th:if="${ hotBoardDTO!= null && hotBoardDTO.dtoList.size() > 0}">
+                                        <ul class="list-unstyled my-4">
                                             <li class="mb-2" th:each="boardDto, iterStat : ${hotBoardDTO.dtoList}">
 
                                                 <a th:href="@{'/board/view?category1=data&bbsIdx=' +${boardDto.bbsIdx}}" class="text-body d-flex justify-content-between align-items-center">
@@ -230,16 +228,18 @@
                                                     <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
                                                 </a>
                                             </li>
-                                        </th:block>
-                                        <th:block th:unless="${ hotBoardDTO!= null && hotBoardDTO.dtoList.size() > 0}">
-                                            <div>게시글이 없습니다.</div>
-                                        </th:block>
                                     </ul>
-                                    <p class="mb-0 fw-medium mt-4">
-                                        <a href="/board/list?category1=data" class="d-flex align-items-center btn btn-primary">
-                                            <span class="me-2">더 보러 가기</span>
-                                        </a>
-                                    </p>
+                                        <p class="mb-0 fw-medium mt-4">
+                                            <a href="/board/list?category1=data" class="d-flex align-items-center btn btn-primary">
+                                                <span class="me-2">더 보러 가기</span>
+                                            </a>
+                                        </p>
+                                    </th:block>
+                                    <th:block th:unless="${ hotBoardDTO!= null && hotBoardDTO.dtoList.size() > 0}">
+                                        <div class="my-5">
+                                            <p>아직 등록된 게시글이 없습니다.</p>
+                                        </div>
+                                    </th:block>
                                 </div>
                             </div>
                         </div>
@@ -253,8 +253,6 @@
                                     <th:block th:if="${lectureReplyList != null && lectureReplyList.size() > 0}">
                                     <ul class="list-unstyled my-4" th:each="replyList : ${lectureReplyList}">
                                         <li class="mb-2">
-
-
                                             <a th:href="@{'/lecture/view?lectureIdx='+${replyList.lectureIdx}}" class="text-body d-flex justify-content-between align-items-center">
                                                 <div class="d-flex flex-column">
                                                     <span class="text-truncate me-2 me-lg-4" th:text="${replyList.reviewContent}">게시글 제목</span>
@@ -262,14 +260,18 @@
                                                 <i class="bx bx-chevron-right scaleX-n1-rtl text-muted"></i>
                                             </a>
                                         </li>
-
                                     </ul>
+                                        <p class="mb-0 fw-medium mt-4">
+                                            <a href="/lecture/list" class="d-flex align-items-center btn btn-primary">
+                                                <span class="me-2">더 보러 가기</span>
+                                            </a>
+                                        </p>
                                     </th:block>
-                                    <p class="mb-0 fw-medium mt-4">
-                                        <a href="/lecture/list" class="d-flex align-items-center btn btn-primary">
-                                            <span class="me-2">더 보러 가기</span>
-                                        </a>
-                                    </p>
+                                    <th:block th:unless="${lectureReplyList != null && lectureReplyList.size() > 0}">
+                                        <div class="my-5">
+                                            <p>아직 등록된 게시글이 없습니다.</p>
+                                        </div>
+                                    </th:block>
                                 </div>
 
                             </div>

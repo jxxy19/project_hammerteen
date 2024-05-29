@@ -27,6 +27,6 @@ public class HandlerInterceptorConfigure implements WebMvcConfigurer {
                 .addPathPatterns("/lecture/addCart")
                 .addPathPatterns("/lecture/addGood")
                 .excludePathPatterns("/member/regist")
-                .excludePathPatterns("/board/view/**");
+                .addPathPatterns("/board/view/**");
     }
 }
