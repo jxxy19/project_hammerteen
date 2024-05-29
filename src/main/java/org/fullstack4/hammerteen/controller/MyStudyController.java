@@ -139,6 +139,9 @@ public class MyStudyController {
         model.addAttribute("dataDTO" , dataDTO);
         LecturePlayedDTO lecturePlayedDTO = LecturePlayedDTO.builder().lectureIdx(lectureDTO.getLectureIdx()).userId(memberDTO.getUserId()).build();
         int playIdx = lectureServiceIf.playIdx(lecturePlayedDTO);
+        LectureDetailDTO playLecture = LectureDetailDTO.builder().lectureDetailIdx(playIdx).build();
+        LectureDetailDTO resultplayedDTO = lectureServiceIf.view(playLecture);
+        model.addAttribute("resultplayedDTO", resultplayedDTO);
         model.addAttribute("lectureDetailIdx", playIdx);
         model.addAttribute("checkOrder", checkOrder);
         model.addAttribute("lectureDTO", resultDTO);

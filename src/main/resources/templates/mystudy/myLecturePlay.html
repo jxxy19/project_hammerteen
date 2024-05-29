@@ -76,11 +76,11 @@
                                 <div class="col-lg-4">
                                     <div class="d-flex justify-content-between my-3">
                                         <div>
-                                            <a href="/" class="btn btn-outline-primary">메인으로</a>
+                                            <a onclick="confirm('메인으로 돌아가시겠습니까?')" href="/" class="btn btn-outline-primary">메인으로</a>
                                         </div>
                                         <div>
-                                            <a th:href="|/mystudy/myLectureView?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-outline-primary">강의실로</a>
-                                            <a th:if="${lectureDetailDTO.playedPercentage}!=100" th:href="|/mystudy/registPlayed?lectureIdx=${lectureDTO.lectureIdx}&lectureDetailIdx=${lectureDetailDTO.lectureDetailIdx}|" class="btn btn-primary text-white">수강 완료</a>
+                                            <a onclick="confirm('강의실로 돌아가시겠습니까?')" th:href="|/mystudy/myLectureView?lectureIdx=${lectureDTO.lectureIdx}|" class="btn btn-outline-primary">강의실로</a>
+                                            <a onclick="confirm('수강을 완료하시겠습니까?')" th:if="${lectureDetailDTO.playedPercentage}!=100" th:href="|/mystudy/registPlayed?lectureIdx=${lectureDTO.lectureIdx}&lectureDetailIdx=${lectureDetailDTO.lectureDetailIdx}|" class="btn btn-primary text-white">수강 완료</a>
                                         </div>
                                     </div>
                                     <div class="stick-top" style="top:100px;">
@@ -101,8 +101,16 @@
                                                 <div class="accordion-collapse collapse show" data-bs-parent="#courseContent"
                                                      id="chapter1" style="">
                                                     <div class="accordion-body py-3 border-top">
-                                                        <div class="list-group" th:each="dto,status:${lectureDetailDTOList}">
-                                                            <a th:href="|/mystudy/myLecturePlay?lectureIdx=${dto.lectureIdx}&lectureDetailIdx=${dto.lectureDetailIdx}|" class="list-group-item list-group-item-action d-flex justify-content-between">
+                                                        <div class="list-group" th:each="dto,status:${lectureDetailDTOList}" >
+                                                            <a th:if="|${lectureDetailDTOList[status.index].playedPercentage!=null}|" th:href="|/mystudy/myLecturePlay?lectureIdx=${dto.lectureIdx}&lectureDetailIdx=${dto.lectureDetailIdx}|" th:class="${lectureDetailDTO.lectureDetailIdx==dto.lectureDetailIdx}?'list-group-item list-group-item-action d-flex justify-content-between active disabled':'list-group-item list-group-item-action d-flex justify-content-between'">
+                                                                <span>
+                                                                    <i th:if="${dto.playedPercentage}==100" class="lni lni-checkmark-circle active-star"></i>
+                                                                    <i th:if="${dto.playedPercentage}!=100" class="lni lni-checkmark-circle"></i>
+                                                                    <span>[[${status.count}]]. [[${dto.detailTitle}]]</span>
+                                                                </span>
+                                                                <span>[[${dto.videoLength}]]</span>
+                                                            </a>
+                                                            <a onclick="alert('강의를 순서대로 완료해주세요.'); return false" th:unless="|${lectureDetailDTOList[status.index].playedPercentage!=null}|" th:href="|/mystudy/myLecturePlay?lectureIdx=${dto.lectureIdx}&lectureDetailIdx=${dto.lectureDetailIdx}|" th:class="${lectureDetailDTO.lectureDetailIdx==dto.lectureDetailIdx}?'list-group-item list-group-item-action d-flex justify-content-between active disabled':'list-group-item list-group-item-action d-flex justify-content-between'">
                                                                 <span>
                                                                     <i th:if="${dto.playedPercentage}==100" class="lni lni-checkmark-circle active-star"></i>
                                                                     <i th:if="${dto.playedPercentage}!=100" class="lni lni-checkmark-circle"></i>
