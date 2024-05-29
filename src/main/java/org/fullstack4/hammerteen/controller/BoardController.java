@@ -44,8 +44,9 @@ public class BoardController {
     private String menuD = "자료게시판";
     private String menuN = "공지사항";
     @GetMapping("/list")
-    public String listGet(Model model, HttpServletRequest req,
-                          PageRequestDTO pageRequestDTO) {
+    public void listGet(Model model, HttpServletRequest req,
+                          PageRequestDTO pageRequestDTO,
+                          @RequestParam(name = "message", defaultValue = "")String message) {
         HttpSession session = req.getSession();
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         UrlPathHelper urlPathHelper = new UrlPathHelper();
@@ -68,6 +69,9 @@ public class BoardController {
             PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.list(pageRequestDTO);
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "qna");
+            if(!message.isEmpty()) {
+                model.addAttribute("info","본인 질문글만 확인할 수 있습니다.");
+            }
         }
         if (url.contains("notice")) {
             pageRequestDTO.setCategory1("공지사항");
@@ -98,7 +102,6 @@ public class BoardController {
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "data");
         }
-        return null;
     }
     @GetMapping("/regist")
     public void registGet(Model model, HttpServletRequest req) {
@@ -182,8 +185,8 @@ public class BoardController {
 //        log.info(userId.equals(resultbbsDTO.getUserId()));
 //        log.info(memberDTO.getRole());
         if((!(userId.equals(resultbbsDTO.getUserId())) && resultbbsDTO.getCategory1().equals("QnA게시판") && (memberDTO.getRole().equals("user")))) {
-            model.addAttribute("info", "본인 질문 글만 확인 가능합니다.");
-            return "redirect:/board/list?category1=qna";
+            log.info("들어옴");
+            return "redirect:/board/list?category1=qna&message=notMyBoard";
         }
         else {
         UrlPathHelper urlPathHelper = new UrlPathHelper();
