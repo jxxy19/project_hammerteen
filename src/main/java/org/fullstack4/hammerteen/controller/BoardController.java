@@ -72,6 +72,7 @@ public class BoardController {
         if (url.contains("notice")) {
             pageRequestDTO.setCategory1("공지사항");
             model.addAttribute("pageType", CommonUtil.setPageType(menuN, "글목록"));
+            log.info(CommonUtil.setPageType(menuN, "글목록"));
             PageResponseDTO<BbsDTO> pageResponseDTO = bbsServiceIf.list(pageRequestDTO);
             model.addAttribute("pageResponseDTO" , pageResponseDTO);
             model.addAttribute("category1", "notice");
