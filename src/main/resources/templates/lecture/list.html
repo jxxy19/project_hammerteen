@@ -95,27 +95,35 @@
                           <div class="tab-content py-0" id="nav-tabContent">
                             <div class="tab-pane show active" id="nav-grid" role="tabpanel" aria-labelledby="nav-grid-tab">
                               <div class="row">
-                                <div class="col-lg-4 col-md-6 col-12" th:each="dto:${pageResponseDTO.dtoList}">
-                                  <!-- Start Single Item -->
-                                  <div class="single-item-grid">
-                                    <div class="image">
-                                      <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|"><img class="w-100" th:src="|${dto.thumbnailImgDirectory}/${dto.thumbnailImgFile}|" alt="#" /></a>
+                                <th:block th:if="${pageResponseDTO!= null && pageResponseDTO.dtoList.size() > 0}">
+                                  <div class="col-lg-4 col-md-6 col-12" th:each="dto:${pageResponseDTO.dtoList}">
+                                    <!-- Start Single Item -->
+                                    <div class="single-item-grid">
+                                      <div class="image">
+                                        <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|"><img class="w-100" th:src="|${dto.thumbnailImgDirectory}/${dto.thumbnailImgFile}|" alt="#" /></a>
+                                      </div>
+                                      <div class="content">
+                                        <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|" class="badge bg-label-primary">[[${dto.categoryName}]]</a>
+                                        <h3 class="title border-0">
+                                          <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|">[[${dto.title}]]</a>
+                                        </h3>
+                                        <p class="teacher">
+                                          <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|"><span>[[${dto.teacherName}]]</span> 선생님</a>
+                                        </p>
+                                      </div>
                                     </div>
-                                    <div class="content">
-                                      <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|" class="badge bg-label-primary">[[${dto.categoryName}]]</a>
-                                      <h3 class="title border-0">
-                                        <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|">[[${dto.title}]]</a>
-                                      </h3>
-                                      <p class="teacher">
-                                        <a th:href="|/lecture/view?lectureIdx=${dto.lectureIdx}|"><span>[[${dto.teacherName}]]</span> 선생님</a>
-                                      </p>
-                                    </div>
+                                    <!-- End Single Item -->
                                   </div>
-                                  <!-- End Single Item -->
-                                </div>
+                                </th:block>
+                                <th:block th:unless="${pageResponseDTO!= null && pageResponseDTO.dtoList.size() > 0}">
+                                  <div class="col-12">
+                                    <div class="card border text-center w-100 py-5">아직 등록된 강의가 없습니다.😢</div>
+                                  </div>
+                                </th:block>
                                   <!-- End Single Item -->
                                 </div>
                               </div>
+                            <th:block th:if="${pageResponseDTO!= null && pageResponseDTO.dtoList.size() > 0}">
                               <div class="row">
                                 <div class="col-12">
                                   <!-- Pagination -->
@@ -137,6 +145,7 @@
                                   <!--/ End Pagination -->
                                 </div>
                               </div>
+                            </th:block>
                             </div>
                           </div>
                         </div>
