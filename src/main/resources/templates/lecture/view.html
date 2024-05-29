@@ -25,11 +25,11 @@
                                         </div>
                                         <div class="d-lg-flex w-100 justify-content-end">
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1 pe-lg-1">
-                                                <a th:if="|${session.memberDTO!=null && session.memberDTO.memberIdx.equals(lectureDTO.teacherIdx)}|" class="col-sm-12 btn btn-outline-primary" th:href="|/lecture/delete?lectureIdx=${lectureDTO.lectureIdx}|">삭제</a>
+                                                <a onclick="return confirm('삭제하시겠습니까?');" th:if="|${session.memberDTO!=null && session.memberDTO.memberIdx.equals(lectureDTO.teacherIdx)}|" class="col-sm-12 btn btn-outline-primary" th:href="|/lecture/delete?lectureIdx=${lectureDTO.lectureIdx}|">삭제</a>
                                             </div>
                                             <div class="row m-lg-0 pb-sm-1 pb-md-1">
                                                 <a class="col-sm-12 btn btn-primary" th:if="|${session.memberDTO!=null && session.memberDTO.memberIdx.equals(lectureDTO.teacherIdx)}|"
-                                                   th:href="|/lecture/modify?lectureIdx=${lectureDTO.lectureIdx}|">수정</a>
+                                                   onclick="return confirm('수정하시겠습니까?');" th:href="|/lecture/modify?lectureIdx=${lectureDTO.lectureIdx}|">수정</a>
                                             </div>
                                         </div>
                                     </div>
