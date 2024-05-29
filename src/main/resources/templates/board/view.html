@@ -122,7 +122,7 @@
                                             </div>
                                     </form>
                                     <ul class="comments-list">
-                                        <th:block th:if="${replyDTO != null}">
+                                        <th:block th:if="${replyDTO != null and replyDTO.size() > 0}">
                                             <li th:each="dto:${replyDTO}" th:id="'list'+${dto.replyIdx}" style="list-style: none">
                                             <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
                                                 <div class="cursor-pointer border-bottom">
@@ -155,7 +155,7 @@
                                                 </div>
                                             </li>
                                         </th:block>
-                                        <th:block th:if="${replyDTO.size() < 1}">
+                                        <th:block th:unless="${replyDTO != null and replyDTO.size() > 0}">
                                             <li style="list-style: none">
                                                 <div class="single-item-list border-dark border-1 rounded-bottom item-list-title">
                                                     <div class="cursor-pointer border-bottom">
