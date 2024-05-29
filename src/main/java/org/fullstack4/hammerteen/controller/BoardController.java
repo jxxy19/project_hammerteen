@@ -178,8 +178,9 @@ public class BoardController {
         MemberDTO memberDTO = (MemberDTO) session.getAttribute("memberDTO");
         String userId = memberDTO.getUserId();
         BbsDTO resultbbsDTO = bbsServiceIf.view(bbsIdx);
-        log.info(userId.equals(resultbbsDTO.getUserId()));
-        if(!(userId.equals(resultbbsDTO.getUserId())) && resultbbsDTO.getCategory1().equals("QnA게시판")) {
+//        log.info(userId.equals(resultbbsDTO.getUserId()));
+//        log.info(memberDTO.getRole());
+        if((!(userId.equals(resultbbsDTO.getUserId())) && resultbbsDTO.getCategory1().equals("QnA게시판") && (memberDTO.getRole().equals("user")))) {
             return "redirect:/board/list?category1=qna";
         }
         else {

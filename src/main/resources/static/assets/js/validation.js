@@ -4,7 +4,7 @@ function showToast(message) {
     $('#liveToast').toast('show');
 }
 
-window.onload = () => {
+$(document).ready(() => {
     document.querySelector('#divForToast').innerHTML += `
         <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 50000;">
           <div id="liveToast" class="toast " role="alert" aria-live="assertive" aria-atomic="true">
@@ -20,7 +20,7 @@ window.onload = () => {
           </div>
         </div>
     `;
-}
+})
 
 
 // 회원가입 - 로그인 - 마이페이지

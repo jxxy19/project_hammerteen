@@ -44,7 +44,7 @@ function registPlan() {
             },
             success: function(data) {
                 console.log(data);
-                alert(data["info"]);
+                showToast(data["info"]);
                 makeCalendar(startDate);
             },
             error : function(xhr, status, error) {
@@ -69,7 +69,7 @@ function deletePlan(idx) {
             },
             success: function(data) {
                 console.log(data);
-                alert(data["info"]);
+                showToast(data["info"]);
                 makeCalendar(startDate);
             },
             error : function(xhr, status, error) {
@@ -101,7 +101,7 @@ function viewPlan(idx) {
                 $('#calendarOffcanvasBackdrop #btnSave').attr("data-idx",resultObj["scheduleIdx"] )
                 $('#calendarOffcanvasBackdrop #btnDelete').attr("data-idx",resultObj["scheduleIdx"] )
             } else {
-                alert(data["info"]);
+                showToast(data["info"]);
             }
         },
         error : function(xhr, status, error) {
@@ -131,7 +131,7 @@ function modifyPlan(idx) {
             },
             success: function(data) {
                 console.log(data);
-                alert(data["info"]);
+                showToast(data["info"]);
                 makeCalendar(startDate);
             },
             error : function(xhr, status, error) {
