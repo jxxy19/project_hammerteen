@@ -122,7 +122,7 @@
                                             <td th:text="${status.index}">1</td>
                                             <td class="align-middle">
                                                 <div class="d-flex gap-1 cursor-pointer align-items-center" onclick="goToThisLick('/lecture/view','lectureIdx',[[${dto.lectureDTO.lectureIdx}]])">
-                                                    <img class="w-px-100 rounded" th:src="${dto.lectureDTO.thumbnailImgFile != null} ? ${dto.lectureDTO.thumbnailImgDirectory}+${dto.lectureDTO.thumbnailImgFile} : '/assets/img/default.png'">
+                                                    <img class="w-px-100 rounded" th:src="${dto.lectureDTO.thumbnailImgFile != null} ? '/upload/'+${dto.lectureDTO.thumbnailImgFile} : '/assets/img/default.png'">
                                                     <span th:text="${dto.lectureDTO.title}">강의 제목입니다.</span>
                                                 </div>
                                             </td>
