@@ -6,9 +6,20 @@ function goToThisLink(str, element) {
     location.href = url;
 }
 function goToThisFullLink(url) {
-    event.preventDefault();
-    event.stopPropagation();
-    location.href = url;
+    if(getWindowSize().width > 992) {
+        event.preventDefault();
+        event.stopPropagation();
+        location.href = url;
+    }
+}
+
+function getWindowSize() {
+    let size = {
+        width: window.innerWidth,
+        height: window.innerHeight
+    };
+    console.log(size);
+    return size;
 }
 
 

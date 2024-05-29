@@ -4,6 +4,7 @@
         class="light-style layout-menu-fixed layout-wide layout-navbar-fixed"
         lang="en"
         layout:decorate="~{/common/common.html}"
+        xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
 <!-- Layout wrapper -->
@@ -167,34 +168,39 @@
                                                             <div class="accordion-collapse collapse" data-bs-parent="#courseContent"
                                                                  id="chapter2" style="">
                                                                 <div class="accordion-body py-3 border-top">
-                                                                    <div class="d-flex flex-column align-items-center" th:each="dto,status:${lectureReplyDTOList.dtoList}">
-                                                                        <p class="d-flex flex-column gap-1 w-100 py-3 m-0">
-                                                                          <span>
-                                                                                <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=dto.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
-                                                                            </span>
-                                                                            <span class="h6 m-0">[[${dto.userId}]]</span>
-                                                                            <span class="text-muted d-block ps-2 border rounded py-3">[[${dto.reviewContent}]]</span>
-                                                                        </p>
-
-                                                                    </div>
-                                                                    <!-- Pagination -->
-
-                                                                    <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
-                                                                        <ul class="pagination">
-                                                                            <li class="page-item prev" th:if="${lectureReplyDTOList.prev_page_flag}">
-                                                                                <a th:href="|/lecture@{/view(page=${lectureReplyDTOList.page_block_start -10},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="#"><i class="tf-icon bx bx-chevron-left"></i></a>
-                                                                            </li>
-                                                                            <th:block th:each="i:${#numbers.sequence(lectureReplyDTOList.page_block_start,lectureReplyDTOList.page_block_end)}">
-                                                                                <li th:class="${lectureReplyDTOList.getPage() == i} ? 'page-item active' : 'page-item'">
-                                                                                    <a th:href="|/lecture@{/view(page=${i},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                                                    <th:block th:if="${lectureReplyDTOList != null and lectureReplyDTOList.dtoList.size() > 0}">
+                                                                        <div class="d-flex flex-column align-items-center" th:each="dto,status:${lectureReplyDTOList.dtoList}">
+                                                                            <p class="d-flex flex-column gap-1 w-100 py-3 m-0">
+                                                                              <span>
+                                                                                    <i th:each="i:${#numbers.sequence(1,5)}" th:class="${i<=dto.rating}?'lni lni-star-filled active-star':'lni lni-star-filled'"></i>
+                                                                                </span>
+                                                                                <span class="h6 m-0">[[${dto.userId}]]</span>
+                                                                                <span class="text-muted d-block ps-2 border rounded py-3">[[${dto.reviewContent}]]</span>
+                                                                            </p>
+                                                                        </div>
+                                                                        <!-- Pagination -->
+                                                                        <nav aria-label="Page navigation" class="d-flex align-items-center justify-content-center">
+                                                                            <ul class="pagination">
+                                                                                <li class="page-item prev" th:if="${lectureReplyDTOList.prev_page_flag}">
+                                                                                    <a th:href="|/lecture@{/view(page=${lectureReplyDTOList.page_block_start -10},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="#"><i class="tf-icon bx bx-chevron-left"></i></a>
                                                                                 </li>
-                                                                            </th:block>
-                                                                            <li class="page-item next" th:if="${lectureReplyDTOList.next_page_flag}">
-                                                                                <a th:href="|/lecture@{/view(page=${lectureReplyDTOList.page_block_end +1},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </nav>
-                                                                    <!--/ End Pagination -->
+                                                                                <th:block th:each="i:${#numbers.sequence(lectureReplyDTOList.page_block_start,lectureReplyDTOList.page_block_end)}">
+                                                                                    <li th:class="${lectureReplyDTOList.getPage() == i} ? 'page-item active' : 'page-item'">
+                                                                                        <a th:href="|/lecture@{/view(page=${i},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" th:data-num="${i}">[[${i}]]</a>
+                                                                                    </li>
+                                                                                </th:block>
+                                                                                <li class="page-item next" th:if="${lectureReplyDTOList.next_page_flag}">
+                                                                                    <a th:href="|/lecture@{/view(page=${lectureReplyDTOList.page_block_end +1},lectureIdx=${lectureDTO.lectureIdx})}${lectureReplyDTOList.linkParams}|" class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </nav>
+                                                                        <!--/ End Pagination -->
+                                                                    </th:block>
+                                                                    <th:block th:unless="${lectureReplyDTOList != null and lectureReplyDTOList.dtoList.size() > 0}">
+                                                                        <div class="d-flex flex-column align-items-center">
+                                                                            아직 등록된 후기가 없습니다.
+                                                                        </div>
+                                                                    </th:block>
                                                                 </div>
                                                             </div>
                                                         </div>

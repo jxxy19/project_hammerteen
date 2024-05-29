@@ -38,13 +38,13 @@
                 </th:block>
                 <div class="col-lg-10 mx-auto d-flex flex-column gap-3">
                     <th:block th:if="${recommendLectureDTO != null}">
-                        <div class="row justify-content-between gap-lg-0 gap-3" >
+                        <div class="row justify-content-center gap-lg-0 gap-3" >
                         <th:block th:if="${recommendLectureDTO.dtoList != null && recommendLectureDTO.dtoList.size() > 0}">
                         <div class="col-lg-4 col-12 mb-md-0 mb-4" th:each="dto, iterStat : ${recommendLectureDTO.dtoList}" th:if="${iterStat.index < 3}">
                             <div class="card border shadow-none overflow-hidden">
                                 <div class="card-body row p-0 ">
                                     <div class="col-5 d-flex justify-content-center overflow-hidden">
-                                        <img src="/assets/img/image/images.jpeg">
+                                        <img th:src="${dto.thumbnailImgFile} != null ? '/upload/'+${dto.thumbnailImgFile} : '/assets/img/default.png'">
                                     </div>
                                     <div class="col-7 d-flex flex-column justify-content-between align-items-start m-0 px-2 py-3 flex-wrap ">
                                         <div class="d-flex flex-column gap-2">
@@ -125,8 +125,8 @@
                                             <div class="d-flex flex-column gap-2 py-3">
 
                                                 <a th:href="@{'/lecture/teacherList?search_type=n&search_word=' +${dto.name}}"> <h4 class="p-0 m-0"><span class="text-primary fw-bold border-primary border-bottom"  th:text="${dto.name}" >전주연</span>선생님</h4></a>
-                                                <small th:text="${dto.categoryName}" >과목</small>
-                                                <small th:text="${dto.writing}" >난 전주연 모두 나를 따르라!!</small>
+                                                <div><small class="badge bg-label-primary" th:text="${dto.categoryName}" >과목</small></div>
+                                                <small class="h-px-30 myText" th:text="${dto.writing}" >난 전주연 모두 나를 따르라!!</small>
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +210,7 @@
                     <h3>커뮤니티✉️️</h3>
                     <p class="mb-3">오늘 헤머틴에선은 어떤이링 일어나고 있을까요? 우리들만의 속닥속닥 커뮤니티</p>
                     <div class="d-flex justify-content-center flex-wrap gap-3">
-                        <div class="col-md-5 col-sm-6 mb-4">
+                        <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-5 col-sm-6 mb-4">
+                        <div class="col-lg-5 col-md-12 col-sm-12 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center">
@@ -293,7 +293,7 @@
 
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 3,
-            spaceBetween: 30,
+            spaceBetween: 20,
             loop : true,
             loopAdditionalSlides : 1,
             pagination: {
@@ -305,7 +305,7 @@
 
         var swiper2 = new Swiper(".mySwiper2", {
             slidesPerView: 3,
-            spaceBetween: 30,
+            spaceBetween: 20,
             loop : true,
             loopAdditionalSlides : 1,
             pagination: {
