@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface LectureRepository extends JpaRepository<LectureEntity, Integer> {
-    Page<LectureEntity> findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
+    Page<LectureEntity> findAllByCategoryIdxStartingWithOrTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(Pageable pageable, String categoryIdx, String teacherName, String title);
     Page<LectureEntity> findAllByCategoryIdxStartingWithOrderByLectureIdxDesc(Pageable pageable, String categoryIdx);
 
     int countByCategoryIdx(String categoryIdx);

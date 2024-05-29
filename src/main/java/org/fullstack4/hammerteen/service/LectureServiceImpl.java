@@ -95,7 +95,7 @@ public class LectureServiceImpl implements LectureServiceIf{
                     pageable, categoryIdx);
         }
         else if((lpageRequestDTO.getSearch_word()!=null && !lpageRequestDTO.getSearch_word().isEmpty())) {
-            result = lectureRepository.findAllByCategoryIdxStartingWithAndTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
+            result = lectureRepository.findAllByCategoryIdxStartingWithOrTeacherNameContainsOrTitleContainsOrderByLectureIdxDesc(
                     pageable, categoryIdx, search_word, search_word);
         }
         else{
