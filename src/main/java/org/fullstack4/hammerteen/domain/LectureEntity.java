@@ -27,7 +27,7 @@ public class LectureEntity extends BaseEntity{
     private String teacherName;
     @Column(nullable=false, length = 50)
     private String title;
-    @Column(nullable=false, length = 500)
+    @Column(nullable=false, columnDefinition="LONGTEXT")
     private String content;
     @Column(nullable=false)
     private int price;
